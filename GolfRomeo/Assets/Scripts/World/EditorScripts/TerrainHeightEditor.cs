@@ -12,11 +12,9 @@ public class TerrainHeightEditor : MonoBehaviour
     private const int size = 45;
     private const int offset = size / 2;
     private const float BaseHeight = 0.01f;
-    float desiredHeight = 0.001f;
 
     int heightmapWidth;
     int heightmapHeight;
-
 
     void Start ()
     {
@@ -29,6 +27,7 @@ public class TerrainHeightEditor : MonoBehaviour
         }
     }
 	
+    //TODO MOVE ELSEWHERE!
     void InitTerrain(float height)
     {
         float[,] heigthmapSize = new float[terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapHeight];
@@ -44,19 +43,6 @@ public class TerrainHeightEditor : MonoBehaviour
         terrain.terrainData.SetHeights(0, 0, heigthmapSize);
     }
 
-	void Update ()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            RaiseTerrainSmooth(desiredHeight);
-        }
-
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            RaiseTerrainSmooth(-desiredHeight);
-        }
-    }
-
     private Vector2 GetTerrainPosition(Vector3 position)
     {
         var posXInTerrain = position.x / terrain.terrainData.size.x * heightmapWidth - offset;
@@ -65,7 +51,7 @@ public class TerrainHeightEditor : MonoBehaviour
         return new Vector2(posXInTerrain, posYInTerrain);
     }
 
-    private void RaiseTerrainSmooth(float height)
+    public void RaiseTerrainSmooth(float height)
     {
         Vector2 terrainPosition = GetTerrainPosition(transform.position - terrain.gameObject.transform.position);
         float[,] heights = terrain.terrainData.GetHeights((int)terrainPosition.x, (int)terrainPosition.y, size, size);
