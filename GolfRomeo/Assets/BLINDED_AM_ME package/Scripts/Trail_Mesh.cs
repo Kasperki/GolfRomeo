@@ -7,8 +7,8 @@ namespace BLINDED_AM_ME{
 	[RequireComponent(typeof(MeshFilter))]
 	[RequireComponent(typeof(MeshRenderer))]
 	[RequireComponent(typeof(Path_Comp))]
-	public class Trail_Mesh : MonoBehaviour {
-
+	public class Trail_Mesh : MonoBehaviour
+    {
 
 		public bool   removeDoubles = false; // removes doubles
 		public Mesh   segment_sourceMesh;
@@ -23,13 +23,15 @@ namespace BLINDED_AM_ME{
 		private Mesh_Maker _maker = new Mesh_Maker();
 
 		// called by Button
-		public void ShapeIt(){
+		public void ShapeIt()
+        {
+            //DestroyImmediate(GetComponent<MeshCollider>());
+            //gameObject.AddComponent<MeshCollider>();
 
-			if(segment_sourceMesh == null){
+            if (segment_sourceMesh == null){
 				Debug.LogError("missing source mesh");
 				return;
 			}
-
 
 			_helpTransform1 = new GameObject("_helpTransform1").transform;
 			_helpTransform2 = new GameObject("_helpTransform2").transform;
@@ -37,7 +39,6 @@ namespace BLINDED_AM_ME{
 			// because it messes it up
 			Quaternion oldRotation = transform.rotation;
 			transform.rotation = Quaternion.identity;
-
 
 			_maker = new Mesh_Maker();
 			ScanSourceMesh();
@@ -48,16 +49,18 @@ namespace BLINDED_AM_ME{
 
 			DestroyImmediate(_helpTransform1.gameObject);
 			DestroyImmediate(_helpTransform2.gameObject);
-		}
+        }
 
-		public void Craft(){
+		public void Craft()
+        {
 
 			_path = GetComponent<Path_Comp>();
 			Path_Point pointA = _path.GetPathPoint(0.0f);
 			Path_Point pointB = pointA;
 		
 
-			for(float dist=0.0f; dist<_path._path.TotalDistance; dist+=_segment_length){
+			for (float dist=0.0f; dist<_path._path.TotalDistance; dist+=_segment_length)
+            {
 				
 				pointB = _path.GetPathPoint(Mathf.Clamp(dist + _segment_length,0,_path._path.TotalDistance));
 
@@ -74,7 +77,8 @@ namespace BLINDED_AM_ME{
 
 		}
 
-		public void Add_Segment(){
+		public void Add_Segment()
+        {
 
 			int[] indices;
 
@@ -93,31 +97,34 @@ namespace BLINDED_AM_ME{
 			}
 		}
 
-		public void AddTriangle( int[] indices, int submesh){
+		public void AddTriangle( int[] indices, int submesh)
+        {
 
 			// vertices
-			Vector3[] verts = new Vector3[3]{
+			Vector3[] verts = new Vector3[3]
+            {
 				segment_sourceMesh.vertices[indices[0]],
 				segment_sourceMesh.vertices[indices[1]],
 				segment_sourceMesh.vertices[indices[2]]
 			};
 			// normals
-			Vector3[] norms = new Vector3[3]{
-
+			Vector3[] norms = new Vector3[3]
+            {
 				segment_sourceMesh.normals[indices[0]],
 				segment_sourceMesh.normals[indices[1]],
 				segment_sourceMesh.normals[indices[2]]
 			};
 
 			// uvs
-			Vector2[] uvs = new Vector2[3]{
+			Vector2[] uvs = new Vector2[3]
+            {
 				segment_sourceMesh.uv[indices[0]],
 				segment_sourceMesh.uv[indices[1]],
 				segment_sourceMesh.uv[indices[2]]
 			};
 			// tangent
-			Vector4[] tangents = new Vector4[3]{
-
+			Vector4[] tangents = new Vector4[3]
+            {
 				segment_sourceMesh.tangents[indices[0]],
 				segment_sourceMesh.tangents[indices[1]],
 				segment_sourceMesh.tangents[indices[2]]

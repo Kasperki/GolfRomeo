@@ -1,9 +1,15 @@
-﻿using System.Collections;
+﻿using BLINDED_AM_ME;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CursorEditor : MonoBehaviour
 {
+    public Color Normal;
+    public Color Hover;
+    public Color Selected;
+    private Material material;
+
     public bool Mouse;
 
     private GameObject lastObject;
@@ -12,16 +18,22 @@ public class CursorEditor : MonoBehaviour
 
     private Vector3 raycastPos = new Vector3(0,10,0);
 
+    public GameObject RoadNodePrefab;
+
     public float TerrainHeightEditModifier = 0.001f;
     private TerrainHeightEditor terrainHeightEditor;
+
 
     private void Awake()
     {
         terrainHeightEditor = GetComponentInChildren<TerrainHeightEditor>();
+        material = GetComponent<Renderer>().material;
     }
 
     void Update ()
     {
+        material.color = Normal;
+
         if (Mouse)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -31,7 +43,7 @@ public class CursorEditor : MonoBehaviour
         }
         else
         {
-            raycastPos += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            raycastPos += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * Time.deltaTime * 2;
             raycastOrigin = raycastPos;
             raycastDirection = -Vector3.up;
             raycastLength = 20;
@@ -50,6 +62,13 @@ public class CursorEditor : MonoBehaviour
 
         //EDIT ROAD
 
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            var obj = GameObject.Instantiate(RoadNodePrefab);
+            obj.transform.SetParent(FindObjectOfType<Trail_Mesh>().transform);
+            var iEditable = obj.GetComponent(typeof(IEditable)) as IEditable;
+            iEditable.OnSelect(transform);
+        }
 
 
         //EDIT TERRAIN
@@ -65,20 +84,20 @@ public class CursorEditor : MonoBehaviour
 
 
         //EDIT WORLD OBJECTS
-
-        Physics.Raycast(raycastOrigin, raycastDirection, out hit, raycastLength, 1 << World.TerrainObjects, QueryTriggerInteraction.Collide);
+        Physics.Raycast(raycastOrigin, raycastDirection, out hit, raycastLength, 1 << World.Road, QueryTriggerInteraction.Collide);
 
         if (hit.collider != null && hit.collider.gameObject != null)
         {
-            var worldObject = hit.collider.gameObject.GetComponent<WorldObject>();
+            var iEditable = hit.collider.gameObject.GetComponent(typeof(IEditable)) as IEditable;
 
-            if (worldObject != null)
+            if (iEditable != null)
             {
-                worldObject.OnHover();
+                iEditable.OnHover();
+                material.color = Hover;
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    worldObject.OnSelect(transform);
+                    iEditable.OnSelect(transform);
                 }
 
                 lastObject = hit.collider.gameObject;
