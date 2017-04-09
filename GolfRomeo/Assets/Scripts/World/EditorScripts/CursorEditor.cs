@@ -65,6 +65,7 @@ public class CursorEditor : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             var obj = GameObject.Instantiate(RoadNodePrefab);
+            obj.transform.position = transform.position;
             obj.transform.SetParent(FindObjectOfType<Trail_Mesh>().transform);
             var iEditable = obj.GetComponent(typeof(IEditable)) as IEditable;
             iEditable.OnSelect(transform);
@@ -80,6 +81,11 @@ public class CursorEditor : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
         {
             terrainHeightEditor.RaiseTerrainSmooth(-TerrainHeightEditModifier);
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            terrainHeightEditor.SmoothTerrain();
         }
 
 
