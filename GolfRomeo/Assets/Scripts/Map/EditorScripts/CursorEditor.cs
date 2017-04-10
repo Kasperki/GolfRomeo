@@ -50,7 +50,7 @@ public class CursorEditor : MonoBehaviour
         }
 
         RaycastHit hit;
-        Physics.Raycast(raycastOrigin, raycastDirection, out hit, raycastLength, 1 << World.TerrainMask, QueryTriggerInteraction.Ignore);
+        Physics.Raycast(raycastOrigin, raycastDirection, out hit, raycastLength, 1 << Map.TerrainMask, QueryTriggerInteraction.Ignore);
         Debug.DrawRay(raycastOrigin, raycastDirection * raycastLength);
 
         //TODO CLAMP
@@ -90,7 +90,7 @@ public class CursorEditor : MonoBehaviour
 
 
         //EDIT WORLD OBJECTS
-        Physics.Raycast(raycastOrigin, raycastDirection, out hit, raycastLength, 1 << World.Road, QueryTriggerInteraction.Collide);
+        Physics.Raycast(raycastOrigin, raycastDirection, out hit, raycastLength, 1 << Map.Road, QueryTriggerInteraction.Collide);
 
         if (hit.collider != null && hit.collider.gameObject != null)
         {
@@ -115,7 +115,7 @@ public class CursorEditor : MonoBehaviour
             
             if (lastObject != null && lastObject != hit.collider.gameObject)
             {
-                lastObject.GetComponent<WorldObject>().OnBlur();
+                lastObject.GetComponent<MapObject>().OnBlur();
             }
         }
     }

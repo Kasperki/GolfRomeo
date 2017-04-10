@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class WorldObject : MonoBehaviour, IEditable
+public class MapObject : MonoBehaviour, IEditable
 {
     public string ID;
     public Vector3 Position { get { return transform.position; } }
