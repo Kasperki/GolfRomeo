@@ -11,8 +11,6 @@ public class TerrainHeightEditor : MonoBehaviour
 
     private const float MaxHeight = 0.025f;
     private const float MinHeight = 0;
-    private const int size = 45;
-    private const int offset = size / 2;
     private const float BaseHeight = 0.01f;
 
     int heightmapWidth;
@@ -45,7 +43,7 @@ public class TerrainHeightEditor : MonoBehaviour
         terrain.terrainData.SetHeights(0, 0, heigthmapSize);
     }
 
-    private Vector2 GetTerrainPosition(Vector3 position)
+    private Vector2 GetTerrainPosition(Vector3 position, int offset)
     {
         var posXInTerrain = position.x / terrain.terrainData.size.x * heightmapWidth - offset;
         var posYInTerrain = position.z / terrain.terrainData.size.z * heightmapHeight - offset;
@@ -53,38 +51,62 @@ public class TerrainHeightEditor : MonoBehaviour
         return new Vector2(posXInTerrain, posYInTerrain);
     }
 
-    public void RaiseTerrainSmooth(float height)
+    public void RaiseTerrainSmooth(float raiseAmount, int size)
     {
-        Vector2 terrainPosition = GetTerrainPosition(transform.position - terrain.gameObject.transform.position);
-        float[,] heights = terrain.terrainData.GetHeights((int)terrainPosition.x, (int)terrainPosition.y, size, size);
+        int offset = size / 2;
 
-        for (int i = 0; i < size; i++)
+        Vector2 terrainPosition = GetTerrainPosition(transform.position - terrain.gameObject.transform.position, offset);
+
+        int width = size;
+        if (terrainPosition.x + size > heightmapWidth)
         {
-            for (int j = 0; j < size; j++)
-            {
-                var distance = (new Vector2(i, j) - new Vector2(offset, offset)).magnitude / offset;
+            width = (int)(heightmapWidth - terrainPosition.x);
+        }
 
-                float heightChange = heights[i, j] + height * Mathf.Lerp(1, 0, distance);
+        if (terrainPosition.x < 0)
+        {
+            offset += (int)terrainPosition.x;
+            terrainPosition.x = 0;
+        }
+
+        int height = size;
+        if (terrainPosition.y + size > heightmapHeight)
+        {
+            height = (int)(heightmapHeight - terrainPosition.y);
+        }
+
+
+
+        float[,] heights = terrain.terrainData.GetHeights((int)terrainPosition.x, (int)terrainPosition.y, width, height);
+
+        for (int x = 0; x < heights.GetLength(0); x++)
+        {
+            for (int y = 0; y < heights.GetLength(1); y++)
+            {
+                var distance = (new Vector2(x, y) - new Vector2(offset, offset)).magnitude / offset;
+
+                float heightChange = heights[x, y] + raiseAmount * Mathf.Lerp(1, 0, distance);
                 heightChange = Mathf.Max(MinHeight, heightChange);
                 heightChange = Mathf.Min(MaxHeight, heightChange);
 
-                heights[i, j] = heightChange;
+                heights[x, y] = heightChange;
             }
         }
 
         terrain.terrainData.SetHeights((int)terrainPosition.x, (int)terrainPosition.y, heights);
     }
 
-    public void SmoothTerrain()
+    public void SmoothTerrain(int size)
     {
-        Vector2 terrainPosition = GetTerrainPosition(transform.position - terrain.gameObject.transform.position);
+        int offset = size / 2;
+        Vector2 terrainPosition = GetTerrainPosition(transform.position - terrain.gameObject.transform.position, offset);
         float[,] heights = terrain.terrainData.GetHeights((int)terrainPosition.x, (int)terrainPosition.y, size, size);
 
-        heights = Smooth(heights);
+        heights = Smooth(heights, (int)size);
         terrain.terrainData.SetHeights((int)terrainPosition.x, (int)terrainPosition.y, heights);
     }
 
-    private float[,] Smooth(float[,] heightMap)
+    private float[,] Smooth(float[,] heightMap, int size)
     {
         int Tw = size;
         int Th = size;
@@ -159,8 +181,6 @@ public class TerrainHeightEditor : MonoBehaviour
                     heightMap[Tx + xIndex + xShift, Ty + yIndex + yShift] = hAverage;
                 }
             }
-            // Show progress...
-            float percentComplete = (iter + 1) / 5;
         }
         return heightMap;
     }

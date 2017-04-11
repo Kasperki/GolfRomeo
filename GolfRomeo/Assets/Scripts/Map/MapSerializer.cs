@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
@@ -9,6 +10,9 @@ public class MapSerializer
 {
     private Map map;
 
+    public const string mapFileExtension = ".xml";
+    public const string mapHeightMapExtension = ".heightmap";
+
     public MapSerializer(Map map)
     {
         this.map = map;
@@ -16,29 +20,40 @@ public class MapSerializer
 	
     public void SaveWorld(string name)
     {
-        var ms = SerializeMap(name);
-
-        using (FileStream file = new FileStream(name, FileMode.Create, FileAccess.Write))
+        using (FileStream file = new FileStream(name + mapFileExtension, FileMode.Create, FileAccess.Write))
         {
-            using (StreamReader sr = new StreamReader(ms))
+            using (StreamReader sr = new StreamReader(SerializeMap(name)))
             {
-                var a = sr.ReadToEnd();
-                byte[] toBytes = Encoding.ASCII.GetBytes(a);
+                var xml = sr.ReadToEnd();
+                byte[] byteArray = Encoding.ASCII.GetBytes(xml);
 
-                file.Write(toBytes, 0, toBytes.Length);
+                file.Write(byteArray, 0, byteArray.Length);
             }
+        }
+
+        //Serialize Terrain
+        using (FileStream file = new FileStream(name + mapHeightMapExtension, FileMode.Create, FileAccess.Write))
+        {
+            byte[] baData = SerializeTerrain();
+            file.Write(baData, 0, baData.Length);
         }
     }
 
-    public void LoadWorld(string name)
+    public MapDTO LoadWorld(string name)
     {
-        FileStream fs = new FileStream(name, FileMode.Open, FileAccess.Read);
-        XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
-        DataContractSerializer ser = new DataContractSerializer(typeof(MapObject[]));
+        FileStream fs = new FileStream(name + mapFileExtension, FileMode.Open, FileAccess.Read);
+        XmlSerializer serializer = new XmlSerializer(typeof(MapDTO));
 
-        MapObject[] worldObjects = (MapObject[])ser.ReadObject(reader, true);
-        reader.Close();
+        MapDTO mapObject = (MapDTO)serializer.Deserialize(fs);
+
         fs.Close();
+
+        //DESERILIZE Terrain
+        var heightMap = new float[(int)mapObject.MapSize.x, (int)mapObject.MapSize.y];
+        FromBytes(heightMap, File.ReadAllBytes(name + mapHeightMapExtension));
+        map.Terrain.terrainData.SetHeights(0, 0, heightMap);
+
+        return mapObject;
     }
 
     private Stream SerializeMap(string name)
@@ -46,21 +61,27 @@ public class MapSerializer
         MemoryStream stream = new MemoryStream();
         XmlSerializer xmlSerializer = new XmlSerializer(typeof(MapDTO));
 
-        MapDTO mapDTO = new MapDTO();
-        mapDTO.MapName = name;
-        mapDTO.MapObjects = new MapObjectDTO[map.Objects.Length];
+        MapDTO mapDTO = new MapDTO().MapToDTO(map);
+        mapDTO.MapObjects = new MapObjectDTO[map.MapObjects.Length];
+        mapDTO.Roads = new RoadDTO[map.Roads.Length];
+
+        //Serialize Roads
+        for (int i = 0; i < map.Roads.Length; i++)
+        {
+            mapDTO.Roads[i] = new RoadDTO().MapToDTO(map.Roads[i]);
+            mapDTO.Roads[i].RoadNodes = new RoadNodeDTO[map.Roads[i].RoadNodes.Length];
+
+            for (int j = 0; j < map.Roads[i].RoadNodes.Length; j++)
+            {
+                mapDTO.Roads[i].RoadNodes[j] = new RoadNodeDTO();
+                mapDTO.Roads[i].RoadNodes[j] = mapDTO.Roads[i].RoadNodes[j].MapToDTO(map.Roads[i].RoadNodes[j]);
+            }
+        }
 
         //Serialize Map Objects
-        for (int i = 0; i < map.Objects.Length; i++)
+        for (int i = 0; i < map.MapObjects.Length; i++)
         {
-            MapObjectDTO obj = new MapObjectDTO()
-            {
-                ID = map.Objects[i].ID,
-                Position = map.Objects[i].Position,
-                Rotation = map.Objects[i].Rotation
-            };
-
-            mapDTO.MapObjects[i] = obj;
+            mapDTO.MapObjects[i] = new MapObjectDTO().MapToDTO(map.MapObjects[i]);
         }
 
         //Serialize
@@ -70,4 +91,21 @@ public class MapSerializer
         return stream;
     }
 
+    private byte[] SerializeTerrain()
+    {
+        var heightMap = map.Terrain.terrainData.GetHeights(0, 0, map.Terrain.terrainData.heightmapWidth, map.Terrain.terrainData.heightmapHeight);
+        return ToBytes(heightMap);
+    }
+
+    public byte[] ToBytes<T>(T[,] array) where T : struct
+    {
+        var buffer = new byte[array.GetLength(0) * array.GetLength(1) * System.Runtime.InteropServices.Marshal.SizeOf(typeof(T))];
+        Buffer.BlockCopy(array, 0, buffer, 0, buffer.Length);
+        return buffer;
+    }
+    public void FromBytes<T>(T[,] array, byte[] buffer) where T : struct
+    {
+        var len = Math.Min(array.GetLength(0) * array.GetLength(1) * System.Runtime.InteropServices.Marshal.SizeOf(typeof(T)), buffer.Length);
+        Buffer.BlockCopy(buffer, 0, array, 0, len);
+    }
 }

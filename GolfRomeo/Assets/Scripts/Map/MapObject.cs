@@ -4,12 +4,9 @@
 public class MapObject : MonoBehaviour, IEditable
 {
     public string ID;
-    public Vector3 Position { get { return transform.position; } }
-    public Vector3 Rotation { get { return transform.rotation.eulerAngles; } }
 
     private bool selected;
     private Transform target;
-
     private bool[] cachedTriggerInfo;
 
     public void Update()

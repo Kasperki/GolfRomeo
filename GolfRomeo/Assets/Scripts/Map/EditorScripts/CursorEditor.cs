@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CursorEditor : MonoBehaviour
 {
+    public EditMode EditMode;
+
     public Color Normal;
     public Color Hover;
     public Color Selected;
@@ -20,7 +22,7 @@ public class CursorEditor : MonoBehaviour
 
     public GameObject RoadNodePrefab;
 
-    public float TerrainHeightEditModifier = 0.001f;
+    public float TerrainHeightEditModifier = 0.0005f;
     private TerrainHeightEditor terrainHeightEditor;
 
 
@@ -59,38 +61,63 @@ public class CursorEditor : MonoBehaviour
         transform.position = hit.point;
         transform.up = Vector3.Lerp(transform.up, hit.normal, Time.deltaTime * 10);
         transform.RotateAround(transform.position, transform.up, transform.localEulerAngles.y);
+        transform.rotation = Quaternion.Euler(transform.rotation.x + 90, transform.rotation.y, transform.rotation.z);
 
         //EDIT ROAD
 
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            EditMode = EditMode.Road;
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            EditMode = EditMode.Terrain;
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            EditMode = EditMode.Objects;
+
+
+        if (EditMode == EditMode.Road)
         {
-            var obj = GameObject.Instantiate(RoadNodePrefab);
-            obj.transform.position = transform.position;
-            obj.transform.SetParent(FindObjectOfType<Trail_Mesh>().transform);
-            var iEditable = obj.GetComponent(typeof(IEditable)) as IEditable;
-            iEditable.OnSelect(transform);
+
+            MoveObjects(Map.Road);
+
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                var obj = GameObject.Instantiate(RoadNodePrefab);
+                obj.transform.position = transform.position;
+                obj.transform.SetParent(FindObjectOfType<Trail_Mesh>().transform);
+                var iEditable = obj.GetComponent(typeof(IEditable)) as IEditable;
+                iEditable.OnSelect(transform);
+            }
         }
-
-
-        //EDIT TERRAIN
-        if (Input.GetKeyDown(KeyCode.P))
+        else if (EditMode == EditMode.Terrain)
         {
-            terrainHeightEditor.RaiseTerrainSmooth(TerrainHeightEditModifier);
-        }
 
-        if (Input.GetKeyDown(KeyCode.O))
+            //EDIT TERRAIN
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                terrainHeightEditor.RaiseTerrainSmooth(TerrainHeightEditModifier, 100);
+            }
+
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                terrainHeightEditor.RaiseTerrainSmooth(-TerrainHeightEditModifier, 50);
+            }
+
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                terrainHeightEditor.SmoothTerrain(120);
+            }
+        }
+        else if (EditMode == EditMode.Objects)
         {
-            terrainHeightEditor.RaiseTerrainSmooth(-TerrainHeightEditModifier);
+            MoveObjects(Map.TerrainObjects);
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            terrainHeightEditor.SmoothTerrain();
-        }
-
-
-        //EDIT WORLD OBJECTS
-        Physics.Raycast(raycastOrigin, raycastDirection, out hit, raycastLength, 1 << Map.Road, QueryTriggerInteraction.Collide);
+    private void MoveObjects(int layer)
+    {
+        RaycastHit hit;
+        Physics.Raycast(raycastOrigin, raycastDirection, out hit, raycastLength, 1 << layer, QueryTriggerInteraction.Collide);
 
         if (hit.collider != null && hit.collider.gameObject != null)
         {
@@ -112,11 +139,20 @@ public class CursorEditor : MonoBehaviour
             {
                 lastObject = null;
             }
-            
+
             if (lastObject != null && lastObject != hit.collider.gameObject)
             {
                 lastObject.GetComponent<MapObject>().OnBlur();
             }
         }
     }
+}
+
+public enum EditMode
+{
+    Road = 0,
+    Terrain = 1,
+    Objects = 2,
+    AIWaypoints = 3,
+    Checkpoints = 4,
 }
