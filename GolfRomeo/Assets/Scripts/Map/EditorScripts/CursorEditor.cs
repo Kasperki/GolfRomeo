@@ -60,7 +60,6 @@ public class CursorEditor : MonoBehaviour
         transform.up = Vector3.Lerp(transform.up, hit.normal, Time.deltaTime * 10);
         transform.RotateAround(transform.position, transform.up, transform.localEulerAngles.y);
 
-
         //EDIT ROAD
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -88,7 +87,7 @@ public class CursorEditor : MonoBehaviour
                 obj.transform.position = transform.position;
                 obj.transform.SetParent(FindObjectOfType<Trail_Mesh>().transform);
                 var iEditable = obj.GetComponent(typeof(IEditable)) as IEditable;
-                iEditable.OnSelect(transform);
+                iEditable.OnSelect(true, transform);
             }
         }
         else if (EditMode == EditMode.Terrain)
@@ -126,14 +125,17 @@ public class CursorEditor : MonoBehaviour
                 var obj = GameObject.Instantiate(CheckpointPrefab);
                 obj.transform.position = transform.position;
                 obj.transform.SetParent(FindObjectOfType<LapTracker>().transform);
+
                 obj.GetComponent<Checkpoint>().SetOrder();
                 var iEditable = obj.GetComponent(typeof(IEditable)) as IEditable;
-                iEditable.OnSelect(transform);
+                iEditable.OnSelect(true, transform);
             }
 
             MoveObjects(Map.CheckpointsMask);
         }
     }
+
+    private GameObject selectedIEditable;
 
     private void MoveObjects(int layer)
     {
@@ -151,7 +153,8 @@ public class CursorEditor : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    iEditable.OnSelect(transform);
+                    selectedIEditable = selectedIEditable == null || hit.collider.gameObject != selectedIEditable ? hit.collider.gameObject : null;
+                    iEditable.OnSelect((selectedIEditable != null), transform);
                 }
 
                 lastObject = hit.collider.gameObject;
@@ -165,6 +168,11 @@ public class CursorEditor : MonoBehaviour
             {
                 lastObject.GetComponent<MapObject>().OnBlur();
             }
+        }
+
+        if (selectedIEditable != null)
+        {
+            selectedIEditable.GetComponent<IEditable>().Move(transform, Input.mouseScrollDelta.y * 5);
         }
     }
 }

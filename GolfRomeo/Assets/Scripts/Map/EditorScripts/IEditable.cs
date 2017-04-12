@@ -6,5 +6,6 @@ public interface IEditable
 {
     void OnHover();
     void OnBlur();
-    void OnSelect(Transform target);
+    void Move(Transform target, float rotationDelta);
+    void OnSelect(bool selected, Transform target);
 }

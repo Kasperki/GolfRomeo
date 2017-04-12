@@ -92,7 +92,7 @@ public class Map : Singleton<Map>
             gameObj.transform.SetParent(CheckpointsParent.transform);
 
             mapObjectDTO.MapToGameObject(mapObjectDTO, gameObj.GetComponent<Checkpoint>());
-            //gameObj.GetComponent<Checkpoint>().SetOrder();
+            gameObj.GetComponent<Checkpoint>().SetOrder(gameObj.GetComponent<Checkpoint>().CheckpointOrder);
         }
     }
 

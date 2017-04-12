@@ -5,6 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(MeshRenderer))]
 public class Checkpoint : MonoBehaviour, IEditable
 {
+    public int CheckpointOrder;
+    public MeshRenderer TextRenderer;
+
+    private new Collider collider;
+    private new MeshRenderer renderer;
+
     private LapTracker lapTracker
     {
         get
@@ -13,35 +19,20 @@ public class Checkpoint : MonoBehaviour, IEditable
         }
     }
 
-    public int CheckpointOrder;
-    private Collider collider;
-    private MeshRenderer renderer;
-    private MeshRenderer orderRenderer;
-
-    private bool selected;
-    private Transform target;
-
     void Awake ()
     {
         collider = GetComponent<Collider>();
         renderer = GetComponent<MeshRenderer>();
-        orderRenderer = GetComponentInChildren<MeshRenderer>();
     }
 	
     void Update()
     {
-        renderer.enabled = orderRenderer.enabled = !GameManager.CheckState(State.Game);
-
-        if (selected)
-        {
-            transform.position = target.position;
-            transform.rotation = target.rotation;
-        }
+        renderer.enabled = TextRenderer.enabled = GameManager.CheckState(State.Edit);
     }
 
     void OnTriggerEnter(Collider collider)
     {
-        var car = collider.gameObject.GetComponent<Car>();
+        var car = collider.gameObject.GetComponentInParent<Car>();
         if (car != null)
         {
             lapTracker.EnterCheckpoint(car.Name, CheckpointOrder);
@@ -50,28 +41,30 @@ public class Checkpoint : MonoBehaviour, IEditable
 
     public void SetOrder()
     {
-        CheckpointOrder = lapTracker.GetComponentsInChildren<Checkpoint>().Length - 1;
-        orderRenderer.gameObject.GetComponent<TextMesh>().text = CheckpointOrder.ToString();
+        SetOrder(lapTracker.GetComponentsInChildren<Checkpoint>().Length - 1);
+    }
 
-        if (CheckpointOrder == 0)
+    public void SetOrder(int order)
+    {
+        CheckpointOrder = order;
+        TextRenderer.GetComponent<TextMesh>().text = order.ToString();
+
+        if (order == 0)
         {
-            //SET FINISHLINE MATERIAL TODOO
+            renderer.material = (Material)Resources.Load("Roads/CheckpointFinishline", typeof(Material)) as Material;
         }
     }
 
-    public void OnBlur()
+    //IEditable
+    public void OnBlur() {}
+
+    public void OnHover() {}
+
+    public void OnSelect(bool selected, Transform target) { }
+
+    public void Move(Transform target, float rotationDelta)
     {
-
-    }
-
-    public void OnHover()
-    {
-
-    }
-
-    public void OnSelect(Transform target)
-    {
-        selected = !selected;
-        this.target = target;
+        transform.position = target.position;
+        transform.rotation = Quaternion.Euler(target.eulerAngles.x, transform.eulerAngles.y + rotationDelta, target.eulerAngles.z);
     }
 }

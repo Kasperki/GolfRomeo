@@ -48,30 +48,37 @@ public class LapTracker : Singleton<LapTracker>
     void Update()
     {
         Cars.OrderBy(x => x.Value.CurrentLap)
-            .OrderBy(x => x.Value.CurrentCheckpointID)
-            .OrderBy(x => Checkpoints[x.Value.CurrentCheckpointID].transform.position - Checkpoints[x.Value.NextCheckpointID].transform.position);
+            .ThenBy(x => x.Value.CurrentCheckpointID)
+            .ThenBy(x => Checkpoints[x.Value.CurrentCheckpointID].transform.position - Checkpoints[x.Value.NextCheckpointID].transform.position);
 
         if (Input.GetKeyDown(KeyCode.K))
         {
             string msg = "";
+            int index = 1;
 
             foreach (var car in Cars)
             {
-                msg += "1: " + car.Key + " lap:" + car.Value.CurrentLap + " chk:" + car.Value.CurrentCheckpointID;
+                msg += index++ + ": " + car.Key + " lap:" + car.Value.CurrentLap + " chk:" + car.Value.CurrentCheckpointID + " next:;" + car.Value.NextCheckpointID + "\n";
             }
+
+            Debug.Log(msg);
         }
     }
 
     public void EnterCheckpoint(string name, int checkpointID)
     {
+        Debug.Log("car:" + name + "is on " + checkpointID);
+
         if (Cars[name].NextCheckpointID == checkpointID)
         {
-            if (Cars[name].NextCheckpointID == 0)
+            Cars[name].CurrentCheckpointID = checkpointID;
+
+            if (Cars[name].CurrentCheckpointID == 0)
             {
                 Cars[name].CurrentLap++;
-            }
 
-            Cars[name].CurrentCheckpointID = checkpointID;
+                Debug.Log("car:" + name + "is on lap " + Cars[name].CurrentLap);
+            }
         }
     }
 }
@@ -85,7 +92,13 @@ public class LapInfo
     {
         get
         {
-            return CurrentCheckpointID < LapTracker.Instance.Checkpoints.Length ? CurrentCheckpointID + 1 : 0;
+            return CurrentCheckpointID < LapTracker.Instance.Checkpoints.Length - 1 ? CurrentCheckpointID + 1 : 0;
         }
+    }
+
+    public LapInfo()
+    {
+        CurrentLap = 1;
+        CurrentCheckpointID = 0;
     }
 }
