@@ -1,6 +1,4 @@
 ﻿using BLINDED_AM_ME;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CursorEditor : MonoBehaviour
@@ -20,7 +18,7 @@ public class CursorEditor : MonoBehaviour
 
     private Vector3 raycastPos = new Vector3(0,10,0);
 
-    public GameObject RoadNodePrefab;
+    public GameObject RoadNodePrefab, CheckpointPrefab;
 
     public float TerrainHeightEditModifier = 0.0005f;
     private TerrainHeightEditor terrainHeightEditor;
@@ -61,7 +59,7 @@ public class CursorEditor : MonoBehaviour
         transform.position = hit.point;
         transform.up = Vector3.Lerp(transform.up, hit.normal, Time.deltaTime * 10);
         transform.RotateAround(transform.position, transform.up, transform.localEulerAngles.y);
-        transform.rotation = Quaternion.Euler(transform.rotation.x + 90, transform.rotation.y, transform.rotation.z);
+
 
         //EDIT ROAD
 
@@ -74,11 +72,15 @@ public class CursorEditor : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3))
             EditMode = EditMode.Objects;
 
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+            EditMode = EditMode.Checkpoints;
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+            EditMode = EditMode.AIWaypoints;
 
         if (EditMode == EditMode.Road)
         {
-
-            MoveObjects(Map.Road);
+            MoveObjects(Map.RoadMask);
 
             if (Input.GetKeyDown(KeyCode.I))
             {
@@ -93,6 +95,11 @@ public class CursorEditor : MonoBehaviour
         {
 
             //EDIT TERRAIN
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                terrainHeightEditor.RaiseTerrain(TerrainHeightEditModifier, 100);
+            }
+
             if (Input.GetKeyDown(KeyCode.P))
             {
                 terrainHeightEditor.RaiseTerrainSmooth(TerrainHeightEditModifier, 100);
@@ -110,7 +117,21 @@ public class CursorEditor : MonoBehaviour
         }
         else if (EditMode == EditMode.Objects)
         {
-            MoveObjects(Map.TerrainObjects);
+            MoveObjects(Map.MapObjectsMask);
+        }
+        else if (EditMode == EditMode.Checkpoints)
+        {
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                var obj = GameObject.Instantiate(CheckpointPrefab);
+                obj.transform.position = transform.position;
+                obj.transform.SetParent(FindObjectOfType<LapTracker>().transform);
+                obj.GetComponent<Checkpoint>().SetOrder();
+                var iEditable = obj.GetComponent(typeof(IEditable)) as IEditable;
+                iEditable.OnSelect(transform);
+            }
+
+            MoveObjects(Map.CheckpointsMask);
         }
     }
 

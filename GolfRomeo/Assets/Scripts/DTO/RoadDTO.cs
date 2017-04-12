@@ -18,13 +18,7 @@ public class RoadDTO : IMappingData<RoadDTO, Road>
         return this;
     }
 
-    public Road MapToGameObject(RoadDTO source)
-    {
-        Road road = new Road();
-        return MapToGameObject(source, road);
-    }
-
-    public Road MapToGameObject(RoadDTO source, Road destination)
+    public Road MapToGameObject(RoadDTO source, Road destination = default(Road))
     {
         destination.gameObject.GetComponent<Path_Comp>().isCircuit = source.IsCircuit;
         return destination;

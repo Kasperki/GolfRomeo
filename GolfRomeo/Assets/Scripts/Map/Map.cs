@@ -4,50 +4,54 @@ using UnityEngine;
 
 public class Map : Singleton<Map>
 {
+    public const int RoadMask = 10;
+    public const int TerrainMask = 11;
+    public const int MapObjectsMask = 12;
+    public const int CheckpointsMask = 13;
+    public const int AIWaypointsMask = 14;
+
     public string Name;
     public Vector2 MapSize;
 
-    public const int Road = 10;
-    public const int TerrainMask = 11;
-    public const int TerrainObjects = 12;
-
     public Terrain Terrain;
-    public GameObject Objects;
+    public GameObject ObjectsParent;
     public GameObject RoadsParent;
+    public GameObject CheckpointsParent;
 
-    public MapObject[] MapObjects;
-    public Road[] Roads;
-    //LAPTIMER
+    public MapObject[] MapObjects { get { return ObjectsParent.GetComponentsInChildren<MapObject>(); } }
+    public Road[] Roads { get { return RoadsParent.GetComponentsInChildren<Road>(); } }
+
+    public LapTracker LapTracker;
 
     public void SaveWorld()
     {
         var WorldSerialization = new MapSerializer(this);
-        MapObjects = Objects.GetComponentsInChildren<MapObject>();
-        Roads = RoadsParent.GetComponentsInChildren<Road>();
-
-        WorldSerialization.SaveWorld("THISISATEST.xml");
+        WorldSerialization.SaveWorld("ThisIsATest");
     }
 
     public void LoadWorld()
     {
         var WorldSerialization = new MapSerializer(this);
-        var map = WorldSerialization.LoadWorld("THISISATEST.xml");
+        var mapDTO = WorldSerialization.LoadWorld("ThisIsATest");
 
-        //DO STUFF WITH MAP METADATA:
-        //Init Right Size map.
+        //TODO DO STUFF WITH METADATA.
 
-        //DO STUFF WITH Roads
-        foreach (var tr in RoadsParent.GetComponentsInChildren<Transform>())
-        {
-            if (tr.GetInstanceID() == RoadsParent.transform.GetInstanceID())
-            {
-                continue;
-            }
+        //Init roads
+        InstantiateRoads(mapDTO);
 
-            Destroy(tr.gameObject);
-        }
+        //Init map objects
+        InstantiateMapObjects(mapDTO);
 
-        foreach (var road in map.Roads)
+        //Init checkpoints
+        InstantiateCheckpoints(mapDTO);
+    }
+
+
+    private void InstantiateRoads(MapDTO mapDTO)
+    {
+        ClearChilds(RoadsParent);
+
+        foreach (var road in mapDTO.Roads)
         {
             GameObject roadObj = Instantiate(Resources.Load("Roads/" + road.ID, typeof(GameObject))) as GameObject;
             roadObj.transform.SetParent(RoadsParent.transform);
@@ -63,26 +67,48 @@ public class Map : Singleton<Map>
 
             roadObj.GetComponent<Road>().GenerateRoadMesh();
         }
+    }
 
-        //DO STUFF WITH MAP OBJECTS
-        foreach (var tr in Objects.GetComponentsInChildren<Transform>())
+    private void InstantiateMapObjects(MapDTO mapDTO)
+    {
+        ClearChilds(ObjectsParent);
+
+        foreach (var mapObjectDTO in mapDTO.MapObjects)
         {
-            if (tr.GetInstanceID() == Objects.transform.GetInstanceID())
+            GameObject gameObj = Instantiate(Resources.Load("Objects/" + mapObjectDTO.ID, typeof(GameObject))) as GameObject;
+            gameObj.transform.SetParent(ObjectsParent.transform);
+
+            mapObjectDTO.MapToGameObject(mapObjectDTO, gameObj.GetComponent<MapObject>());
+        }
+    }
+
+    private void InstantiateCheckpoints(MapDTO mapDTO)
+    {
+        ClearChilds(CheckpointsParent);
+
+        foreach (var mapObjectDTO in mapDTO.Checkpoints)
+        {
+            GameObject gameObj = Instantiate(Resources.Load("Roads/Checkpoint", typeof(GameObject))) as GameObject;
+            gameObj.transform.SetParent(CheckpointsParent.transform);
+
+            mapObjectDTO.MapToGameObject(mapObjectDTO, gameObj.GetComponent<Checkpoint>());
+            //gameObj.GetComponent<Checkpoint>().SetOrder();
+        }
+    }
+
+    private void ClearChilds(GameObject obj)
+    {
+        foreach (var tr in obj.GetComponentsInChildren<Transform>())
+        {
+            if (tr.GetInstanceID() == obj.transform.GetInstanceID())
             {
                 continue;
             }
 
             Destroy(tr.gameObject);
         }
-
-        foreach (var mapObjectDTO in map.MapObjects)
-        {
-            GameObject gameObj = Instantiate(Resources.Load("Objects/" + mapObjectDTO.ID, typeof(GameObject))) as GameObject;
-            gameObj.transform.SetParent(Objects.transform);
-
-            mapObjectDTO.MapToGameObject(mapObjectDTO, gameObj.GetComponent<MapObject>());
-        }
     }
+
 
     private void Update()
     {

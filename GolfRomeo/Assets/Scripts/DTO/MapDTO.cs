@@ -19,21 +19,24 @@ public class MapDTO : IMappingData<MapDTO, Map>
     /// </summary>
     public RoadDTO[] Roads;
 
+    /// <summary>
+    /// Map checkpoints
+    /// </summary>
+    public CheckpointDTO[] Checkpoints;
+
     public MapDTO MapToDTO(Map source)
     {
         MapName = source.name;
         MapSize = new Vector2(source.Terrain.terrainData.heightmapResolution, source.Terrain.terrainData.heightmapResolution);
 
+        MapObjects = new MapObjectDTO[source.MapObjects.Length];
+        Roads = new RoadDTO[source.Roads.Length];
+        Checkpoints = new CheckpointDTO[source.LapTracker.Checkpoints.Length];
+
         return this;
     }
 
-    public Map MapToGameObject(MapDTO source)
-    {
-        var Map = new Map();
-        return MapToGameObject(source, Map);
-    }
-
-    public Map MapToGameObject(MapDTO source, Map destination)
+    public Map MapToGameObject(MapDTO source, Map destination = default(Map))
     {
         destination.MapSize = source.MapSize;
         return destination;

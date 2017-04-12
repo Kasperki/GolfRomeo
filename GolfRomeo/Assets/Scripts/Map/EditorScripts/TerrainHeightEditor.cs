@@ -43,41 +43,57 @@ public class TerrainHeightEditor : MonoBehaviour
         terrain.terrainData.SetHeights(0, 0, heigthmapSize);
     }
 
-    private Vector2 GetTerrainPosition(Vector3 position, int offset)
+    private Vector4 GetTerrainPosition(Vector3 position, int size, out int offset)
     {
+        offset = size / 2;
         var posXInTerrain = position.x / terrain.terrainData.size.x * heightmapWidth - offset;
         var posYInTerrain = position.z / terrain.terrainData.size.z * heightmapHeight - offset;
 
-        return new Vector2(posXInTerrain, posYInTerrain);
+        int width = posXInTerrain + size > heightmapWidth ? (int)(heightmapWidth - posXInTerrain) : size;
+
+        if (posXInTerrain < 0)
+        {
+            offset += (int)posXInTerrain;
+            posXInTerrain = 0;
+        }
+
+        int height = posYInTerrain + size > heightmapHeight ? (int)(heightmapHeight - posYInTerrain) : size;
+
+        if (posYInTerrain < 0)
+        {
+            offset += (int)posYInTerrain;
+            posYInTerrain = 0;
+        }
+
+        return new Vector4(posXInTerrain, posYInTerrain, width, height);
+    }
+
+    public void RaiseTerrain(float raiseAmount, int size)
+    {
+        int offset = 0;
+        Vector4 terrainPosition = GetTerrainPosition(transform.position - terrain.gameObject.transform.position, size, out offset);
+        float[,] heights = terrain.terrainData.GetHeights((int)terrainPosition.x, (int)terrainPosition.y, (int)terrainPosition.z, (int)terrainPosition.w);
+
+        for (int x = 0; x < heights.GetLength(0); x++)
+        {
+            for (int y = 0; y < heights.GetLength(1); y++)
+            {
+                float heightChange = heights[x, y] + raiseAmount;
+                heightChange = Mathf.Max(MinHeight, heightChange);
+                heightChange = Mathf.Min(MaxHeight, heightChange);
+
+                heights[x, y] = heightChange;
+            }
+        }
+
+        terrain.terrainData.SetHeights((int)terrainPosition.x, (int)terrainPosition.y, heights);
     }
 
     public void RaiseTerrainSmooth(float raiseAmount, int size)
     {
-        int offset = size / 2;
-
-        Vector2 terrainPosition = GetTerrainPosition(transform.position - terrain.gameObject.transform.position, offset);
-
-        int width = size;
-        if (terrainPosition.x + size > heightmapWidth)
-        {
-            width = (int)(heightmapWidth - terrainPosition.x);
-        }
-
-        if (terrainPosition.x < 0)
-        {
-            offset += (int)terrainPosition.x;
-            terrainPosition.x = 0;
-        }
-
-        int height = size;
-        if (terrainPosition.y + size > heightmapHeight)
-        {
-            height = (int)(heightmapHeight - terrainPosition.y);
-        }
-
-
-
-        float[,] heights = terrain.terrainData.GetHeights((int)terrainPosition.x, (int)terrainPosition.y, width, height);
+        int offset = 0;
+        Vector4 terrainPosition = GetTerrainPosition(transform.position - terrain.gameObject.transform.position, size, out offset);
+        float[,] heights = terrain.terrainData.GetHeights((int)terrainPosition.x, (int)terrainPosition.y, (int)terrainPosition.z, (int)terrainPosition.w);
 
         for (int x = 0; x < heights.GetLength(0); x++)
         {
@@ -98,9 +114,9 @@ public class TerrainHeightEditor : MonoBehaviour
 
     public void SmoothTerrain(int size)
     {
-        int offset = size / 2;
-        Vector2 terrainPosition = GetTerrainPosition(transform.position - terrain.gameObject.transform.position, offset);
-        float[,] heights = terrain.terrainData.GetHeights((int)terrainPosition.x, (int)terrainPosition.y, size, size);
+        int offset = 0;
+        Vector4 terrainPosition = GetTerrainPosition(transform.position - terrain.gameObject.transform.position, size, out offset);
+        float[,] heights = terrain.terrainData.GetHeights((int)terrainPosition.x, (int)terrainPosition.y, (int)terrainPosition.w, (int)terrainPosition.z);
 
         heights = Smooth(heights, (int)size);
         terrain.terrainData.SetHeights((int)terrainPosition.x, (int)terrainPosition.y, heights);

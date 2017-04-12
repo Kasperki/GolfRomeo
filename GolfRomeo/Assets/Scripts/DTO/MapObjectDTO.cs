@@ -18,13 +18,7 @@ public class MapObjectDTO : IMappingData<MapObjectDTO, MapObject>
         return this;
     }
 
-    public MapObject MapToGameObject(MapObjectDTO source)
-    {
-        var MapObject = new MapObject();
-        return MapToGameObject(source, MapObject);
-    }
-
-    public MapObject MapToGameObject(MapObjectDTO source, MapObject destination)
+    public MapObject MapToGameObject(MapObjectDTO source, MapObject destination = default(MapObject))
     {
         destination.transform.position = source.Position;
         destination.transform.rotation = Quaternion.Euler(source.Rotation);
