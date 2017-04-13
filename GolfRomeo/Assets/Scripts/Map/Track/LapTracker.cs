@@ -8,7 +8,7 @@ public class LapTracker : Singleton<LapTracker>
 {
     public int Laps;
     public Checkpoint[] Checkpoints { get { return GetComponentsInChildren<Checkpoint>(); } }
-    public SortedList<string, LapInfo> Cars;
+    public List<LapInfo> Cars;
 
     public float LenghtInKilometers
     {
@@ -28,12 +28,12 @@ public class LapTracker : Singleton<LapTracker>
 
     public int GetPosition(string name)
     {
-        return Cars.IndexOfKey(name);
+        return Cars.FindIndex(x => x.car.Name == name);
     }
 
     void Start()
     {
-        Cars = new SortedList<string, LapInfo>();
+        Cars = new List<LapInfo>();
         StartRace();
     }
 
@@ -41,50 +41,42 @@ public class LapTracker : Singleton<LapTracker>
     {
         foreach(var car in FindObjectsOfType<Car>())
         {
-            Cars.Add(car.Name, new LapInfo());
+            Cars.Add(new LapInfo(car));
         }
     }
 
     void Update()
     {
-        Cars.OrderBy(x => x.Value.CurrentLap)
-            .ThenBy(x => x.Value.CurrentCheckpointID)
-            .ThenBy(x => Checkpoints[x.Value.CurrentCheckpointID].transform.position - Checkpoints[x.Value.NextCheckpointID].transform.position);
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            string msg = "";
-            int index = 1;
-
-            foreach (var car in Cars)
-            {
-                msg += index++ + ": " + car.Key + " lap:" + car.Value.CurrentLap + " chk:" + car.Value.CurrentCheckpointID + " next:;" + car.Value.NextCheckpointID + "\n";
-            }
-
-            Debug.Log(msg);
-        }
+        Cars = Cars.OrderByDescending(x => x.CurrentLap)
+            .ThenByDescending(x => x.CurrentCheckpointID)
+            .ThenBy(x => (x.car.transform.position - Checkpoints[x.NextCheckpointID].transform.position).magnitude)
+            .ToList();
     }
 
     public void EnterCheckpoint(string name, int checkpointID)
     {
-        Debug.Log("car:" + name + "is on " + checkpointID);
+        var lapInfo = GetCarLapInfo(name);
 
-        if (Cars[name].NextCheckpointID == checkpointID)
+        if (lapInfo.NextCheckpointID == checkpointID)
         {
-            Cars[name].CurrentCheckpointID = checkpointID;
+            lapInfo.CurrentCheckpointID = checkpointID;
 
-            if (Cars[name].CurrentCheckpointID == 0)
+            if (lapInfo.CurrentCheckpointID == 0)
             {
-                Cars[name].CurrentLap++;
-
-                Debug.Log("car:" + name + "is on lap " + Cars[name].CurrentLap);
+                lapInfo.CurrentLap++;
             }
         }
+    }
+
+    private LapInfo GetCarLapInfo(string name)
+    {
+        return Cars.Find(x => x.car.Name == name);
     }
 }
 
 public class LapInfo
 {
+    public Car car;
     public int CurrentLap;
     public int CurrentCheckpointID;
 
@@ -96,8 +88,9 @@ public class LapInfo
         }
     }
 
-    public LapInfo()
+    public LapInfo(Car car)
     {
+        this.car = car;
         CurrentLap = 1;
         CurrentCheckpointID = 0;
     }

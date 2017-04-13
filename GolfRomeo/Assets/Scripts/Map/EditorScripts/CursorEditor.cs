@@ -18,7 +18,7 @@ public class CursorEditor : MonoBehaviour
 
     private Vector3 raycastPos = new Vector3(0,10,0);
 
-    public GameObject RoadNodePrefab, CheckpointPrefab;
+    public GameObject RoadNodePrefab, CheckpointPrefab, WaypointPrefab;
 
     public float TerrainHeightEditModifier = 0.0005f;
     private TerrainHeightEditor terrainHeightEditor;
@@ -87,6 +87,8 @@ public class CursorEditor : MonoBehaviour
                 obj.transform.position = transform.position;
                 obj.transform.SetParent(FindObjectOfType<Trail_Mesh>().transform);
                 var iEditable = obj.GetComponent(typeof(IEditable)) as IEditable;
+
+                selectedIEditable = obj;
                 iEditable.OnSelect(true, transform);
             }
         }
@@ -128,10 +130,29 @@ public class CursorEditor : MonoBehaviour
 
                 obj.GetComponent<Checkpoint>().SetOrder();
                 var iEditable = obj.GetComponent(typeof(IEditable)) as IEditable;
+
+                selectedIEditable = obj;
                 iEditable.OnSelect(true, transform);
             }
 
             MoveObjects(Map.CheckpointsMask);
+        }
+        else if (EditMode == EditMode.AIWaypoints)
+        {
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                var obj = GameObject.Instantiate(WaypointPrefab);
+                obj.transform.position = transform.position;
+                obj.transform.SetParent(FindObjectOfType<WayPointCircuit>().transform);
+
+                FindObjectOfType<WayPointCircuit>().CachePositionsAndDistances();
+                var iEditable = obj.GetComponent(typeof(IEditable)) as IEditable;
+
+                selectedIEditable = obj;
+                iEditable.OnSelect(true, transform);
+            }
+
+            MoveObjects(Map.AIWaypointsMask);
         }
     }
 

@@ -22,6 +22,7 @@ public class Map : Singleton<Map>
     public Road[] Roads { get { return RoadsParent.GetComponentsInChildren<Road>(); } }
 
     public LapTracker LapTracker;
+    public WayPointCircuit WayPointCircuit;
 
     public void SaveWorld()
     {
@@ -44,6 +45,9 @@ public class Map : Singleton<Map>
 
         //Init checkpoints
         InstantiateCheckpoints(mapDTO);
+
+        //Init waypoints
+        InstantiateWaypoints(mapDTO);
     }
 
 
@@ -59,7 +63,7 @@ public class Map : Singleton<Map>
 
             foreach (var node in road.RoadNodes)
             {
-                GameObject roadNode = Instantiate(Resources.Load("Roads/Node", typeof(GameObject))) as GameObject;
+                GameObject roadNode = Instantiate(Resources.Load("Roads/RoadNode", typeof(GameObject))) as GameObject;
                 roadNode.transform.SetParent(roadObj.transform);
 
                 node.MapToGameObject(node, roadNode.GetComponent<RoadNode>());
@@ -86,14 +90,29 @@ public class Map : Singleton<Map>
     {
         ClearChilds(CheckpointsParent);
 
-        foreach (var mapObjectDTO in mapDTO.Checkpoints)
+        foreach (var checkpointDTO in mapDTO.Checkpoints)
         {
             GameObject gameObj = Instantiate(Resources.Load("Roads/Checkpoint", typeof(GameObject))) as GameObject;
             gameObj.transform.SetParent(CheckpointsParent.transform);
 
-            mapObjectDTO.MapToGameObject(mapObjectDTO, gameObj.GetComponent<Checkpoint>());
+            checkpointDTO.MapToGameObject(checkpointDTO, gameObj.GetComponent<Checkpoint>());
             gameObj.GetComponent<Checkpoint>().SetOrder(gameObj.GetComponent<Checkpoint>().CheckpointOrder);
         }
+    }
+
+    private void InstantiateWaypoints(MapDTO mapDTO)
+    {
+        ClearChilds(WayPointCircuit.gameObject);
+
+        foreach (var waypointDTO in mapDTO.Waypoints)
+        {
+            GameObject gameObj = Instantiate(Resources.Load("Roads/WaypointNode", typeof(GameObject))) as GameObject;
+            gameObj.transform.SetParent(WayPointCircuit.transform);
+
+            waypointDTO.MapToGameObject(waypointDTO, gameObj.GetComponent<WaypointNode>());
+        }
+
+        WayPointCircuit.CachePositionsAndDistances();
     }
 
     private void ClearChilds(GameObject obj)

@@ -56,6 +56,7 @@ public class MapSerializer
         RoadsToDTO(mapDTO);
         MapObjectsToDTO(mapDTO);
         CheckpointsToDTO(mapDTO);
+        WaypointsToDTO(mapDTO);
 
         //Serialize
         xmlSerializer.Serialize(stream, mapDTO);
@@ -91,6 +92,14 @@ public class MapSerializer
         for (int i = 0; i < map.LapTracker.Checkpoints.Length; i++)
         {
             mapDTO.Checkpoints[i] = new CheckpointDTO().MapToDTO(map.LapTracker.Checkpoints[i]);
+        }
+    }
+
+    private void WaypointsToDTO(MapDTO mapDTO)
+    {
+        for (int i = 0; i < mapDTO.Waypoints.Length; i++)
+        {
+            mapDTO.Waypoints[i] = new WaypointDTO().MapToDTO(map.WayPointCircuit.GetComponentsInChildren<WaypointNode>()[i]);
         }
     }
 }

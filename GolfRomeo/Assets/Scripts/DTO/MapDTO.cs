@@ -24,6 +24,11 @@ public class MapDTO : IMappingData<MapDTO, Map>
     /// </summary>
     public CheckpointDTO[] Checkpoints;
 
+    /// <summary>
+    /// Map checkpoints
+    /// </summary>
+    public WaypointDTO[] Waypoints;
+
     public MapDTO MapToDTO(Map source)
     {
         MapName = source.name;
@@ -32,6 +37,7 @@ public class MapDTO : IMappingData<MapDTO, Map>
         MapObjects = new MapObjectDTO[source.MapObjects.Length];
         Roads = new RoadDTO[source.Roads.Length];
         Checkpoints = new CheckpointDTO[source.LapTracker.Checkpoints.Length];
+        Waypoints = new WaypointDTO[source.WayPointCircuit.GetComponentsInChildren<WaypointNode>().Length];
 
         return this;
     }

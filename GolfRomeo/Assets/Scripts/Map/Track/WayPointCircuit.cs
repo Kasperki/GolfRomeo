@@ -45,6 +45,14 @@ public class WayPointCircuit : MonoBehaviour
         numPoints = Waypoints.Length;
     }
 
+    public void OnRenderObject()
+    {
+        for (int i = 0; i < points.Length; i++)
+        {
+            int nextIndex = (i + 1 == points.Length ? 0 : i + 1);
+            DrawLines.DrawLine(transform, points[i], points[nextIndex], Color.red);
+        }
+    }
 
     public RoutePoint GetRoutePoint(float dist)
     {
@@ -54,7 +62,6 @@ public class WayPointCircuit : MonoBehaviour
         Vector3 delta = p2 - p1;
         return new RoutePoint(p1, delta.normalized);
     }
-
 
     public Vector3 GetRoutePosition(float dist)
     {
@@ -114,7 +121,6 @@ public class WayPointCircuit : MonoBehaviour
         }
     }
 
-
     private Vector3 CatmullRom(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float i)
     {
         // comments are no use here... it's the catmull-rom equation.
@@ -124,9 +130,15 @@ public class WayPointCircuit : MonoBehaviour
                 (-p0 + 3 * p1 - 3 * p2 + p3) * i * i * i);
     }
 
-
-    private void CachePositionsAndDistances()
+    public void CachePositionsAndDistances()
     {
+        var waypointNodes = GetComponentsInChildren<WaypointNode>();
+        waypointList.items = new Transform[waypointNodes.Length];
+        for (int i = 0; i < waypointNodes.Length; i++)
+        {
+            waypointList.items[i] = waypointNodes[i].transform;
+        } 
+
         // transfer the position of each point and distances between points to arrays for
         // speed of lookup at runtime
         points = new Vector3[Waypoints.Length + 1];
@@ -148,7 +160,6 @@ public class WayPointCircuit : MonoBehaviour
         }
     }
 
-
     private void OnDrawGizmos()
     {
         DrawGizmos(false);
@@ -159,7 +170,6 @@ public class WayPointCircuit : MonoBehaviour
     {
         DrawGizmos(true);
     }
-
 
     private void DrawGizmos(bool selected)
     {
@@ -207,7 +217,6 @@ public class WayPointCircuit : MonoBehaviour
     {
         public Vector3 position;
         public Vector3 direction;
-
 
         public RoutePoint(Vector3 position, Vector3 direction)
         {

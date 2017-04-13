@@ -7,8 +7,6 @@ public class Checkpoint : MonoBehaviour, IEditable
 {
     public int CheckpointOrder;
     public MeshRenderer TextRenderer;
-
-    private new Collider collider;
     private new MeshRenderer renderer;
 
     private LapTracker lapTracker
@@ -21,7 +19,6 @@ public class Checkpoint : MonoBehaviour, IEditable
 
     void Awake ()
     {
-        collider = GetComponent<Collider>();
         renderer = GetComponent<MeshRenderer>();
     }
 	
