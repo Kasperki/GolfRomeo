@@ -35,6 +35,8 @@ public class CarController : MonoBehaviour
         var steerAngle = steering * MaxSteeringAngle;
         foreach (AxleInfo axleInfo in AxleInfos)
         {
+            GetAxleTerrain(axleInfo);
+
             //Steering
             if (axleInfo.steering)
             {
@@ -120,6 +122,29 @@ public class CarController : MonoBehaviour
 
         visualWheel.transform.rotation = rotation;
     }
+
+    private void GetAxleTerrain(AxleInfo axle)
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(axle.leftWheel.transform.position, -transform.up, 1, 1 << Map.RoadMask))
+        {
+            axle.leftWheelTerrain = WheelTerrain.Asfalt;
+        }
+        else
+        {
+            axle.leftWheelTerrain = WheelTerrain.Sand;
+        };
+
+        if (Physics.Raycast(axle.rightWheel.transform.position, -transform.up, 1, 1 << Map.RoadMask))
+        {
+            axle.rightWheelTerrain = WheelTerrain.Asfalt;
+        }
+        else
+        {
+            axle.rightWheelTerrain = WheelTerrain.Sand;
+        };
+    }
 }
 
 [Serializable]
@@ -127,8 +152,20 @@ public class AxleInfo
 {
     public WheelCollider leftWheel;
     public WheelCollider rightWheel;
+    public WheelTerrain leftWheelTerrain;
+    public WheelTerrain rightWheelTerrain;
+
     public bool handbrake; //does handbrake affect here?
     public bool motor; // is this wheel attached to motor?
     public bool steering; // does this wheel apply steer angle?
 }
 
+public enum WheelTerrain
+{
+    Asfalt = 0,
+    SandRoad = 1,
+    Grass = 2,
+    Sand = 3,
+    Snow = 4,
+    Ice = 5,
+}

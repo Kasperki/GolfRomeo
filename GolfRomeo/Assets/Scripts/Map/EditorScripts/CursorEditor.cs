@@ -91,6 +91,23 @@ public class CursorEditor : MonoBehaviour
                 selectedIEditable = obj;
                 iEditable.OnSelect(true, transform);
             }
+
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                var road = FindObjectOfType<Trail_Mesh>();
+                var roadVetices = road.GetComponent<MeshFilter>().mesh.vertices;
+
+                terrainHeightEditor.RaiseToCoordinate(roadVetices, 25);
+
+                for (int i = 0; i < roadVetices.Length; i++)
+                {
+                    if (i % 10 == 0)
+                    {
+                        var position = road.transform.TransformPoint(roadVetices[i]);
+                        terrainHeightEditor.SmoothTerrain(position, 50);
+                    }
+                }
+            }
         }
         else if (EditMode == EditMode.Terrain)
         {

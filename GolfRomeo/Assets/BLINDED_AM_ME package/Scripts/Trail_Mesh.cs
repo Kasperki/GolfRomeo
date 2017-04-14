@@ -9,7 +9,6 @@ namespace BLINDED_AM_ME{
 	[RequireComponent(typeof(Path_Comp))]
 	public class Trail_Mesh : MonoBehaviour
     {
-
 		public bool   removeDoubles = false; // removes doubles
 		public Mesh   segment_sourceMesh;
 		private float _segment_length;
@@ -21,12 +20,12 @@ namespace BLINDED_AM_ME{
 		private Transform  _helpTransform2;
 
 		private Mesh_Maker _maker = new Mesh_Maker();
+        private MeshCollider meshCollider;
 
 		// called by Button
 		public void ShapeIt()
         {
-            //DestroyImmediate(GetComponent<MeshCollider>());
-            //gameObject.AddComponent<MeshCollider>();
+            DestroyImmediate(meshCollider);
 
             if (segment_sourceMesh == null){
 				Debug.LogError("missing source mesh");
@@ -49,6 +48,8 @@ namespace BLINDED_AM_ME{
 
 			DestroyImmediate(_helpTransform1.gameObject);
 			DestroyImmediate(_helpTransform2.gameObject);
+
+            meshCollider = gameObject.AddComponent<MeshCollider>();
         }
 
 		public void Craft()
