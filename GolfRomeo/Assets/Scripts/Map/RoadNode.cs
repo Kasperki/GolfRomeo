@@ -1,4 +1,5 @@
-﻿using BLINDED_AM_ME;
+﻿using System;
+using BLINDED_AM_ME;
 using UnityEngine;
 
 public class RoadNode : MonoBehaviour, IEditable
@@ -25,5 +26,11 @@ public class RoadNode : MonoBehaviour, IEditable
     public void Move(Transform target, float rotationDelta)
     {
         transform.position = target.position;
+    }
+
+    public void OnDelete()
+    {
+        DestroyImmediate(gameObject);
+        road.ShapeIt();
     }
 }

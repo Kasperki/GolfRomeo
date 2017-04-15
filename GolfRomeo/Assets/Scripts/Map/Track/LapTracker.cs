@@ -10,6 +10,8 @@ public class LapTracker : Singleton<LapTracker>
     public Checkpoint[] Checkpoints { get { return GetComponentsInChildren<Checkpoint>(); } }
     public List<LapInfo> Cars;
 
+    private float raceStartTime;
+
     public float LenghtInKilometers
     {
         get
@@ -39,10 +41,20 @@ public class LapTracker : Singleton<LapTracker>
 
     void StartRace()
     {
-        foreach(var car in FindObjectsOfType<Car>())
+        var map = GetComponentInParent<Map>();
+        var startSquares = map.ObjectsParent.GetComponentsInChildren<StartSquare>();
+        startSquares.OrderBy(m => m.transform.position - Checkpoints[0].transform.position);
+        
+        var cars = FindObjectsOfType<Car>();
+
+        for (int i = 0; i < cars.Count(); i++)
         {
-            Cars.Add(new LapInfo(car));
+            Cars.Add(new LapInfo(cars[i]));
+            cars[i].transform.position = startSquares[i % (cars.Count() - 1)].transform.position;
+            cars[i].transform.rotation = startSquares[i % (cars.Count() - 1)].transform.rotation;
         }
+
+        raceStartTime = Time.time;
     }
 
     void Update()
@@ -64,6 +76,7 @@ public class LapTracker : Singleton<LapTracker>
             if (lapInfo.CurrentCheckpointID == 0)
             {
                 lapInfo.CurrentLap++;
+                lapInfo.LapTimes.Add(Time.time - raceStartTime);
             }
         }
     }
@@ -79,6 +92,9 @@ public class LapInfo
     public Car car;
     public int CurrentLap;
     public int CurrentCheckpointID;
+    public List<float> LapTimes;
+
+    public float RaceTotalTime { get { return LapTimes.Sum(); } }
 
     public int NextCheckpointID
     {
@@ -93,5 +109,7 @@ public class LapInfo
         this.car = car;
         CurrentLap = 1;
         CurrentCheckpointID = 0;
+
+        LapTimes = new List<float>();
     }
 }

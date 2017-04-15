@@ -8,4 +8,5 @@ public interface IEditable
     void OnBlur();
     void Move(Transform target, float rotationDelta);
     void OnSelect(bool selected, Transform target);
+    void OnDelete();
 }

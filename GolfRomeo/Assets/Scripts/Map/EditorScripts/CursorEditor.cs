@@ -49,8 +49,15 @@ public class CursorEditor : MonoBehaviour
             raycastLength = 20;
         }
 
+        int cursorHitLayer = 1 << Map.TerrainMask;
+
+        if (EditMode == EditMode.Objects)
+        {
+            cursorHitLayer = (1 << Map.TerrainMask) | (1 << Map.RoadMask);
+        }
+
         RaycastHit hit;
-        Physics.Raycast(raycastOrigin, raycastDirection, out hit, raycastLength, 1 << Map.TerrainMask, QueryTriggerInteraction.Ignore);
+        Physics.Raycast(raycastOrigin, raycastDirection, out hit, raycastLength, cursorHitLayer, QueryTriggerInteraction.Ignore);
         Debug.DrawRay(raycastOrigin, raycastDirection * raycastLength);
 
         //TODO CLAMP
@@ -111,7 +118,6 @@ public class CursorEditor : MonoBehaviour
         }
         else if (EditMode == EditMode.Terrain)
         {
-
             //EDIT TERRAIN
             if (Input.GetKeyDown(KeyCode.Y))
             {
@@ -211,6 +217,12 @@ public class CursorEditor : MonoBehaviour
         if (selectedIEditable != null)
         {
             selectedIEditable.GetComponent<IEditable>().Move(transform, Input.mouseScrollDelta.y * 5);
+
+            if (Input.GetKeyDown(KeyCode.Delete))
+            {
+                selectedIEditable.GetComponent<IEditable>().OnDelete();
+                selectedIEditable = null;
+            }
         }
     }
 }

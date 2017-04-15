@@ -16,4 +16,9 @@ public class WaypointNode : MonoBehaviour, IEditable
     {
         transform.position = target.position;
     }
+
+    public void OnDelete()
+    {
+        Destroy(gameObject);
+    }
 }

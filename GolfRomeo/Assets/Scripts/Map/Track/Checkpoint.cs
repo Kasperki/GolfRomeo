@@ -64,4 +64,11 @@ public class Checkpoint : MonoBehaviour, IEditable
         transform.position = target.position;
         transform.rotation = Quaternion.Euler(target.eulerAngles.x, transform.eulerAngles.y + rotationDelta, target.eulerAngles.z);
     }
+
+    public void OnDelete()
+    {
+        Destroy(gameObject);
+
+        //TODO ORDER CHECKPOINTS AGAIN.
+    }
 }
