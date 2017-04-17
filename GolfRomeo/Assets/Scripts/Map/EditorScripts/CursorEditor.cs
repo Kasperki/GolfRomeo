@@ -5,6 +5,7 @@ public class CursorEditor : MonoBehaviour
 {
     public EditMode EditMode;
 
+    public Renderer Renderer;
     public Color Normal;
     public Color Hover;
     public Color Selected;
@@ -27,7 +28,7 @@ public class CursorEditor : MonoBehaviour
     private void Awake()
     {
         terrainHeightEditor = GetComponentInChildren<TerrainHeightEditor>();
-        material = GetComponent<Renderer>().material;
+        material = Renderer.material;
     }
 
     void Update ()
@@ -51,7 +52,7 @@ public class CursorEditor : MonoBehaviour
 
         int cursorHitLayer = 1 << Map.TerrainMask;
 
-        if (EditMode == EditMode.Objects)
+        if (EditMode == EditMode.Objects || EditMode == EditMode.Checkpoints || EditMode == EditMode.AIWaypoints || EditMode == EditMode.Road)
         {
             cursorHitLayer = (1 << Map.TerrainMask) | (1 << Map.RoadMask);
         }

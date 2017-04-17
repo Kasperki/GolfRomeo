@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class RoadNode : MonoBehaviour, IEditable
 {
-    Trail_Mesh road;
+    private Trail_Mesh road;
+    private Renderer renderer;
 
     void Start ()
     {
         road = GetComponentInParent<Trail_Mesh>();
-	}
-	
+        renderer = GetComponent<Renderer>();
+    }
+
+    void Update()
+    {
+        renderer.enabled = GameManager.CheckState(State.Edit);
+    }
+
     public void OnBlur() {}
 
     public void OnHover() {}

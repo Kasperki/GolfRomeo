@@ -38,6 +38,8 @@ public class MapObject : MonoBehaviour, IEditable
     {
         transform.position = target.position;
         transform.eulerAngles += new Vector3(0, rotationDelta, 0);
+
+        //transform.rotation = Quaternion.Euler(target.eulerAngles.x, transform.eulerAngles.y + rotationDelta, target.eulerAngles.z);
     }
 
     public void OnDelete()

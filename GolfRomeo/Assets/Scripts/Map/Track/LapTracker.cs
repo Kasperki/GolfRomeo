@@ -36,11 +36,25 @@ public class LapTracker : Singleton<LapTracker>
     void Start()
     {
         Cars = new List<LapInfo>();
-        StartRace();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            StartRace();
+        }
+
+        Cars = Cars.OrderByDescending(x => x.CurrentLap)
+        .ThenByDescending(x => x.CurrentCheckpointID)
+        .ThenBy(x => (x.car.transform.position - Checkpoints[x.NextCheckpointID].transform.position).magnitude)
+        .ToList();
     }
 
     void StartRace()
     {
+        GameManager.SetState(State.Game);
+
         var map = GetComponentInParent<Map>();
         var startSquares = map.ObjectsParent.GetComponentsInChildren<StartSquare>();
         startSquares.OrderBy(m => m.transform.position - Checkpoints[0].transform.position);
@@ -50,19 +64,11 @@ public class LapTracker : Singleton<LapTracker>
         for (int i = 0; i < cars.Count(); i++)
         {
             Cars.Add(new LapInfo(cars[i]));
-            cars[i].transform.position = startSquares[i % (cars.Count() - 1)].transform.position;
-            cars[i].transform.rotation = startSquares[i % (cars.Count() - 1)].transform.rotation;
+            cars[i].transform.position = startSquares[i % (startSquares.Length - 1)].transform.position;
+            cars[i].transform.rotation = startSquares[i % (startSquares.Length - 1)].transform.rotation;
         }
 
         raceStartTime = Time.time;
-    }
-
-    void Update()
-    {
-        Cars = Cars.OrderByDescending(x => x.CurrentLap)
-            .ThenByDescending(x => x.CurrentCheckpointID)
-            .ThenBy(x => (x.car.transform.position - Checkpoints[x.NextCheckpointID].transform.position).magnitude)
-            .ToList();
     }
 
     public void EnterCheckpoint(string name, int checkpointID)

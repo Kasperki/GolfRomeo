@@ -6,6 +6,18 @@ using UnityEngine;
 
 public class WaypointNode : MonoBehaviour, IEditable
 {
+    private Renderer renderer;
+
+    void Start()
+    {
+        renderer = GetComponent<Renderer>();
+    }
+
+    void Update()
+    {
+        renderer.enabled = GameManager.CheckState(State.Edit);
+    }
+
     public void OnBlur() { }
 
     public void OnHover() { }

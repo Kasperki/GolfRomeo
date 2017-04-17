@@ -47,10 +47,13 @@ public class WayPointCircuit : MonoBehaviour
 
     public void OnRenderObject()
     {
-        for (int i = 0; i < points.Length; i++)
+        if (GameManager.CheckState(State.Edit))
         {
-            int nextIndex = (i + 1 == points.Length ? 0 : i + 1);
-            DrawLines.DrawLine(transform, points[i], points[nextIndex], Color.red);
+            for (int i = 0; i < points.Length; i++)
+            {
+                int nextIndex = (i + 1 == points.Length ? 0 : i + 1);
+                DrawLines.DrawLine(transform, points[i], points[nextIndex], Color.red);
+            }
         }
     }
 
