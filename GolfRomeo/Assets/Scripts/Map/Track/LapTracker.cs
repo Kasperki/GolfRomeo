@@ -84,6 +84,7 @@ public class LapTracker : Singleton<LapTracker>
             cars[i].transform.rotation = startSquares[i % (startSquares.Length - 1)].transform.rotation;
         }
 
+        FindObjectOfType<LapTrackerUI>().Init();
         raceStartTime = Time.time;
     }
 

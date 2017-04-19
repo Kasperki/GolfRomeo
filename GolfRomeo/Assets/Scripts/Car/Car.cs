@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Car : MonoBehaviour
 {
-    public string Name { get { return gameObject.name; } }
+    public string Name;
+    public Color PrimaryColor;
+    public Color SecondaryColor;
 
     public float Fuel;
     public float FuelUsage;
@@ -14,6 +12,4 @@ public class Car : MonoBehaviour
 
     public float Health;
     public float MaxHealth;
-
-
 }

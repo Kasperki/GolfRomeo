@@ -140,7 +140,7 @@ public class CursorEditor : MonoBehaviour
                 terrainHeightEditor.SmoothTerrain(120);
             }
 
-            if (Input.GetKeyDown(KeyCode.B))
+            if (Input.GetKey(KeyCode.B))
             {
                 terrainHeightEditor.UpdateTerrainTexture(1, 5);
             }
