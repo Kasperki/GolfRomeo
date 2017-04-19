@@ -5,7 +5,7 @@ using UnityEngine;
 public class RoadNode : MonoBehaviour, IEditable
 {
     private Trail_Mesh road;
-    private Renderer renderer;
+    private new Renderer renderer;
 
     void Start ()
     {
@@ -37,7 +37,7 @@ public class RoadNode : MonoBehaviour, IEditable
 
     public void OnDelete()
     {
-        DestroyImmediate(gameObject);
-        road.ShapeIt();
+        GetComponentInParent<Road>().GenerateRoadMeshOnNextChange();
+        Destroy(gameObject);
     }
 }

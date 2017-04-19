@@ -11,7 +11,8 @@ public class Map : Singleton<Map>
     public const int AIWaypointsMask = 14;
 
     public string Name;
-    public Vector2 MapSize;
+    public Vector2 HeightMapSize;
+    public Vector3 TextureMapSize;
 
     public Terrain Terrain;
     public GameObject ObjectsParent;

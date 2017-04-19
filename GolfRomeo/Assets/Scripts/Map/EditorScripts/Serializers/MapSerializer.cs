@@ -41,7 +41,8 @@ public class MapSerializer
         fs.Close();
 
         //Set height map
-        map.Terrain.terrainData.SetHeights(0,0, terrainSerializer.Deserialize(name, mapObject.MapSize));
+        map.Terrain.terrainData.SetHeights(0,0, terrainSerializer.DeserializeHeightMap(name, mapObject.HeightMapSize));
+        map.Terrain.terrainData.SetAlphamaps(0, 0, terrainSerializer.DeserializeTextureMap(name, mapObject.TextureMapSize));
 
         return mapObject;
     }

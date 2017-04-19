@@ -7,7 +7,8 @@ public class MapDTO : IMappingData<MapDTO, Map>
 {
     //Map metadata  
     public string MapName;
-    public Vector2 MapSize;
+    public Vector2 HeightMapSize;
+    public Vector3 TextureMapSize;
 
     /// <summary>
     /// Map Objects - trees etc.
@@ -32,7 +33,8 @@ public class MapDTO : IMappingData<MapDTO, Map>
     public MapDTO MapToDTO(Map source)
     {
         MapName = source.name;
-        MapSize = new Vector2(source.Terrain.terrainData.heightmapResolution, source.Terrain.terrainData.heightmapResolution);
+        HeightMapSize = new Vector2(source.Terrain.terrainData.heightmapResolution, source.Terrain.terrainData.heightmapResolution);
+        TextureMapSize = new Vector3(source.Terrain.terrainData.alphamapWidth, source.Terrain.terrainData.alphamapHeight, source.Terrain.terrainData.alphamapLayers);
 
         MapObjects = new MapObjectDTO[source.MapObjects.Length];
         Roads = new RoadDTO[source.Roads.Length];
@@ -44,7 +46,8 @@ public class MapDTO : IMappingData<MapDTO, Map>
 
     public Map MapToGameObject(MapDTO source, Map destination = default(Map))
     {
-        destination.MapSize = source.MapSize;
+        destination.HeightMapSize = source.HeightMapSize;
+        destination.TextureMapSize = source.TextureMapSize;
         return destination;
     }
 }

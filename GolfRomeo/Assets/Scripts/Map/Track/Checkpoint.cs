@@ -67,8 +67,7 @@ public class Checkpoint : MonoBehaviour, IEditable
 
     public void OnDelete()
     {
+        lapTracker.ListenToReOrderOnChange();
         Destroy(gameObject);
-
-        //TODO ORDER CHECKPOINTS AGAIN.
     }
 }

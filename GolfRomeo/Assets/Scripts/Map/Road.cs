@@ -16,11 +16,35 @@ public class Road : MonoBehaviour
         set { GetComponent<Path_Comp>().isCircuit = value; }
     }
 
+    private bool listenToChildCount;
+    private int listenedChildNodes;
+
     public RoadNode[] RoadNodes { get { return GetComponentsInChildren<RoadNode>(); } }
 
     public void GenerateRoadMesh()
     {
         GetComponent<Path_Comp>().Update_Path();
         GetComponent<Trail_Mesh>().ShapeIt();
+    }
+
+    public void GenerateRoadMeshOnNextChange()
+    {
+        listenToChildCount = true;
+        listenedChildNodes = RoadNodes.Length;
+    }
+
+    private void Update()
+    {
+        if (GameManager.CheckState(State.Edit))
+        {
+            if (listenToChildCount == true)
+            {
+                if (listenedChildNodes != RoadNodes.Length)
+                {
+                    listenToChildCount = false;
+                    GenerateRoadMesh();
+                }
+            }
+        }
     }
 }

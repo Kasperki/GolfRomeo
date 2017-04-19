@@ -31,7 +31,6 @@ public class TerrainHeightEditor : MonoBehaviour
     void InitTerrain(float height)
     {
         float[,] heigthmapSize = new float[terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapHeight];
-
         for (int x = 0; x < heigthmapSize.GetLength(0); x++)
         {
             for (int y = 0; y < heigthmapSize.GetLength(1); y++)
@@ -41,6 +40,28 @@ public class TerrainHeightEditor : MonoBehaviour
         }
 
         terrain.terrainData.SetHeights(0, 0, heigthmapSize);
+
+
+        float[,,] alphaMap = new float[terrain.terrainData.alphamapWidth, terrain.terrainData.alphamapHeight, terrain.terrainData.alphamapLayers];
+        for (int x = 0; x < alphaMap.GetLength(0); x++)
+        {
+            for (int y = 0; y < alphaMap.GetLength(1); y++)
+            {
+                for (int i = 0; i < alphaMap.GetLength(2); i++)
+                {
+                    if (i == 0)
+                    {
+                        alphaMap[x, y, i] = 1;
+                    }
+                    else
+                    {
+                        alphaMap[x, y, i] = 0;
+                    }
+                }
+            }
+        }
+
+        terrain.terrainData.SetAlphamaps(0, 0, alphaMap);
     }
 
     private Vector4 GetTerrainPosition(Vector3 position, int size, out int offset)
@@ -67,6 +88,34 @@ public class TerrainHeightEditor : MonoBehaviour
 
         return new Vector4(posXInTerrain, posYInTerrain, width, height);
     }
+
+
+    public void UpdateTerrainTexture(int textureID, int size)
+    {
+        int offset = 0;
+        Vector4 terrainPosition = GetTerrainPosition(transform.position - terrain.gameObject.transform.position, size, out offset);
+
+        float[,,] alphas = terrain.terrainData.GetAlphamaps((int)terrainPosition.x, (int)terrainPosition.y, (int)terrainPosition.z, (int)terrainPosition.w);
+
+        for (int x = 0; x < alphas.GetLength(0); x++)
+        {
+            for (int y = 0; y < alphas.GetLength(1); y++)
+            {
+                alphas[x, y, textureID] = 1;
+
+                for (int i = 0; i < terrain.terrainData.alphamapLayers; i++)
+                {
+                    if (i != textureID)
+                    {
+                        alphas[x, y, i] = 0;
+                    }
+                }
+            }
+        }
+
+        terrain.terrainData.SetAlphamaps((int)terrainPosition.x, (int)terrainPosition.y, alphas);
+    }
+
 
     public void RaiseTerrain(float raiseAmount, int size)
     {

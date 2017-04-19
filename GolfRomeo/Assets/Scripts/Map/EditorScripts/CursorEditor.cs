@@ -139,6 +139,11 @@ public class CursorEditor : MonoBehaviour
             {
                 terrainHeightEditor.SmoothTerrain(120);
             }
+
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                terrainHeightEditor.UpdateTerrainTexture(1, 5);
+            }
         }
         else if (EditMode == EditMode.Objects)
         {

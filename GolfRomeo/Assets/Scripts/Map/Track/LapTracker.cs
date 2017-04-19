@@ -11,6 +11,8 @@ public class LapTracker : Singleton<LapTracker>
     public List<LapInfo> Cars;
 
     private float raceStartTime;
+    private bool listenToChildCount;
+    private int listenedChildNodes;
 
     public float LenghtInKilometers
     {
@@ -45,10 +47,24 @@ public class LapTracker : Singleton<LapTracker>
             StartRace();
         }
 
-        Cars = Cars.OrderByDescending(x => x.CurrentLap)
-        .ThenByDescending(x => x.CurrentCheckpointID)
-        .ThenBy(x => (x.car.transform.position - Checkpoints[x.NextCheckpointID].transform.position).magnitude)
-        .ToList();
+        if (GameManager.CheckState(State.Game))
+        {
+            Cars = Cars.OrderByDescending(x => x.CurrentLap)
+            .ThenByDescending(x => x.CurrentCheckpointID)
+            .ThenBy(x => (x.car.transform.position - Checkpoints[x.NextCheckpointID].transform.position).magnitude)
+            .ToList();
+        }
+        else if (GameManager.CheckState(State.Edit))
+        {
+            if (listenToChildCount == true)
+            {
+                if (listenedChildNodes != Checkpoints.Length)
+                {
+                    listenToChildCount = false;
+                    ReOrderCheckpoints();
+                }
+            }
+        }
     }
 
     void StartRace()
@@ -90,6 +106,20 @@ public class LapTracker : Singleton<LapTracker>
     private LapInfo GetCarLapInfo(string name)
     {
         return Cars.Find(x => x.car.Name == name);
+    }
+
+    public void ListenToReOrderOnChange()
+    {
+        listenToChildCount = true;
+        listenedChildNodes = Checkpoints.Length;
+    }
+
+    private void ReOrderCheckpoints()
+    {
+        for (int i = 0; i < Checkpoints.Length; i++)
+        {
+            Checkpoints[i].SetOrder(i);
+        }
     }
 }
 
