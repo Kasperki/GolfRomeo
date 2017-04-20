@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 using UnityEngine;
 
 [XmlRootAttribute("Map", Namespace = "")]
-public class MapDTO : IMappingData<MapDTO, Map>
+public class TrackDTO : IMappingData<TrackDTO, Track>
 {
     //Map metadata  
     public string MapName;
@@ -13,7 +13,7 @@ public class MapDTO : IMappingData<MapDTO, Map>
     /// <summary>
     /// Map Objects - trees etc.
     /// </summary>
-    public MapObjectDTO[] MapObjects;
+    public TrackObjectDTO[] MapObjects;
 
     /// <summary>
     /// Map all roads
@@ -30,13 +30,13 @@ public class MapDTO : IMappingData<MapDTO, Map>
     /// </summary>
     public WaypointDTO[] Waypoints;
 
-    public MapDTO MapToDTO(Map source)
+    public TrackDTO MapToDTO(Track source)
     {
         MapName = source.name;
         HeightMapSize = new Vector2(source.Terrain.terrainData.heightmapResolution, source.Terrain.terrainData.heightmapResolution);
         TextureMapSize = new Vector3(source.Terrain.terrainData.alphamapWidth, source.Terrain.terrainData.alphamapHeight, source.Terrain.terrainData.alphamapLayers);
 
-        MapObjects = new MapObjectDTO[source.MapObjects.Length];
+        MapObjects = new TrackObjectDTO[source.MapObjects.Length];
         Roads = new RoadDTO[source.Roads.Length];
         Checkpoints = new CheckpointDTO[source.LapTracker.Checkpoints.Length];
         Waypoints = new WaypointDTO[source.WayPointCircuit.GetComponentsInChildren<WaypointNode>().Length];
@@ -44,7 +44,7 @@ public class MapDTO : IMappingData<MapDTO, Map>
         return this;
     }
 
-    public Map MapToGameObject(MapDTO source, Map destination = default(Map))
+    public Track MapToGameObject(TrackDTO source, Track destination = default(Track))
     {
         destination.HeightMapSize = source.HeightMapSize;
         destination.TextureMapSize = source.TextureMapSize;

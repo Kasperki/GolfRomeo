@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class LapTrackerUI : MonoBehaviour
 {
     private LapTracker lapTracker;
-    private Map map;
+    private Track track;
 
     public Text MapName;
     public Text LapRecord;
@@ -15,10 +15,10 @@ public class LapTrackerUI : MonoBehaviour
 
 	public void Init()
     {
-        lapTracker = Map.Instance.LapTracker;
-        map = Map.Instance;
+        lapTracker = Track.Instance.LapTracker;
+        track = Track.Instance;
 
-        MapName.text = map.Name;
+        MapName.text = track.Name;
         LapRecord.text = "TR:" + "T0:D0";
 
         Laps.text = lapTracker.Laps + " laps";

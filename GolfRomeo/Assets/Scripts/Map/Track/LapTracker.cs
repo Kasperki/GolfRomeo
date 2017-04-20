@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 public class LapTracker : Singleton<LapTracker>
@@ -11,8 +11,6 @@ public class LapTracker : Singleton<LapTracker>
     public List<LapInfo> Cars;
 
     private float raceStartTime;
-    private bool listenToChildCount;
-    private int listenedChildNodes;
 
     public float LenghtInKilometers
     {
@@ -30,9 +28,9 @@ public class LapTracker : Singleton<LapTracker>
         }
     }
 
-    public int GetPosition(string name)
+    public int GetCarPosition(Guid ID)
     {
-        return Cars.FindIndex(x => x.car.Name == name);
+        return Cars.FindIndex(x => x.car.Player.ID == ID);
     }
 
     void Start()
@@ -47,36 +45,19 @@ public class LapTracker : Singleton<LapTracker>
             StartRace();
         }
 
-        if (GameManager.CheckState(State.Game))
-        {
-            Cars = Cars.OrderByDescending(x => x.CurrentLap)
-            .ThenByDescending(x => x.CurrentCheckpointID)
-            .ThenBy(x => (x.car.transform.position - Checkpoints[x.NextCheckpointID].transform.position).magnitude)
-            .ToList();
-        }
-        else if (GameManager.CheckState(State.Edit))
-        {
-            if (listenToChildCount == true)
-            {
-                if (listenedChildNodes != Checkpoints.Length)
-                {
-                    listenToChildCount = false;
-                    ReOrderCheckpoints();
-                }
-            }
-        }
+        Cars = Cars.OrderByDescending(x => x.CurrentLap)
+        .ThenByDescending(x => x.CurrentCheckpointID)
+        .ThenBy(x => (x.car.transform.position - Checkpoints[x.NextCheckpointID].transform.position).magnitude)
+        .ToList();
     }
 
-    void StartRace()
+    public void StartRace()
     {
-        GameManager.SetState(State.Game);
-
-        var map = GetComponentInParent<Map>();
-        var startSquares = map.ObjectsParent.GetComponentsInChildren<StartSquare>();
+        var track = Track.Instance;
+        var startSquares = track.ObjectsParent.GetComponentsInChildren<StartSquare>();
         startSquares.OrderBy(m => m.transform.position - Checkpoints[0].transform.position);
         
         var cars = FindObjectsOfType<Car>();
-
         for (int i = 0; i < cars.Count(); i++)
         {
             Cars.Add(new LapInfo(cars[i]));
@@ -86,11 +67,19 @@ public class LapTracker : Singleton<LapTracker>
 
         FindObjectOfType<LapTrackerUI>().Init();
         raceStartTime = Time.time;
+
+        StartCoroutine(StartCountDown());
     }
 
-    public void EnterCheckpoint(string name, int checkpointID)
+    private IEnumerator StartCountDown()
     {
-        var lapInfo = GetCarLapInfo(name);
+        GameManager.SetState(State.Game);
+        yield return null;
+    }
+
+    public void EnterCheckpoint(Car car, int checkpointID)
+    {
+        var lapInfo = GetCarLapInfo(car.Player.ID);
 
         if (lapInfo.NextCheckpointID == checkpointID)
         {
@@ -104,23 +93,9 @@ public class LapTracker : Singleton<LapTracker>
         }
     }
 
-    private LapInfo GetCarLapInfo(string name)
+    private LapInfo GetCarLapInfo(Guid ID)
     {
-        return Cars.Find(x => x.car.Name == name);
-    }
-
-    public void ListenToReOrderOnChange()
-    {
-        listenToChildCount = true;
-        listenedChildNodes = Checkpoints.Length;
-    }
-
-    private void ReOrderCheckpoints()
-    {
-        for (int i = 0; i < Checkpoints.Length; i++)
-        {
-            Checkpoints[i].SetOrder(i);
-        }
+        return Cars.Find(x => x.car.Player.ID == ID);
     }
 }
 
@@ -132,6 +107,10 @@ public class LapInfo
     public List<float> LapTimes;
 
     public float RaceTotalTime { get { return LapTimes.Sum(); } }
+
+    public float LastLapTime { get { return LapTimes.Last(); } }
+
+    public float FastestLapTime { get { return LapTimes.Min(); } }
 
     public int NextCheckpointID
     {

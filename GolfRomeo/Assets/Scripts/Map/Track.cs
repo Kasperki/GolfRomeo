@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Map : Singleton<Map>
+public class Track : Singleton<Track>
 {
     public const int RoadMask = 10;
     public const int TerrainMask = 11;
@@ -17,23 +17,21 @@ public class Map : Singleton<Map>
     public Terrain Terrain;
     public GameObject ObjectsParent;
     public GameObject RoadsParent;
-    public GameObject CheckpointsParent;
+    public LapTracker LapTracker; //Checkpoints parent
+    public WayPointCircuit WayPointCircuit; //Waypoints parent
 
-    public MapObject[] MapObjects { get { return ObjectsParent.GetComponentsInChildren<MapObject>(); } }
+    public TrackObject[] MapObjects { get { return ObjectsParent.GetComponentsInChildren<TrackObject>(); } }
     public Road[] Roads { get { return RoadsParent.GetComponentsInChildren<Road>(); } }
-
-    public LapTracker LapTracker;
-    public WayPointCircuit WayPointCircuit;
 
     public void SaveWorld()
     {
-        var WorldSerialization = new MapSerializer(this);
+        var WorldSerialization = new TrackSerializer(this);
         WorldSerialization.SaveWorld("ThisIsATest");
     }
 
-    public void LoadWorld()
+    public void LoadWorld(string trackName)
     {
-        var WorldSerialization = new MapSerializer(this);
+        var WorldSerialization = new TrackSerializer(this);
         var mapDTO = WorldSerialization.LoadWorld("ThisIsATest");
 
         //TODO DO STUFF WITH METADATA.
@@ -52,7 +50,7 @@ public class Map : Singleton<Map>
     }
 
 
-    private void InstantiateRoads(MapDTO mapDTO)
+    private void InstantiateRoads(TrackDTO mapDTO)
     {
         ClearChilds(RoadsParent);
 
@@ -74,7 +72,7 @@ public class Map : Singleton<Map>
         }
     }
 
-    private void InstantiateMapObjects(MapDTO mapDTO)
+    private void InstantiateMapObjects(TrackDTO mapDTO)
     {
         ClearChilds(ObjectsParent);
 
@@ -83,25 +81,25 @@ public class Map : Singleton<Map>
             GameObject gameObj = Instantiate(Resources.Load("Objects/" + mapObjectDTO.ID, typeof(GameObject))) as GameObject;
             gameObj.transform.SetParent(ObjectsParent.transform);
 
-            mapObjectDTO.MapToGameObject(mapObjectDTO, gameObj.GetComponent<MapObject>());
+            mapObjectDTO.MapToGameObject(mapObjectDTO, gameObj.GetComponent<TrackObject>());
         }
     }
 
-    private void InstantiateCheckpoints(MapDTO mapDTO)
+    private void InstantiateCheckpoints(TrackDTO mapDTO)
     {
-        ClearChilds(CheckpointsParent);
+        ClearChilds(LapTracker.gameObject);
 
         foreach (var checkpointDTO in mapDTO.Checkpoints)
         {
             GameObject gameObj = Instantiate(Resources.Load("Roads/Checkpoint", typeof(GameObject))) as GameObject;
-            gameObj.transform.SetParent(CheckpointsParent.transform);
+            gameObj.transform.SetParent(LapTracker.transform);
 
             checkpointDTO.MapToGameObject(checkpointDTO, gameObj.GetComponent<Checkpoint>());
             gameObj.GetComponent<Checkpoint>().SetOrder(gameObj.GetComponent<Checkpoint>().CheckpointOrder);
         }
     }
 
-    private void InstantiateWaypoints(MapDTO mapDTO)
+    private void InstantiateWaypoints(TrackDTO mapDTO)
     {
         ClearChilds(WayPointCircuit.gameObject);
 
@@ -139,7 +137,7 @@ public class Map : Singleton<Map>
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            LoadWorld();
+            LoadWorld("ThisIsATest");
         }
     }
 }

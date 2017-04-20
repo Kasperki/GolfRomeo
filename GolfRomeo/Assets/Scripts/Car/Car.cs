@@ -2,9 +2,10 @@
 
 public class Car : MonoBehaviour
 {
-    public string Name;
-    public Color PrimaryColor;
-    public Color SecondaryColor;
+    public Player Player;
+
+    public Renderer PrimaryColor;
+    public Renderer SecondaryColor;
 
     public float Fuel;
     public float FuelUsage;
@@ -12,4 +13,11 @@ public class Car : MonoBehaviour
 
     public float Health;
     public float MaxHealth;
+
+    public void Init(Player player)
+    {
+        Player = player;
+        PrimaryColor.material.color = Player.PrimaryColor;
+        SecondaryColor.material.color = Player.SecondaryColor;
+    }
 }

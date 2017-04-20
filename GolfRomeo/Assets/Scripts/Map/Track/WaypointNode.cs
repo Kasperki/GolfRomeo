@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class WaypointNode : MonoBehaviour, IEditable
 {
-    private Renderer renderer;
+    private new Renderer renderer;
 
     void Start()
     {

@@ -128,8 +128,7 @@ public class TerrainHeightEditor : MonoBehaviour
             for (int y = 0; y < heights.GetLength(1); y++)
             {
                 float heightChange = heights[x, y] + raiseAmount;
-                heightChange = Mathf.Max(MinHeight, heightChange);
-                heightChange = Mathf.Min(MaxHeight, heightChange);
+                heightChange = Mathf.Clamp(heightChange, MinHeight, MaxHeight);
 
                 heights[x, y] = heightChange;
             }
@@ -152,8 +151,7 @@ public class TerrainHeightEditor : MonoBehaviour
                 for (int y = (int)terrainPosition.y; y < terrainPosition.y + terrainPosition.w; y++)
                 {
                     float heightChange = pos[i].y / terrain.terrainData.heightmapResolution + BaseHeight + 0.00075f;
-                    heightChange = Mathf.Max(MinHeight, heightChange);
-                    heightChange = Mathf.Min(MaxHeight, heightChange);
+                    heightChange = Mathf.Clamp(heightChange, MinHeight, MaxHeight);
 
                     heights[y, x] = heightChange;
                 }
@@ -176,8 +174,7 @@ public class TerrainHeightEditor : MonoBehaviour
                 var distance = (new Vector2(x, y) - new Vector2(offset, offset)).magnitude / offset;
 
                 float heightChange = heights[x, y] + raiseAmount * Mathf.Lerp(1, 0, distance);
-                heightChange = Mathf.Max(MinHeight, heightChange);
-                heightChange = Mathf.Min(MaxHeight, heightChange);
+                heightChange = Mathf.Clamp(heightChange, MinHeight, MaxHeight);
 
                 heights[x, y] = heightChange;
             }

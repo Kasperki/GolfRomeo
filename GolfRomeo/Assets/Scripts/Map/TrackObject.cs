@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class MapObject : MonoBehaviour, IEditable
+public class TrackObject : MonoBehaviour, IEditable
 {
     public string ID;
 

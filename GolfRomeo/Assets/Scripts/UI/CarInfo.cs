@@ -18,10 +18,10 @@ public class CarInfo : MonoBehaviour
     public void Init(LapInfo lapInfo)
     {
         this.lapInfo = lapInfo;
-        Name.text = lapInfo.car.Name;
+        Name.text = lapInfo.car.Player.Name;
 
-        Background.color = lapInfo.car.PrimaryColor;
-        SecondaryBackground.color = lapInfo.car.SecondaryColor;
+        Background.color = lapInfo.car.Player.PrimaryColor;
+        SecondaryBackground.color = lapInfo.car.Player.SecondaryColor;
     }
 
     public void UpdateLapInformation()

@@ -3,13 +3,13 @@ using System.Xml.Serialization;
 using UnityEngine;
 
 [Serializable]
-public class MapObjectDTO : IMappingData<MapObjectDTO, MapObject>
+public class TrackObjectDTO : IMappingData<TrackObjectDTO, TrackObject>
 {
     public string ID;
     public Vector3 Position;
     public Vector3 Rotation;
 
-    public MapObjectDTO MapToDTO(MapObject source)
+    public TrackObjectDTO MapToDTO(TrackObject source)
     {
         ID = source.ID;
         Position = source.transform.position;
@@ -18,7 +18,7 @@ public class MapObjectDTO : IMappingData<MapObjectDTO, MapObject>
         return this;
     }
 
-    public MapObject MapToGameObject(MapObjectDTO source, MapObject destination = default(MapObject))
+    public TrackObject MapToGameObject(TrackObjectDTO source, TrackObject destination = default(TrackObject))
     {
         destination.transform.position = source.Position;
         destination.transform.rotation = Quaternion.Euler(source.Rotation);

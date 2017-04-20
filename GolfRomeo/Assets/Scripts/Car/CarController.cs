@@ -125,9 +125,7 @@ public class CarController : MonoBehaviour
 
     private void GetAxleTerrain(AxleInfo axle)
     {
-        RaycastHit hit;
-
-        if (Physics.Raycast(axle.leftWheel.transform.position, -transform.up, 1, 1 << Map.RoadMask))
+        if (Physics.Raycast(axle.leftWheel.transform.position, -transform.up, 1, 1 << Track.RoadMask))
         {
             axle.leftWheelTerrain = WheelTerrain.Asfalt;
         }
@@ -136,7 +134,7 @@ public class CarController : MonoBehaviour
             axle.leftWheelTerrain = WheelTerrain.Sand;
         };
 
-        if (Physics.Raycast(axle.rightWheel.transform.position, -transform.up, 1, 1 << Map.RoadMask))
+        if (Physics.Raycast(axle.rightWheel.transform.position, -transform.up, 1, 1 << Track.RoadMask))
         {
             axle.rightWheelTerrain = WheelTerrain.Asfalt;
         }

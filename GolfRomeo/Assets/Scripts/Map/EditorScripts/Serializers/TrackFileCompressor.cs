@@ -2,7 +2,7 @@
 using System.IO.Compression;
 using System.IO;
 
-public class MapFileCompressor
+public class TrackFileCompressor
 {
     public void CreatePackage(string directoryPath)
     {

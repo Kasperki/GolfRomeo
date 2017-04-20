@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartSquare : MonoBehaviour
+public class TrackEditor : MonoBehaviour
 {
-
+    
 }

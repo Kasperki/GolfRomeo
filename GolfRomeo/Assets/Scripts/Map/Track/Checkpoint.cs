@@ -32,7 +32,7 @@ public class Checkpoint : MonoBehaviour, IEditable
         var car = collider.gameObject.GetComponentInParent<Car>();
         if (car != null)
         {
-            lapTracker.EnterCheckpoint(car.Name, CheckpointOrder);
+            lapTracker.EnterCheckpoint(car, CheckpointOrder);
         }
     }
 
@@ -67,7 +67,7 @@ public class Checkpoint : MonoBehaviour, IEditable
 
     public void OnDelete()
     {
-        lapTracker.ListenToReOrderOnChange();
+        GetComponentInParent<LapTrackerEditor>().ListenToReOrderOnChange();
         Destroy(gameObject);
     }
 }

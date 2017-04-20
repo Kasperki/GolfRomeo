@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class TerrainSerializer
 {
-    public const string mapHeightMapExtension = ".heightmap";
+    public const string trackHeightMapExtension = ".heightmap";
     public const string textureMapExtension = ".texturemap";
-    private Map map;
+    private Track track;
 
-    public TerrainSerializer(Map map)
+    public TerrainSerializer(Track track)
     {
-        this.map = map;
+        this.track = track;
     }
 
     public void Serialize(string name)
     {
-        using (FileStream file = new FileStream(name + mapHeightMapExtension, FileMode.Create, FileAccess.Write))
+        using (FileStream file = new FileStream(name + trackHeightMapExtension, FileMode.Create, FileAccess.Write))
         {
-            byte[] baData = SerializeHeightMap(map.Terrain);
+            byte[] baData = SerializeHeightMap(track.Terrain);
             file.Write(baData, 0, baData.Length);
         }
 
         using (FileStream file = new FileStream(name + textureMapExtension, FileMode.Create, FileAccess.Write))
         {
-            byte[] baData = SerializeTextureMap(map.Terrain);
+            byte[] baData = SerializeTextureMap(track.Terrain);
             file.Write(baData, 0, baData.Length);
         }
     }
@@ -31,7 +31,7 @@ public class TerrainSerializer
     public float[,] DeserializeHeightMap(string name, Vector2 heightMapSize)
     {
         var heightMap = new float[(int)heightMapSize.x, (int)heightMapSize.y];
-        FromBytes(heightMap, File.ReadAllBytes(name + mapHeightMapExtension));
+        FromBytes(heightMap, File.ReadAllBytes(name + trackHeightMapExtension));
         return heightMap;
     }
 

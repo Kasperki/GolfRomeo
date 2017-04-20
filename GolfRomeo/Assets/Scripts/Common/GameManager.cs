@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-
 public class GameManager : Singleton<GameManager>
 {
     private static State e_state = State.Edit;
