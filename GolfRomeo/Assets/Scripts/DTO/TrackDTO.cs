@@ -2,7 +2,7 @@
 using System.Xml.Serialization;
 using UnityEngine;
 
-[XmlRootAttribute("Map", Namespace = "")]
+[XmlRootAttribute("Track", Namespace = "")]
 public class TrackDTO : IMappingData<TrackDTO, Track>
 {
     //Map metadata  

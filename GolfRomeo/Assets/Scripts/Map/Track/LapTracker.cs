@@ -106,11 +106,11 @@ public class LapInfo
     public int CurrentCheckpointID;
     public List<float> LapTimes;
 
-    public float RaceTotalTime { get { return LapTimes.Sum(); } }
+    public float RaceTotalTime { get { return LapTimes.Count() > 0 ? LapTimes.Sum() : 0; } }
 
-    public float LastLapTime { get { return LapTimes.Last(); } }
+    public float LastLapTime { get { return LapTimes.Count() > 0 ? LapTimes.Last() : 0; } }
 
-    public float FastestLapTime { get { return LapTimes.Min(); } }
+    public float FastestLapTime { get { return LapTimes.Count() > 0 ? LapTimes.Min() : 0 ; } }
 
     public int NextCheckpointID
     {

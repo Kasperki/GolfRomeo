@@ -75,15 +75,18 @@ public class CursorEditor : MonoBehaviour
         var hit = RaycastAgainstTerrain(cursorHitLayer);
 
         //TODO CLAMP
-        raycastPos = new Vector3(hit.point.x, 10, hit.point.z);
-        transform.position = hit.point;
-        transform.up = Vector3.Lerp(transform.up, hit.normal, Time.deltaTime * 10);
-        transform.RotateAround(transform.position, transform.up, transform.localEulerAngles.y);
+        if (hit.collider != null)
+        {
+            raycastPos = new Vector3(hit.point.x, 10, hit.point.z);
+            transform.position = hit.point;
+            transform.up = Vector3.Lerp(transform.up, hit.normal, Time.deltaTime * 10);
+            transform.RotateAround(transform.position, transform.up, transform.localEulerAngles.y);
+        }
 
         //BRUSH SIZE
         BrushSize += (int)Input.mouseScrollDelta.y * 5;
         BrushSize = Mathf.Clamp(BrushSize, MIN_BRUSH_SIZE, MAX_BRUSH_SIZE);
-        BrushRenderer.transform.localScale = new Vector3(1, 1, 0.5f) * BrushSize / 10;
+        BrushRenderer.transform.localScale = new Vector3(1 * BrushSize / 10, 1 * BrushSize / 10, 0.5f);
 
         //DEBUGGG
         if (Input.GetKeyDown(KeyCode.Alpha1))

@@ -26,6 +26,13 @@ public class CarInfo : MonoBehaviour
 
     public void UpdateLapInformation()
     {
+        CurrentLap.text = lapInfo.CurrentLap.ToString();
+        FastestLapTime.text = lapInfo.FastestLapTime.ToString(Constants.LAP_TIME_FORMAT);
+        CurrentLapTime.text = lapInfo.LastLapTime.ToString(Constants.LAP_TIME_FORMAT);
+    }
 
+    public void Update()
+    {
+        UpdateLapInformation();
     }
 }

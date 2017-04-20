@@ -26,7 +26,7 @@ public class LapTrackerUI : MonoBehaviour
         foreach (var car in lapTracker.Cars)
         {
             var obj = Instantiate(CarLapInfoPrefab) as GameObject;
-            CarLapInfoPrefab.GetComponent<CarInfo>().Init(car);
+            obj.GetComponent<CarInfo>().Init(car);
 
             obj.transform.SetParent(CarInfoParent, true);
             obj.GetComponent<RectTransform>().sizeDelta = new Vector2(CarInfoParent.rect.width / lapTracker.Cars.Count, 0);
