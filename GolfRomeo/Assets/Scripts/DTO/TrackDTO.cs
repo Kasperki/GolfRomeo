@@ -16,11 +16,6 @@ public class TrackDTO : IMappingData<TrackDTO, Track>
     public TrackObjectDTO[] MapObjects;
 
     /// <summary>
-    /// Map all roads
-    /// </summary>
-    public RoadDTO[] Roads;
-
-    /// <summary>
     /// Map checkpoints
     /// </summary>
     public CheckpointDTO[] Checkpoints;
@@ -37,7 +32,6 @@ public class TrackDTO : IMappingData<TrackDTO, Track>
         TextureMapSize = new Vector3(source.Terrain.terrainData.alphamapWidth, source.Terrain.terrainData.alphamapHeight, source.Terrain.terrainData.alphamapLayers);
 
         MapObjects = new TrackObjectDTO[source.MapObjects.Length];
-        Roads = new RoadDTO[source.Roads.Length];
         Checkpoints = new CheckpointDTO[source.LapTracker.Checkpoints.Length];
         Waypoints = new WaypointDTO[source.WayPointCircuit.GetComponentsInChildren<WaypointNode>().Length];
 

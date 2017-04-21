@@ -16,10 +16,10 @@ public class Mapper
     public Mapper ()
     {
         MapList = new Dictionary<TypePair, MapData>();
-        Bind<RoadDTO, Road>
+        Bind<TrackDTO, Track>
         ((src,destination) => 
             {
-                destination.ID = src.ID;
+                destination.Name = src.MapName;
 
                 return destination;
             }

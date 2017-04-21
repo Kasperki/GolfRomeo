@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Track : Singleton<Track>
 {
-    public const int RoadMask = 10;
     public const int TerrainMask = 11;
     public const int MapObjectsMask = 12;
     public const int CheckpointsMask = 13;
@@ -16,12 +15,10 @@ public class Track : Singleton<Track>
 
     public Terrain Terrain;
     public GameObject ObjectsParent;
-    public GameObject RoadsParent;
     public LapTracker LapTracker; //Checkpoints parent
     public WayPointCircuit WayPointCircuit; //Waypoints parent
 
     public TrackObject[] MapObjects { get { return ObjectsParent.GetComponentsInChildren<TrackObject>(); } }
-    public Road[] Roads { get { return RoadsParent.GetComponentsInChildren<Road>(); } }
 
     public void SaveWorld()
     {
@@ -36,9 +33,6 @@ public class Track : Singleton<Track>
 
         //TODO DO STUFF WITH METADATA.
 
-        //Init roads
-        InstantiateRoads(mapDTO);
-
         //Init map objects
         InstantiateMapObjects(mapDTO);
 
@@ -47,29 +41,6 @@ public class Track : Singleton<Track>
 
         //Init waypoints
         InstantiateWaypoints(mapDTO);
-    }
-
-
-    private void InstantiateRoads(TrackDTO mapDTO)
-    {
-        ClearChilds(RoadsParent);
-
-        foreach (var road in mapDTO.Roads)
-        {
-            GameObject roadObj = Instantiate(Resources.Load("Roads/" + road.ID, typeof(GameObject))) as GameObject;
-            roadObj.transform.SetParent(RoadsParent.transform);
-            road.MapToGameObject(road, roadObj.GetComponent<Road>());
-
-            foreach (var node in road.RoadNodes)
-            {
-                GameObject roadNode = Instantiate(Resources.Load("Roads/RoadNode", typeof(GameObject))) as GameObject;
-                roadNode.transform.SetParent(roadObj.transform);
-
-                node.MapToGameObject(node, roadNode.GetComponent<RoadNode>());
-            }
-
-            roadObj.GetComponent<Road>().GenerateRoadMesh();
-        }
     }
 
     private void InstantiateMapObjects(TrackDTO mapDTO)

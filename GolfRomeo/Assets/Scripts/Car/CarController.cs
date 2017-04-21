@@ -17,7 +17,10 @@ public class CarController : MonoBehaviour
 
     private Rigidbody rgbd;
 
-    public float CurrentSpeed { get { return rgbd.velocity.magnitude * 2.23693629f; } }
+    public const float SPEED_MULTIPLIER = 5.6f;
+    public float CurrentSpeed { get { return rgbd.velocity.magnitude * SPEED_MULTIPLIER; } }
+
+    public ParticleController ParticleController;
 
     private void Start()
     {
@@ -47,8 +50,25 @@ public class CarController : MonoBehaviour
             //Driving
             if (axleInfo.motor)
             {
-                axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque;
-                axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque;
+                if (axleInfo.leftWheelTerrain == WheelTerrain.Asfalt)
+                {
+                    axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque;
+                }
+                else
+                {
+                    //ParticleController.EmitSandParticles();
+                    axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque / 5;
+                }
+
+                if (axleInfo.rightWheelTerrain == WheelTerrain.Asfalt)
+                {
+                    axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque;
+                }
+                else
+                {
+                    //ParticleController.EmitSandParticles();
+                    axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque / 5;
+                }
             }
 
             //Breaking
@@ -92,11 +112,9 @@ public class CarController : MonoBehaviour
 
     private void CapSpeed()
     {
-        float speed = rgbd.velocity.magnitude * 3.6f;
-
-        if (speed > TopSpeed)
+        if (CurrentSpeed > TopSpeed)
         {
-            rgbd.velocity = (TopSpeed / 3.6f) * rgbd.velocity.normalized;
+            rgbd.velocity = (TopSpeed / SPEED_MULTIPLIER) * rgbd.velocity.normalized;
         }
     }
 
@@ -125,23 +143,8 @@ public class CarController : MonoBehaviour
 
     private void GetAxleTerrain(AxleInfo axle)
     {
-        if (Physics.Raycast(axle.leftWheel.transform.position, -transform.up, 1, 1 << Track.RoadMask))
-        {
-            axle.leftWheelTerrain = WheelTerrain.Asfalt;
-        }
-        else
-        {
-            axle.leftWheelTerrain = WheelTerrain.Sand;
-        };
-
-        if (Physics.Raycast(axle.rightWheel.transform.position, -transform.up, 1, 1 << Track.RoadMask))
-        {
-            axle.rightWheelTerrain = WheelTerrain.Asfalt;
-        }
-        else
-        {
-            axle.rightWheelTerrain = WheelTerrain.Sand;
-        };
+        axle.leftWheelTerrain = axle.GetWheelTerrain(axle.leftWheel.transform.position);
+        axle.rightWheelTerrain = axle.GetWheelTerrain(axle.rightWheel.transform.position);
     }
 }
 
@@ -153,17 +156,57 @@ public class AxleInfo
     public WheelTerrain leftWheelTerrain;
     public WheelTerrain rightWheelTerrain;
 
-    public bool handbrake; //does handbrake affect here?
-    public bool motor; // is this wheel attached to motor?
-    public bool steering; // does this wheel apply steer angle?
+    public bool handbrake;
+    public bool motor;
+    public bool steering;
+
+    private float[] GetTextureMix(Vector3 worldPos)
+    {
+        var terrainPos = Track.Instance.Terrain.transform.position;
+        var terrainData = Track.Instance.Terrain.terrainData;
+
+        int mapX = (int)(((worldPos.x - terrainPos.x) / terrainData.size.x) * terrainData.alphamapWidth );
+        int mapZ = (int)(((worldPos.z - terrainPos.z) / terrainData.size.z) * terrainData.alphamapHeight );
+
+        float[,,] splatmapData = terrainData.GetAlphamaps(mapX, mapZ, 1, 1 );
+
+        // extract the 3D array data to a 1D array:
+        float[] cellMix = new float[splatmapData.GetUpperBound(2) + 1];
+     
+         for (int i = 0; i < cellMix.Length; i++)
+         {
+             cellMix[i] = splatmapData[0, 0, i];
+         }
+     
+         return cellMix;
+    }
+ 
+    public WheelTerrain GetWheelTerrain(Vector3 wheelPosition)
+    {
+        float[] mix = GetTextureMix(wheelPosition);
+
+        float maxMix = 0;
+        int terrainIndex = 0;
+     
+        for (int i = 0; i < mix.Length; i++)
+        {
+            if (mix[i] > maxMix)
+            {
+                terrainIndex = i;
+                maxMix = mix[i];
+            }
+        }
+     
+        return (WheelTerrain)terrainIndex;
+    }
 }
 
 public enum WheelTerrain
 {
-    Asfalt = 0,
+    Sand = 0,
     SandRoad = 1,
-    Grass = 2,
-    Sand = 3,
+    Asfalt = 2,
+    Grass = 3,
     Snow = 4,
     Ice = 5,
 }

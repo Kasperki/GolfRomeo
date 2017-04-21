@@ -54,7 +54,6 @@ public class TrackSerializer
 
         TrackDTO mapDTO = new TrackDTO().MapToDTO(track);
 
-        RoadsToDTO(mapDTO);
         MapObjectsToDTO(mapDTO);
         CheckpointsToDTO(mapDTO);
         WaypointsToDTO(mapDTO);
@@ -64,20 +63,6 @@ public class TrackSerializer
 
         stream.Position = 0;
         return stream;
-    }
-
-    private void RoadsToDTO(TrackDTO mapDTO)
-    {
-        for (int i = 0; i < track.Roads.Length; i++)
-        {
-            mapDTO.Roads[i] = new RoadDTO().MapToDTO(track.Roads[i]);
-            mapDTO.Roads[i].RoadNodes = new RoadNodeDTO[track.Roads[i].RoadNodes.Length];
-
-            for (int j = 0; j < track.Roads[i].RoadNodes.Length; j++)
-            {
-                mapDTO.Roads[i].RoadNodes[j] = new RoadNodeDTO().MapToDTO(track.Roads[i].RoadNodes[j]);
-            }
-        }
     }
 
     private void MapObjectsToDTO(TrackDTO mapDTO)

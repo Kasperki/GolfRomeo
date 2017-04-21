@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class LapTrackerUI : MonoBehaviour
@@ -13,6 +14,8 @@ public class LapTrackerUI : MonoBehaviour
     public RectTransform CarInfoParent;
     public GameObject CarLapInfoPrefab;
 
+    private List<CarInfo> carInfoUIs;
+
 	public void Init()
     {
         lapTracker = Track.Instance.LapTracker;
@@ -23,13 +26,27 @@ public class LapTrackerUI : MonoBehaviour
 
         Laps.text = lapTracker.Laps + " laps";
 
+        carInfoUIs = new List<CarInfo>();
+
         foreach (var car in lapTracker.Cars)
         {
             var obj = Instantiate(CarLapInfoPrefab) as GameObject;
             obj.GetComponent<CarInfo>().Init(car);
+            carInfoUIs.Add(obj.GetComponent<CarInfo>());
 
             obj.transform.SetParent(CarInfoParent, true);
             obj.GetComponent<RectTransform>().sizeDelta = new Vector2(CarInfoParent.rect.width / lapTracker.Cars.Count, 0);
         }
 	}
+
+    public void Update()
+    {
+        if (carInfoUIs != null)
+        {
+            foreach (var carInfo in carInfoUIs)
+            {
+                carInfo.transform.SetSiblingIndex(lapTracker.GetCarPosition(carInfo.LapInfo.car.Player.ID));
+            }
+        }
+    }
 }

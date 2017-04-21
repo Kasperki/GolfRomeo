@@ -1,5 +1,4 @@
-﻿using BLINDED_AM_ME;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CursorEditor : MonoBehaviour
 {
@@ -67,11 +66,6 @@ public class CursorEditor : MonoBehaviour
         cursorMaterial.color = Normal;
 
         int cursorHitLayer = 1 << Track.TerrainMask;
-        if (EditMode == EditMode.Objects || EditMode == EditMode.Checkpoints || EditMode == EditMode.AIWaypoints || EditMode == EditMode.Road)
-        {
-            cursorHitLayer = (1 << Track.TerrainMask) | (1 << Track.RoadMask);
-        }
-
         var hit = RaycastAgainstTerrain(cursorHitLayer);
 
         //TODO CLAMP
@@ -88,9 +82,7 @@ public class CursorEditor : MonoBehaviour
         BrushSize = Mathf.Clamp(BrushSize, MIN_BRUSH_SIZE, MAX_BRUSH_SIZE);
         BrushRenderer.transform.localScale = new Vector3(1 * BrushSize / 10, 1 * BrushSize / 10, 0.5f);
 
-        //DEBUGGG
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            EditMode = EditMode.Road;
+        //DEBUGGGs
         if (Input.GetKeyDown(KeyCode.Alpha2))
             EditMode = EditMode.Terrain;
         if (Input.GetKeyDown(KeyCode.Alpha3))
@@ -101,33 +93,6 @@ public class CursorEditor : MonoBehaviour
             EditMode = EditMode.AIWaypoints;
 
 
-        if (EditMode == EditMode.Road)
-        {
-            MoveObjects(Track.RoadMask);
-
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                var obj = InstantiateObject(RoadNodePrefab, Track.Instance.RoadsParent.transform);
-                obj.GetComponent<Checkpoint>().SetOrder();
-            }
-
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                var road = FindObjectOfType<Trail_Mesh>();
-                var roadVetices = road.GetComponent<MeshFilter>().mesh.vertices;
-
-                terrainHeightEditor.RaiseToCoordinate(roadVetices, BrushSize);
-
-                for (int i = 0; i < roadVetices.Length; i++)
-                {
-                    if (i % 10 == 0)
-                    {
-                        var position = road.transform.TransformPoint(roadVetices[i]);
-                        terrainHeightEditor.SmoothTerrain(position, BrushSize);
-                    }
-                }
-            }
-        }
         else if (EditMode == EditMode.Terrain)
         {
             //EDIT TERRAIN
@@ -246,9 +211,8 @@ public class CursorEditor : MonoBehaviour
 
 public enum EditMode
 {
-    Road = 0,
-    Terrain = 1,
-    Objects = 2,
-    AIWaypoints = 3,
-    Checkpoints = 4,
+    Terrain = 0,
+    Objects = 1,
+    AIWaypoints = 2,
+    Checkpoints = 3,
 }

@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(CarController))]
 public class Car : MonoBehaviour
 {
     public Player Player;
 
+    public CarController CarController;
     public Renderer PrimaryColor;
     public Renderer SecondaryColor;
 
@@ -13,6 +15,11 @@ public class Car : MonoBehaviour
 
     public float Health;
     public float MaxHealth;
+
+    public void Awake()
+    {
+        CarController = GetComponent<CarController>();
+    }
 
     public void Init(Player player)
     {

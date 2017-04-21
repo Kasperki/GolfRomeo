@@ -12,12 +12,13 @@ public class CarInfo : MonoBehaviour
     public Text CurrentLap;
     public Text FastestLapTime;
     public Text CurrentLapTime;
+    public Text Speed;
 
-    private LapInfo lapInfo;
+    public LapInfo LapInfo;
 
     public void Init(LapInfo lapInfo)
     {
-        this.lapInfo = lapInfo;
+        LapInfo = lapInfo;
         Name.text = lapInfo.car.Player.Name;
 
         Background.color = lapInfo.car.Player.PrimaryColor;
@@ -26,9 +27,10 @@ public class CarInfo : MonoBehaviour
 
     public void UpdateLapInformation()
     {
-        CurrentLap.text = lapInfo.CurrentLap.ToString();
-        FastestLapTime.text = lapInfo.FastestLapTime.ToString(Constants.LAP_TIME_FORMAT);
-        CurrentLapTime.text = lapInfo.LastLapTime.ToString(Constants.LAP_TIME_FORMAT);
+        CurrentLap.text = LapInfo.CurrentLap.ToString();
+        FastestLapTime.text = LapInfo.FastestLapTime.ToString(Constants.LAP_TIME_FORMAT);
+        CurrentLapTime.text = LapInfo.LastLapTime.ToString(Constants.LAP_TIME_FORMAT);
+        Speed.text = LapInfo.car.CarController.CurrentSpeed.ToString("0") + " km/h";
     }
 
     public void Update()

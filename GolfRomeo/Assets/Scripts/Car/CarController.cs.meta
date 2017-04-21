@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: d6397efa66c2a124b95ace3e2f82fb3b
-timeCreated: 1490342751
+timeCreated: 1492765753
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - SandParticles: {fileID: 198823980863123500, guid: b47586fbf94803f4f9e9bf316e5502a7,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
