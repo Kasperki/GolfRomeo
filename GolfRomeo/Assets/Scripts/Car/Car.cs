@@ -26,5 +26,19 @@ public class Car : MonoBehaviour
         Player = player;
         PrimaryColor.material.color = Player.PrimaryColor;
         SecondaryColor.material.color = Player.SecondaryColor;
+
+        if (player.PlayerType == PlayerType.AI)
+        {
+            var aiCarController = gameObject.AddComponent<AICarControl>();
+            var targetProvider = gameObject.AddComponent<WaypointTargetProvider>();
+
+            aiCarController.targetProvider = targetProvider;
+        }
+        else
+        {
+            gameObject.AddComponent<UserCarController>();
+
+            //TODO INIT CONTROL MECHANISM
+        }
     }
 }

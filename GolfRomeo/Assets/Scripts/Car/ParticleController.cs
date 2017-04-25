@@ -14,18 +14,35 @@ public class ParticleController : MonoBehaviour
         carController = GetComponentInParent<CarController>();
     }
 
+    private bool sandEmitting;
     public void EmitSandParticles()
     {
-        if (carController.CurrentSpeed > 20)
+        if (carController.CurrentSpeed > 1)
         {
-            ParticleSystem.EmissionModule em = SandParticles.emission;
-            em.enabled = true;
+            if (SandParticles.isPlaying == false)
+            {
+                SandParticles.Play();
+            }
+
+            ParticleSystem.MainModule mainModule = SandParticles.main;
+            mainModule.startSize = Mathf.Min(2, carController.CurrentSpeed / 10);
+
+            sandEmitting = true;
         }
     }
 
-    public void Update()
+    private void CleanSandEmitter()
     {
-        ParticleSystem.EmissionModule em = SandParticles.emission;
-        em.enabled = false;
+        if (!sandEmitting && SandParticles.isPlaying)
+        {
+            SandParticles.Stop();
+        }
+
+        sandEmitting = false;
+    }
+
+    public void CleanEmmiters()
+    {
+        CleanSandEmitter();
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class CarController : MonoBehaviour
 {
     public float TopSpeed = 200;
+    public float TopSpeedOffRoad = 50;
 
     public float MaxMotorTorque; // maximum torque the motor can apply to wheel
     public float MaxBreakTorque; // maximum torque the motor can apply to wheel
@@ -50,29 +51,61 @@ public class CarController : MonoBehaviour
             //Driving
             if (axleInfo.motor)
             {
-                if (axleInfo.leftWheelTerrain == WheelTerrain.Asfalt)
+                switch (axleInfo.leftWheelTerrain)
                 {
-                    axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque;
-                }
-                else
-                {
-                    //ParticleController.EmitSandParticles();
-                    axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque / 5;
+                    case WheelTerrain.Sand:
+                        //ParticleController.EmitSandParticles();
+                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        break;
+                    case WheelTerrain.SandRoad:
+                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        break;
+                    case WheelTerrain.Asfalt:
+                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        break;
+                    case WheelTerrain.Grass:
+                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        break;
+                    case WheelTerrain.Snow:
+                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        break;
+                    case WheelTerrain.Ice:
+                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        break;
+                    default:
+                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque;
+                        break;
                 }
 
-                if (axleInfo.rightWheelTerrain == WheelTerrain.Asfalt)
+                switch (axleInfo.rightWheelTerrain)
                 {
-                    axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque;
-                }
-                else
-                {
-                    //ParticleController.EmitSandParticles();
-                    axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque / 5;
+                    case WheelTerrain.Sand:
+                        //ParticleController.EmitSandParticles();
+                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        break;
+                    case WheelTerrain.SandRoad:
+                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        break;
+                    case WheelTerrain.Asfalt:
+                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        break;
+                    case WheelTerrain.Grass:
+                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        break;
+                    case WheelTerrain.Snow:
+                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        break;
+                    case WheelTerrain.Ice:
+                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        break;
+                    default:
+                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque;
+                        break;
                 }
             }
 
             //Breaking
-            if (CurrentSpeed > 5 && Vector3.Angle(transform.forward, rgbd.velocity) < 50f)
+            if (CurrentSpeed > 3 && Vector3.Angle(transform.forward, rgbd.velocity) < 50f)
             {
                 axleInfo.leftWheel.brakeTorque = MaxBreakTorque * footbrake;
                 axleInfo.rightWheel.brakeTorque = MaxBreakTorque * footbrake;
@@ -108,6 +141,8 @@ public class CarController : MonoBehaviour
 
         CapSpeed();
         AddDownForce(AxleInfos[0]);
+
+        //ParticleController.CleanEmmiters();
     }
 
     private void CapSpeed()
@@ -159,6 +194,8 @@ public class AxleInfo
     public bool handbrake;
     public bool motor;
     public bool steering;
+
+    public float Asfalt = 1;
 
     private float[] GetTextureMix(Vector3 worldPos)
     {
