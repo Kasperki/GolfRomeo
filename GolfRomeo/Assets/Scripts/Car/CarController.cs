@@ -5,6 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
+    //TODO CAP SPEED - By offroad, gasoline & damage.
+        //Jarruille myös kerroin
+    //REFACTOR SHIT
+
     public float TopSpeed = 200;
     public float TopSpeedOffRoad = 50;
 
@@ -54,49 +58,45 @@ public class CarController : MonoBehaviour
                 switch (axleInfo.leftWheelTerrain)
                 {
                     case WheelTerrain.Sand:
-                        //ParticleController.EmitSandParticles();
-                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        ParticleController.EmitSandParticles();
+                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSand;
                         break;
                     case WheelTerrain.SandRoad:
-                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSandRoad;
                         break;
                     case WheelTerrain.Asfalt:
-                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionAsfalt;
                         break;
                     case WheelTerrain.Grass:
-                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
-                        break;
-                    case WheelTerrain.Snow:
-                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        ParticleController.EmitGrassParticles();
+                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionGrass;
                         break;
                     case WheelTerrain.Ice:
-                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionIce;
                         break;
                     default:
-                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque;
+                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionDefault;
                         break;
                 }
 
                 switch (axleInfo.rightWheelTerrain)
                 {
                     case WheelTerrain.Sand:
-                        //ParticleController.EmitSandParticles();
-                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        ParticleController.EmitSandParticles();
+                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSand;
                         break;
                     case WheelTerrain.SandRoad:
-                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSandRoad;
                         break;
                     case WheelTerrain.Asfalt:
-                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        ParticleController.EmitGrassParticles();
+                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionAsfalt;
                         break;
                     case WheelTerrain.Grass:
-                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
-                        break;
-                    case WheelTerrain.Snow:
-                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionGrass;
                         break;
                     case WheelTerrain.Ice:
-                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque / axleInfo.Asfalt;
+                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionIce;
                         break;
                     default:
                         axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque;
@@ -122,7 +122,7 @@ public class CarController : MonoBehaviour
                 }
             }
 
-            if (axleInfo.handbrake && handbrake > 0f)
+            /*if (axleInfo.handbrake && handbrake > 0f)
             {
                 var hbTorque = handbrake * MaxBreakTorque;
                 axleInfo.leftWheel.brakeTorque = hbTorque;
@@ -133,7 +133,7 @@ public class CarController : MonoBehaviour
             {
                 axleInfo.leftWheel.brakeTorque = 0f;
                 axleInfo.rightWheel.brakeTorque = 0f;
-            }
+            }*/
 
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
@@ -142,7 +142,7 @@ public class CarController : MonoBehaviour
         CapSpeed();
         AddDownForce(AxleInfos[0]);
 
-        //ParticleController.CleanEmmiters();
+        ParticleController.CleanEmmiters();
     }
 
     private void CapSpeed()
@@ -195,7 +195,12 @@ public class AxleInfo
     public bool motor;
     public bool steering;
 
-    public float Asfalt = 1;
+    public float TractionDefault = 1;
+    public float TractionAsfalt = 1;
+    public float TractionSandRoad = 1;
+    public float TractionSand = 1;
+    public float TractionGrass = 1;
+    public float TractionIce = 1;
 
     private float[] GetTextureMix(Vector3 worldPos)
     {
@@ -244,6 +249,5 @@ public enum WheelTerrain
     SandRoad = 1,
     Asfalt = 2,
     Grass = 3,
-    Snow = 4,
-    Ice = 5,
+    Ice = 4,
 }

@@ -30,14 +30,14 @@ public class Car : MonoBehaviour
         if (player.PlayerType == PlayerType.AI)
         {
             var aiCarController = gameObject.AddComponent<AICarControl>();
-            var targetProvider = gameObject.AddComponent<WaypointTargetProvider>();
+            aiCarController.SetDefaultOptions();
 
+            var targetProvider = gameObject.AddComponent<WaypointTargetProvider>();
             aiCarController.targetProvider = targetProvider;
         }
         else
         {
             gameObject.AddComponent<UserCarController>();
-
             //TODO INIT CONTROL MECHANISM
         }
     }
