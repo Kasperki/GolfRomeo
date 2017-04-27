@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Car))]
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
-    //TODO CAP SPEED - By offroad, gasoline & damage.
-        //Jarruille myös kerroin
+    //Jarruille myös kerroin
     //REFACTOR SHIT
 
     public float TopSpeed = 200;
     public float TopSpeedOffRoad = 50;
+    private const float NoFuelMaxSpeed = 10;
 
     public float MaxMotorTorque; // maximum torque the motor can apply to wheel
     public float MaxBreakTorque; // maximum torque the motor can apply to wheel
@@ -21,6 +22,7 @@ public class CarController : MonoBehaviour
     public List<AxleInfo> AxleInfos; // the information about each individual axle
 
     private Rigidbody rgbd;
+    private Car car;
 
     public const float SPEED_MULTIPLIER = 5.6f;
     public float CurrentSpeed { get { return rgbd.velocity.magnitude * SPEED_MULTIPLIER; } }
@@ -30,6 +32,7 @@ public class CarController : MonoBehaviour
     private void Start()
     {
         rgbd = GetComponent<Rigidbody>();
+        car = GetComponent<Car>();
     }
 
     public void Move(float steering, float accel, float footbrake, float handbrake)
@@ -48,8 +51,15 @@ public class CarController : MonoBehaviour
             //Steering
             if (axleInfo.steering)
             {
-                axleInfo.leftWheel.steerAngle = steerAngle;
-                axleInfo.rightWheel.steerAngle = steerAngle;
+                float steerRandom = 0;
+                if (car.Health / car.MaxHealth < 0.5f)
+                {
+                    float destructionFactor = 0.5f - car.Health / car.MaxHealth;
+                    steerRandom = UnityEngine.Random.Range(-3, 3) * destructionFactor;
+                }
+
+                axleInfo.leftWheel.steerAngle = steerAngle + steerRandom;
+                axleInfo.rightWheel.steerAngle = steerAngle + steerRandom;
             }
 
             //Driving
@@ -140,16 +150,56 @@ public class CarController : MonoBehaviour
         }
 
         CapSpeed();
-        AddDownForce(AxleInfos[0]);
+        AddDownForce(AxleInfos[0]); //TODO.. adding down force only to first axel pair??.. HERE remove down force when tiers are gone.
 
         ParticleController.CleanEmmiters();
     }
 
     private void CapSpeed()
     {
-        if (CurrentSpeed > TopSpeed)
+        float maxSpeed = TopSpeed;
+
+        //OffRoad
+        int offRoadTerrain = 0;
+        int motorWheelCount = 0;
+        foreach (var axle in AxleInfos)
         {
-            rgbd.velocity = (TopSpeed / SPEED_MULTIPLIER) * rgbd.velocity.normalized;
+            if (axle.motor)
+            {
+                motorWheelCount += 2;
+
+                if (axle.leftWheelTerrain != WheelTerrain.Asfalt && axle.leftWheelTerrain != WheelTerrain.SandRoad)
+                {
+                    offRoadTerrain++;
+                }
+                if (axle.rightWheelTerrain != WheelTerrain.Asfalt && axle.rightWheelTerrain != WheelTerrain.SandRoad)
+                {
+                    offRoadTerrain++;
+                }
+            }
+        }
+
+        if (offRoadTerrain == motorWheelCount)
+        {
+            maxSpeed = TopSpeedOffRoad;
+        }
+
+        //Cap from Fuel
+        if (car.Fuel <= 0)
+        {
+            maxSpeed = NoFuelMaxSpeed;
+        }
+
+        //Cap from health
+        if (car.Health < car.MaxHealth)
+        {
+            maxSpeed = Mathf.Min(Mathf.Max(1, TopSpeed * (car.Health / car.MaxHealth)), maxSpeed);
+        }
+
+        //Set rigidbody velocity based on maxspeed
+        if (CurrentSpeed > maxSpeed)
+        {
+            rgbd.velocity = (maxSpeed / SPEED_MULTIPLIER) * rgbd.velocity.normalized;
         }
     }
 
