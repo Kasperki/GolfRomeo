@@ -14,6 +14,6 @@ public class UserCarController : MonoBehaviour
 
     public void FixedUpdate()
     {
-        carController.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), Input.GetAxis("Vertical"), Input.GetKeyDown(KeyCode.Space) ? 1 : 0);
+        carController.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), Input.GetAxis("Vertical"));
     }
 }

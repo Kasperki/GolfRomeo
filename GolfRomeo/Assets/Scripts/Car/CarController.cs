@@ -35,13 +35,12 @@ public class CarController : MonoBehaviour
         car = GetComponent<Car>();
     }
 
-    public void Move(float steering, float accel, float footbrake, float handbrake)
+    public void Move(float steering, float accel, float footbrake)
     {
         //clamp input values
         steering = Mathf.Clamp(steering, -1, 1);
         accel = Mathf.Clamp(accel, 0, 1);
         footbrake = -1 * Mathf.Clamp(footbrake, -1, 0);
-        handbrake = Mathf.Clamp(handbrake, 0, 1);
 
         var steerAngle = steering * MaxSteeringAngle;
         foreach (AxleInfo axleInfo in AxleInfos)
@@ -75,10 +74,10 @@ public class CarController : MonoBehaviour
                         axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSandRoad;
                         break;
                     case WheelTerrain.Asfalt:
+                        ParticleController.EmitGrassParticles();
                         axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionAsfalt;
                         break;
                     case WheelTerrain.Grass:
-                        ParticleController.EmitGrassParticles();
                         axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionGrass;
                         break;
                     case WheelTerrain.Ice:
@@ -132,19 +131,6 @@ public class CarController : MonoBehaviour
                 }
             }
 
-            /*if (axleInfo.handbrake && handbrake > 0f)
-            {
-                var hbTorque = handbrake * MaxBreakTorque;
-                axleInfo.leftWheel.brakeTorque = hbTorque;
-                axleInfo.rightWheel.brakeTorque = hbTorque;
-            }
-
-            if (footbrake == 0 && handbrake == 0)
-            {
-                axleInfo.leftWheel.brakeTorque = 0f;
-                axleInfo.rightWheel.brakeTorque = 0f;
-            }*/
-
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
         }
@@ -193,13 +179,16 @@ public class CarController : MonoBehaviour
         //Cap from health
         if (car.Health < car.MaxHealth)
         {
-            maxSpeed = Mathf.Min(Mathf.Max(1, TopSpeed * (car.Health / car.MaxHealth)), maxSpeed);
+            maxSpeed = Mathf.Min(Mathf.Max(5, TopSpeed * (car.Health / car.MaxHealth)), maxSpeed);
         }
 
         //Set rigidbody velocity based on maxspeed
         if (CurrentSpeed > maxSpeed)
         {
-            rgbd.velocity = (maxSpeed / SPEED_MULTIPLIER) * rgbd.velocity.normalized;
+            Debug.Log(maxSpeed);
+
+            var newVelocity = (maxSpeed / SPEED_MULTIPLIER) * rgbd.velocity.normalized;
+            rgbd.velocity = new Vector3(newVelocity.x, rgbd.velocity.y, newVelocity.z);
         }
     }
 
@@ -245,11 +234,17 @@ public class AxleInfo
     public bool motor;
     public bool steering;
 
+    [Range(0,2)]
     public float TractionDefault = 1;
+    [Range(0, 2)]
     public float TractionAsfalt = 1;
+    [Range(0, 2)]
     public float TractionSandRoad = 1;
+    [Range(0, 2)]
     public float TractionSand = 1;
+    [Range(0, 2)]
     public float TractionGrass = 1;
+    [Range(0, 2)]
     public float TractionIce = 1;
 
     private float[] GetTextureMix(Vector3 worldPos)

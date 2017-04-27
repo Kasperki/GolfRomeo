@@ -34,7 +34,7 @@ public class WaypointProgressTracker : MonoBehaviour
     // whether to update the position smoothly along the route (good for curved paths) or just when we reach each waypoint.
 
     [SerializeField]
-    public float pointToPointThreshold = 0.55f;
+    public float pointToPointThreshold = 0.65f;
     // proximity to waypoint which must be reached to switch target to next waypoint : only used in PointToPoint mode.
 
     public enum ProgressStyle

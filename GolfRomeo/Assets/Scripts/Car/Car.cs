@@ -27,6 +27,9 @@ public class Car : MonoBehaviour
         PrimaryColor.material.color = Player.PrimaryColor;
         SecondaryColor.material.color = Player.SecondaryColor;
 
+        Health = MaxHealth;
+        Fuel = MaxFuel;
+
         if (player.PlayerType == PlayerType.AI)
         {
             var aiCarController = gameObject.AddComponent<AICarControl>();
