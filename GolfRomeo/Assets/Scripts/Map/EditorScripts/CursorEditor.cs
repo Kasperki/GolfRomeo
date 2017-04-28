@@ -168,8 +168,16 @@ public class CursorEditor : MonoBehaviour
         RaycastHit hit;
         Physics.Raycast(raycastOrigin, raycastDirection, out hit, raycastLength, 1 << layer, QueryTriggerInteraction.Collide);
 
+
         if (hit.collider != null && hit.collider.gameObject != null)
         {
+            //BLUR
+            if (lastHoveredObject != null && lastHoveredObject != hit.collider.gameObject)
+            {
+                lastHoveredObject.GetComponent<IEditable>().OnBlur();
+            }
+
+            //SELECT
             var iEditable = hit.collider.gameObject.GetComponent(typeof(IEditable)) as IEditable;
 
             if (iEditable != null)
@@ -180,31 +188,40 @@ public class CursorEditor : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     selectedIEditable = selectedIEditable == null || hit.collider.gameObject != selectedIEditable ? hit.collider.gameObject : null;
+                    //transform.position = hit.collider.gameObject.transform.position;
                     iEditable.OnSelect((selectedIEditable != null), transform);
                 }
 
                 lastHoveredObject = hit.collider.gameObject;
             }
-            else
-            {
-                lastHoveredObject = null;
-            }
+        }
 
-            if (lastHoveredObject != null && lastHoveredObject != hit.collider.gameObject)
-            {
-                lastHoveredObject.GetComponent<IEditable>().OnBlur();
-            }
+        //DESELECT
+        if (selectedIEditable != null)
+        {
+            cursorMaterial.color = Hover;
+            selectedIEditable.GetComponent<IEditable>().OnSelect(false, transform);
+        }
+
+        //BLUR
+        if (hit.collider == null && lastHoveredObject != null)
+        {
+            lastHoveredObject.GetComponent<IEditable>().OnBlur();
         }
 
         if (selectedIEditable != null)
         {
+            //MOVE
             selectedIEditable.GetComponent<IEditable>().Move(transform, Input.mouseScrollDelta.y * 5);
 
+            //REMOVE
             if (Input.GetKeyDown(KeyCode.Delete))
             {
                 selectedIEditable.GetComponent<IEditable>().OnDelete();
                 selectedIEditable = null;
             }
+
+            //DUPLICATE
         }
     }
 }

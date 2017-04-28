@@ -74,10 +74,10 @@ public class CarController : MonoBehaviour
                         axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSandRoad;
                         break;
                     case WheelTerrain.Asfalt:
-                        ParticleController.EmitGrassParticles();
                         axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionAsfalt;
                         break;
                     case WheelTerrain.Grass:
+                        ParticleController.EmitGrassParticles();
                         axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionGrass;
                         break;
                     case WheelTerrain.Ice:
@@ -98,10 +98,10 @@ public class CarController : MonoBehaviour
                         axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSandRoad;
                         break;
                     case WheelTerrain.Asfalt:
-                        ParticleController.EmitGrassParticles();
                         axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionAsfalt;
                         break;
                     case WheelTerrain.Grass:
+                        ParticleController.EmitGrassParticles();
                         axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionGrass;
                         break;
                     case WheelTerrain.Ice:

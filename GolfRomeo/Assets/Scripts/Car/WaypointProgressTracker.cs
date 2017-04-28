@@ -14,11 +14,11 @@ public class WaypointProgressTracker : MonoBehaviour
     private WayPointCircuit circuit; // A reference to the waypoint-based route we should follow
 
     [SerializeField]
-    private float lookAheadForTargetOffset = 5;
+    private float lookAheadForTargetOffset = 4;
     // The offset ahead along the route that the we will aim for
 
     [SerializeField]
-    private float lookAheadForTargetFactor = .1f;
+    private float lookAheadForTargetFactor = .2f;
     // A multiplier adding distance ahead along the route to aim for, based on current speed
 
     [SerializeField]
@@ -34,7 +34,7 @@ public class WaypointProgressTracker : MonoBehaviour
     // whether to update the position smoothly along the route (good for curved paths) or just when we reach each waypoint.
 
     [SerializeField]
-    public float pointToPointThreshold = 0.65f;
+    public float pointToPointThreshold = 1.25f;
     // proximity to waypoint which must be reached to switch target to next waypoint : only used in PointToPoint mode.
 
     public enum ProgressStyle

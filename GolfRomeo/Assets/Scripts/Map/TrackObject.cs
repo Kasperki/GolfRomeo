@@ -8,9 +8,35 @@ public class TrackObject : MonoBehaviour, IEditable
 
     private bool[] cachedTriggerInfo;
 
-    public void OnHover() { }
+    public void OnHover()
+    {
+        var renderer = GetComponent<Renderer>();
 
-    public void OnBlur() { }
+        if (renderer)
+        {
+            renderer.material.SetColor("_Color", new Color(1, renderer.material.color.g, renderer.material.color.b, 0.15f));
+        }
+
+        foreach (var rendererChildren in gameObject.GetComponentsInChildren<Renderer>())
+        {
+            rendererChildren.material.SetColor("_Color", new Color(1, rendererChildren.material.color.g, rendererChildren.material.color.b, 0.15f));
+        }
+    }
+
+    public void OnBlur()
+    {
+        var renderer = GetComponent<Renderer>();
+
+        if (renderer)
+        {
+            renderer.material.SetColor("_Color", new Color(0, renderer.material.color.g, renderer.material.color.b, 1));
+        }
+
+        foreach (var rendererChildren in gameObject.GetComponentsInChildren<Renderer>())
+        {
+            rendererChildren.material.SetColor("_Color", new Color(0, rendererChildren.material.color.g, rendererChildren.material.color.b, 1));
+        }
+    }
 
     public void OnSelect(bool selected, Transform target)
     {

@@ -18,6 +18,16 @@ public class WaypointNode : MonoBehaviour, IEditable
         renderer.enabled = GameManager.CheckState(State.Edit);
     }
 
+    public void SetStart()
+    {
+        if (renderer == null)
+        {
+            renderer = GetComponent<Renderer>();
+        }
+
+        renderer.material = (Material)Resources.Load("Roads/CheckpointFinishline", typeof(Material)) as Material;
+    }
+
     public void OnBlur() { }
 
     public void OnHover() { }

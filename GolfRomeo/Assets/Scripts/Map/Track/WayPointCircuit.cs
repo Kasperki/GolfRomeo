@@ -139,6 +139,11 @@ public class WayPointCircuit : MonoBehaviour
         waypointList.items = new Transform[waypointNodes.Length];
         for (int i = 0; i < waypointNodes.Length; i++)
         {
+            if (i == 0)
+            {
+                waypointNodes[i].SetStart();
+            }
+
             waypointList.items[i] = waypointNodes[i].transform;
         } 
 

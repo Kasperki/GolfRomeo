@@ -32,9 +32,10 @@ public class DrawLines
         lineMaterial.SetPass(0);
 
         GL.PushMatrix();
+
         // Set transformation matrix for drawing to
         // match our transform
-        GL.MultMatrix(tr.localToWorldMatrix);
+        //GL.MultMatrix(tr.localToWorldMatrix);
 
         // Draw lines
         GL.Begin(GL.LINES);
