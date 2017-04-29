@@ -33,7 +33,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>53.722744</y>
+        <y>53.72274</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -53,9 +53,9 @@
     <TrackObjectDTO>
       <ID>overheadLights</ID>
       <Position>
-        <x>-27.9</x>
-        <y>-0.05</y>
-        <z>-2.98</z>
+        <x>-27.2950783</x>
+        <y>0.006226063</y>
+        <z>-3.723503</z>
       </Position>
       <Rotation>
         <x>0</x>
@@ -261,26 +261,26 @@
     <TrackObjectDTO>
       <ID>TrafficCone</ID>
       <Position>
-        <x>-37.58058</x>
-        <y>0.08236399</y>
-        <z>-5.49081373</z>
+        <x>-37.626194</x>
+        <y>0.08242632</y>
+        <z>-5.49175167</z>
       </Position>
       <Rotation>
-        <x>270</x>
-        <y>-0.005656069</y>
-        <z>0</z>
+        <x>270.4723</x>
+        <y>250.127319</y>
+        <z>109.470078</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
       <ID>TrafficCone</ID>
       <Position>
         <x>-33.9041</x>
-        <y>0.082487</y>
-        <z>-1.59073377</z>
+        <y>0.0823641</y>
+        <z>-1.59084535</z>
       </Position>
       <Rotation>
-        <x>270.083923</x>
-        <y>359.880371</y>
+        <x>270</x>
+        <y>359.8804</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -508,9 +508,9 @@
     <TrackObjectDTO>
       <ID>grandStand</ID>
       <Position>
-        <x>-22.6500015</x>
+        <x>-22.6209927</x>
         <y>0.006226063</y>
-        <z>-3.68</z>
+        <z>-3.761539</z>
       </Position>
       <Rotation>
         <x>0</x>
@@ -534,13 +534,13 @@
     <TrackObjectDTO>
       <ID>grandStand</ID>
       <Position>
-        <x>-21.7129173</x>
-        <y>0.006225586</y>
-        <z>-0.5803547</z>
+        <x>-21.793766</x>
+        <y>0.006226063</y>
+        <z>-0.49038887</z>
       </Position>
       <Rotation>
         <x>0</x>
-        <y>81.80591</y>
+        <y>96.80591</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>

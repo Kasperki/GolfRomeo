@@ -8,33 +8,49 @@ public class TrackObject : MonoBehaviour, IEditable
 
     private bool[] cachedTriggerInfo;
 
+    private bool hover;
+
     public void OnHover()
     {
-        var renderer = GetComponent<Renderer>();
-
-        if (renderer)
+        if (!hover)
         {
-            renderer.material.SetColor("_Color", new Color(1, renderer.material.color.g, renderer.material.color.b, 0.15f));
-        }
+            var renderer = GetComponent<Renderer>();
 
-        foreach (var rendererChildren in gameObject.GetComponentsInChildren<Renderer>())
-        {
-            rendererChildren.material.SetColor("_Color", new Color(1, rendererChildren.material.color.g, rendererChildren.material.color.b, 0.15f));
+            if (renderer)
+            {
+                var color = renderer.material.GetColor("_Color");
+                renderer.material.SetColor("_Color", color - new Color(0.5f, 0.5f, 0.5f));
+            }
+
+            foreach (var rendererChildren in gameObject.GetComponentsInChildren<Renderer>())
+            {
+                var color = rendererChildren.material.GetColor("_Color");
+                rendererChildren.material.SetColor("_Color", color - new Color(0.5f, 0.5f, 0.5f));
+            }
+
+            hover = true;
         }
     }
 
     public void OnBlur()
     {
-        var renderer = GetComponent<Renderer>();
-
-        if (renderer)
+        if (hover)
         {
-            renderer.material.SetColor("_Color", new Color(0, renderer.material.color.g, renderer.material.color.b, 1));
-        }
+            var renderer = GetComponent<Renderer>();
 
-        foreach (var rendererChildren in gameObject.GetComponentsInChildren<Renderer>())
-        {
-            rendererChildren.material.SetColor("_Color", new Color(0, rendererChildren.material.color.g, rendererChildren.material.color.b, 1));
+            if (renderer)
+            {
+                var color = renderer.material.GetColor("_Color");
+                renderer.material.SetColor("_Color", color + new Color(0.5f, 0.5f, 0.5f));
+            }
+
+            foreach (var rendererChildren in gameObject.GetComponentsInChildren<Renderer>())
+            {
+                var color = rendererChildren.material.GetColor("_Color");
+                rendererChildren.material.SetColor("_Color", color + new Color(0.5f, 0.5f, 0.5f));
+            }
+
+            hover = false;
         }
     }
 

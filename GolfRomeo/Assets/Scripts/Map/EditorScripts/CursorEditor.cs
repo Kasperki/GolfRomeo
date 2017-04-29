@@ -31,6 +31,8 @@ public class CursorEditor : MonoBehaviour
     public KeyCode Select = KeyCode.Space;
     public KeyCode Delete = KeyCode.Delete;
 
+    private bool selected;
+
     private void Awake()
     {
         terrainHeightEditor = GetComponentInChildren<TerrainHeightEditor>();
@@ -165,9 +167,10 @@ public class CursorEditor : MonoBehaviour
 
     private void MoveObjects(int layer)
     {
+        selected = false;
+
         RaycastHit hit;
         Physics.Raycast(raycastOrigin, raycastDirection, out hit, raycastLength, 1 << layer, QueryTriggerInteraction.Collide);
-
 
         if (hit.collider != null && hit.collider.gameObject != null)
         {
@@ -182,35 +185,29 @@ public class CursorEditor : MonoBehaviour
 
             if (iEditable != null)
             {
-                iEditable.OnHover();
                 cursorMaterial.color = Hover;
 
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (selectedIEditable == null)
                 {
-                    selectedIEditable = selectedIEditable == null || hit.collider.gameObject != selectedIEditable ? hit.collider.gameObject : null;
-                    //transform.position = hit.collider.gameObject.transform.position;
-                    iEditable.OnSelect((selectedIEditable != null), transform);
+                    iEditable.OnHover();
+
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        selectedIEditable = hit.collider.gameObject;
+                        iEditable.OnSelect(true, transform);
+                        selected = true;
+                    }
                 }
 
                 lastHoveredObject = hit.collider.gameObject;
             }
         }
 
-        //DESELECT
         if (selectedIEditable != null)
         {
             cursorMaterial.color = Hover;
-            selectedIEditable.GetComponent<IEditable>().OnSelect(false, transform);
-        }
+            selectedIEditable.GetComponent<IEditable>().OnHover();
 
-        //BLUR
-        if (hit.collider == null && lastHoveredObject != null)
-        {
-            lastHoveredObject.GetComponent<IEditable>().OnBlur();
-        }
-
-        if (selectedIEditable != null)
-        {
             //MOVE
             selectedIEditable.GetComponent<IEditable>().Move(transform, Input.mouseScrollDelta.y * 5);
 
@@ -222,6 +219,20 @@ public class CursorEditor : MonoBehaviour
             }
 
             //DUPLICATE
+
+            //DESELECT
+            if (Input.GetKeyDown(KeyCode.Space) && !selected)
+            {
+                selectedIEditable.GetComponent<IEditable>().OnSelect(false, transform);
+                selectedIEditable.GetComponent<IEditable>().OnBlur();
+                selectedIEditable = null;
+            }
+        }
+
+        //BLUR
+        if (hit.collider == null && lastHoveredObject != null && selectedIEditable == null)
+        {
+            lastHoveredObject.GetComponent<IEditable>().OnBlur();
         }
     }
 }

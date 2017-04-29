@@ -133,11 +133,14 @@ public class CarController : MonoBehaviour
 
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
+
+            if (axleInfo.addDownForce == true)
+            {
+                AddDownForce(axleInfo); //TODO.. remove down force when tiers are gone.
+            }
         }
 
         CapSpeed();
-        AddDownForce(AxleInfos[0]); //TODO.. adding down force only to first axel pair??.. HERE remove down force when tiers are gone.
-
         ParticleController.CleanEmmiters();
     }
 
@@ -185,8 +188,6 @@ public class CarController : MonoBehaviour
         //Set rigidbody velocity based on maxspeed
         if (CurrentSpeed > maxSpeed)
         {
-            Debug.Log(maxSpeed);
-
             var newVelocity = (maxSpeed / SPEED_MULTIPLIER) * rgbd.velocity.normalized;
             rgbd.velocity = new Vector3(newVelocity.x, rgbd.velocity.y, newVelocity.z);
         }
@@ -233,6 +234,7 @@ public class AxleInfo
     public bool handbrake;
     public bool motor;
     public bool steering;
+    public bool addDownForce;
 
     [Range(0,2)]
     public float TractionDefault = 1;

@@ -61,8 +61,8 @@ public class LapTracker : Singleton<LapTracker>
         for (int i = 0; i < cars.Count(); i++)
         {
             Cars.Add(new LapInfo(cars[i]));
-            cars[i].transform.position = startSquares[i % (startSquares.Length - 1)].transform.position;
-            cars[i].transform.rotation = startSquares[i % (startSquares.Length - 1)].transform.rotation;
+            cars[i].transform.position = startSquares[i % (startSquares.Length)].transform.position;
+            cars[i].transform.rotation = startSquares[i % (startSquares.Length)].transform.rotation;
         }
 
         FindObjectOfType<LapTrackerUI>().Init();
