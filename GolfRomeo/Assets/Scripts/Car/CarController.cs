@@ -22,7 +22,7 @@ public class CarController : MonoBehaviour
     public List<AxleInfo> AxleInfos; // the information about each individual axle
 
     private Rigidbody rgbd;
-    private Car car;
+    public Car Car;
 
     public const float SPEED_MULTIPLIER = 5.6f;
     public float CurrentSpeed { get { return rgbd.velocity.magnitude * SPEED_MULTIPLIER; } }
@@ -32,7 +32,7 @@ public class CarController : MonoBehaviour
     private void Start()
     {
         rgbd = GetComponent<Rigidbody>();
-        car = GetComponent<Car>();
+        Car = GetComponent<Car>();
     }
 
     public void Move(float steering, float accel, float footbrake)
@@ -51,9 +51,9 @@ public class CarController : MonoBehaviour
             if (axleInfo.steering)
             {
                 float steerRandom = 0;
-                if (car.Health / car.MaxHealth < 0.5f)
+                if (Car.Health / Car.MaxHealth < 0.5f)
                 {
-                    float destructionFactor = 0.5f - car.Health / car.MaxHealth;
+                    float destructionFactor = 0.5f - Car.Health / Car.MaxHealth;
                     steerRandom = UnityEngine.Random.Range(-3, 3) * destructionFactor;
                 }
 
@@ -174,15 +174,15 @@ public class CarController : MonoBehaviour
         }
 
         //Cap from Fuel
-        if (car.Fuel <= 0)
+        if (Car.Fuel <= 0)
         {
             maxSpeed = NoFuelMaxSpeed;
         }
 
         //Cap from health
-        if (car.Health < car.MaxHealth)
+        if (Car.Health < Car.MaxHealth)
         {
-            maxSpeed = Mathf.Min(Mathf.Max(5, TopSpeed * (car.Health / car.MaxHealth)), maxSpeed);
+            maxSpeed = Mathf.Min(Mathf.Max(5, TopSpeed * (Car.Health / Car.MaxHealth)), maxSpeed);
         }
 
         //Set rigidbody velocity based on maxspeed

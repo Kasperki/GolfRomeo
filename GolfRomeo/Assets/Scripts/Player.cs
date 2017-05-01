@@ -12,6 +12,8 @@ public class Player
     public PlayerType PlayerType;
     public CarType CarType;
 
+    public ControllerScheme ControllerScheme;
+
     public Player()
     {
         ID = Guid.NewGuid();

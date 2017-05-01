@@ -6,14 +6,16 @@ using UnityEngine;
 public class UserCarController : MonoBehaviour
 {
     private CarController carController;
+    private ControllerScheme controllerScheme;
 
     private void Start()
     {
         carController = GetComponent<CarController>();
+        controllerScheme = carController.Car.Player.ControllerScheme;
     }
 
     public void FixedUpdate()
     {
-        carController.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), Input.GetAxis("Vertical"));
+        carController.Move(Input.GetAxis(controllerScheme.HorizontalAxis), Input.GetAxis(controllerScheme.VerticalAxis), Input.GetAxis(controllerScheme.VerticalAxis));
     }
 }

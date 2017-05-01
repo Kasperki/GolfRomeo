@@ -30,7 +30,7 @@ public class WaypointProgressTracker : MonoBehaviour
     // A multiplier adding distance ahead along the route for speed adjustments
 
     [SerializeField]
-    private ProgressStyle progressStyle = ProgressStyle.PointToPoint;
+    private ProgressStyle progressStyle = ProgressStyle.SmoothAlongRoute;
     // whether to update the position smoothly along the route (good for curved paths) or just when we reach each waypoint.
 
     [SerializeField]

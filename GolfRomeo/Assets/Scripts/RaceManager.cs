@@ -32,6 +32,7 @@ public class RaceManager : Singleton<RaceManager>
     {
         //TODO CLEAN UP
 
+
         //Load World
         Track.Instance.LoadWorld(TrackNames[CurrentTrack++]);
 
