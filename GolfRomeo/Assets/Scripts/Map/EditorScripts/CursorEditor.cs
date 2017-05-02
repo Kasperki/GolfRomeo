@@ -19,7 +19,7 @@ public class CursorEditor : MonoBehaviour
     private float raycastLength;
 
     //Track spesific
-    public GameObject RoadNodePrefab, CheckpointPrefab, WaypointPrefab;
+    public GameObject CheckpointPrefab, WaypointPrefab;
 
     private TerrainEditor terrainEditor;
 
@@ -81,8 +81,8 @@ public class CursorEditor : MonoBehaviour
         {
             raycastPos = new Vector3(hit.point.x, 10, hit.point.z);
             transform.position = hit.point;
-            transform.up = Vector3.Lerp(transform.up, hit.normal, Time.deltaTime * 10);
-            transform.RotateAround(transform.position, transform.up, transform.localEulerAngles.y);
+            //transform.up = Vector3.Lerp(transform.up, hit.normal, Time.deltaTime * 10);
+            //transform.RotateAround(transform.position, transform.up, transform.localEulerAngles.y);
         }
 
         switch (EditMode)

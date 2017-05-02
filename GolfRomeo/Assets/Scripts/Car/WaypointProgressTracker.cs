@@ -86,7 +86,7 @@ public class WaypointProgressTracker : MonoBehaviour
         }
     }
 
-    public void PreviosPoint()
+    public void PreviousPoint()
     {
         progressNum--;
         progressDistance--;

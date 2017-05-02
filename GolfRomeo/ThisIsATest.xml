@@ -261,26 +261,26 @@
     <TrackObjectDTO>
       <ID>TrafficCone</ID>
       <Position>
-        <x>-37.6266975</x>
-        <y>0.08244321</y>
-        <z>-5.49216127</z>
+        <x>-37.290638</x>
+        <y>0.0823639</y>
+        <z>-5.157093</z>
       </Position>
       <Rotation>
-        <x>270.49176</x>
-        <y>262.424866</y>
-        <z>97.16046</z>
+        <x>270</x>
+        <y>120.606323</y>
+        <z>0</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
       <ID>TrafficCone</ID>
       <Position>
-        <x>-33.9041</x>
-        <y>0.08236409</y>
-        <z>-1.59084535</z>
+        <x>-34.2960358</x>
+        <y>0.08236549</y>
+        <z>1.798532</z>
       </Position>
       <Rotation>
         <x>270</x>
-        <y>359.8804</y>
+        <y>25.3678131</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>

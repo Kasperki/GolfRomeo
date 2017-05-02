@@ -237,7 +237,7 @@ public class AICarControl : MonoBehaviour
         if (Time.time > stuckOnTrackObjectLast && stuckOnTrackObject)
         {
             previousTarget = true;
-            waypointProgressTracker.PreviosPoint();
+            waypointProgressTracker.PreviousPoint();
         }
     }
 

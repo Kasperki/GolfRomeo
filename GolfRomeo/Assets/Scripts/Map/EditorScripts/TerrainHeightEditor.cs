@@ -89,7 +89,6 @@ public class TerrainHeightEditor : MonoBehaviour
         return new Vector4(posXInTerrain, posYInTerrain, width, height);
     }
 
-
     public void UpdateTerrainTexture(int textureID, int size)
     {
         int offset = 0;
@@ -116,7 +115,6 @@ public class TerrainHeightEditor : MonoBehaviour
         terrain.terrainData.SetAlphamaps((int)terrainPosition.x, (int)terrainPosition.y, alphas);
     }
 
-
     public void RaiseTerrain(float raiseAmount, int size)
     {
         int offset = 0;
@@ -137,28 +135,45 @@ public class TerrainHeightEditor : MonoBehaviour
         terrain.terrainData.SetHeights((int)terrainPosition.x, (int)terrainPosition.y, heights);
     }
 
-    public void RaiseToCoordinate(Vector3[] pos, int size)
+    public Vector3[] CoordinatesToTerrain(Vector3[] pos)
     {
         float[,] heights = terrain.terrainData.GetHeights(0, 0, heightmapWidth, heightmapHeight);
 
         for (int i = 0; i < pos.Length; i++)
-        { 
+        {
+
             int offset = 0;
-            Vector4 terrainPosition = GetTerrainPosition(pos[i] - terrain.gameObject.transform.position, size, out offset);
+            Vector4 terrainPosition = GetTerrainPosition(pos[i] - terrain.gameObject.transform.position, 1, out offset);
 
             for (int x = (int)terrainPosition.x; x < terrainPosition.x + terrainPosition.z; x++)
             {
                 for (int y = (int)terrainPosition.y; y < terrainPosition.y + terrainPosition.w; y++)
                 {
-                    float heightChange = pos[i].y / terrain.terrainData.heightmapResolution + BaseHeight + 0.00075f;
-                    heightChange = Mathf.Clamp(heightChange, MinHeight, MaxHeight);
-
-                    heights[y, x] = heightChange;
+                    pos[i] = new Vector3(pos[i].x, pos[i].y, heights[y, x] * 1200);
+                    break;
                 }
             }
         }
 
-        terrain.terrainData.SetHeights(0, 0, heights);
+        return pos;
+    }
+
+    public float GetTerrainHeightAtPos(Vector3 pos)
+    {
+        float[,] heights = terrain.terrainData.GetHeights(0, 0, heightmapWidth, heightmapHeight);
+
+        int offset = 0;
+        Vector4 terrainPosition = GetTerrainPosition(pos - terrain.gameObject.transform.position, 1, out offset);
+
+        for (int x = (int)terrainPosition.x; x < terrainPosition.x + terrainPosition.z; x++)
+        {
+            for (int y = (int)terrainPosition.y; y < terrainPosition.y + terrainPosition.w; y++)
+            {
+                return heights[y, x];
+            }
+        }
+
+        return 0;
     }
 
     public void RaiseTerrainSmooth(float raiseAmount, int size)
