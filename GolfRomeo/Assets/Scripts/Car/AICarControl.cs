@@ -4,6 +4,7 @@ using Random = UnityEngine.Random;
 
 
 [RequireComponent(typeof(CarController))]
+[RequireComponent(typeof(WaypointProgressTracker))]
 public class AICarControl : MonoBehaviour
 {
     WaypointProgressTracker waypointProgressTracker;
@@ -64,12 +65,12 @@ public class AICarControl : MonoBehaviour
     private float m_AvoidOtherCarSlowdown;    // how much to slow down due to colliding with another car, whilst avoiding
     private float m_AvoidPathOffset;          // direction (-1 or 1) in which to offset path to avoid other car, whilst avoiding
     private Rigidbody m_Rigidbody;
-
-    public TargetProvider targetProvider;
     private Vector3 localTarget;
 
     private void Awake()
     {
+        waypointProgressTracker = GetComponent<WaypointProgressTracker>();
+
         // get the car controller reference
         m_CarController = GetComponent<CarController>();
 
@@ -87,20 +88,12 @@ public class AICarControl : MonoBehaviour
     private void FixedUpdate()
     {
         m_Driving = GameManager.CheckState(State.Game);
-
-        if (targetProvider != null)
-        {
-            m_Target = targetProvider.GetTargetTransform();
-        }
-        else
-        {
-            throw new Exception("No target provider");
-        }
+        m_Target = waypointProgressTracker.target;
 
         if (m_Target == null || !m_Driving)
         {
             // Car should not be moving,
-            m_CarController.Move(0, 0, 0);
+            m_CarController.Move(0, 0, 0, 1);
         }
         else
         {
@@ -158,8 +151,6 @@ public class AICarControl : MonoBehaviour
                     break;
             }
 
-            // Evasive action due to collision with other cars:
-
             // our target position starts off as the 'real' target position
             Vector3 offsetTargetPos = m_Target.position;
 
@@ -181,30 +172,18 @@ public class AICarControl : MonoBehaviour
                                     m_LateralWanderDistance;
             }
 
-            // use different sensitivity depending on whether accelerating or braking:
-            float accelBrakeSensitivity = (desiredSpeed < m_CarController.CurrentSpeed)
-                                                ? m_BrakeSensitivity
-                                                : m_AccelSensitivity;
-
-            // decide the actual amount of accel/brake input to achieve desired speed.
+            // accel
+            float accelBrakeSensitivity = (desiredSpeed < m_CarController.CurrentSpeed) ? m_BrakeSensitivity : m_AccelSensitivity;
             float accel = Mathf.Clamp((desiredSpeed - m_CarController.CurrentSpeed) * accelBrakeSensitivity, -1, 1);
+            accel *= (1 - m_AccelWanderAmount) + (Mathf.PerlinNoise(Time.time * m_AccelWanderSpeed, m_RandomPerlin) * m_AccelWanderAmount); //wander
 
-            // add acceleration 'wander', which also prevents AI from seeming too uniform and robotic in their driving
-            // i.e. increasing the accel wander amount can introduce jostling and bumps between AI cars in a race
-            accel *= (1 - m_AccelWanderAmount) +
-                        (Mathf.PerlinNoise(Time.time * m_AccelWanderSpeed, m_RandomPerlin) * m_AccelWanderAmount);
-
-            // calculate the local-relative position of the target, to steer towards
+            // steering
             localTarget = transform.InverseTransformPoint(offsetTargetPos);
-
-            // work out the local angle towards the target
             float targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
-
-            // get the amount of steering needed to aim the car towards the target
             float steer = Mathf.Clamp(targetAngle * m_SteerSensitivity, -1, 1) * Mathf.Sign(m_CarController.CurrentSpeed);
 
             // feed input to the car controller.
-            m_CarController.Move(steer, accel, accel);
+            m_CarController.Move(steer, accel, accel, 0);
         }
 
         // if appropriate, stop driving when we're close enough to the target.
@@ -214,12 +193,12 @@ public class AICarControl : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision col)
+    private void OnCollisionStay(Collision collision)
     {
         // detect collision against other cars, so that we can take evasive action
-        if (col.rigidbody != null)
+        if (collision.rigidbody != null)
         {
-            var otherAI = col.rigidbody.GetComponent<AICarControl>();
+            var otherAI = collision.rigidbody.GetComponent<AICarControl>();
             if (otherAI != null)
             {
                 // we'll take evasive action for 1 second
@@ -243,6 +222,33 @@ public class AICarControl : MonoBehaviour
                 float otherCarAngle = Mathf.Atan2(otherCarLocalDelta.x, otherCarLocalDelta.z);
                 m_AvoidPathOffset = m_LateralWanderDistance * -Mathf.Sign(otherCarAngle);
             }
+        }
+
+        //are we stuck on some road object.
+        if (collision.gameObject.layer == Track.TrackObjectsMask)
+        {
+            if (!stuckOnTrackObject)
+            {
+                stuckOnTrackObject = true;
+                stuckOnTrackObjectLast = Time.time + 1;
+            } 
+        }
+
+        if (Time.time > stuckOnTrackObjectLast && stuckOnTrackObject)
+        {
+            previousTarget = true;
+            waypointProgressTracker.PreviosPoint();
+        }
+    }
+
+    private bool stuckOnTrackObject, previousTarget;
+    private float stuckOnTrackObjectLast;
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.layer == Track.TrackObjectsMask)
+        {
+            stuckOnTrackObject = false;
         }
     }
 }

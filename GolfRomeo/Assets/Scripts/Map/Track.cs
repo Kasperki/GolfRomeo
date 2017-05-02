@@ -5,7 +5,7 @@ using UnityEngine;
 public class Track : Singleton<Track>
 {
     public const int TerrainMask = 11;
-    public const int MapObjectsMask = 12;
+    public const int TrackObjectsMask = 12;
     public const int CheckpointsMask = 13;
     public const int AIWaypointsMask = 14;
 

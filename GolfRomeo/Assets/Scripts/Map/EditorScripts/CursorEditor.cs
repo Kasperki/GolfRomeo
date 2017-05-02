@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(TerrainEditor))]
 public class CursorEditor : MonoBehaviour
 {
     public EditMode EditMode;
 
     public Renderer Renderer;
-    public Renderer BrushRenderer;
+    private Material cursorMaterial;
     public Color Normal;
     public Color Hover;
     public Color Selected;
-    private Material cursorMaterial;
 
     public bool Mouse;
 
@@ -21,22 +21,18 @@ public class CursorEditor : MonoBehaviour
     //Track spesific
     public GameObject RoadNodePrefab, CheckpointPrefab, WaypointPrefab;
 
-    //TerrainEditor
-    private const int MIN_BRUSH_SIZE = 1;
-    private const int MAX_BRUSH_SIZE = 100;
-    public int BrushSize;
-    public float TerrainHeightEditModifier = 0.0005f;
-    private TerrainHeightEditor terrainHeightEditor;
+    private TerrainEditor terrainEditor;
 
     public KeyCode Select = KeyCode.Space;
     public KeyCode Delete = KeyCode.Delete;
 
     private bool selected;
+    private GameObject selectedIEditable;
 
     private void Awake()
     {
-        terrainHeightEditor = GetComponentInChildren<TerrainHeightEditor>();
         cursorMaterial = Renderer.material;
+        terrainEditor = GetComponent<TerrainEditor>();
     }
     
     private RaycastHit RaycastAgainstTerrain(int cursorHitLayer)
@@ -50,7 +46,7 @@ public class CursorEditor : MonoBehaviour
         }
         else
         {
-            raycastPos += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * Time.deltaTime * 2;
+            raycastPos += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * Time.deltaTime * 4;
             raycastOrigin = raycastPos;
             raycastDirection = -Vector3.up;
             raycastLength = 20;
@@ -65,6 +61,16 @@ public class CursorEditor : MonoBehaviour
 
     void Update ()
     {
+        //DEBUGGGs
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            EditMode = EditMode.Terrain;
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            EditMode = EditMode.Objects;
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+            EditMode = EditMode.Checkpoints;
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+            EditMode = EditMode.AIWaypoints;
+
         cursorMaterial.color = Normal;
 
         int cursorHitLayer = 1 << Track.TerrainMask;
@@ -79,79 +85,41 @@ public class CursorEditor : MonoBehaviour
             transform.RotateAround(transform.position, transform.up, transform.localEulerAngles.y);
         }
 
-        //BRUSH SIZE
-        BrushSize += (int)Input.mouseScrollDelta.y * 5;
-        BrushSize = Mathf.Clamp(BrushSize, MIN_BRUSH_SIZE, MAX_BRUSH_SIZE);
-        BrushRenderer.transform.localScale = new Vector3(1 * BrushSize / 10, 1 * BrushSize / 10, 0.5f);
-
-        //DEBUGGGs
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            EditMode = EditMode.Terrain;
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            EditMode = EditMode.Objects;
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-            EditMode = EditMode.Checkpoints;
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-            EditMode = EditMode.AIWaypoints;
-
-
-        else if (EditMode == EditMode.Terrain)
+        switch (EditMode)
         {
-            //EDIT TERRAIN
-            if (Input.GetKeyDown(KeyCode.Y))
-            {
-                terrainHeightEditor.RaiseTerrain(TerrainHeightEditModifier, BrushSize);
-            }
+            case EditMode.Terrain:
+                terrainEditor.CCC();
+                break;
+            case EditMode.Objects:
+                MoveObjects(Track.TrackObjectsMask);
+                break;
+            case EditMode.AIWaypoints:
+                if (Input.GetKeyDown(KeyCode.I))
+                {
+                    InstantiateObject(WaypointPrefab, Track.Instance.WayPointCircuit.transform);
+                    FindObjectOfType<WayPointCircuit>().CachePositionsAndDistances();
+                }
 
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                terrainHeightEditor.RaiseTerrainSmooth(TerrainHeightEditModifier, BrushSize);
-            }
+                MoveObjects(Track.AIWaypointsMask);
+                break;
+            case EditMode.Checkpoints:
+                if (Input.GetKeyDown(KeyCode.I))
+                {
+                    var obj = InstantiateObject(CheckpointPrefab, Track.Instance.LapTracker.transform);
+                    obj.GetComponent<Checkpoint>().SetOrder();
+                }
 
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                terrainHeightEditor.RaiseTerrainSmooth(-TerrainHeightEditModifier, BrushSize);
-            }
+                MoveObjects(Track.CheckpointsMask);
 
-            if (Input.GetKeyDown(KeyCode.U))
-            {
-                terrainHeightEditor.SmoothTerrain(BrushSize);
-            }
-
-            if (Input.GetKey(KeyCode.B))
-            {
-                terrainHeightEditor.UpdateTerrainTexture(1, BrushSize);
-            }
-        }
-        else if (EditMode == EditMode.Objects)
-        {
-            MoveObjects(Track.MapObjectsMask);
-        }
-        else if (EditMode == EditMode.Checkpoints)
-        {
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                var obj = InstantiateObject(CheckpointPrefab, Track.Instance.LapTracker.transform);
-                obj.GetComponent<Checkpoint>().SetOrder();
-            }
-
-            MoveObjects(Track.CheckpointsMask);
-        }
-        else if (EditMode == EditMode.AIWaypoints)
-        {
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                InstantiateObject(WaypointPrefab, Track.Instance.WayPointCircuit.transform);
-                FindObjectOfType<WayPointCircuit>().CachePositionsAndDistances();
-            }
-
-            MoveObjects(Track.AIWaypointsMask);
+                break;
+            default:
+                break;
         }
     }
 
     private GameObject InstantiateObject(GameObject obj, Transform parent)
     {
-        var gameObj = GameObject.Instantiate(obj);
+        var gameObj = Instantiate(obj);
         gameObj.transform.position = transform.position;
         gameObj.transform.SetParent(parent);
 
@@ -163,7 +131,11 @@ public class CursorEditor : MonoBehaviour
         return gameObj;
     }
 
-    private GameObject selectedIEditable;
+    private GameObject DuplicateObject(GameObject obj)
+    {
+        string name = obj.name;
+        return InstantiateObject(Resources.Load(name) as GameObject, obj.transform);
+    }
 
     private void MoveObjects(int layer)
     {
@@ -219,6 +191,10 @@ public class CursorEditor : MonoBehaviour
             }
 
             //DUPLICATE
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                DuplicateObject(selectedIEditable);
+            }
 
             //DESELECT
             if (Input.GetKeyDown(KeyCode.Space) && !selected)

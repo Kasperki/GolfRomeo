@@ -35,7 +35,7 @@ public class CarController : MonoBehaviour
         Car = GetComponent<Car>();
     }
 
-    public void Move(float steering, float accel, float footbrake)
+    public void Move(float steering, float accel, float footbrake, float handbrake)
     {
         //clamp input values
         steering = Mathf.Clamp(steering, -1, 1);
@@ -131,6 +131,19 @@ public class CarController : MonoBehaviour
                 }
             }
 
+            if (handbrake > 0f)
+            {
+                var hbTorque = handbrake * MaxBreakTorque;
+                axleInfo.leftWheel.brakeTorque = hbTorque;
+                axleInfo.rightWheel.brakeTorque = hbTorque;
+            }
+
+            if (footbrake == 0 && handbrake == 0)
+            {
+                axleInfo.leftWheel.brakeTorque = 0f;
+                axleInfo.rightWheel.brakeTorque = 0f;
+            }
+
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
 
@@ -221,6 +234,14 @@ public class CarController : MonoBehaviour
         axle.leftWheelTerrain = axle.GetWheelTerrain(axle.leftWheel.transform.position);
         axle.rightWheelTerrain = axle.GetWheelTerrain(axle.rightWheel.transform.position);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.gameObject.layer == Track.TrackObjectsMask)
+        {
+            Car.Health -= rgbd.velocity.magnitude;
+        }
+    }
 }
 
 [Serializable]
@@ -231,7 +252,6 @@ public class AxleInfo
     public WheelTerrain leftWheelTerrain;
     public WheelTerrain rightWheelTerrain;
 
-    public bool handbrake;
     public bool motor;
     public bool steering;
     public bool addDownForce;
