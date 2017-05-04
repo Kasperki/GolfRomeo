@@ -7,7 +7,6 @@ public class TrackObject : MonoBehaviour, IEditable
     public string ID;
 
     private bool[] cachedTriggerInfo;
-
     private bool hover;
 
     public void OnHover()
@@ -19,13 +18,13 @@ public class TrackObject : MonoBehaviour, IEditable
             if (renderer)
             {
                 var color = renderer.material.GetColor("_Color");
-                renderer.material.SetColor("_Color", color - new Color(0.5f, 0.5f, 0.5f));
+                renderer.material.SetColor("_Color", color - new Color(0.5f, 0.5f, 0.5f, 0));
             }
 
             foreach (var rendererChildren in gameObject.GetComponentsInChildren<Renderer>())
             {
                 var color = rendererChildren.material.GetColor("_Color");
-                rendererChildren.material.SetColor("_Color", color - new Color(0.5f, 0.5f, 0.5f));
+                rendererChildren.material.SetColor("_Color", color - new Color(0.5f, 0.5f, 0.5f, 0));
             }
 
             hover = true;
@@ -41,20 +40,20 @@ public class TrackObject : MonoBehaviour, IEditable
             if (renderer)
             {
                 var color = renderer.material.GetColor("_Color");
-                renderer.material.SetColor("_Color", color + new Color(0.5f, 0.5f, 0.5f));
+                renderer.material.SetColor("_Color", color + new Color(0.5f, 0.5f, 0.5f, 0));
             }
 
             foreach (var rendererChildren in gameObject.GetComponentsInChildren<Renderer>())
             {
                 var color = rendererChildren.material.GetColor("_Color");
-                rendererChildren.material.SetColor("_Color", color + new Color(0.5f, 0.5f, 0.5f));
+                rendererChildren.material.SetColor("_Color", color + new Color(0.5f, 0.5f, 0.5f, 0));
             }
 
             hover = false;
         }
     }
 
-    public void OnSelect(bool selected, Transform target)
+    public virtual void OnSelect(bool selected, Transform target)
     {
         if (selected)
         {
@@ -80,8 +79,6 @@ public class TrackObject : MonoBehaviour, IEditable
     {
         transform.position = target.position;
         transform.eulerAngles += new Vector3(0, rotationDelta, 0);
-
-        //transform.rotation = Quaternion.Euler(target.eulerAngles.x, transform.eulerAngles.y + rotationDelta, target.eulerAngles.z);
     }
 
     public void OnDelete()

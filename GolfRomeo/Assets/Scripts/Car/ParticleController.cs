@@ -15,6 +15,15 @@ public class ParticleController : MonoBehaviour
     {
         car = GetComponentInParent<Car>();
         carController = car.CarController;
+
+        SandParticles = Instantiate(SandParticles);
+        SandParticles.transform.SetParent(transform, false);
+
+        GrassParticles = Instantiate(GrassParticles);
+        GrassParticles.transform.SetParent(transform, false);
+
+        Smoke = Instantiate(Smoke);
+        Smoke.transform.SetParent(transform, false);
     }
 
     private bool sandEmitting;
@@ -81,8 +90,8 @@ public class ParticleController : MonoBehaviour
                 Smoke.Play();
             }
 
-            ParticleSystem.MainModule mainModule = Smoke.main;
-            mainModule.startSize = Mathf.Max(0, 1 - car.Health / car.MaxHealth);
+            ParticleSystem.EmissionModule emissionModule = Smoke.emission;
+            emissionModule.rateOverTime = Mathf.Max(0, (1 - car.Health / car.MaxHealth) * 30);
         }
         else
         {

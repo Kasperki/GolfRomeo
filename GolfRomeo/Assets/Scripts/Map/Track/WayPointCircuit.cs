@@ -88,9 +88,11 @@ public class WayPointCircuit : MonoBehaviour
         p2n = point;
 
         // found point numbers, now find interpolation value between the two middle points
-
+        if (p1n >= distances.Length || p2n >= distances.Length)
+            return points[0];
+        
         i = Mathf.InverseLerp(distances[p1n], distances[p2n], dist);
-
+        
         if (smoothRoute)
         {
             // smooth catmull-rom calculation between the two relevant points

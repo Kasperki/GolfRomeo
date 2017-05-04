@@ -81,14 +81,14 @@ public class CursorEditor : MonoBehaviour
         {
             raycastPos = new Vector3(hit.point.x, 10, hit.point.z);
             transform.position = hit.point;
-            //transform.up = Vector3.Lerp(transform.up, hit.normal, Time.deltaTime * 10);
-            //transform.RotateAround(transform.position, transform.up, transform.localEulerAngles.y);
+            transform.up = Vector3.Lerp(transform.up, hit.normal, Time.deltaTime * 10);
+            transform.RotateAround(transform.position, transform.up, transform.localEulerAngles.y);
         }
 
         switch (EditMode)
         {
             case EditMode.Terrain:
-                terrainEditor.CCC();
+                terrainEditor.UpdateTerrainEditorTools();
                 break;
             case EditMode.Objects:
                 MoveObjects(Track.TrackObjectsMask);
@@ -133,8 +133,8 @@ public class CursorEditor : MonoBehaviour
 
     private GameObject DuplicateObject(GameObject obj)
     {
-        string name = obj.name;
-        return InstantiateObject(Resources.Load(name) as GameObject, obj.transform);
+        string name = obj.GetComponent<TrackObject>().ID;
+        return InstantiateObject(Resources.Load(name) as GameObject, obj.transform); //TODO LOAD FROM FOLDER, MAKE THESE TO OWN CLASS
     }
 
     private void MoveObjects(int layer)

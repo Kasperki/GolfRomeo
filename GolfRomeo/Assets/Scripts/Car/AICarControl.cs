@@ -172,6 +172,12 @@ public class AICarControl : MonoBehaviour
                                     m_LateralWanderDistance;
             }
 
+            //We are stuck we need to back away
+            if (previousTarget > Time.time)
+            {
+                desiredSpeed = -m_CarController.TopSpeed;
+            }
+
             // accel
             float accelBrakeSensitivity = (desiredSpeed < m_CarController.CurrentSpeed) ? m_BrakeSensitivity : m_AccelSensitivity;
             float accel = Mathf.Clamp((desiredSpeed - m_CarController.CurrentSpeed) * accelBrakeSensitivity, -1, 1);
@@ -236,13 +242,13 @@ public class AICarControl : MonoBehaviour
 
         if (Time.time > stuckOnTrackObjectLast && stuckOnTrackObject)
         {
-            previousTarget = true;
+            previousTarget = Time.time + 0.75f;
             waypointProgressTracker.PreviousPoint();
         }
     }
 
-    private bool stuckOnTrackObject, previousTarget;
-    private float stuckOnTrackObjectLast;
+    private bool stuckOnTrackObject;
+    private float stuckOnTrackObjectLast, previousTarget;
 
     private void OnCollisionExit(Collision collision)
     {

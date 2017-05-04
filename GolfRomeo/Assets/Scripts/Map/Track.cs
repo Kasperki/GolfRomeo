@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class Track : Singleton<Track>
 {
+    //Track Layers
     public const int TerrainMask = 11;
     public const int TrackObjectsMask = 12;
     public const int CheckpointsMask = 13;
     public const int AIWaypointsMask = 14;
 
+    //Track Physic Materials
+    public PhysicMaterial SoftMaterial;
+
+    //Track Metadata
     public string Name;
     public Vector2 HeightMapSize;
     public Vector3 TextureMapSize;
 
+    //Track objects
     public Terrain Terrain;
     public GameObject ObjectsParent;
     public LapTracker LapTracker; //Checkpoints parent

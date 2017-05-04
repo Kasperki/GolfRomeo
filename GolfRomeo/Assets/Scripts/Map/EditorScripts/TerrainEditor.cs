@@ -21,35 +21,27 @@ public class TerrainEditor : MonoBehaviour
         brushRendererMesh = BrushRenderer.GetComponent<MeshFilter>();
     }
 
-    public void CCC ()
+    private void UpdateBrush()
     {
-        //SET BRUSH GRAPHICS
+        BrushRenderer.enabled = true;
+
         BrushSize += (int)Input.mouseScrollDelta.y * 5;
         BrushSize = Mathf.Clamp(BrushSize, MIN_BRUSH_SIZE, MAX_BRUSH_SIZE);
 
-        BrushRenderer.transform.eulerAngles = new Vector3(-90,0,0);
-        BrushRenderer.transform.position = new Vector3(BrushRenderer.transform.position.x, -4.5f, BrushRenderer.transform.position.z);
+        BrushRenderer.transform.position = new Vector3(transform.position.x, -5.75f, transform.position.z);
         BrushRenderer.transform.localScale = new Vector3(1 * BrushSize / 10, 1 * BrushSize / 10, 1);
-        BrushRenderer.enabled = true;
 
+        UpdateBrushCursorMesh();
+    }
+
+    private void UpdateBrushCursorMesh()
+    {
         Vector3[] vertices = brushRendererMesh.mesh.vertices;
         var verticesCopy = new Vector3[vertices.Length];
 
         for (int i = 0; i < verticesCopy.Length; i++)
         {
             verticesCopy[i] = BrushRenderer.transform.TransformPoint(vertices[i]);
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            var d = terrainHeightEditor.GetTerrainHeightAtPos(transform.position);
-            Debug.Log("mousePos" + transform.position + "height:" + d);
-
-            for (int i = 0; i < 20; i++)
-            {
-                var k = terrainHeightEditor.GetTerrainHeightAtPos(verticesCopy[i]);
-                Debug.Log("verticesPosition" + verticesCopy[i] + "height:" + k);
-            }
         }
 
         verticesCopy = terrainHeightEditor.CoordinatesToTerrain(verticesCopy);
@@ -60,7 +52,11 @@ public class TerrainEditor : MonoBehaviour
         }
 
         BrushRenderer.GetComponent<MeshFilter>().mesh.vertices = vertices;
+    }
 
+    public void UpdateTerrainEditorTools ()
+    {
+        UpdateBrush();
 
         //EDIT TERRAIN
         if (Input.GetKeyDown(KeyCode.Y))
