@@ -30,6 +30,7 @@ public class TerrainEditor : MonoBehaviour
 
         BrushRenderer.transform.position = new Vector3(transform.position.x, -5.75f, transform.position.z);
         BrushRenderer.transform.localScale = new Vector3(1 * BrushSize / 10, 1 * BrushSize / 10, 1);
+        BrushRenderer.transform.eulerAngles = new Vector3(-90, 0, 0);
 
         UpdateBrushCursorMesh();
     }

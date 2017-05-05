@@ -15,7 +15,7 @@ public class CursorEditor : MonoBehaviour
 
     private GameObject lastHoveredObject;
     private Vector3 raycastOrigin, raycastDirection;
-    private Vector3 raycastPos;
+    private Vector3 raycastPos = new Vector3(-30,10,10);
     private float raycastLength;
 
     //Track spesific
@@ -46,7 +46,7 @@ public class CursorEditor : MonoBehaviour
         }
         else
         {
-            raycastPos += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * Time.deltaTime * 4;
+            raycastPos += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * Time.deltaTime * 6;
             raycastOrigin = raycastPos;
             raycastDirection = -Vector3.up;
             raycastLength = 20;

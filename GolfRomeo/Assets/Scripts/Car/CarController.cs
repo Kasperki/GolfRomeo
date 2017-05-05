@@ -239,10 +239,12 @@ public class CarController : MonoBehaviour
     {
         if (CurrentSpeed < 15 && collision.collider.gameObject.layer == Track.TrackObjectsMask)
         {
-            if (collision.collider.material.name.Equals(Track.Instance.SoftMaterial.name))
-                return;
+            var trackObject = collision.collider.gameObject.GetComponent<TrackObject>();
 
-            Car.Health -= rgbd.velocity.magnitude;
+            if (trackObject != null && trackObject.SoftCollision == false)
+            {
+                Car.Health -= rgbd.velocity.magnitude;
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ public class WaypointProgressTracker : MonoBehaviour
     private WayPointCircuit circuit; // A reference to the waypoint-based route we should follow
 
     [SerializeField]
-    private float lookAheadForTargetOffset = 3;
+    private float lookAheadForTargetOffset = 2;
     // The offset ahead along the route that the we will aim for
 
     [SerializeField]
@@ -89,7 +89,7 @@ public class WaypointProgressTracker : MonoBehaviour
     public void PreviousPoint()
     {
         progressNum--;
-        progressDistance -= 0.5f;
+        progressDistance--;
     }
 
     private void Update()

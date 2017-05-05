@@ -10,9 +10,6 @@ public class Track : Singleton<Track>
     public const int CheckpointsMask = 13;
     public const int AIWaypointsMask = 14;
 
-    //Track Physic Materials
-    public PhysicMaterial SoftMaterial;
-
     //Track Metadata
     public string Name;
     public Vector2 HeightMapSize;

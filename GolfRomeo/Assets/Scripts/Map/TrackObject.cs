@@ -5,6 +5,7 @@ using UnityEngine;
 public class TrackObject : MonoBehaviour, IEditable
 {
     public string ID;
+    public bool SoftCollision;
 
     private bool[] cachedTriggerInfo;
     private bool hover;
