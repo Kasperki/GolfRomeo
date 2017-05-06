@@ -2,51 +2,51 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CursorUI : MonoBehaviour
+public class CursorUI : EditorUI
 {
-    public CursorEditor CursorEditor;
-    public GameObject UIParent;
-    public RectTransform ButtonsRect;
-    public List<Button> Buttons;
-
+    public GameObject EditorObject;
     public TerrainEditorUI TerrainEditorUI;
+    public TerrainTextureEditorUI TerrainTextureEditorUI;
+    public TrackObjectsUI TrackObjectsUI;
 
-    private int selection;
-    private InputManagerExtension inputManager;
+    private GameObject testCar;
 
-	void Start ()
-    {
-        inputManager = gameObject.AddComponent<InputManagerExtension>();
-	}
-	
-	void Update ()
+	new void Update ()
     {
         transform.eulerAngles = Vector3.zero;
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            UIParent.SetActive(true);
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            UIParent.SetActive(false);
+            Init();
         }
 
-        if (inputManager.LeftTriggerDown() && selection > 0)
-        {
-            ButtonsRect.position += new Vector3(2.5f, 0);
-            selection--;
-        }
-        else if (inputManager.RightTriggerDown() && selection < Buttons.Count - 1)
-        {
-            ButtonsRect.position -= new Vector3(2.5f, 0);
-            selection++;
-        }
+        base.Update();
+    }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+    public void Init()
+    {
+        EditorObject.SetActive(true);
+        Destroy(testCar);
+
+        if (TerrainEditorUI.gameObject.activeSelf == false && TerrainTextureEditorUI.gameObject.activeSelf == false && TrackObjectsUI == false)
         {
-            Buttons[selection].onClick.Invoke();
+            Open();
         }
+    }
+
+    public void Exit()
+    {
+        EditorObject.SetActive(false);
+    }
+
+    public override void Open()
+    {
+        ButtonsRect.gameObject.SetActive(true);
+    }
+
+    public override void Close()
+    {
+        ButtonsRect.gameObject.SetActive(false);
     }
 
     public void EditTerrain()
@@ -55,28 +55,37 @@ public class CursorUI : MonoBehaviour
         Close();
     }
 
+    public void EditTexture()
+    {
+        TerrainTextureEditorUI.Open();
+        Close();
+    }
+
     public void EditObjects()
     {
-        CursorEditor.EditMode = EditMode.Objects;
+        TrackObjectsUI.Open();
+        Close();
     }
 
     public void TestMap()
     {
-        //SPAWN CAR WITH THIS CURSOR CONTROL SCHEME
+        Player player = new Player();
+        player.ControllerScheme = new ControllerScheme()
+        {
+            HorizontalAxis = "Horizontal",
+            VerticalAxis = "Vertical"
+        };
+
+        testCar = Instantiate(Resources.Load("Cars/" + player.CarType.ToString())) as GameObject;
+        testCar.GetComponent<Car>().Init(player);
+        testCar.transform.position = transform.position;
+
+        Exit();
     }
 
     public void Save()
     {
+        Exit();
         //OPEN SAVE DIALOG, SAVE OR DISCARD
-    }
-
-    public void Open()
-    {
-        ButtonsRect.gameObject.SetActive(true);
-    }
-
-    public void Close()
-    {
-        ButtonsRect.gameObject.SetActive(false);
     }
 }

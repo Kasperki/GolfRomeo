@@ -21,7 +21,7 @@ public class CursorEditor : MonoBehaviour
     //Track spesific
     public GameObject CheckpointPrefab, WaypointPrefab;
 
-    private TerrainEditor terrainEditor;
+    public TerrainEditor terrainEditor;
 
     public KeyCode Select = KeyCode.Space;
     public KeyCode Delete = KeyCode.Delete;
@@ -63,7 +63,7 @@ public class CursorEditor : MonoBehaviour
     {
         //DEBUGGGs
         if (Input.GetKeyDown(KeyCode.Alpha2))
-            EditMode = EditMode.Terrain;
+            EditMode = EditMode.TerrainHeightMap;
         if (Input.GetKeyDown(KeyCode.Alpha3))
             EditMode = EditMode.Objects;
         if (Input.GetKeyDown(KeyCode.Alpha4))
@@ -87,8 +87,11 @@ public class CursorEditor : MonoBehaviour
 
         switch (EditMode)
         {
-            case EditMode.Terrain:
-                terrainEditor.UpdateTerrainEditorTools();
+            case EditMode.TerrainHeightMap:
+                terrainEditor.UpdateTerrainHeightMap();
+                break;
+            case EditMode.TerrainTexture:
+                terrainEditor.UpdateTerrainTexture();
                 break;
             case EditMode.Objects:
                 MoveObjects(Track.TrackObjectsMask);
@@ -215,8 +218,9 @@ public class CursorEditor : MonoBehaviour
 
 public enum EditMode
 {
-    Terrain = 0,
-    Objects = 1,
-    AIWaypoints = 2,
-    Checkpoints = 3,
+    TerrainHeightMap = 0,
+    TerrainTexture = 1,
+    Objects = 2,
+    AIWaypoints = 3,
+    Checkpoints = 4,
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TerrainEditor : MonoBehaviour
 {
+    public TerrainEdit TerrainEditMode;
+    public int TextureID;
+
     public Renderer BrushRenderer;
     private MeshFilter brushRendererMesh;
 
@@ -29,7 +32,7 @@ public class TerrainEditor : MonoBehaviour
         BrushSize = Mathf.Clamp(BrushSize, MIN_BRUSH_SIZE, MAX_BRUSH_SIZE);
 
         BrushRenderer.transform.position = new Vector3(transform.position.x, -5.75f, transform.position.z);
-        BrushRenderer.transform.localScale = new Vector3(1 * BrushSize / 10, 1 * BrushSize / 10, 1);
+        BrushRenderer.transform.localScale = new Vector3(BrushSize / 7, BrushSize / 7, 1);
         BrushRenderer.transform.eulerAngles = new Vector3(-90, 0, 0);
 
         UpdateBrushCursorMesh();
@@ -55,34 +58,58 @@ public class TerrainEditor : MonoBehaviour
         BrushRenderer.GetComponent<MeshFilter>().mesh.vertices = vertices;
     }
 
-    public void UpdateTerrainEditorTools ()
+    public void UpdateTerrainHeightMap ()
     {
         UpdateBrush();
 
-        //EDIT TERRAIN
-        if (Input.GetKeyDown(KeyCode.Y))
+        if (Input.GetKey(KeyCode.K))
         {
-            terrainHeightEditor.RaiseTerrain(TerrainHeightEditModifier, BrushSize);
-        }
-
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            terrainHeightEditor.RaiseTerrainSmooth(TerrainHeightEditModifier, BrushSize);
-        }
-
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            terrainHeightEditor.RaiseTerrainSmooth(-TerrainHeightEditModifier, BrushSize);
-        }
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            terrainHeightEditor.SmoothTerrain(BrushSize);
-        }
-
-        if (Input.GetKey(KeyCode.B))
-        {
-            terrainHeightEditor.UpdateTerrainTexture(1, BrushSize);
+            switch (TerrainEditMode)
+            {
+                case TerrainEdit.Raise:
+                    terrainHeightEditor.RaiseTerrain(TerrainHeightEditModifier, BrushSize);
+                    break;
+                case TerrainEdit.Lower:
+                    terrainHeightEditor.RaiseTerrain(-TerrainHeightEditModifier, BrushSize);
+                    break;
+                case TerrainEdit.RaiseSmooth:
+                    terrainHeightEditor.RaiseTerrainSmooth(TerrainHeightEditModifier, BrushSize);
+                    break;
+                case TerrainEdit.LowerSmooth:
+                    terrainHeightEditor.RaiseTerrainSmooth(-TerrainHeightEditModifier, BrushSize);
+                    break;
+                case TerrainEdit.Smooth:
+                    terrainHeightEditor.SmoothTerrain(BrushSize);
+                    break;
+                default:
+                    break;
+            }
         }
     }
+
+    public void UpdateTerrainTexture()
+    {
+        UpdateBrush();
+
+        if (Input.GetKey(KeyCode.K))
+        {
+            terrainHeightEditor.UpdateTerrainTexture(TextureID, BrushSize);
+        }
+    }
+}
+
+public enum TerrainEdit
+{
+    Raise = 0,
+    Lower = 1,
+    RaiseSmooth = 2,
+    LowerSmooth = 3,
+    Smooth = 4
+}
+
+public enum TerrainTextures
+{
+    Desert = 0,
+    Asflat = 1,
+    WhiteLine = 2,
 }

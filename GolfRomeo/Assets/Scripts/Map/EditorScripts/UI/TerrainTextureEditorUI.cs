@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TerrainEditorUI : EditorUI
+public class TerrainTextureEditorUI : EditorUI
 {
     private CursorUI CursorEditorUI;
 
@@ -15,7 +15,7 @@ public class TerrainEditorUI : EditorUI
     public override void Open()
     {
         ButtonsRect.gameObject.SetActive(true);
-        CursorEditor.EditMode = EditMode.TerrainHeightMap;
+        CursorEditor.EditMode = EditMode.TerrainTexture;
     }
 
     public override void Close()
@@ -24,21 +24,22 @@ public class TerrainEditorUI : EditorUI
         CursorEditorUI.Open();
     }
 
-    public void RaiseTerrain()
+
+    public void Desert()
     {
-        CursorEditor.terrainEditor.TerrainEditMode = TerrainEdit.RaiseSmooth;
+        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Desert;
         CursorEditorUI.Exit();
     }
 
-    public void LowerTerrain()
+    public void Asflat()
     {
-        CursorEditor.terrainEditor.TerrainEditMode = TerrainEdit.LowerSmooth;
+        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Asflat;
         CursorEditorUI.Exit();
     }
 
-    public void SmoothTerrain()
+    public void WhiteLine()
     {
-        CursorEditor.terrainEditor.TerrainEditMode = TerrainEdit.Smooth;
+        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.WhiteLine;
         CursorEditorUI.Exit();
     }
 }

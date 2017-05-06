@@ -9,7 +9,7 @@ public class TerrainHeightEditor : MonoBehaviour
     public Terrain terrain;
     public bool InitOnStart;
 
-    private const float MaxHeight = 0.025f;
+    private const float MaxHeight = 0.020f;
     private const float MinHeight = 0;
     private const float BaseHeight = 0.01f;
 
