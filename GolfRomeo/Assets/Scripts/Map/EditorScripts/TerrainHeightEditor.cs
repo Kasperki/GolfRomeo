@@ -100,13 +100,30 @@ public class TerrainHeightEditor : MonoBehaviour
         {
             for (int y = 0; y < alphas.GetLength(1); y++)
             {
-                alphas[x, y, textureID] = 1;
-
-                for (int i = 0; i < terrain.terrainData.alphamapLayers; i++)
+                var distance = (new Vector2(x, y) - new Vector2(offset, offset)).magnitude / offset;
+                if (distance < 1)
                 {
-                    if (i != textureID)
+                    alphas[x, y, textureID] = 1;
+
+                    for (int i = 0; i < terrain.terrainData.alphamapLayers; i++)
                     {
-                        alphas[x, y, i] = 0;
+                        if (i != textureID)
+                        {
+                            alphas[x, y, i] = 0;
+                        }
+                    }
+                }
+
+                var x1 = Input.GetAxis("Horizontal");
+                var y1 = Input.GetAxis("Vertical");
+
+                var dotProduct = Vector2.Dot(new Vector2(x1, y1), new Vector2(y, x) - new Vector2(offset, offset));
+
+                if (dotProduct > 0)
+                {
+                    if (distance > 0.95f && distance < 1.1f)
+                    {
+                        alphas[x, y, 2] = 0.85f;
                     }
                 }
             }

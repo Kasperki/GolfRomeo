@@ -15,9 +15,9 @@ public class CursorUI : EditorUI
     {
         transform.eulerAngles = Vector3.zero;
 
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (EditorObject.activeSelf == false)
         {
-            Init();
+            return;
         }
 
         base.Update();
@@ -28,7 +28,7 @@ public class CursorUI : EditorUI
         EditorObject.SetActive(true);
         Destroy(testCar);
 
-        if (TerrainEditorUI.gameObject.activeSelf == false && TerrainTextureEditorUI.gameObject.activeSelf == false && TrackObjectsUI == false)
+        if (TerrainEditorUI.gameObject.activeSelf == false && TerrainTextureEditorUI.gameObject.activeSelf == false && TrackObjectsUI.gameObject.activeSelf == false)
         {
             Open();
         }
@@ -46,7 +46,14 @@ public class CursorUI : EditorUI
 
     public override void Close()
     {
-        ButtonsRect.gameObject.SetActive(false);
+        if (TerrainEditorUI.gameObject.activeSelf == false && TerrainTextureEditorUI.gameObject.activeSelf == false && TrackObjectsUI.gameObject.activeSelf == false)
+        {
+            Exit();
+        }
+        else
+        {
+            ButtonsRect.gameObject.SetActive(false);
+        }
     }
 
     public void EditTerrain()

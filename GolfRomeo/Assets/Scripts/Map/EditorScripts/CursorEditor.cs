@@ -18,21 +18,19 @@ public class CursorEditor : MonoBehaviour
     private Vector3 raycastPos = new Vector3(-30,10,10);
     private float raycastLength;
 
-    //Track spesific
-    public GameObject CheckpointPrefab, WaypointPrefab;
-
-    public TerrainEditor terrainEditor;
-
-    public KeyCode Select = KeyCode.Space;
-    public KeyCode Delete = KeyCode.Delete;
-
     private bool selected;
     private GameObject selectedIEditable;
+
+    public GameObject ObjectPrefab, CheckpointPrefab, WaypointPrefab;
+    public TerrainEditor terrainEditor;
+
+    private CursorUI cursorUI;
 
     private void Awake()
     {
         cursorMaterial = Renderer.material;
         terrainEditor = GetComponent<TerrainEditor>();
+        cursorUI = GetComponentInChildren<CursorUI>();
     }
     
     private RaycastHit RaycastAgainstTerrain(int cursorHitLayer)
@@ -46,7 +44,11 @@ public class CursorEditor : MonoBehaviour
         }
         else
         {
-            raycastPos += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * Time.deltaTime * 6;
+            if (cursorUI.EditorObject.activeSelf == false)
+            {
+                raycastPos += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * Time.deltaTime * 6;
+            }
+
             raycastOrigin = raycastPos;
             raycastDirection = -Vector3.up;
             raycastLength = 20;
@@ -61,20 +63,16 @@ public class CursorEditor : MonoBehaviour
 
     void Update ()
     {
-        //DEBUGGGs
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            EditMode = EditMode.TerrainHeightMap;
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            EditMode = EditMode.Objects;
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-            EditMode = EditMode.Checkpoints;
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-            EditMode = EditMode.AIWaypoints;
-
         cursorMaterial.color = Normal;
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            cursorUI.Init();
+        }
 
         int cursorHitLayer = 1 << Track.TerrainMask;
         var hit = RaycastAgainstTerrain(cursorHitLayer);
+        terrainEditor.BrushRenderer.enabled = false;
 
         //TODO CLAMP
         if (hit.collider != null)
@@ -120,6 +118,11 @@ public class CursorEditor : MonoBehaviour
         }
     }
 
+    public void CreateNewObject(GameObject prefab)
+    {
+        InstantiateObject(prefab, Track.Instance.ObjectsParent.transform);
+    }
+
     private GameObject InstantiateObject(GameObject obj, Transform parent)
     {
         var gameObj = Instantiate(obj);
@@ -137,7 +140,7 @@ public class CursorEditor : MonoBehaviour
     private GameObject DuplicateObject(GameObject obj)
     {
         string name = obj.GetComponent<TrackObject>().ID;
-        return InstantiateObject(Resources.Load(name) as GameObject, obj.transform); //TODO LOAD FROM FOLDER, MAKE THESE TO OWN CLASS
+        return InstantiateObject(Resources.Load("Objects/" + name) as GameObject, obj.transform); //TODO LOAD FROM FOLDER, MAKE THESE TO OWN CLASS
     }
 
     private void MoveObjects(int layer)
@@ -175,6 +178,15 @@ public class CursorEditor : MonoBehaviour
                 }
 
                 lastHoveredObject = hit.collider.gameObject;
+
+                //DUPLICATE
+                if (selectedIEditable == null)
+                {
+                    if (Input.GetKeyDown(KeyCode.H))
+                    {
+                        DuplicateObject(lastHoveredObject);
+                    }
+                }
             }
         }
 
@@ -191,12 +203,6 @@ public class CursorEditor : MonoBehaviour
             {
                 selectedIEditable.GetComponent<IEditable>().OnDelete();
                 selectedIEditable = null;
-            }
-
-            //DUPLICATE
-            if (Input.GetKeyDown(KeyCode.H))
-            {
-                DuplicateObject(selectedIEditable);
             }
 
             //DESELECT

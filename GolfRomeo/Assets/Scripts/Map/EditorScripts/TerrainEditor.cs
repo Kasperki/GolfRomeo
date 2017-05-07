@@ -62,7 +62,7 @@ public class TerrainEditor : MonoBehaviour
     {
         UpdateBrush();
 
-        if (Input.GetKey(KeyCode.K))
+        if (Input.GetKey(KeyCode.Space))
         {
             switch (TerrainEditMode)
             {
@@ -91,7 +91,7 @@ public class TerrainEditor : MonoBehaviour
     {
         UpdateBrush();
 
-        if (Input.GetKey(KeyCode.K))
+        if (Input.GetKey(KeyCode.Space))
         {
             terrainHeightEditor.UpdateTerrainTexture(TextureID, BrushSize);
         }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,11 +29,17 @@ public class TrackObjectsUI : EditorUI
             var button = gameObj.AddComponent<Button>();
             var image = gameObj.AddComponent<Image>();
             button.targetGraphic = image;
-            //image.sprite = obj.icon;
+
+            Texture2D prev = AssetPreview.GetAssetPreview(obj.gameObject);
+            if (prev != null)
+            {
+                var sprite = Sprite.Create(prev, new Rect(0, 0, prev.width, prev.height), Vector2.zero);
+                image.sprite = sprite;
+            }
 
             button.onClick.AddListener(() =>  {
-                CursorEditor.CheckpointPrefab = Resources.Load("Objects/" + trackObj.ID) as GameObject;
-
+                CursorEditor.CreateNewObject(Resources.Load("Objects/" + trackObj.ID) as GameObject);
+                CursorEditorUI.Exit();
             });
 
             Buttons.Add(button);

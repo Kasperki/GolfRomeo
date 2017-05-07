@@ -24,7 +24,6 @@ public class TerrainTextureEditorUI : EditorUI
         CursorEditorUI.Open();
     }
 
-
     public void Desert()
     {
         CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Desert;

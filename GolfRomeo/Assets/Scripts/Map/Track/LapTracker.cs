@@ -40,11 +40,6 @@ public class LapTracker : Singleton<LapTracker>
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            StartRace();
-        }
-
         Cars = Cars.OrderByDescending(x => x.CurrentLap)
         .ThenByDescending(x => x.CurrentCheckpointID)
         .ThenBy(x => (x.car.transform.position - Checkpoints[x.NextCheckpointID].transform.position).magnitude)
