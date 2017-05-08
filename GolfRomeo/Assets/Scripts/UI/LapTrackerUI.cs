@@ -18,6 +18,8 @@ public class LapTrackerUI : MonoBehaviour
 
 	public void Init()
     {
+        gameObject.SetActive(true);
+
         lapTracker = Track.Instance.LapTracker;
         track = Track.Instance;
 

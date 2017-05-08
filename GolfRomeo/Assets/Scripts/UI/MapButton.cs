@@ -23,7 +23,8 @@ public class MapButton : MonoBehaviour
     {
         text.text = track;
 
-        button.onClick.AddListener(() => {
+        button.onClick.AddListener(() => 
+        {
             selected = !selected;
 
             if (selected)

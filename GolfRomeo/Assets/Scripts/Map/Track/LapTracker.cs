@@ -10,6 +10,8 @@ public class LapTracker : Singleton<LapTracker>
     public Checkpoint[] Checkpoints { get { return GetComponentsInChildren<Checkpoint>(); } }
     public List<LapInfo> Cars;
 
+    public LapTrackerUI LapTrackerUI;
+
     private float raceStartTime;
 
     public float LenghtInKilometers
@@ -60,7 +62,7 @@ public class LapTracker : Singleton<LapTracker>
             cars[i].transform.rotation = startSquares[i % (startSquares.Length)].transform.rotation;
         }
 
-        FindObjectOfType<LapTrackerUI>().Init();
+        LapTrackerUI.Init();
         raceStartTime = Time.time;
 
         StartCoroutine(StartCountDown());
@@ -68,6 +70,14 @@ public class LapTracker : Singleton<LapTracker>
 
     private IEnumerator StartCountDown()
     {
+        var startTime = Time.time + 3;
+
+        while (Time.time < startTime)
+        {
+
+            yield return null;
+        }
+
         GameManager.SetState(State.Game);
         yield return null;
     }

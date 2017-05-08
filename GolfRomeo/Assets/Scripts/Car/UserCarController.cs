@@ -16,6 +16,9 @@ public class UserCarController : MonoBehaviour
 
     public void FixedUpdate()
     {
-        carController.Move(Input.GetAxis(controllerScheme.HorizontalAxis), Input.GetAxis(controllerScheme.VerticalAxis), Input.GetAxis(controllerScheme.VerticalAxis), 0);
+        if (GameManager.CheckState(State.Game) || GameManager.CheckState(State.Edit))
+        {
+            carController.Move(Input.GetAxis(controllerScheme.HorizontalAxis), Input.GetAxis(controllerScheme.VerticalAxis), Input.GetAxis(controllerScheme.VerticalAxis), 0);
+        }
     }
 }

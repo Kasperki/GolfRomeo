@@ -10,7 +10,7 @@ public class RaceManager : Singleton<RaceManager>
 
     public List<string> TrackNames;
     public int CurrentTrack;
-    public int Laps;
+    public int Laps = 1;
 
     //OTHER INFO
     //TODO CALCULATE STADINGS
