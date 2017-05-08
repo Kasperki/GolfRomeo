@@ -28,11 +28,11 @@ public class TerrainEditor : MonoBehaviour
     {
         BrushRenderer.enabled = true;
 
-        BrushSize += (int)Input.mouseScrollDelta.y * 5;
+        BrushSize += (int)(Input.mouseScrollDelta.y * 1.5f);
         BrushSize = Mathf.Clamp(BrushSize, MIN_BRUSH_SIZE, MAX_BRUSH_SIZE);
 
-        BrushRenderer.transform.position = new Vector3(transform.position.x, -5.75f, transform.position.z);
-        BrushRenderer.transform.localScale = new Vector3(BrushSize / 7, BrushSize / 7, 1);
+        BrushRenderer.transform.position = new Vector3(transform.position.x, -5.65f, transform.position.z);
+        BrushRenderer.transform.localScale = new Vector3(BrushSize / 6.8f, BrushSize / 6.8f, 1);
         BrushRenderer.transform.eulerAngles = new Vector3(-90, 0, 0);
 
         UpdateBrushCursorMesh();
@@ -112,4 +112,7 @@ public enum TerrainTextures
     Desert = 0,
     Asflat = 1,
     WhiteLine = 2,
+    RedLine = 3,
+    YellowLine = 4,
+    BlackLine = 5,
 }

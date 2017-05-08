@@ -8,15 +8,20 @@ public class TrackSerializer
 
     private Track track;
     private TerrainSerializer terrainSerializer;
+    private DirectoryHelper directoryHelper;
 
     public TrackSerializer(Track track)
     {
         this.track = track;
         terrainSerializer = new TerrainSerializer(track);
+
+        directoryHelper = new DirectoryHelper();
     }
 	
     public void SaveWorld(string name)
     {
+        name = directoryHelper.GetPathToMap(name);
+
         using (FileStream file = new FileStream(name + mapFileExtension, FileMode.Create, FileAccess.Write))
         {
             using (StreamReader sr = new StreamReader(SerializeMap(name)))
@@ -33,6 +38,8 @@ public class TrackSerializer
 
     public TrackDTO LoadWorld(string name)
     {
+        name = directoryHelper.LoadTrackPath(name);
+
         FileStream fs = new FileStream(name + mapFileExtension, FileMode.Open, FileAccess.Read);
         XmlSerializer serializer = new XmlSerializer(typeof(TrackDTO));
 

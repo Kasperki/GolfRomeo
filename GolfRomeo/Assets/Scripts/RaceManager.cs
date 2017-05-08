@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class RaceManager : Singleton<RaceManager>
 {
+    public const int MaxPlayers = 8;
     public List<Player> Players;
 
     public List<string> TrackNames;

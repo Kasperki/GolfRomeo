@@ -25,7 +25,7 @@ public abstract class EditorUI : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape))
         {
             Close();
         }
@@ -41,7 +41,7 @@ public abstract class EditorUI : MonoBehaviour
             selection++;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Space))
         {
             Buttons[selection].onClick.Invoke();
         }

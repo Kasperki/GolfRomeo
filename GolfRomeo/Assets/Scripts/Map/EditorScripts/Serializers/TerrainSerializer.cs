@@ -40,7 +40,7 @@ public class TerrainSerializer
         var heightMap = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapHeight);
         return ToBytes(heightMap);
     }
-
+    
     public float[,,] DeserializeTextureMap(string name, Vector3 textureMapSize)
     {
         var alphaMap = new float[(int)textureMapSize.x, (int)textureMapSize.y, (int)textureMapSize.z];

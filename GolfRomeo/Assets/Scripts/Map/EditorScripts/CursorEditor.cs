@@ -73,6 +73,7 @@ public class CursorEditor : MonoBehaviour
         int cursorHitLayer = 1 << Track.TerrainMask;
         var hit = RaycastAgainstTerrain(cursorHitLayer);
         terrainEditor.BrushRenderer.enabled = false;
+        Renderer.enabled = true;
 
         //TODO CLAMP
         if (hit.collider != null)
@@ -86,9 +87,11 @@ public class CursorEditor : MonoBehaviour
         switch (EditMode)
         {
             case EditMode.TerrainHeightMap:
+                Renderer.enabled = false;
                 terrainEditor.UpdateTerrainHeightMap();
                 break;
             case EditMode.TerrainTexture:
+                Renderer.enabled = false;
                 terrainEditor.UpdateTerrainTexture();
                 break;
             case EditMode.Objects:

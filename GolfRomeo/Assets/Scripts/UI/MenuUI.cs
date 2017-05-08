@@ -5,12 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class MenuUI : MonoBehaviour
 {
-    public void PlayMap()
-    {
-        GameManager.SetState(State.Pause);
-        SceneManager.LoadScene("PlayMap");
+    public PlayUI playUI;
 
-        //TODO LOAD SELECTED CARS
+    public void Play()
+    {
+        playUI.Init();
     }
 
     public void EditMap()

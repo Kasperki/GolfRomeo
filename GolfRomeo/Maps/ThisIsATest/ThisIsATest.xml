@@ -274,13 +274,13 @@
     <TrackObjectDTO>
       <ID>TrafficCone</ID>
       <Position>
-        <x>-34.2960358</x>
-        <y>0.08236357</y>
-        <z>1.79853213</z>
+        <x>-34.2961273</x>
+        <y>0.08235727</y>
+        <z>1.79857683</z>
       </Position>
       <Rotation>
         <x>270</x>
-        <y>25.36769</y>
+        <y>25.3598061</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>

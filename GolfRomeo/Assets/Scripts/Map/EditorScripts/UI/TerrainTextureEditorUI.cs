@@ -41,4 +41,10 @@ public class TerrainTextureEditorUI : EditorUI
         CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.WhiteLine;
         CursorEditorUI.Exit();
     }
+
+    public void RedLine()
+    {
+        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.RedLine;
+        CursorEditorUI.Exit();
+    }
 }
