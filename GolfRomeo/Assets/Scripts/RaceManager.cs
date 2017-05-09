@@ -7,6 +7,7 @@ public class RaceManager : Singleton<RaceManager>
 {
     public const int MaxPlayers = 8;
     public List<Player> Players;
+    public StadingsCalculator StandingsCalculator;
 
     public List<string> TrackNames;
     public int CurrentTrack;
@@ -32,7 +33,7 @@ public class RaceManager : Singleton<RaceManager>
     public void LoadNextRace()
     {
         //TODO CLEAN UP
-
+        StandingsCalculator = new StadingsCalculator(Players);
 
         //Load World
         Track.Instance.LoadWorld(TrackNames[CurrentTrack++]);

@@ -46,6 +46,8 @@ public class LapTracker : Singleton<LapTracker>
         .ThenByDescending(x => x.CurrentCheckpointID)
         .ThenBy(x => (x.car.transform.position - Checkpoints[x.NextCheckpointID].transform.position).magnitude)
         .ToList();
+
+        //TODO WHEN FIRST IS AN GOAL + 30sec and end race.
     }
 
     public void StartRace()
