@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TrackObjectsUI : EditorUI
+public class TrackObjectsUI : CursorEditorUI
 {
     private CursorUI CursorEditorUI;
 

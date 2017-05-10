@@ -5,7 +5,7 @@ using System.Text;
 
 public class GameManager : Singleton<GameManager>
 {
-    private static State e_state = State.Edit;
+    private static State e_state = State.Menu;
 
     /// <summary>
     /// Returns current state

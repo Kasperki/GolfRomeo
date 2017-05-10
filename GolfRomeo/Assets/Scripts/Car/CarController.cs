@@ -27,7 +27,7 @@ public class CarController : MonoBehaviour
     public const float SPEED_MULTIPLIER = 5.6f;
     public float CurrentSpeed { get { return rgbd.velocity.magnitude * SPEED_MULTIPLIER; } }
 
-    public ParticleController ParticleController;
+    public CarParticleController ParticleController;
 
     private void Start()
     {
@@ -149,7 +149,7 @@ public class CarController : MonoBehaviour
 
             if (axleInfo.addDownForce == true)
             {
-                AddDownForce(axleInfo); //TODO.. remove down force when tiers are gone.
+                AddDownForce(axleInfo); //TODO.. remove down force when tiers are gone. & change tiers damping values?
             }
         }
 
@@ -237,7 +237,7 @@ public class CarController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (CurrentSpeed < 15 && collision.collider.gameObject.layer == Track.TrackObjectsMask)
+        if (CurrentSpeed < 15 && collision.collider.gameObject.layer == (int)TrackMask.TrackObjects)
         {
             var trackObject = collision.collider.gameObject.GetComponent<TrackObject>();
 

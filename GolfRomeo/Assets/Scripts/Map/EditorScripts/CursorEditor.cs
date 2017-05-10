@@ -25,6 +25,7 @@ public class CursorEditor : MonoBehaviour
     public TerrainEditor terrainEditor;
 
     private CursorUI cursorUI;
+    //TODO ADD CONTROLC SCHEME.. remove all keycode.
 
     private void Awake()
     {
@@ -70,7 +71,7 @@ public class CursorEditor : MonoBehaviour
             cursorUI.Init();
         }
 
-        int cursorHitLayer = 1 << Track.TerrainMask;
+        int cursorHitLayer = 1 << (int)TrackMask.Terrain;
         var hit = RaycastAgainstTerrain(cursorHitLayer);
         terrainEditor.BrushRenderer.enabled = false;
         Renderer.enabled = true;
@@ -95,7 +96,7 @@ public class CursorEditor : MonoBehaviour
                 terrainEditor.UpdateTerrainTexture();
                 break;
             case EditMode.Objects:
-                MoveObjects(Track.TrackObjectsMask);
+                MoveObjects((int)TrackMask.TrackObjects);
                 break;
             case EditMode.AIWaypoints:
                 if (Input.GetKeyDown(KeyCode.I))
@@ -104,7 +105,7 @@ public class CursorEditor : MonoBehaviour
                     FindObjectOfType<WayPointCircuit>().CachePositionsAndDistances();
                 }
 
-                MoveObjects(Track.AIWaypointsMask);
+                MoveObjects((int)TrackMask.AIWaypoints);
                 break;
             case EditMode.Checkpoints:
                 if (Input.GetKeyDown(KeyCode.I))
@@ -113,7 +114,7 @@ public class CursorEditor : MonoBehaviour
                     obj.GetComponent<Checkpoint>().SetOrder();
                 }
 
-                MoveObjects(Track.CheckpointsMask);
+                MoveObjects((int)TrackMask.Checkpoints);
 
                 break;
             default:
@@ -123,7 +124,7 @@ public class CursorEditor : MonoBehaviour
 
     public void CreateNewObject(GameObject prefab)
     {
-        InstantiateObject(prefab, Track.Instance.ObjectsParent.transform);
+        InstantiateObject(prefab, Track.Instance.TrackObjectsParent.transform);
     }
 
     private GameObject InstantiateObject(GameObject obj, Transform parent)

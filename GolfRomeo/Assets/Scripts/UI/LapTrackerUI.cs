@@ -26,7 +26,7 @@ public class LapTrackerUI : MonoBehaviour
         MapName.text = track.Name;
         LapRecord.text = "TR:" + "T0:D0";
 
-        Laps.text = lapTracker.Laps + " laps";
+        Laps.text = RaceManager.Instance.Laps + " laps";
 
         carInfoUIs = new List<CarInfo>();
 

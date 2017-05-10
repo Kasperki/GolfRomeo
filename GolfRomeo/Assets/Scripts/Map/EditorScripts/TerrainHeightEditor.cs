@@ -7,7 +7,6 @@ using UnityEngine;
 public class TerrainHeightEditor : MonoBehaviour
 {
     public Terrain terrain;
-    public bool InitOnStart;
 
     private const float MaxHeight = 0.020f;
     private const float MinHeight = 0;
@@ -18,17 +17,13 @@ public class TerrainHeightEditor : MonoBehaviour
 
     void Start ()
     {
+        terrain = Track.Instance.Terrain;
+
         heightmapWidth = terrain.terrainData.heightmapWidth;
         heightmapHeight = terrain.terrainData.heightmapHeight;
-
-        if (InitOnStart)
-        {
-            InitTerrain(BaseHeight);
-        }
     }
 	
-    //TODO MOVE ELSEWHERE!
-    void InitTerrain(float height)
+    void NewEmptyTerrain(float height)
     {
         float[,] heigthmapSize = new float[terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapHeight];
         for (int x = 0; x < heigthmapSize.GetLength(0); x++)
@@ -114,7 +109,7 @@ public class TerrainHeightEditor : MonoBehaviour
                     }
                 }
 
-                var x1 = Input.GetAxis("Horizontal");
+                /*var x1 = Input.GetAxis("Horizontal");
                 var y1 = Input.GetAxis("Vertical");
 
                 var dotProduct = Vector2.Dot(new Vector2(x1, y1), new Vector2(y, x) - new Vector2(offset, offset));
@@ -140,7 +135,7 @@ public class TerrainHeightEditor : MonoBehaviour
                             alphas[x + 1, y, 2] = 0.5f;
                         }
                     }
-                }
+                }*/
             }
         }
 
@@ -177,14 +172,9 @@ public class TerrainHeightEditor : MonoBehaviour
             int offset = 0;
             Vector4 terrainPosition = GetTerrainPosition(pos[i] - terrain.gameObject.transform.position, 1, out offset);
 
-            for (int x = (int)terrainPosition.x; x < terrainPosition.x + terrainPosition.z; x++)
-            {
-                for (int y = (int)terrainPosition.y; y < terrainPosition.y + terrainPosition.w; y++)
-                {
-                    pos[i] = new Vector3(pos[i].x, pos[i].y, heights[y, x] * 1200);
-                    break;
-                }
-            }
+            int x = (int)terrainPosition.x;
+            int y = (int)terrainPosition.y;
+            pos[i] = new Vector3(pos[i].x, pos[i].y, heights[y, x] * 1200);
         }
 
         return pos;
@@ -196,16 +186,7 @@ public class TerrainHeightEditor : MonoBehaviour
 
         int offset = 0;
         Vector4 terrainPosition = GetTerrainPosition(pos - terrain.gameObject.transform.position, 1, out offset);
-
-        for (int x = (int)terrainPosition.x; x < terrainPosition.x + terrainPosition.z; x++)
-        {
-            for (int y = (int)terrainPosition.y; y < terrainPosition.y + terrainPosition.w; y++)
-            {
-                return heights[y, x];
-            }
-        }
-
-        return 0;
+        return heights[(int)terrainPosition.y, (int)terrainPosition.x];
     }
 
     public void RaiseTerrainSmooth(float raiseAmount, int size)

@@ -4,10 +4,10 @@ using Random = UnityEngine.Random;
 
 
 [RequireComponent(typeof(CarController))]
-[RequireComponent(typeof(WaypointProgressTracker))]
+[RequireComponent(typeof(AIWaypointProgressTracker))]
 public class AICarControl : MonoBehaviour
 {
-    WaypointProgressTracker waypointProgressTracker;
+    AIWaypointProgressTracker waypointProgressTracker;
 
     public enum BrakeCondition
     {
@@ -69,7 +69,7 @@ public class AICarControl : MonoBehaviour
 
     private void Awake()
     {
-        waypointProgressTracker = GetComponent<WaypointProgressTracker>();
+        waypointProgressTracker = GetComponent<AIWaypointProgressTracker>();
 
         // get the car controller reference
         m_CarController = GetComponent<CarController>();
@@ -231,7 +231,7 @@ public class AICarControl : MonoBehaviour
         }
 
         //are we stuck on some road object.
-        if (collision.gameObject.layer == Track.TrackObjectsMask)
+        if (collision.gameObject.layer == (int)TrackMask.TrackObjects)
         {
             if (!stuckOnTrackObject)
             {
@@ -252,7 +252,7 @@ public class AICarControl : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.layer == Track.TrackObjectsMask)
+        if (collision.gameObject.layer == (int)TrackMask.TrackObjects)
         {
             stuckOnTrackObject = false;
         }

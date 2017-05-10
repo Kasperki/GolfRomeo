@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StartSquare : TrackObject
 {
-    Renderer renderer;
+    private new Renderer renderer;
 
     void Start()
     {

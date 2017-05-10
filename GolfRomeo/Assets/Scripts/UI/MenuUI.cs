@@ -6,8 +6,7 @@ public class MenuUI : MonoBehaviour
 {
     public RectTransform ContentParent;
     public PlayUI playUI;
-
-    public Button PlayButton;
+    public EditorUI editorUI;
 
     void Start()
     {
@@ -23,5 +22,11 @@ public class MenuUI : MonoBehaviour
     {
         ContentParent.gameObject.SetActive(false);
         playUI.Init();
+    }
+
+    public void Edit()
+    {
+        ContentParent.gameObject.SetActive(false);
+        editorUI.Init();
     }
 }

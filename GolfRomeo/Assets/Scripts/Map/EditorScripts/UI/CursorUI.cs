@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CursorUI : EditorUI
+public class CursorUI : CursorEditorUI
 {
     public GameObject EditorObject;
     public TerrainEditorUI TerrainEditorUI;

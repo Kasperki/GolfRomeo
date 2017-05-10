@@ -107,12 +107,12 @@ public class PlayUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
-            var player = CreatePlayer("Joystick1", new ControllerScheme().Keyboard());
+            CreatePlayer("Joystick1", new ControllerScheme().Keyboard());
         }
 
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            var player = CreatePlayer("Joystick2", new ControllerScheme().Keyboard2());
+            CreatePlayer("Joystick2", new ControllerScheme().Keyboard2());
         }
 
         foreach (var player in RaceManager.Instance.Players)
@@ -130,6 +130,11 @@ public class PlayUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             AddAI();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Back();
         }
     }
 
