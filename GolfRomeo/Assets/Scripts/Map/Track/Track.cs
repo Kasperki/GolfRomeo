@@ -1,13 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Track : Singleton<Track>
 {
     //Track Metadata
+    public Guid ID;
     public string Name;
     public Vector2 HeightMapSize;
     public Vector3 TextureMapSize;
+
     public float TrackLenghtInKilometers
     {
         get
@@ -35,7 +38,7 @@ public class Track : Singleton<Track>
     public void SaveTrack()
     {
         var WorldSerialization = new TrackSerializer(this);
-        WorldSerialization.SaveWorld("Monaco");
+        WorldSerialization.SaveWorld(Name);
     }
 
     public void LoadTrack(string trackName)

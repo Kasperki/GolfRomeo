@@ -7,8 +7,9 @@ public class StadingsCalculator
 {
     public RacePointTemplate RacePointTemplate;
     public Dictionary<Player, int> PlayerStandings;
+    private StandingsUI standingsUI;
 
-	public StadingsCalculator(List<Player> players)
+	public StadingsCalculator(List<Player> players, StandingsUI standingsUI)
     {
         RacePointTemplate = RacePointTemplate.DefaultTemplate;
 
@@ -17,6 +18,8 @@ public class StadingsCalculator
         {
             PlayerStandings.Add(player, 0);
         }
+
+        this.standingsUI = standingsUI;
     }
 
     public void UpdateStandings(List<LapInfo> lapinfo)
@@ -44,5 +47,15 @@ public class StadingsCalculator
     {
         var sortedDict =  from entry in PlayerStandings orderby entry.Value ascending select entry;
         PlayerStandings = sortedDict.ToDictionary(pair => pair.Key, pair => pair.Value);
+    }
+
+    public void ShowStandings()
+    {
+        standingsUI.SetStandings(PlayerStandings);
+    }
+
+    public void ShowWinners()
+    {
+        standingsUI.ShowWinners();
     }
 }

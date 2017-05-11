@@ -16,6 +16,9 @@ public class Car : MonoBehaviour
     public float Health;
     public float MaxHealth;
 
+    public float TiresHealth;
+    public float TiresMaxHealth;
+
     public void Awake()
     {
         CarController = GetComponent<CarController>();

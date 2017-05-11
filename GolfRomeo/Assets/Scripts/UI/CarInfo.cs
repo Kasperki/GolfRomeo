@@ -9,6 +9,10 @@ public class CarInfo : MonoBehaviour
     public Image Background;
     public Image SecondaryBackground;
 
+    public Image Health;
+    public Image Fuel;
+    public Image Tires;
+
     public Text CurrentLap;
     public Text FastestLapTime;
     public Text CurrentLapTime;
@@ -36,5 +40,9 @@ public class CarInfo : MonoBehaviour
     public void Update()
     {
         UpdateLapInformation();
+
+        Health.fillAmount = LapInfo.car.Health / LapInfo.car.MaxHealth;
+        Fuel.fillAmount = LapInfo.car.Fuel / LapInfo.car.MaxFuel;
+        Tires.fillAmount = LapInfo.car.TiresHealth / LapInfo.car.TiresMaxHealth;
     }
 }

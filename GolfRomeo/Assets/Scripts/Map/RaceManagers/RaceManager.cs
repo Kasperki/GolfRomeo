@@ -9,10 +9,13 @@ public class RaceManager : Singleton<RaceManager>
     public const int MaxPlayers = 8;
     public List<Player> Players;
     public StadingsCalculator StandingsCalculator;
+    public StandingsUI StandingsUI;
 
     public List<string> TrackNames;
     public int CurrentTrack;
     public int Laps = 1;
+
+    private bool raceEnded;
 
     private new void Awake()
     {
@@ -20,9 +23,27 @@ public class RaceManager : Singleton<RaceManager>
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Update()
+    {
+        if (raceEnded)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                if (CurrentTrack == TrackNames.Count)
+                {
+                    FindObjectOfType<PlayUI>().Init();
+                }
+                else
+                {
+                    LoadNextRace();
+                }
+            }
+        }
+    }
+
     public void StartNewTournament()
     {
-        StandingsCalculator = new StadingsCalculator(Players);
+        StandingsCalculator = new StadingsCalculator(Players, StandingsUI);
     }
 
     public void EditTrack()
@@ -86,9 +107,12 @@ public class RaceManager : Singleton<RaceManager>
     public void EndRace()
     {
         GameManager.SetState(State.Pause);
-        //TODO SHOW SCORES
-        FindObjectOfType<PlayUI>().Init();
+        raceEnded = true;
+        StandingsCalculator.ShowStandings();
+
+        if (CurrentTrack == TrackNames.Count)
+        {
+            StandingsCalculator.ShowWinners();
+        }
     }
-
-
 }
