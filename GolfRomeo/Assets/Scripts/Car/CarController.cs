@@ -314,7 +314,7 @@ public class AxleInfo
 
         var terrainTexture = (TerrainTextures)terrainIndex;
         var terrainTextureName = Regex.Replace(terrainTexture.ToString(), @"[\d-]", string.Empty);
-        return (WheelTerrain)Enum.Parse(typeof(TerrainTextures), terrainTextureName, true);
+        return (WheelTerrain)Enum.Parse(typeof(WheelTerrain), terrainTextureName, true);
     }
 }
 

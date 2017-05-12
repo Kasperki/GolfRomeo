@@ -17,6 +17,11 @@ public class StandingsUI : MonoBehaviour
         {
             StandingsObject[i++].GetComponent<Text>().text = standing.Key.Name + " : " + standing.Value;
         }
+
+        for (int j = i; j < StandingsObject.Length; j++)
+        {
+            StandingsObject[j].GetComponent<Text>().text = "";
+        }
     }
 
     public void ShowWinners()

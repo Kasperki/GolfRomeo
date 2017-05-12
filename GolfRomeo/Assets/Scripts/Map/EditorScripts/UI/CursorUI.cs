@@ -10,6 +10,13 @@ public class CursorUI : CursorEditorUI
     public TrackObjectsUI TrackObjectsUI;
 
     private GameObject testCar;
+    private EditorUI editorUI;
+
+    new void Awake()
+    {
+        base.Awake();
+        editorUI = FindObjectOfType<EditorUI>();
+    }
 
 	new void Update ()
     {
@@ -92,7 +99,11 @@ public class CursorUI : CursorEditorUI
 
     public void Save()
     {
-        Exit();
-        //OPEN SAVE DIALOG, SAVE OR DISCARD
+        editorUI.MapEditorMenuUI.Init();
+    }
+
+    public bool IsActive()
+    {
+        return EditorObject.activeSelf;
     }
 }

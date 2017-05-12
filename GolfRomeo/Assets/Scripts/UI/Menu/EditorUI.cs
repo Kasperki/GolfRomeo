@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,6 +7,7 @@ using UnityEngine.UI;
 public class EditorUI : MonoBehaviour
 {
     public MenuUI MenuUI;
+    public MapEditorMenuUI MapEditorMenuUI;
     public RectTransform ContentParent;
     public GameObject EditButton;
 
@@ -66,7 +65,7 @@ public class EditorUI : MonoBehaviour
         RaceManager.Instance.EditTrack(); //LOAD TRACK
         Instantiate(CursorPrefab);
 
-        gameObject.SetActive(false);
+        ContentParent.gameObject.SetActive(false);
     }
 
     public void NewTrack()
@@ -74,14 +73,14 @@ public class EditorUI : MonoBehaviour
         Track.Instance.ID = Guid.NewGuid(); //TODO INIT NET TRACK TOOD GET NAME
         Instantiate(CursorPrefab);
 
-        gameObject.SetActive(false);
+        ContentParent.gameObject.SetActive(false);
     }
 
     public void Update ()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Back();
+            Back(); //TODO ONLY WHEN ACTIVE ON THIS MENU....
         }
     }
 }

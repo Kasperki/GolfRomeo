@@ -100,13 +100,13 @@ public class TerrainHeightEditor : MonoBehaviour
                 {
                     alphas[x, y, textureID] = 1;
 
-                    for (int i = 0; i < terrain.terrainData.alphamapLayers; i++)
+                    /*for (int i = 0; i < terrain.terrainData.alphamapLayers; i++)
                     {
                         if (i != textureID)
                         {
                             alphas[x, y, i] = 0;
                         }
-                    }
+                    }*/
                 }
 
                 /*var x1 = Input.GetAxis("Horizontal");

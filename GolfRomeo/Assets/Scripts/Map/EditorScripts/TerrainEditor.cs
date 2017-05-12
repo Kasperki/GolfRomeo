@@ -17,11 +17,13 @@ public class TerrainEditor : MonoBehaviour
     public float TerrainHeightEditModifier = 0.0005f;
 
     private TerrainHeightEditor terrainHeightEditor;
+    private CursorEditor cursorEditor;
 
     private void Awake()
     {
         terrainHeightEditor = GetComponentInChildren<TerrainHeightEditor>();
         brushRendererMesh = BrushRenderer.GetComponent<MeshFilter>();
+        cursorEditor = GetComponentInParent<CursorEditor>();
     }
 
     private void UpdateBrush()
@@ -62,7 +64,7 @@ public class TerrainEditor : MonoBehaviour
     {
         UpdateBrush();
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && cursorEditor.CursorUI.IsActive() == false)
         {
             switch (TerrainEditMode)
             {
@@ -91,7 +93,7 @@ public class TerrainEditor : MonoBehaviour
     {
         UpdateBrush();
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && cursorEditor.CursorUI.IsActive() == false)
         {
             terrainHeightEditor.UpdateTerrainTexture(TextureID, BrushSize);
         }

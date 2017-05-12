@@ -24,14 +24,14 @@ public class CursorEditor : MonoBehaviour
     public GameObject ObjectPrefab, CheckpointPrefab, WaypointPrefab;
     public TerrainEditor terrainEditor;
 
-    private CursorUI cursorUI;
+    public CursorUI CursorUI;
     //TODO ADD CONTROLC SCHEME.. remove all keycode.
 
     private void Awake()
     {
         cursorMaterial = Renderer.material;
         terrainEditor = GetComponent<TerrainEditor>();
-        cursorUI = GetComponentInChildren<CursorUI>();
+        CursorUI = GetComponentInChildren<CursorUI>();
     }
     
     private RaycastHit RaycastAgainstTerrain(int cursorHitLayer)
@@ -45,7 +45,7 @@ public class CursorEditor : MonoBehaviour
         }
         else
         {
-            if (cursorUI.EditorObject.activeSelf == false)
+            if (CursorUI.IsActive() == false)
             {
                 raycastPos += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * Time.deltaTime * 6;
             }
@@ -68,7 +68,7 @@ public class CursorEditor : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            cursorUI.Init();
+            CursorUI.Init();
         }
 
         int cursorHitLayer = 1 << (int)TrackMask.Terrain;

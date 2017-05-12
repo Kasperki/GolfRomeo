@@ -43,13 +43,15 @@ public class RaceManager : Singleton<RaceManager>
 
     public void StartNewTournament()
     {
+        CurrentTrack = 0;
         StandingsCalculator = new StadingsCalculator(Players, StandingsUI);
+        LoadNextRace();
     }
 
     public void EditTrack()
     {
         GameManager.SetState(State.Edit);
-        Track.Instance.LoadTrack(TrackNames[CurrentTrack++]);
+        Track.Instance.LoadTrack(TrackNames[0]);
     }
 
     public void LoadNextRace()
