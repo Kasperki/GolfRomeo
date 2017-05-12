@@ -1,6 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Xml.Serialization;
+using UnityEngine;
 
 public class TrackSerializer
 {
@@ -49,7 +51,7 @@ public class TrackSerializer
 
         //Set height map
         track.Terrain.terrainData.SetHeights(0,0, terrainSerializer.DeserializeHeightMap(name, mapObject.HeightMapSize));
-        track.Terrain.terrainData.SetAlphamaps(0, 0, terrainSerializer.DeserializeTextureMap(name, mapObject.TextureMapSize));
+        track.Terrain.terrainData.SetAlphamaps(0, 0, terrainSerializer.DeserializeTextureMap(name, new Vector3(512,512, Enum.GetNames(typeof(TerrainTextures)).Length)));
 
         return mapObject;
     }

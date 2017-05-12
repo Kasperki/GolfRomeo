@@ -16,6 +16,7 @@ public class EditorUI : MonoBehaviour
     public GameObject MapButtonPrefab;
     private DirectoryHelper directoryHelper;
 
+    private Track track;
     public Text TrackName;
     public Text TrackInfo;
 
@@ -63,7 +64,7 @@ public class EditorUI : MonoBehaviour
     public void StartEdit()
     {
         RaceManager.Instance.EditTrack(); //LOAD TRACK
-        var obj = Instantiate(CursorPrefab) as GameObject;
+        Instantiate(CursorPrefab);
 
         gameObject.SetActive(false);
     }
@@ -71,7 +72,7 @@ public class EditorUI : MonoBehaviour
     public void NewTrack()
     {
         Track.Instance.ID = Guid.NewGuid(); //TODO INIT NET TRACK TOOD GET NAME
-        var obj = Instantiate(CursorPrefab) as GameObject;
+        Instantiate(CursorPrefab);
 
         gameObject.SetActive(false);
     }

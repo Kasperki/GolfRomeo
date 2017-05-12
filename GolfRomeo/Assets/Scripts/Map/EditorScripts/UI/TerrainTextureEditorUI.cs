@@ -24,27 +24,27 @@ public class TerrainTextureEditorUI : CursorEditorUI
         CursorEditorUI.Open();
     }
 
-    public void Desert()
-    {
-        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Desert;
-        CursorEditorUI.Exit();
-    }
-
     public void Asflat()
     {
-        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Asflat;
+        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Asfalt0;
         CursorEditorUI.Exit();
     }
 
     public void WhiteLine()
     {
-        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.WhiteLine;
+        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Asfalt1;
         CursorEditorUI.Exit();
     }
 
     public void RedLine()
     {
-        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.RedLine;
+        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Asfalt2;
+        CursorEditorUI.Exit();
+    }
+
+    public void Desert()
+    {
+        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Sand0;
         CursorEditorUI.Exit();
     }
 }

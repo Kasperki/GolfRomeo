@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 [RequireComponent(typeof(Car))]
@@ -310,16 +311,19 @@ public class AxleInfo
                 maxMix = mix[i];
             }
         }
-     
-        return (WheelTerrain)terrainIndex;
+
+        var terrainTexture = (TerrainTextures)terrainIndex;
+        var terrainTextureName = Regex.Replace(terrainTexture.ToString(), @"[\d-]", string.Empty);
+        return (WheelTerrain)Enum.Parse(typeof(TerrainTextures), terrainTextureName, true);
     }
 }
 
 public enum WheelTerrain
 {
-    Sand = 0,
+    Asfalt = 0,
     SandRoad = 1,
-    Asfalt = 2,
+    Sand = 2,
     Grass = 3,
-    Ice = 4,
+    Snow = 4,
+    Ice = 5,
 }

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Track : Singleton<Track>
 {
-    //Track Metadata
     public Guid ID;
     public string Name;
     public Vector2 HeightMapSize;
@@ -118,12 +115,4 @@ public class Track : Singleton<Track>
             SaveTrack();
         }
     }
-}
-
-public enum TrackMask
-{
-    Terrain = 11,
-    TrackObjects = 12,
-    Checkpoints = 13,
-    AIWaypoints = 14,
 }
