@@ -101,7 +101,7 @@ public class CursorEditor : MonoBehaviour
             case EditMode.AIWaypoints:
                 if (Input.GetKeyDown(KeyCode.I))
                 {
-                    InstantiateObject(WaypointPrefab, Track.Instance.WayPointCircuit.transform);
+                    InitializeObject(WaypointPrefab, Track.Instance.WayPointCircuit.transform);
                     FindObjectOfType<WayPointCircuit>().CachePositionsAndDistances();
                 }
 
@@ -110,7 +110,7 @@ public class CursorEditor : MonoBehaviour
             case EditMode.Checkpoints:
                 if (Input.GetKeyDown(KeyCode.I))
                 {
-                    var obj = InstantiateObject(CheckpointPrefab, Track.Instance.LapTracker.transform);
+                    var obj = InitializeObject(CheckpointPrefab, Track.Instance.LapTracker.transform);
                     obj.GetComponent<Checkpoint>().SetOrder();
                 }
 
@@ -122,29 +122,28 @@ public class CursorEditor : MonoBehaviour
         }
     }
 
-    public void CreateNewObject(GameObject prefab)
+    public void CreateNewObject(GameObject obj)
     {
-        InstantiateObject(prefab, Track.Instance.TrackObjectsParent.transform);
+        InitializeObject(obj, Track.Instance.TrackObjectsParent.transform);
     }
 
-    private GameObject InstantiateObject(GameObject obj, Transform parent)
+    private GameObject InitializeObject(GameObject obj, Transform parent)
     {
-        var gameObj = Instantiate(obj);
-        gameObj.transform.position = transform.position;
-        gameObj.transform.SetParent(parent);
+        obj.transform.position = transform.position;
+        obj.transform.SetParent(parent);
 
-        var iEditable = gameObj.GetComponent(typeof(IEditable)) as IEditable;
+        var iEditable = obj.GetComponent(typeof(IEditable)) as IEditable;
 
-        selectedIEditable = gameObj;
+        selectedIEditable = obj;
         iEditable.OnSelect(true, transform);
 
-        return gameObj;
+        return obj;
     }
 
     private GameObject DuplicateObject(GameObject obj)
     {
         string name = obj.GetComponent<TrackObject>().ID;
-        return InstantiateObject(Resources.Load("Objects/" + name) as GameObject, obj.transform); //TODO LOAD FROM FOLDER, MAKE THESE TO OWN CLASS
+        return InitializeObject(ResourcesLoader.LoadTrackObject(name), obj.transform);
     }
 
     private void MoveObjects(int layer)

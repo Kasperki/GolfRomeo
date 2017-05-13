@@ -48,7 +48,7 @@ public class Checkpoint : MonoBehaviour, IEditable
 
         if (order == 0)
         {
-            renderer.material = (Material)Resources.Load("Roads/CheckpointFinishline", typeof(Material)) as Material;
+            renderer.material = (Material)Resources.Load(ResourcesLoader.ROADS + "/CheckpointFinishline", typeof(Material)) as Material;
         }
     }
 

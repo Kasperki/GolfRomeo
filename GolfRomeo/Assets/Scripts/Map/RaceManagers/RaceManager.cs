@@ -91,14 +91,13 @@ public class RaceManager : Singleton<RaceManager>
 
         for (int i = 0; i < Players.Count; i++)
         {
-            var obj = Instantiate(Resources.Load("Cars/" + Players[i].CarType.ToString())) as GameObject;
+            var obj = ResourcesLoader.LoadCar(Players[i].CarType);
             cars[i] = obj.GetComponent<Car>();
             cars[i].Init(Players[i]);
         }
 
         return cars;
     }
-
 
     private void StartRace()
     {

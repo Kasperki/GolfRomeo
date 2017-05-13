@@ -42,7 +42,7 @@ public class PlayUI : MonoBehaviour
 
             var obj = Instantiate(MapButtonPrefab);
             obj.transform.SetParent(mapButtonsParent, false);
-            obj.GetComponent<MapButton>().SetListener(name);
+            obj.GetComponent<MapSelectionButton>().SetListener(name);
         }
     }
 

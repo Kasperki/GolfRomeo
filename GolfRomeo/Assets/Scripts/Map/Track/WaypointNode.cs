@@ -25,7 +25,7 @@ public class WaypointNode : MonoBehaviour, IEditable
             renderer = GetComponent<Renderer>();
         }
 
-        renderer.material = (Material)Resources.Load("Roads/CheckpointFinishline", typeof(Material)) as Material;
+        renderer.material = (Material)Resources.Load(ResourcesLoader.ROADS + "/CheckpointFinishline", typeof(Material)) as Material;
     }
 
     public void OnBlur() { }

@@ -6,14 +6,14 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TrackObjectsUI : CursorEditorUI
+public class CursorTrackObjectsUI : CursorBaseUI
 {
     private CursorUI CursorEditorUI;
 
     public void Start()
     {
         CursorEditorUI = GetComponentInParent<CursorUI>();
-        var trackObjects = Resources.LoadAll("Objects", typeof(GameObject)).Cast<GameObject>();
+        var trackObjects = Resources.LoadAll(ResourcesLoader.TRACKOBJECTS, typeof(GameObject)).Cast<GameObject>();
 
         Buttons = new List<Button>();
 
@@ -38,7 +38,7 @@ public class TrackObjectsUI : CursorEditorUI
             }
 
             button.onClick.AddListener(() =>  {
-                CursorEditor.CreateNewObject(Resources.Load("Objects/" + trackObj.ID) as GameObject);
+                CursorEditor.CreateNewObject(ResourcesLoader.LoadTrackObject(trackObj.ID));
                 CursorEditorUI.Exit();
             });
 

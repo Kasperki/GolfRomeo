@@ -59,7 +59,7 @@ public class Track : Singleton<Track>
 
         foreach (var mapObjectDTO in mapDTO.MapObjects)
         {
-            GameObject gameObj = Instantiate(Resources.Load("Objects/" + mapObjectDTO.ID, typeof(GameObject))) as GameObject;
+            GameObject gameObj = ResourcesLoader.LoadTrackObject(mapObjectDTO.ID);
             gameObj.transform.SetParent(TrackObjectsParent.transform);
 
             mapObjectDTO.MapToGameObject(mapObjectDTO, gameObj.GetComponent<TrackObject>());
@@ -72,7 +72,7 @@ public class Track : Singleton<Track>
 
         foreach (var checkpointDTO in mapDTO.Checkpoints)
         {
-            GameObject gameObj = Instantiate(Resources.Load("Roads/Checkpoint", typeof(GameObject))) as GameObject;
+            GameObject gameObj = ResourcesLoader.LoadRoadObject("Checkpoint");
             gameObj.transform.SetParent(LapTracker.transform);
 
             checkpointDTO.MapToGameObject(checkpointDTO, gameObj.GetComponent<Checkpoint>());
@@ -86,7 +86,7 @@ public class Track : Singleton<Track>
 
         foreach (var waypointDTO in mapDTO.Waypoints)
         {
-            GameObject gameObj = Instantiate(Resources.Load("Roads/WaypointNode", typeof(GameObject))) as GameObject;
+            GameObject gameObj = ResourcesLoader.LoadRoadObject("WaypointNode");
             gameObj.transform.SetParent(WayPointCircuit.transform);
 
             waypointDTO.MapToGameObject(waypointDTO, gameObj.GetComponent<WaypointNode>());

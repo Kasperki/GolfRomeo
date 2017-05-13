@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-class MapEditorButton : MonoBehaviour
+class MapSelectionEditorButton : MonoBehaviour
 {
     public Color selectedColor, normalColor;
 
@@ -23,7 +23,7 @@ class MapEditorButton : MonoBehaviour
 
         button.onClick.AddListener(() =>
         {
-            foreach (var btn in FindObjectsOfType<MapEditorButton>())
+            foreach (var btn in FindObjectsOfType<MapSelectionEditorButton>())
             {
                 btn.image.color = normalColor;
             }

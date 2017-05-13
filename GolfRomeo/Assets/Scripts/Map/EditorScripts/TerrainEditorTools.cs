@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TerrainHeightEditor : MonoBehaviour
+public class TerrainEditorTools : MonoBehaviour
 {
     public Terrain terrain;
 

@@ -2,12 +2,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CursorUI : CursorEditorUI
+public class CursorUI : CursorBaseUI
 {
     public GameObject EditorObject;
-    public TerrainEditorUI TerrainEditorUI;
-    public TerrainTextureEditorUI TerrainTextureEditorUI;
-    public TrackObjectsUI TrackObjectsUI;
+    public CursorTerrainHeightEditorUI TerrainEditorUI;
+    public CursorTerrainTextureEditorUI TerrainTextureEditorUI;
+    public CursorTrackObjectsUI TrackObjectsUI;
 
     private GameObject testCar;
     private EditorUI editorUI;
@@ -90,7 +90,7 @@ public class CursorUI : CursorEditorUI
             VerticalAxis = "Vertical"
         };
 
-        testCar = Instantiate(Resources.Load("Cars/" + player.CarType.ToString())) as GameObject;
+        testCar = ResourcesLoader.LoadCar(player.CarType);
         testCar.GetComponent<Car>().Init(player);
         testCar.transform.position = transform.position;
 

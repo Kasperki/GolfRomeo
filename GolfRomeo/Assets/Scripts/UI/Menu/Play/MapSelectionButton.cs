@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MapButton : MonoBehaviour
+public class MapSelectionButton : MonoBehaviour
 {
     public Color selectedColor, normalColor;
 

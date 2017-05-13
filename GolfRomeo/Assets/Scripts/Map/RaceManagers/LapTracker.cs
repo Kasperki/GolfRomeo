@@ -46,12 +46,13 @@ public class LapTracker : Singleton<LapTracker>
     {
         if (GameManager.CheckState(State.Game))
         {
+            //Update car positions
             Cars = Cars.OrderByDescending(x => x.CurrentLap)
             .ThenByDescending(x => x.CurrentCheckpointID)
             .ThenBy(x => (x.car.transform.position - Checkpoints[x.NextCheckpointID].transform.position).magnitude)
             .ToList();
 
-            //TODO WHEN FIRST IS AN GOAL + 30sec and end race.
+            //Check when race ends
             if (Cars.Find(x => x.Finished == true) != null && someoneHasFinishedRace == false)
             {
                 someoneHasFinishedRace = true;

@@ -42,7 +42,7 @@ public class EditorUI : MonoBehaviour
 
             var obj = Instantiate(MapButtonPrefab);
             obj.transform.SetParent(mapButtonsParent, false);
-            obj.GetComponent<MapEditorButton>().SetListener(name);
+            obj.GetComponent<MapSelectionEditorButton>().SetListener(name);
         }
     }
 

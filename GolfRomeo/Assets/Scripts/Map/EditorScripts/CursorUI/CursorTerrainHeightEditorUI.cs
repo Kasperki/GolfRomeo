@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TerrainEditorUI : CursorEditorUI
+public class CursorTerrainHeightEditorUI : CursorBaseUI
 {
     private CursorUI CursorEditorUI;
 

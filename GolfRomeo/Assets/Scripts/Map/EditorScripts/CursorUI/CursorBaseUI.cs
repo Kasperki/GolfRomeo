@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class CursorEditorUI : MonoBehaviour
+public abstract class CursorBaseUI : MonoBehaviour
 {
     protected CursorEditor CursorEditor;
     public RectTransform ButtonsRect;

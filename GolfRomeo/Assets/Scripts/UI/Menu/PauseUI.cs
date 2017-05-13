@@ -38,6 +38,7 @@ public class PauseUI : MonoBehaviour
 
     public void Exit()
     {
+        GameManager.SetState(State.Menu);
         PlayUI.Init();
     }
 }
