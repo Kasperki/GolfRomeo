@@ -91,22 +91,25 @@ public class TerrainEditorTools : MonoBehaviour
 
         float[,,] alphas = terrain.terrainData.GetAlphamaps((int)terrainPosition.x, (int)terrainPosition.y, (int)terrainPosition.z, (int)terrainPosition.w);
 
-        for (int x = 0; x < alphas.GetLength(0); x++)
+        int xLength = alphas.GetLength(0);
+        int yLength = alphas.GetLength(1);
+
+        for (int x = 0; x < xLength; x++)
         {
-            for (int y = 0; y < alphas.GetLength(1); y++)
+            for (int y = 0; y < yLength; y++)
             {
                 var distance = (new Vector2(x, y) - new Vector2(offset, offset)).magnitude / offset;
                 if (distance < 1)
                 {
                     alphas[x, y, textureID] = 1;
 
-                    /*for (int i = 0; i < terrain.terrainData.alphamapLayers; i++)
+                    for (int i = 0; i < terrain.terrainData.alphamapLayers; i++)
                     {
                         if (i != textureID)
                         {
                             alphas[x, y, i] = 0;
                         }
-                    }*/
+                    }
                 }
 
                 /*var x1 = Input.GetAxis("Horizontal");

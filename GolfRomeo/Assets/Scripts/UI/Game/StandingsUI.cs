@@ -10,7 +10,7 @@ public class StandingsUI : MonoBehaviour
 
     public void SetStandings(Dictionary<Player, int> standings)
     {
-        StandingsParent.gameObject.SetActive(true);
+        gameObject.SetActive(true);
 
         int i = 0;
         foreach (var standing in standings)
@@ -27,5 +27,10 @@ public class StandingsUI : MonoBehaviour
     public void ShowWinners()
     {
         //TODO
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }

@@ -20,6 +20,16 @@ public class LapTrackerUI : MonoBehaviour
     {
         gameObject.SetActive(true);
 
+        //clear childers;
+        var oldLapInfos = CarInfoParent.GetComponentsInChildren<Transform>();
+        for (int i = 0; i < oldLapInfos.Length; i++)
+        {
+            if (oldLapInfos[i].transform.GetInstanceID() != CarInfoParent.transform.GetInstanceID())
+            {
+                Destroy(oldLapInfos[i].gameObject);
+            }
+        }
+
         lapTracker = Track.Instance.LapTracker;
         track = Track.Instance;
 

@@ -143,7 +143,11 @@ public class CursorEditor : MonoBehaviour
     private GameObject DuplicateObject(GameObject obj)
     {
         string name = obj.GetComponent<TrackObject>().ID;
-        return InitializeObject(ResourcesLoader.LoadTrackObject(name), obj.transform);
+
+        var newObj = ResourcesLoader.LoadTrackObject(name);
+        newObj.transform.rotation = obj.transform.rotation;
+
+        return InitializeObject(newObj, obj.transform);
     }
 
     private void MoveObjects(int layer)

@@ -46,7 +46,7 @@ public class WayPointCircuit : MonoBehaviour
 
     public void OnRenderObject()
     {
-        if (GameManager.CheckState(State.Edit))
+        if (GameManager.CheckState(State.Edit) && points != null)
         {
             for (int i = 0; i < points.Length; i++)
             {

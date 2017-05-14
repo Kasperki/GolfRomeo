@@ -16,10 +16,11 @@ public class EditorUI : MonoBehaviour
     private DirectoryHelper directoryHelper;
 
     private Track track;
-    public Text TrackName;
-    public Text TrackInfo;
+    public InputField TrackNameInput;
 
     public GameObject CursorPrefab;
+
+    private bool editing;
 
     private void Start()
     {
@@ -52,6 +53,8 @@ public class EditorUI : MonoBehaviour
         ContentParent.gameObject.SetActive(true);
         EventSystem.current.SetSelectedGameObject(EditButton);
         Start();
+
+        editing = false;
     }
 
     public void Back()
@@ -65,20 +68,23 @@ public class EditorUI : MonoBehaviour
         RaceManager.Instance.EditTrack(); //LOAD TRACK
         Instantiate(CursorPrefab);
 
+        editing = true;
         ContentParent.gameObject.SetActive(false);
     }
 
     public void NewTrack()
     {
+        Track.Instance.Name = TrackNameInput.text;
         Track.Instance.ID = Guid.NewGuid(); //TODO INIT NET TRACK TOOD GET NAME
         Instantiate(CursorPrefab);
 
+        editing = true;
         ContentParent.gameObject.SetActive(false);
     }
 
     public void Update ()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && editing == false)
         {
             Back(); //TODO ONLY WHEN ACTIVE ON THIS MENU....
         }

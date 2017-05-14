@@ -43,6 +43,10 @@ public class Track : Singleton<Track>
         var WorldSerialization = new TrackSerializer(this);
         var mapDTO = WorldSerialization.LoadWorld(trackName);
 
+        //TODO META DATA
+        //ID -- set map folders name + GUID....
+        Name = trackName;
+
         //Init map objects
         InstantiateMapObjects(mapDTO);
 
@@ -92,7 +96,10 @@ public class Track : Singleton<Track>
             waypointDTO.MapToGameObject(waypointDTO, gameObj.GetComponent<WaypointNode>());
         }
 
-        WayPointCircuit.CachePositionsAndDistances();
+        if (mapDTO.Waypoints.Length > 0)
+        {
+            WayPointCircuit.CachePositionsAndDistances();
+        }
     }
 
     private void ClearChilds(GameObject obj)

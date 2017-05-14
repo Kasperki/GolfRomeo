@@ -27,8 +27,10 @@ public class RaceManager : Singleton<RaceManager>
     {
         if (raceEnded)
         {
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
+                StandingsCalculator.HideStandings();
+
                 if (CurrentTrack == TrackNames.Count)
                 {
                     FindObjectOfType<PlayUI>().Init();
@@ -58,6 +60,13 @@ public class RaceManager : Singleton<RaceManager>
     {
         GameManager.SetState(State.Pause);
 
+        //Clean up.
+        var oldCars = FindObjectsOfType<Car>();
+        for (int i = 0; i < oldCars.Length; i++)
+        {
+            Destroy(oldCars[i].gameObject);
+        }
+
         //Load World
         Track.Instance.LoadTrack(TrackNames[CurrentTrack++]);
 
@@ -72,6 +81,7 @@ public class RaceManager : Singleton<RaceManager>
 
     private IEnumerator StartCountDown()
     {
+        FindObjectOfType<CountDown>().Awake();
         GameManager.SetState(State.Pause);
         var startTime = Time.time + 3.5f;
 

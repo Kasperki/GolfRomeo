@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MapEditorMenuUI : MonoBehaviour
 {
     public EditorUI EditorUI;
+    public Button SaveButton;
 
     public void Init()
     {
         gameObject.SetActive(true);
+        SaveButton.Select();
     }
 
     public void DiscardAndExit()

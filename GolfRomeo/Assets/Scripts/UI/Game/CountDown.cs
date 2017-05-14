@@ -6,20 +6,20 @@ using UnityEngine.UI;
 public class CountDown : MonoBehaviour
 {
     public Text text3, text2, text1, textgo;
-    private Quaternion text3Start, text2Start, text1Start, textgoStart;
+    public Vector3 text3Start, text2Start, text1Start, textgoStart;
     private bool text3animating, text2animating, text1animating, textgoanimating;
 
-    void Awake ()
+    public void Awake ()
     {
         text3animating = false;
         text2animating = false;
         text1animating = false;
         textgoanimating = false;
 
-        text3Start = text3.transform.rotation;
-        text2Start = text2.transform.rotation;
-        text1Start = text1.transform.rotation;
-        textgoStart = textgo.transform.rotation;
+        text3.transform.rotation = Quaternion.Euler(text3Start.x, text3Start.y, text3Start.z);
+        text2.transform.rotation = Quaternion.Euler(text2Start.x, text2Start.y, text2Start.z);
+        text1.transform.rotation = Quaternion.Euler(text1Start.x, text1Start.y, text1Start.z);
+        textgo.transform.rotation = Quaternion.Euler(textgoStart.x, textgoStart.y, textgoStart.z);
     }
 	
     public void UpdateCountdown(float TimeUntilStart)
@@ -27,22 +27,22 @@ public class CountDown : MonoBehaviour
         if (TimeUntilStart <= 3 && text3animating == false)
         {
             text3animating = true;
-            StartCoroutine(FlyText(text3.gameObject, text3Start));
+            StartCoroutine(FlyText(text3.gameObject, Quaternion.Euler(text3Start.x, text3Start.y, text3Start.z)));
         }
         else if (TimeUntilStart <= 2 && text2animating == false)
         {
             text2animating = true;
-            StartCoroutine(FlyText(text2.gameObject, text2Start));
+            StartCoroutine(FlyText(text2.gameObject, Quaternion.Euler(text2Start.x, text2Start.y, text2Start.z)));
         }
         else if (TimeUntilStart <= 1 && text1animating == false)
         {
             text1animating = true;
-            StartCoroutine(FlyText(text1.gameObject, text1Start));
+            StartCoroutine(FlyText(text1.gameObject, Quaternion.Euler(text1Start.x, text1Start.y, text1Start.z)));
         }
         else if (TimeUntilStart <= 0 && textgoanimating == false)
         {
             textgoanimating = true;
-            StartCoroutine(FlyText(textgo.gameObject, textgoStart));
+            StartCoroutine(FlyText(textgo.gameObject, Quaternion.Euler(textgoStart.x, textgoStart.y, textgoStart.z)));
         }
     }
 
@@ -55,7 +55,7 @@ public class CountDown : MonoBehaviour
         while (t < 1)
         {
             t = Time.time - startTime;
-            obj.transform.rotation = Quaternion.Slerp(rotation, Quaternion.identity, t);
+            obj.transform.rotation = Quaternion.Slerp(rotation, Quaternion.identity, Mathf.SmoothStep(0,4,t));
             yield return null;
         }
 
