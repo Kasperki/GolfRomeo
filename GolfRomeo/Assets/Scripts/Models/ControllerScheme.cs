@@ -33,8 +33,8 @@ public class ControllerScheme
     {
         return new ControllerScheme()
         {
-            VerticalAxis = "Vertical",
-            HorizontalAxis = "Horizontal",
+            VerticalAxis = "VerticalDebug",
+            HorizontalAxis = "HorizontalDebug",
             Menu = KeyCode.K,
             Select = KeyCode.I,
             Cancel = KeyCode.J,

@@ -9,7 +9,9 @@ public class CursorUI : CursorBaseUI
     public CursorTerrainTextureEditorUI TerrainTextureEditorUI;
     public CursorTrackObjectsUI TrackObjectsUI;
 
-    private GameObject testCar;
+    public bool DriveTesting;
+    public GameObject TestCar;
+
     private EditorUI editorUI;
 
     new void Awake()
@@ -33,7 +35,8 @@ public class CursorUI : CursorBaseUI
     public void Init()
     {
         EditorObject.SetActive(true);
-        Destroy(testCar);
+        Destroy(TestCar);
+        DriveTesting = false;
 
         if (TerrainEditorUI.gameObject.activeSelf == false && TerrainTextureEditorUI.gameObject.activeSelf == false && TrackObjectsUI.gameObject.activeSelf == false)
         {
@@ -90,9 +93,10 @@ public class CursorUI : CursorBaseUI
             VerticalAxis = "Vertical"
         };
 
-        testCar = ResourcesLoader.LoadCar(player.CarType);
-        testCar.GetComponent<Car>().Init(player);
-        testCar.transform.position = transform.position;
+        TestCar = ResourcesLoader.LoadCar(player.CarType);
+        TestCar.GetComponent<Car>().Init(player);
+        TestCar.transform.position = transform.position;
+        DriveTesting = true;
 
         Exit();
     }

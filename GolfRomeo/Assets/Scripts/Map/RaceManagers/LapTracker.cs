@@ -23,6 +23,9 @@ public class LapTracker : Singleton<LapTracker>
 
     public void Initialize(Car[] cars)
     {
+        Cars.Clear();
+        someoneHasFinishedRace = false;
+
         var track = Track.Instance;
         var startSquares = track.TrackObjectsParent.GetComponentsInChildren<StartSquare>();
         startSquares.OrderBy(m => m.transform.position - Checkpoints[0].transform.position);
@@ -47,7 +50,9 @@ public class LapTracker : Singleton<LapTracker>
         if (GameManager.CheckState(State.Game))
         {
             //Update car positions
-            Cars = Cars.OrderByDescending(x => x.CurrentLap)
+            Cars = Cars.OrderByDescending(x => x.Finished ? 1 : 0)
+            .ThenBy(x => x.RaceTotalTime)
+            .ThenByDescending(x => x.CurrentLap)
             .ThenByDescending(x => x.CurrentCheckpointID)
             .ThenBy(x => (x.car.transform.position - Checkpoints[x.NextCheckpointID].transform.position).magnitude)
             .ToList();

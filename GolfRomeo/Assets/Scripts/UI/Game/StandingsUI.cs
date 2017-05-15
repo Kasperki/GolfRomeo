@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class StandingsUI : MonoBehaviour
 {
-    public GameObject[] StandingsObject;
+    public StandingUIPlayerCard[] StandingsObject;
     public RectTransform StandingsParent;
 
     public void SetStandings(Dictionary<Player, int> standings)
@@ -15,12 +15,13 @@ public class StandingsUI : MonoBehaviour
         int i = 0;
         foreach (var standing in standings)
         {
-            StandingsObject[i++].GetComponent<Text>().text = standing.Key.Name + " : " + standing.Value;
+            StandingsObject[i].gameObject.SetActive(true);
+            StandingsObject[i++].UpdateCardInfo(standing.Key, standing.Value);
         }
 
         for (int j = i; j < StandingsObject.Length; j++)
         {
-            StandingsObject[j].GetComponent<Text>().text = "";
+            StandingsObject[j].gameObject.SetActive(false);
         }
     }
 

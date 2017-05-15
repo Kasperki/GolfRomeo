@@ -47,7 +47,14 @@ public class CursorEditor : MonoBehaviour
         {
             if (CursorUI.IsActive() == false)
             {
-                raycastPos += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * Time.deltaTime * 6;
+                if (CursorUI.DriveTesting == false)
+                {
+                    raycastPos += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * Time.deltaTime * 6;
+                }
+                else
+                {
+                    raycastPos = new Vector3(CursorUI.TestCar.transform.position.x, 10, CursorUI.TestCar.transform.position.z);
+                }
             }
 
             raycastOrigin = raycastPos;

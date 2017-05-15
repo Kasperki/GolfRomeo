@@ -45,7 +45,7 @@ public class StadingsCalculator
 
     private void SortDictionaryByValue()
     {
-        var sortedDict =  from entry in PlayerStandings orderby entry.Value ascending select entry;
+        var sortedDict =  from entry in PlayerStandings orderby entry.Value descending select entry;
         PlayerStandings = sortedDict.ToDictionary(pair => pair.Key, pair => pair.Value);
     }
 

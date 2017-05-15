@@ -23,14 +23,14 @@ public class TerrainEditorTools : MonoBehaviour
         heightmapHeight = terrain.terrainData.heightmapHeight;
     }
 	
-    void NewEmptyTerrain(float height)
+    public void NewEmptyTerrain()
     {
         float[,] heigthmapSize = new float[terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapHeight];
         for (int x = 0; x < heigthmapSize.GetLength(0); x++)
         {
             for (int y = 0; y < heigthmapSize.GetLength(1); y++)
             {
-                heigthmapSize[x, y] = height;
+                heigthmapSize[x, y] = BaseHeight;
             }
         }
 

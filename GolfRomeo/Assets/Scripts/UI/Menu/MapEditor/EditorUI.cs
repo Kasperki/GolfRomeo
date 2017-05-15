@@ -75,8 +75,9 @@ public class EditorUI : MonoBehaviour
     public void NewTrack()
     {
         Track.Instance.Name = TrackNameInput.text;
-        Track.Instance.ID = Guid.NewGuid(); //TODO INIT NET TRACK TOOD GET NAME
-        Instantiate(CursorPrefab);
+        Track.Instance.ID = Guid.NewGuid(); //TODO INIT SOMEHERE ELSE THAN IN FUCKIN UI
+        var cursor = Instantiate(CursorPrefab) as GameObject;
+        cursor.GetComponentInChildren<TerrainEditorTools>().NewEmptyTerrain();
 
         editing = true;
         ContentParent.gameObject.SetActive(false);

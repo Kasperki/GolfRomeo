@@ -16,10 +16,10 @@ public class CountDown : MonoBehaviour
         text1animating = false;
         textgoanimating = false;
 
-        text3.transform.rotation = Quaternion.Euler(text3Start.x, text3Start.y, text3Start.z);
-        text2.transform.rotation = Quaternion.Euler(text2Start.x, text2Start.y, text2Start.z);
-        text1.transform.rotation = Quaternion.Euler(text1Start.x, text1Start.y, text1Start.z);
-        textgo.transform.rotation = Quaternion.Euler(textgoStart.x, textgoStart.y, textgoStart.z);
+        text3.transform.rotation = Quaternion.Euler(Random.Range(-80, -110), Random.Range(-270, 270), Random.Range(-270, 270));
+        text2.transform.rotation = Quaternion.Euler(Random.Range(-270, 270), Random.Range(-80, -110), Random.Range(-270, 270));
+        text1.transform.rotation = Quaternion.Euler(Random.Range(-170, 170), Random.Range(-80, -110), Random.Range(-10, 20));
+        textgo.transform.rotation = Quaternion.Euler(Random.Range(-370, 370), Random.Range(-200, 210), Random.Range(-50, 50));
     }
 	
     public void UpdateCountdown(float TimeUntilStart)

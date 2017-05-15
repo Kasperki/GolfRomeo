@@ -6,13 +6,19 @@ public class PlayerSelectionUI : MonoBehaviour
 {
     public Text JoinInfo;
 
+    public Button PreviousCarButton, NextCarButton;
     public Text PlayerName;
     public Text CarName;
     private int carIndex;
     private bool left, right;
 
     private ControllerScheme scheme;
-    private Player player;
+    private Player player = null;
+
+    public Player Player
+    {
+        get { return player; }
+    }
 
     public bool IsControllerSchemeSame(ControllerScheme scheme)
     {
@@ -24,6 +30,16 @@ public class PlayerSelectionUI : MonoBehaviour
         return this.scheme.Select == scheme.Select;
     }
 
+    public bool IsSlotAI()
+    {
+        return player != null && player.PlayerType == PlayerType.AI;
+    }
+
+    public bool IsSlotEmpty()
+    {
+        return player == null;
+    }
+
 	public void Join(Player player)
     {
         this.player = player;
@@ -33,22 +49,27 @@ public class PlayerSelectionUI : MonoBehaviour
         JoinInfo.gameObject.SetActive(false);
         CarName.gameObject.SetActive(true);
         PlayerName.gameObject.SetActive(true);
+        PreviousCarButton.gameObject.SetActive(true);
+        NextCarButton.gameObject.SetActive(true);
 
         UpdateCar();
     }
 
     public void Leave()
     {
+        player = null;
         scheme = null;
 
         JoinInfo.gameObject.SetActive(true);
         CarName.gameObject.SetActive(false);
         PlayerName.gameObject.SetActive(false);
+        PreviousCarButton.gameObject.SetActive(false);
+        NextCarButton.gameObject.SetActive(false);
     }
-	
-	void Update ()
+
+    void Update()
     {
-        if (scheme != null)
+        if (scheme != null && scheme.HorizontalAxis != new ControllerScheme().Keyboard().HorizontalAxis && GameManager.CheckState(State.Menu))
         {
             if (Input.GetAxisRaw(scheme.HorizontalAxis) == 0)
             {
@@ -82,6 +103,30 @@ public class PlayerSelectionUI : MonoBehaviour
                 right = true;
             }
         }
+    }
+
+    public void PreviousCar()
+    {
+        carIndex--;
+
+        if (carIndex < 0)
+        {
+            carIndex = Enum.GetNames(typeof(CarType)).Length - 1;
+        }
+
+        UpdateCar();
+    }
+
+    public void NextCar()
+    {
+        carIndex++;
+
+        if (carIndex >= Enum.GetNames(typeof(CarType)).Length)
+        {
+            carIndex = 0;
+        }
+
+        UpdateCar();
     }
 
     private void UpdateCar()

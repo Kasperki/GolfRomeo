@@ -61,6 +61,8 @@ public class RaceManager : Singleton<RaceManager>
         GameManager.SetState(State.Pause);
 
         //Clean up.
+        raceEnded = false;
+
         var oldCars = FindObjectsOfType<Car>();
         for (int i = 0; i < oldCars.Length; i++)
         {
@@ -119,6 +121,8 @@ public class RaceManager : Singleton<RaceManager>
     {
         GameManager.SetState(State.Pause);
         raceEnded = true;
+
+        StandingsCalculator.UpdateStandings(Track.Instance.LapTracker.Cars);
         StandingsCalculator.ShowStandings();
 
         if (CurrentTrack == TrackNames.Count)

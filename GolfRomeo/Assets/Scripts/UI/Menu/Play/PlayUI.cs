@@ -115,17 +115,22 @@ public class PlayUI : MonoBehaviour
             CreatePlayer("Joystick2", new ControllerScheme().Keyboard2());
         }
 
-        foreach (var player in RaceManager.Instance.Players)
+        var playersToRemove = new List<Player>();
+        for(int i = 0; i < RaceManager.Instance.Players.Count; i++)
         {
+            var player = RaceManager.Instance.Players[i];
+
             if (player.PlayerType == PlayerType.Player)
             {
                 if (Input.GetKeyDown(player.ControllerScheme.Cancel))
                 {
-                    playerSelections.Find(x => x.IsControllerSchemeSame(player.ControllerScheme)).Leave();
-                    RaceManager.Instance.Players.Remove(player);
+                    playersToRemove.Add(player);
                 }
             }
         }
+
+        RemovePlayers(playersToRemove);
+        playersToRemove.Clear();
 
         if (Input.GetKeyDown(KeyCode.H))
         {
@@ -146,7 +151,8 @@ public class PlayUI : MonoBehaviour
             player.Name = "AI";
             player.PlayerType = PlayerType.AI;
 
-            playerSelections[RaceManager.Instance.Players.Count].Join(player);
+            var firstEmptySlot = playerSelections.Find(x => x.IsSlotEmpty());
+            playerSelections[playerSelections.IndexOf(firstEmptySlot)].Join(player);
             RaceManager.Instance.Players.Add(player);
         }
     }
@@ -159,10 +165,26 @@ public class PlayUI : MonoBehaviour
 
         if (playerSelections.Find(x => x.IsControllerSchemeSame(player.ControllerScheme)) == null)
         {
-            playerSelections[RaceManager.Instance.Players.Count].Join(player);
+            var firstEmptySlot = playerSelections.Find(x => x.IsSlotEmpty() || x.IsSlotAI());
+
+            if (firstEmptySlot.IsSlotAI())
+            {
+                RemovePlayers(new List<Player>() { firstEmptySlot.Player });
+            }
+
+            playerSelections[playerSelections.IndexOf(firstEmptySlot)].Join(player);
             RaceManager.Instance.Players.Add(player);
         }
 
         return player;
+    }
+
+    private void RemovePlayers(List<Player> players)
+    {
+        foreach (var player in players)
+        {
+            playerSelections.Find(x => x.IsControllerSchemeSame(player.ControllerScheme)).Leave();
+            RaceManager.Instance.Players.Remove(player);
+        }
     }
 }
