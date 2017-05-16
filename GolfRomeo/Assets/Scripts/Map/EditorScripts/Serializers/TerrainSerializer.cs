@@ -28,10 +28,10 @@ public class TerrainSerializer
         }
     }
 
-    public float[,] DeserializeHeightMap(string name, Vector2 heightMapSize)
+    public float[,] DeserializeHeightMap(MemoryStream stream, Vector2 heightMapSize)
     {
         var heightMap = new float[(int)heightMapSize.x, (int)heightMapSize.y];
-        FromBytes(heightMap, File.ReadAllBytes(name + trackHeightMapExtension));
+        FromBytes(heightMap, stream.ToArray());
         return heightMap;
     }
 
@@ -41,10 +41,10 @@ public class TerrainSerializer
         return ToBytes(heightMap);
     }
     
-    public float[,,] DeserializeTextureMap(string name, Vector3 textureMapSize)
+    public float[,,] DeserializeTextureMap(MemoryStream stream, Vector3 textureMapSize)
     {
         var alphaMap = new float[(int)textureMapSize.x, (int)textureMapSize.y, (int)textureMapSize.z];
-        FromBytes(alphaMap, File.ReadAllBytes(name + textureMapExtension));
+        FromBytes(alphaMap, stream.ToArray());
         return alphaMap;
     }
 

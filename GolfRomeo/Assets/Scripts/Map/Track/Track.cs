@@ -114,12 +114,4 @@ public class Track : Singleton<Track>
             Destroy(tr.gameObject);
         }
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            SaveTrack();
-        }
-    }
 }

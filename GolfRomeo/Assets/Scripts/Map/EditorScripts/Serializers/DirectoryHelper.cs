@@ -15,6 +15,11 @@ public class DirectoryHelper
         }
     }
 
+    public string GetPathToDirectory(string trackName)
+    {
+        return MapFolderName + "/" + trackName;
+    }
+
 	public string GetPathToMap(string trackName)
     {
         if (!Directory.Exists(MapFolderName))
