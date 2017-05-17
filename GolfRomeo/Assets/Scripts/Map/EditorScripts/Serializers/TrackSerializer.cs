@@ -27,17 +27,12 @@ public class TrackSerializer
     {
         var trackPath = directoryHelper.GetPathToMap(name);
 
-        var trackStreams = new TrackStreams();
+        var trackStreams = new TrackData();
 
-        var byteArray = SerializeMap(trackPath);
-        trackStreams.TrackStream = new MemoryStream(byteArray);
+        trackStreams.ObjectsData = SerializeMap(trackPath);
+        trackStreams.HeightMapData = terrainSerializer.SerializeHeightMap(trackPath, track);
+        trackStreams.TextureMapData = terrainSerializer.SerializeTextureMap(trackPath, track);
 
-        using (FileStream file = new FileStream(trackPath + mapFileExtension, FileMode.Create, FileAccess.Write))
-        {
-            file.Write(byteArray, 0, byteArray.Length);
-        }
-
-        terrainSerializer.Serialize(trackPath, trackStreams, track);
         trackCompressor.CreatePackage(trackPath, trackStreams);
     }
 
@@ -48,11 +43,11 @@ public class TrackSerializer
         XmlSerializer serializer = new XmlSerializer(typeof(TrackDTO));
 
         TrackFileCompressor trackCompressor = new TrackFileCompressor();
-        TrackStreams decompressedTrackStreams = trackCompressor.DecompressPackage(trackPath);
-        TrackDTO mapObject = (TrackDTO)serializer.Deserialize(decompressedTrackStreams.TrackStream);
+        TrackData decompressedTrackStreams = trackCompressor.DecompressPackage(trackPath);
+        TrackDTO mapObject = (TrackDTO)serializer.Deserialize(new MemoryStream(decompressedTrackStreams.ObjectsData));
 
-        track.Terrain.terrainData.SetHeights(0, 0, terrainSerializer.DeserializeHeightMap(decompressedTrackStreams.HeightMapStream, track.HeightMapSize));
-        track.Terrain.terrainData.SetAlphamaps(0, 0, terrainSerializer.DeserializeTextureMap(decompressedTrackStreams.TextureMapStream, track.TextureMapSize));
+        track.Terrain.terrainData.SetHeights(0, 0, terrainSerializer.DeserializeHeightMap(decompressedTrackStreams.HeightMapData, track.HeightMapSize));
+        track.Terrain.terrainData.SetAlphamaps(0, 0, terrainSerializer.DeserializeTextureMap(decompressedTrackStreams.TextureMapData, track.TextureMapSize));
 
         return mapObject;
     }
@@ -74,6 +69,11 @@ public class TrackSerializer
         stream.Position = 0;
         var bytes = stream.ToArray();
         stream.Close();
+
+        using (FileStream file = new FileStream(name + mapFileExtension, FileMode.Create, FileAccess.Write))
+        {
+            file.Write(bytes, 0, bytes.Length);
+        }
 
         return bytes;
     }

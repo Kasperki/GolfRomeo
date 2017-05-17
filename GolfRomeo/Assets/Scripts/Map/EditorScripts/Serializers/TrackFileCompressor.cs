@@ -2,24 +2,25 @@
 using System.IO.Compression;
 using System.IO;
 
-public class TrackStreams
+public class TrackData
 {
-    public MemoryStream TrackStream;
-    public MemoryStream HeightMapStream;
-    public MemoryStream TextureMapStream;
+    public byte[] ObjectsData;
+    public byte[] HeightMapData;
+    public byte[] TextureMapData;
 }
 
 public class TrackFileCompressor
 {
-    public void CreatePackage(string directoryPath, TrackStreams streams)
+    public void CreatePackage(string directoryPath, TrackData trackData)
     {
-        CompressFile(directoryPath + TrackSerializer.mapFileExtension, streams.TrackStream);
-        CompressFile(directoryPath + TerrainSerializer.trackHeightMapExtension, streams.HeightMapStream);
-        CompressFile(directoryPath + TerrainSerializer.textureMapExtension, streams.TextureMapStream);
+        CompressFile(directoryPath + TrackSerializer.mapFileExtension, trackData.ObjectsData);
+        CompressFile(directoryPath + TerrainSerializer.trackHeightMapExtension, trackData.HeightMapData);
+        CompressFile(directoryPath + TerrainSerializer.textureMapExtension, trackData.TextureMapData);
     }
 
-    private void CompressFile(string path, MemoryStream stream)
+    private void CompressFile(string path, byte[] data)
     {
+        MemoryStream stream = new MemoryStream(data);
         using (MemoryStream compressedMemStream = new MemoryStream())
         {
             using (GZipStream compressionStream = new GZipStream(compressedMemStream, CompressionMode.Compress, leaveOpen: true))
@@ -37,17 +38,17 @@ public class TrackFileCompressor
         stream.Close();
     }
 
-    public TrackStreams DecompressPackage(string directoryPath)
+    public TrackData DecompressPackage(string directoryPath)
     {
-        TrackStreams deserializedTrackStreams = new TrackStreams();
-        deserializedTrackStreams.TrackStream = DecompressFile(directoryPath + TrackSerializer.mapFileExtension);
-        deserializedTrackStreams.HeightMapStream = DecompressFile(directoryPath + TerrainSerializer.trackHeightMapExtension);
-        deserializedTrackStreams.TextureMapStream = DecompressFile(directoryPath + TerrainSerializer.textureMapExtension);
+        TrackData deserializedTrackStreams = new TrackData();
+        deserializedTrackStreams.ObjectsData = DecompressFile(directoryPath + TrackSerializer.mapFileExtension);
+        deserializedTrackStreams.HeightMapData = DecompressFile(directoryPath + TerrainSerializer.trackHeightMapExtension);
+        deserializedTrackStreams.TextureMapData = DecompressFile(directoryPath + TerrainSerializer.textureMapExtension);
 
         return deserializedTrackStreams;
     }
 
-    private MemoryStream DecompressFile(string directoryPath)
+    private byte[] DecompressFile(string directoryPath)
     {
         var fileInfo = new FileInfo(directoryPath + ".gz");
 
@@ -59,7 +60,7 @@ public class TrackFileCompressor
                 decompressionStream.CopyTo(decompressedMemoryStream);
                 decompressedMemoryStream.Position = 0;
 
-                return decompressedMemoryStream;
+                return decompressedMemoryStream.ToArray();
             }
         }
     }

@@ -170,14 +170,14 @@
     <TrackObjectDTO>
       <ID>TrafficCone</ID>
       <Position>
-        <x>-33.91353</x>
-        <y>0.180833131</y>
-        <z>1.31875765</z>
+        <x>-33.9119148</x>
+        <y>0.177952036</y>
+        <z>1.31907606</z>
       </Position>
       <Rotation>
-        <x>281.936157</x>
-        <y>69.71343</y>
-        <z>279.6621</z>
+        <x>281.918854</x>
+        <y>72.01397</y>
+        <z>277.135376</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
@@ -1074,6 +1074,19 @@
       <Rotation>
         <x>270</x>
         <y>51.90493</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Cactus</ID>
+      <Position>
+        <x>-24.1565876</x>
+        <y>0.006226063</y>
+        <z>5.837838</z>
+      </Position>
+      <Rotation>
+        <x>270</x>
+        <y>311.9049</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
