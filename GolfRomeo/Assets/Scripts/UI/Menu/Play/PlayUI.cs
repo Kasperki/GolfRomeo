@@ -105,41 +105,39 @@ public class PlayUI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad1))
+        if (GameManager.CheckState(State.Menu))
         {
-            CreatePlayer("Joystick1", new ControllerScheme().Keyboard());
-        }
-
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            CreatePlayer("Joystick2", new ControllerScheme().Keyboard2());
-        }
-
-        var playersToRemove = new List<Player>();
-        for(int i = 0; i < RaceManager.Instance.Players.Count; i++)
-        {
-            var player = RaceManager.Instance.Players[i];
-
-            if (player.PlayerType == PlayerType.Player)
+            if (Input.GetKeyDown(KeyCode.Keypad1))
             {
-                if (Input.GetKeyDown(player.ControllerScheme.Cancel))
+                CreatePlayer("Joystick1", new ControllerScheme().Keyboard());
+            }
+
+            if (Input.GetKeyDown(KeyCode.Keypad2))
+            {
+                CreatePlayer("Joystick2", new ControllerScheme().Keyboard2());
+            }
+
+            var playersToRemove = new List<Player>();
+            for (int i = 0; i < RaceManager.Instance.Players.Count; i++)
+            {
+                var player = RaceManager.Instance.Players[i];
+
+                if (player.PlayerType == PlayerType.Player)
                 {
-                    playersToRemove.Add(player);
+                    if (Input.GetKeyDown(player.ControllerScheme.Cancel))
+                    {
+                        playersToRemove.Add(player);
+                    }
                 }
             }
-        }
 
-        RemovePlayers(playersToRemove);
-        playersToRemove.Clear();
+            RemovePlayers(playersToRemove);
+            playersToRemove.Clear();
 
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            AddAI();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Back();
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                AddAI();
+            }
         }
     }
 
