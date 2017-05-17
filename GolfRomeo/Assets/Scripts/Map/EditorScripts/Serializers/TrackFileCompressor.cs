@@ -26,6 +26,7 @@ public class TrackFileCompressor
             {
                 stream.CopyTo(compressionStream);
             }
+
             compressedMemStream.Seek(0, SeekOrigin.Begin);
 
             FileStream compressedFileStream = File.Create(path + ".gz");

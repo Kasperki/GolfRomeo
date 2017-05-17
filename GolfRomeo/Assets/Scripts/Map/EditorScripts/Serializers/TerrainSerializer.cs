@@ -6,27 +6,21 @@ public class TerrainSerializer
 {
     public const string trackHeightMapExtension = ".heightmap";
     public const string textureMapExtension = ".texturemap";
-    private Track track;
 
-    public TerrainSerializer(Track track)
-    {
-        this.track = track;
-    }
-
-    public void Serialize(string name, TrackStreams dd)
+    public void Serialize(string name, TrackStreams trackStreams, Track track)
     {
         using (FileStream file = new FileStream(name + trackHeightMapExtension, FileMode.Create, FileAccess.Write))
         {
-            byte[] baData = SerializeHeightMap(track.Terrain);
-            dd.HeightMapStream = new MemoryStream(baData);
-            file.Write(baData, 0, baData.Length);
+            byte[] heightMapByteArray = SerializeHeightMap(track);
+            trackStreams.HeightMapStream = new MemoryStream(heightMapByteArray);
+            file.Write(heightMapByteArray, 0, heightMapByteArray.Length);
         }
 
         using (FileStream file = new FileStream(name + textureMapExtension, FileMode.Create, FileAccess.Write))
         {
-            byte[] baData = SerializeTextureMap(track.Terrain);
-            dd.TextureMapStream = new MemoryStream(baData);
-            file.Write(baData, 0, baData.Length);
+            byte[] textureMapByteArray = SerializeTextureMap(track);
+            trackStreams.TextureMapStream = new MemoryStream(textureMapByteArray);
+            file.Write(textureMapByteArray, 0, textureMapByteArray.Length);
         }
     }
 
@@ -34,12 +28,14 @@ public class TerrainSerializer
     {
         var heightMap = new float[(int)heightMapSize.x, (int)heightMapSize.y];
         FromBytes(heightMap, stream.ToArray());
+
+        stream.Close();
         return heightMap;
     }
 
-    private byte[] SerializeHeightMap(Terrain terrain)
+    public byte[] SerializeHeightMap(Track track)
     {
-        var heightMap = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapHeight);
+        var heightMap = track.Terrain.terrainData.GetHeights(0, 0, (int)track.HeightMapSize.x, (int)track.HeightMapSize.y);
         return ToBytes(heightMap);
     }
     
@@ -47,12 +43,14 @@ public class TerrainSerializer
     {
         var alphaMap = new float[(int)textureMapSize.x, (int)textureMapSize.y, (int)textureMapSize.z];
         FromBytes(alphaMap, stream.ToArray());
+
+        stream.Close();
         return alphaMap;
     }
 
-    private byte[] SerializeTextureMap(Terrain terrain)
+    public byte[] SerializeTextureMap(Track track)
     {
-        var alphaMap = terrain.terrainData.GetAlphamaps(0, 0, terrain.terrainData.alphamapWidth, terrain.terrainData.alphamapHeight);
+        var alphaMap = track.Terrain.terrainData.GetAlphamaps(0, 0, (int)track.TextureMapSize.x, (int)track.TextureMapSize.y);
         return ToBytes(alphaMap);
     }
 

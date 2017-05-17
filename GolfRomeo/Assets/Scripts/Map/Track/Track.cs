@@ -4,9 +4,25 @@ using UnityEngine;
 public class Track : Singleton<Track>
 {
     public Guid ID;
+    private Guid PrivateEditingKey;
     public string Name;
-    public Vector2 HeightMapSize;
-    public Vector3 TextureMapSize;
+
+    public Vector2 HeightMapSize
+    {
+        get
+        {
+            return new Vector2(Terrain.terrainData.heightmapWidth, Terrain.terrainData.heightmapHeight);
+        }
+    }
+
+
+    public Vector3 TextureMapSize
+    {
+        get
+        {
+            return new Vector3(Terrain.terrainData.alphamapWidth, Terrain.terrainData.alphamapHeight, Enum.GetNames(typeof(TerrainTextures)).Length);
+        }
+    }
 
     public float TrackLenghtInKilometers
     {
@@ -24,7 +40,7 @@ public class Track : Singleton<Track>
         }
     }
 
-    //Track objects
+    //BEHAVIOUR -------------------------------------------------
     public Terrain Terrain;
     public GameObject TrackObjectsParent;
     public LapTracker LapTracker; //Checkpoints parent

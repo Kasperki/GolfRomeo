@@ -40,8 +40,6 @@ public class TrackDTO : IMappingData<TrackDTO, Track>
 
     public Track MapToGameObject(TrackDTO source, Track destination = default(Track))
     {
-        destination.HeightMapSize = source.HeightMapSize;
-        destination.TextureMapSize = source.TextureMapSize;
         return destination;
     }
 }

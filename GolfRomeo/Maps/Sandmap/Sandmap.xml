@@ -170,14 +170,14 @@
     <TrackObjectDTO>
       <ID>TrafficCone</ID>
       <Position>
-        <x>-33.9153824</x>
-        <y>0.1867012</y>
-        <z>1.31528664</z>
+        <x>-33.91353</x>
+        <y>0.180833131</y>
+        <z>1.31875765</z>
       </Position>
       <Rotation>
-        <x>282.6163</x>
-        <y>62.26001</y>
-        <z>287.711731</z>
+        <x>281.936157</x>
+        <y>69.71343</y>
+        <z>279.6621</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>

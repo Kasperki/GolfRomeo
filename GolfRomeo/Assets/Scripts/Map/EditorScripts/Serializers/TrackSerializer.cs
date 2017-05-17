@@ -4,10 +4,10 @@ using System.Text;
 using System.Xml.Serialization;
 using UnityEngine;
 
+//TODO CREATE NOT COMPRESSED FILES FOR ONLY DEBUG!
 public class TrackSerializer
 {
     public const string mapFileExtension = ".xml";
-    private Vector3 textureMapSize;
 
     private Track track;
     private DirectoryHelper directoryHelper;
@@ -17,9 +17,8 @@ public class TrackSerializer
     public TrackSerializer(Track track)
     {
         this.track = track;
-        terrainSerializer = new TerrainSerializer(track);
-        textureMapSize = new Vector3(track.Terrain.terrainData.alphamapWidth, track.Terrain.terrainData.alphamapHeight, Enum.GetNames(typeof(TerrainTextures)).Length);
 
+        terrainSerializer = new TerrainSerializer();
         directoryHelper = new DirectoryHelper();
         trackCompressor = new TrackFileCompressor();
     }
@@ -30,19 +29,16 @@ public class TrackSerializer
 
         var trackStreams = new TrackStreams();
 
+        var byteArray = SerializeMap(trackPath);
+        trackStreams.TrackStream = new MemoryStream(byteArray);
+
         using (FileStream file = new FileStream(trackPath + mapFileExtension, FileMode.Create, FileAccess.Write))
         {
-            using (StreamReader sr = new StreamReader(SerializeMap(trackPath)))
-            {
-                var xml = sr.ReadToEnd();
-                byte[] byteArray = Encoding.ASCII.GetBytes(xml);
-                trackStreams.TrackStream = new MemoryStream(byteArray);
-                file.Write(byteArray, 0, byteArray.Length);
-            }
+            file.Write(byteArray, 0, byteArray.Length);
         }
 
-        terrainSerializer.Serialize(trackPath, trackStreams);
-        trackCompressor.CreatePackage(trackPath, trackStreams); //CREATE FILES FOR DEBUG??
+        terrainSerializer.Serialize(trackPath, trackStreams, track);
+        trackCompressor.CreatePackage(trackPath, trackStreams);
     }
 
     public TrackDTO LoadWorld(string name)
@@ -55,13 +51,13 @@ public class TrackSerializer
         TrackStreams decompressedTrackStreams = trackCompressor.DecompressPackage(trackPath);
         TrackDTO mapObject = (TrackDTO)serializer.Deserialize(decompressedTrackStreams.TrackStream);
 
-        track.Terrain.terrainData.SetHeights(0, 0, terrainSerializer.DeserializeHeightMap(decompressedTrackStreams.HeightMapStream, mapObject.HeightMapSize));
-        track.Terrain.terrainData.SetAlphamaps(0, 0, terrainSerializer.DeserializeTextureMap(decompressedTrackStreams.TextureMapStream, textureMapSize));
+        track.Terrain.terrainData.SetHeights(0, 0, terrainSerializer.DeserializeHeightMap(decompressedTrackStreams.HeightMapStream, track.HeightMapSize));
+        track.Terrain.terrainData.SetAlphamaps(0, 0, terrainSerializer.DeserializeTextureMap(decompressedTrackStreams.TextureMapStream, track.TextureMapSize));
 
         return mapObject;
     }
 
-    private Stream SerializeMap(string name)
+    private byte[] SerializeMap(string name)
     {
         MemoryStream stream = new MemoryStream();
         XmlSerializer xmlSerializer = new XmlSerializer(typeof(TrackDTO));
@@ -76,7 +72,10 @@ public class TrackSerializer
         xmlSerializer.Serialize(stream, mapDTO);
 
         stream.Position = 0;
-        return stream;
+        var bytes = stream.ToArray();
+        stream.Close();
+
+        return bytes;
     }
 
     private void MapObjectsToDTO(TrackDTO mapDTO)
