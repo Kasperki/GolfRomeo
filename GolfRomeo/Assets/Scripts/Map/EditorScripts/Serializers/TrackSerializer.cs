@@ -10,15 +10,15 @@ public class TrackSerializer
     private Vector3 textureMapSize;
 
     private Track track;
-    private TerrainSerializer terrainSerializer;
-    private TrackFileCompressor trackCompressor;
     private DirectoryHelper directoryHelper;
+    private TrackFileCompressor trackCompressor;
+    private TerrainSerializer terrainSerializer;
 
     public TrackSerializer(Track track)
     {
         this.track = track;
         terrainSerializer = new TerrainSerializer(track);
-        textureMapSize = new Vector3(512, 512, Enum.GetNames(typeof(TerrainTextures)).Length);
+        textureMapSize = new Vector3(track.Terrain.terrainData.alphamapWidth, track.Terrain.terrainData.alphamapHeight, Enum.GetNames(typeof(TerrainTextures)).Length);
 
         directoryHelper = new DirectoryHelper();
         trackCompressor = new TrackFileCompressor();
@@ -28,19 +28,21 @@ public class TrackSerializer
     {
         var trackPath = directoryHelper.GetPathToMap(name);
 
+        var trackStreams = new TrackStreams();
+
         using (FileStream file = new FileStream(trackPath + mapFileExtension, FileMode.Create, FileAccess.Write))
         {
             using (StreamReader sr = new StreamReader(SerializeMap(trackPath)))
             {
                 var xml = sr.ReadToEnd();
                 byte[] byteArray = Encoding.ASCII.GetBytes(xml);
-
+                trackStreams.TrackStream = new MemoryStream(byteArray);
                 file.Write(byteArray, 0, byteArray.Length);
             }
         }
 
-        terrainSerializer.Serialize(trackPath);
-        trackCompressor.CreatePackage(directoryHelper.GetPathToDirectory(name)); //TODO USE TRACK MEMORY STERAM, DON*T GET THEM FROM FILES, CREATE FILES FOR DEBUG??
+        terrainSerializer.Serialize(trackPath, trackStreams);
+        trackCompressor.CreatePackage(trackPath, trackStreams); //CREATE FILES FOR DEBUG??
     }
 
     public TrackDTO LoadWorld(string name)
@@ -49,8 +51,8 @@ public class TrackSerializer
 
         XmlSerializer serializer = new XmlSerializer(typeof(TrackDTO));
 
-        TrackFileCompressor trCompressor = new TrackFileCompressor();
-        TrackStreams decompressedTrackStreams = trCompressor.DecompressPackage(directoryHelper.GetPathToDirectory(name));
+        TrackFileCompressor trackCompressor = new TrackFileCompressor();
+        TrackStreams decompressedTrackStreams = trackCompressor.DecompressPackage(trackPath);
         TrackDTO mapObject = (TrackDTO)serializer.Deserialize(decompressedTrackStreams.TrackStream);
 
         track.Terrain.terrainData.SetHeights(0, 0, terrainSerializer.DeserializeHeightMap(decompressedTrackStreams.HeightMapStream, mapObject.HeightMapSize));

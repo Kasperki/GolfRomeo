@@ -13,17 +13,19 @@ public class TerrainSerializer
         this.track = track;
     }
 
-    public void Serialize(string name)
+    public void Serialize(string name, TrackStreams dd)
     {
         using (FileStream file = new FileStream(name + trackHeightMapExtension, FileMode.Create, FileAccess.Write))
         {
             byte[] baData = SerializeHeightMap(track.Terrain);
+            dd.HeightMapStream = new MemoryStream(baData);
             file.Write(baData, 0, baData.Length);
         }
 
         using (FileStream file = new FileStream(name + textureMapExtension, FileMode.Create, FileAccess.Write))
         {
             byte[] baData = SerializeTextureMap(track.Terrain);
+            dd.TextureMapStream = new MemoryStream(baData);
             file.Write(baData, 0, baData.Length);
         }
     }

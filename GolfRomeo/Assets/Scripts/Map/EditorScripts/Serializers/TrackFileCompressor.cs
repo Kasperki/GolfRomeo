@@ -11,58 +11,56 @@ public class TrackStreams
 
 public class TrackFileCompressor
 {
-    public void CreatePackage(string directoryPath)
+    public void CreatePackage(string directoryPath, TrackStreams streams)
     {
-        DirectoryInfo directorySelected = new DirectoryInfo(directoryPath);
+        CompressFile(directoryPath + TrackSerializer.mapFileExtension, streams.TrackStream);
+        CompressFile(directoryPath + TerrainSerializer.trackHeightMapExtension, streams.HeightMapStream);
+        CompressFile(directoryPath + TerrainSerializer.textureMapExtension, streams.TextureMapStream);
+    }
 
-        foreach (FileInfo fileToCompress in directorySelected.GetFiles())
+    private void CompressFile(string path, MemoryStream stream)
+    {
+        using (MemoryStream compressedMemStream = new MemoryStream())
         {
-            using (FileStream originalFileStream = fileToCompress.OpenRead())
+            using (GZipStream compressionStream = new GZipStream(compressedMemStream, CompressionMode.Compress, leaveOpen: true))
             {
-                if ((File.GetAttributes(fileToCompress.FullName) & FileAttributes.Hidden) != FileAttributes.Hidden & fileToCompress.Extension != ".gz")
-                {
-                    using (FileStream compressedFileStream = File.Create(fileToCompress.FullName + ".gz"))
-                    {
-                        using (GZipStream compressionStream = new GZipStream(compressedFileStream, CompressionMode.Compress))
-                        {
-                            originalFileStream.CopyTo(compressionStream);
-                        }
-                    }
-                }
+                stream.CopyTo(compressionStream);
             }
+            compressedMemStream.Seek(0, SeekOrigin.Begin);
+
+            FileStream compressedFileStream = File.Create(path + ".gz");
+            compressedMemStream.WriteTo(compressedFileStream);
+            compressedFileStream.Close();
         }
+
+        stream.Close();
     }
 
     public TrackStreams DecompressPackage(string directoryPath)
     {
         TrackStreams deserializedTrackStreams = new TrackStreams();
-        deserializedTrackStreams.TrackStream = DecompressFile(directoryPath, TrackSerializer.mapFileExtension);
-        deserializedTrackStreams.HeightMapStream = DecompressFile(directoryPath, TerrainSerializer.trackHeightMapExtension);
-        deserializedTrackStreams.TextureMapStream = DecompressFile(directoryPath, TerrainSerializer.textureMapExtension);
+        deserializedTrackStreams.TrackStream = DecompressFile(directoryPath + TrackSerializer.mapFileExtension);
+        deserializedTrackStreams.HeightMapStream = DecompressFile(directoryPath + TerrainSerializer.trackHeightMapExtension);
+        deserializedTrackStreams.TextureMapStream = DecompressFile(directoryPath + TerrainSerializer.textureMapExtension);
 
         return deserializedTrackStreams;
     }
 
-    private MemoryStream DecompressFile(string directoryPath, string fileExtension)
+    private MemoryStream DecompressFile(string directoryPath)
     {
-        DirectoryInfo directorySelected = new DirectoryInfo(directoryPath);
+        var fileInfo = new FileInfo(directoryPath + ".gz");
 
-        foreach (FileInfo fileToDecompress in directorySelected.GetFiles("*" + fileExtension + ".gz"))
+        using (FileStream originalFileStream = fileInfo.OpenRead())
         {
-            using (FileStream originalFileStream = fileToDecompress.OpenRead())
+            using (GZipStream decompressionStream = new GZipStream(originalFileStream, CompressionMode.Decompress))
             {
-                using (GZipStream decompressionStream = new GZipStream(originalFileStream, CompressionMode.Decompress))
-                {
-                    var decompressedMemoryStream = new MemoryStream();
-                    decompressionStream.CopyTo(decompressedMemoryStream);
-                    decompressedMemoryStream.Position = 0;
+                var decompressedMemoryStream = new MemoryStream();
+                decompressionStream.CopyTo(decompressedMemoryStream);
+                decompressedMemoryStream.Position = 0;
 
-                    return decompressedMemoryStream;
-                }
+                return decompressedMemoryStream;
             }
         }
-
-        return null;
     }
 }
 

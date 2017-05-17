@@ -8,7 +8,7 @@
   <TextureMapSize>
     <x>512</x>
     <y>512</y>
-    <z>21</z>
+    <z>14</z>
   </TextureMapSize>
   <MapObjects>
     <TrackObjectDTO>
@@ -72,7 +72,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>13.9398375</y>
+        <y>13.9398384</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -170,14 +170,14 @@
     <TrackObjectDTO>
       <ID>TrafficCone</ID>
       <Position>
-        <x>-33.9292259</x>
-        <y>0.20821929</y>
-        <z>1.4237746</z>
+        <x>-33.9153824</x>
+        <y>0.1867012</y>
+        <z>1.31528664</z>
       </Position>
       <Rotation>
-        <x>284.4712</x>
-        <y>55.76187</y>
-        <z>296.455933</z>
+        <x>282.6163</x>
+        <y>62.26001</y>
+        <z>287.711731</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
@@ -280,7 +280,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>269.746643</y>
+        <y>269.746582</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -319,8 +319,8 @@
       </Position>
       <Rotation>
         <x>359.58316</x>
-        <y>6.844616</y>
-        <z>1.00054232E-08</z>
+        <y>6.84461355</y>
+        <z>1.1672995E-08</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
@@ -1061,6 +1061,19 @@
       <Rotation>
         <x>0</x>
         <y>269.205444</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Cactus</ID>
+      <Position>
+        <x>-33.6917152</x>
+        <y>0.006226063</y>
+        <z>5.885646</z>
+      </Position>
+      <Rotation>
+        <x>270</x>
+        <y>51.90493</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
