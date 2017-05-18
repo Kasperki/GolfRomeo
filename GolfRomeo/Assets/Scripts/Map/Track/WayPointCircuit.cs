@@ -51,7 +51,7 @@ public class WayPointCircuit : MonoBehaviour
             for (int i = 0; i < points.Length; i++)
             {
                 int nextIndex = (i + 1 == points.Length ? 0 : i + 1);
-                DrawLines.DrawLine(transform, points[i], points[nextIndex], Color.red);
+                DrawLines.DrawLine(points[i], points[nextIndex], Color.red);
             }
         }
     }

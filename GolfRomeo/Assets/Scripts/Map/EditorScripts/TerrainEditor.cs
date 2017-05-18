@@ -5,6 +5,7 @@ using UnityEngine;
 public class TerrainEditor : MonoBehaviour
 {
     public TerrainEdit TerrainEditMode;
+    public TextureEdit TextureEditMode;
     public int TextureID;
 
     public Renderer BrushRenderer;
@@ -25,6 +26,8 @@ public class TerrainEditor : MonoBehaviour
         brushRendererMesh = BrushRenderer.GetComponent<MeshFilter>();
         cursorEditor = GetComponentInParent<CursorEditor>();
     }
+
+    Vector3 testPos = Vector3.zero;
 
     private void UpdateBrush()
     {
@@ -60,6 +63,21 @@ public class TerrainEditor : MonoBehaviour
         BrushRenderer.GetComponent<MeshFilter>().mesh.vertices = vertices;
     }
 
+    private BezierCurve UpdateBezierCurve(Vector3 startPosition, Vector3 tangentPos, Vector3 endPosition, int size)
+    {
+        startPosition = new Vector2(startPosition.x, startPosition.z);
+        endPosition = new Vector2(endPosition.x, endPosition.z);
+        tangentPos = new Vector2(tangentPos.x, tangentPos.z);
+
+        var bezierCurve = new BezierCurve(startPosition, tangentPos, endPosition);
+
+        //Draw helper lines
+        float steps = 0.02f;
+        bezierCurve.Draw(steps);
+
+        return bezierCurve;
+    }
+
     public void UpdateTerrainHeightMap ()
     {
         UpdateBrush();
@@ -89,13 +107,54 @@ public class TerrainEditor : MonoBehaviour
         }
     }
 
+    private Vector3 p0, p1, p2;
+    private int bezierStatus = 0;
+
+    public void StartBezierEditMode()
+    {
+        TextureEditMode = TextureEdit.Bezier;
+        p0 = transform.position;
+        bezierStatus = 0;
+    }
+
     public void UpdateTerrainTexture()
     {
         UpdateBrush();
 
-        if (Input.GetKey(KeyCode.Space) && cursorEditor.CursorUI.IsActive() == false)
+        switch (TextureEditMode)
         {
-            terrainHeightEditor.UpdateTerrainTexture(TextureID, BrushSize);
+            case TextureEdit.Brush:
+                if (Input.GetKey(KeyCode.Space) && cursorEditor.CursorUI.IsActive() == false)
+                {
+                    terrainHeightEditor.UpdateTerrainTexture(TextureID, BrushSize);
+                }
+                break;
+            case TextureEdit.Bezier:
+
+                var bezierCurve = UpdateBezierCurve(p0, p1, p2, BrushSize);
+
+                if (Input.GetKeyDown(KeyCode.Space) && cursorEditor.CursorUI.IsActive() == false)
+                {
+                    if (bezierStatus == 0)
+                    {
+                        var p2 = transform.position;
+                        var p1 = new Vector2(p2.x / 2, 2);
+                    }
+                    else if (bezierStatus == 1)
+                    {
+                        var p1 = transform.position;
+                    }
+                    else
+                    {
+                        terrainHeightEditor.UpdateTerrainTextureOnBezierCurvePath(TextureID, bezierCurve, BrushSize);
+                    }
+
+                    bezierStatus++;
+                }
+
+                break;
+            default:
+                break;
         }
     }
 }
@@ -107,4 +166,10 @@ public enum TerrainEdit
     RaiseSmooth = 2,
     LowerSmooth = 3,
     Smooth = 4
+}
+
+public enum TextureEdit
+{
+    Brush = 0,
+    Bezier = 1,
 }

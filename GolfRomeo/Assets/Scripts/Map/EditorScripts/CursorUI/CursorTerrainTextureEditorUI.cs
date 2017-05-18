@@ -16,6 +16,7 @@ public class CursorTerrainTextureEditorUI : CursorBaseUI
     {
         ButtonsRect.gameObject.SetActive(true);
         CursorEditor.EditMode = EditMode.TerrainTexture;
+        CursorEditor.terrainEditor.TextureEditMode = TextureEdit.Brush;
     }
 
     public override void Close()

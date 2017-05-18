@@ -10,6 +10,7 @@ public class RaceManager : Singleton<RaceManager>
     public List<Player> Players;
     public StadingsCalculator StandingsCalculator;
     public StandingsUI StandingsUI;
+    public RaceOptions RaceOptions;
 
     public List<string> TrackNames;
     public int CurrentTrack;
@@ -47,6 +48,7 @@ public class RaceManager : Singleton<RaceManager>
     {
         CurrentTrack = 0;
         StandingsCalculator = new StadingsCalculator(Players, StandingsUI);
+        RaceOptions = RaceOptions.DefaultRaceOptions;
         LoadNextRace();
     }
 

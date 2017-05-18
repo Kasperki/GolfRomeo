@@ -13,6 +13,7 @@ public class CarController : MonoBehaviour
     public float TopSpeed = 200;
     public float TopSpeedOffRoad = 50;
     private const float NoFuelMaxSpeed = 10;
+    private const float FuelBaseConsuption = 0.1f;
 
     public float MaxMotorTorque; // maximum torque the motor can apply to wheel
     public float MaxBreakTorque; // maximum torque the motor can apply to wheel
@@ -65,6 +66,8 @@ public class CarController : MonoBehaviour
             //Driving
             if (axleInfo.motor)
             {
+                Car.Fuel -= FuelBaseConsuption * Time.deltaTime * RaceManager.Instance.RaceOptions.FuelConsuptionRate;
+
                 switch (axleInfo.leftWheelTerrain)
                 {
                     case WheelTerrain.Sand:
@@ -244,7 +247,7 @@ public class CarController : MonoBehaviour
 
             if (trackObject != null && trackObject.SoftCollision == false)
             {
-                Car.Health -= rgbd.velocity.magnitude;
+                Car.Health -= rgbd.velocity.magnitude * RaceManager.Instance.RaceOptions.DamageFromEnvironmentRate;
             }
         }
     }

@@ -86,8 +86,13 @@ public class TerrainEditorTools : MonoBehaviour
 
     public void UpdateTerrainTexture(int textureID, int size)
     {
+        UpdateTerrainTexture(transform.position, textureID, size);
+    }
+
+    public void UpdateTerrainTexture(Vector3 pos, int textureID, int size)
+    {
         int offset = 0;
-        Vector4 terrainPosition = GetTerrainPosition(transform.position - terrain.gameObject.transform.position, size, out offset);
+        Vector4 terrainPosition = GetTerrainPosition(pos - terrain.gameObject.transform.position, size, out offset);
 
         float[,,] alphas = terrain.terrainData.GetAlphamaps((int)terrainPosition.x, (int)terrainPosition.y, (int)terrainPosition.z, (int)terrainPosition.w);
 
@@ -145,6 +150,15 @@ public class TerrainEditorTools : MonoBehaviour
         terrain.terrainData.SetAlphamaps((int)terrainPosition.x, (int)terrainPosition.y, alphas);
     }
 
+    public void UpdateTerrainTextureOnBezierCurvePath(int textureID, BezierCurve bzCurve, int size)
+    {
+        for (float t = 0; t < 1.0f; t += 0.025f)
+        {
+            var bzVector = bzCurve.GetPositionAt(t);
+            UpdateTerrainTexture(new Vector3(bzVector.x, 0, bzVector.y), textureID, size);
+        }
+    }
+
     public void RaiseTerrain(float raiseAmount, int size)
     {
         int offset = 0;
@@ -181,15 +195,6 @@ public class TerrainEditorTools : MonoBehaviour
         }
 
         return pos;
-    }
-
-    public float GetTerrainHeightAtPos(Vector3 pos)
-    {
-        float[,] heights = terrain.terrainData.GetHeights(0, 0, heightmapWidth, heightmapHeight);
-
-        int offset = 0;
-        Vector4 terrainPosition = GetTerrainPosition(pos - terrain.gameObject.transform.position, 1, out offset);
-        return heights[(int)terrainPosition.y, (int)terrainPosition.x];
     }
 
     public void RaiseTerrainSmooth(float raiseAmount, int size)

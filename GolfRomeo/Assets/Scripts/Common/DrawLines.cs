@@ -25,7 +25,7 @@ public class DrawLines
     }
 
     // Will be called after all regular rendering is done
-    public static void DrawLine(Transform tr, Vector3 startPos, Vector3 endPos, Color color)
+    public static void DrawLine(Vector3 startPos, Vector3 endPos, Color color)
     {
         CreateLineMaterial();
         // Apply the line material
@@ -33,18 +33,12 @@ public class DrawLines
 
         GL.PushMatrix();
 
-        // Set transformation matrix for drawing to
-        // match our transform
-        //GL.MultMatrix(tr.localToWorldMatrix);
-
         // Draw lines
         GL.Begin(GL.LINES);
 
-        // Vertex colors change from red to green
         GL.Color(color);
-        // One vertex at transform position
+
         GL.Vertex3(startPos.x, startPos.y, startPos.z);
-        // Another vertex at edge of circle
         GL.Vertex3(endPos.x, endPos.y, endPos.z);
 
         GL.End();
