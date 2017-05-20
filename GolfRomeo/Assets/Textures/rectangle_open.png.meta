@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: e590c39e802a4e44cbdc787f6e77f2ce
-timeCreated: 1494016957
+timeCreated: 1495202391
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -43,7 +43,7 @@ TextureImporter:
   spritePixelsToUnits: 100
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: -1
+  spriteTessellationDetail: 0
   textureType: 8
   textureShape: 1
   maxTextureSizeSet: 0
@@ -51,7 +51,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -59,7 +59,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -67,7 +67,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Windows Store Apps
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -77,7 +77,27 @@ TextureImporter:
   spriteSheet:
     serializedVersion: 2
     sprites: []
-    outline: []
+    outline:
+    - - {x: -128, y: -76}
+      - {x: -128, y: -128}
+      - {x: -76, y: -128}
+      - {x: -76, y: -120}
+      - {x: -120, y: -76}
+    - - {x: 76, y: -120}
+      - {x: 76, y: -128}
+      - {x: 128, y: -128}
+      - {x: 128, y: -76}
+      - {x: 120, y: -76}
+    - - {x: -128, y: 128}
+      - {x: -128, y: 76}
+      - {x: -100, y: 76}
+      - {x: -76, y: 120}
+      - {x: -76, y: 128}
+    - - {x: 76, y: 128}
+      - {x: 76, y: 120}
+      - {x: 120, y: 76}
+      - {x: 128, y: 76}
+      - {x: 128, y: 128}
   spritePackingTag: 
   userData: 
   assetBundleName: 

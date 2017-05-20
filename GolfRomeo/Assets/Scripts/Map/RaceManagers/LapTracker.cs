@@ -51,9 +51,9 @@ public class LapTracker : Singleton<LapTracker>
         {
             //Update car positions
             Cars = Cars.OrderByDescending(x => x.Finished ? 1 : 0)
-            .ThenBy(x => x.RaceTotalTime)
             .ThenByDescending(x => x.CurrentLap)
             .ThenByDescending(x => x.CurrentCheckpointID)
+            .ThenBy(x => x.RaceTotalTime)
             .ThenBy(x => (x.car.transform.position - Checkpoints[x.NextCheckpointID].transform.position).magnitude)
             .ToList();
 
@@ -83,7 +83,7 @@ public class LapTracker : Singleton<LapTracker>
         {
             lapInfo.CurrentCheckpointID = checkpointID;
 
-            if (lapInfo.CurrentCheckpointID == 0)
+            if (lapInfo.CurrentCheckpointID == 0 && lapInfo.Finished == false)
             {
                 lapInfo.LapTimes.Add(Time.time - raceStartTime);
 

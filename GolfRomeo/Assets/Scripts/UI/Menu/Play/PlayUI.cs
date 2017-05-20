@@ -134,9 +134,9 @@ public class PlayUI : MonoBehaviour
             RemovePlayers(playersToRemove);
             playersToRemove.Clear();
 
-            if (Input.GetKeyDown(KeyCode.H))
+            if (Input.GetKeyDown(KeyCode.P))
             {
-                AddAI();
+                Back();
             }
         }
     }
@@ -155,11 +155,22 @@ public class PlayUI : MonoBehaviour
         }
     }
 
+    public void RemoveAI()
+    {
+        var player = RaceManager.Instance.Players.Find(x => x.PlayerType == PlayerType.AI);
+
+        if (player != null)
+        {
+            RemovePlayers(new List<Player>() { player });
+        }
+    }
+
     public Player CreatePlayer(string name, ControllerScheme scheme)
     {
         Player player = new Player();
         player.Name = name;
         player.ControllerScheme = scheme;
+        player.PrimaryColor = Color.red;
 
         if (playerSelections.Find(x => x.IsControllerSchemeSame(player.ControllerScheme)) == null)
         {
@@ -181,8 +192,13 @@ public class PlayUI : MonoBehaviour
     {
         foreach (var player in players)
         {
-            playerSelections.Find(x => x.IsControllerSchemeSame(player.ControllerScheme)).Leave();
-            RaceManager.Instance.Players.Remove(player);
+            var playerFound = playerSelections.Find(x => x.Player != null && x.Player.ID == player.ID);
+
+            if (playerFound != null)
+            {
+                playerFound.Leave();
+                RaceManager.Instance.Players.Remove(player);
+            }
         }
     }
 }

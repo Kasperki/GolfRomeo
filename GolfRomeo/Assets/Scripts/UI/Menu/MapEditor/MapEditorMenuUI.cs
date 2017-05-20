@@ -20,6 +20,7 @@ public class MapEditorMenuUI : MonoBehaviour
         CleanEditorCursors();
         gameObject.SetActive(false);
         EditorUI.Init();
+        GameManager.SetState(State.Menu);
     }
 
     public void SaveAndExit()
@@ -28,6 +29,7 @@ public class MapEditorMenuUI : MonoBehaviour
         Track.Instance.SaveTrack();
         gameObject.SetActive(false);
         EditorUI.Init();
+        GameManager.SetState(State.Menu);
     }
 
     private void CleanEditorCursors()

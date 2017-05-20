@@ -35,6 +35,7 @@ public class RaceManager : Singleton<RaceManager>
                 if (CurrentTrack == TrackNames.Count)
                 {
                     FindObjectOfType<PlayUI>().Init();
+                    GameManager.SetState(State.Menu);
                 }
                 else
                 {

@@ -65,6 +65,7 @@ public class EditorUI : MonoBehaviour
 
     public void StartEdit()
     {
+        GameManager.SetState(State.Edit);
         RaceManager.Instance.EditTrack(); //LOAD TRACK
         Instantiate(CursorPrefab);
 
@@ -74,6 +75,7 @@ public class EditorUI : MonoBehaviour
 
     public void NewTrack()
     {
+        GameManager.SetState(State.Edit);
         Track.Instance.Name = TrackNameInput.text;
         Track.Instance.ID = Guid.NewGuid(); //TODO INIT SOMEHERE ELSE THAN IN FUCKIN UI
         var cursor = Instantiate(CursorPrefab) as GameObject;
