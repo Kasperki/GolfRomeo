@@ -9,7 +9,6 @@ public class LapTrackerUI : MonoBehaviour
 
     public Text MapName;
     public Text LapRecord;
-    public Text Laps;
 
     public RectTransform CarInfoParent;
     public GameObject CarLapInfoPrefab;
@@ -20,20 +19,13 @@ public class LapTrackerUI : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        //clear childers;
-        var oldLapInfos = CarInfoParent.GetComponentsInChildren<CarInfo>();
-        for (int i = 0; i < oldLapInfos.Length; i++)
-        {
-             Destroy(oldLapInfos[i].gameObject);
-        }
+        ClearChildrens();
 
         lapTracker = Track.Instance.LapTracker;
         track = Track.Instance;
 
         MapName.text = track.Name;
-        LapRecord.text = "TR:" + "T0:D0";
-
-        Laps.text = RaceManager.Instance.Laps + " laps";
+        LapRecord.text = "TR:" + "todo";
 
         carInfoUIs = new List<CarInfo>();
 
@@ -47,6 +39,21 @@ public class LapTrackerUI : MonoBehaviour
             obj.GetComponent<RectTransform>().sizeDelta = new Vector2(CarInfoParent.rect.width / lapTracker.Cars.Count, 0);
         }
 	}
+
+    public void Hide()
+    {
+        ClearChildrens();
+        gameObject.SetActive(false);
+    }
+
+    public void ClearChildrens()
+    {
+        var oldLapInfos = CarInfoParent.GetComponentsInChildren<CarInfo>();
+        for (int i = 0; i < oldLapInfos.Length; i++)
+        {
+            Destroy(oldLapInfos[i].gameObject);
+        }
+    }
 
     public void Update()
     {

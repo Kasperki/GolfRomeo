@@ -127,6 +127,7 @@ public class RaceManager : Singleton<RaceManager>
 
         StandingsCalculator.UpdateStandings(Track.Instance.LapTracker.Cars);
         StandingsCalculator.ShowStandings();
+        Track.Instance.LapTracker.LapTrackerUI.Hide();
 
         if (CurrentTrack == TrackNames.Count)
         {

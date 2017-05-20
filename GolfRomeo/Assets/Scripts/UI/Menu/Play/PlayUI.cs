@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class PlayUI : MonoBehaviour
 {
     public MenuUI MenuUI;
+    public RaceOptionsUI RaceOptionsUI;
     public RectTransform ContentParent;
     public GameObject StartButton;
 
@@ -55,27 +56,14 @@ public class PlayUI : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(StartButton);
         Start();
+
+        RaceOptionsUI.Init();
     }
 
     public void Back()
     {
         MenuUI.Init();
         ContentParent.gameObject.SetActive(false);
-    }
-
-    public void AddLaps()
-    {
-        RaceManager.Instance.Laps++;
-        UpdateLapsCount();
-    }
-
-    public void DecreaseLaps()
-    {
-        if (RaceManager.Instance.Laps > 1)
-        {
-            RaceManager.Instance.Laps--;
-            UpdateLapsCount();
-        }
     }
 
     public void StartGame()
@@ -96,11 +84,6 @@ public class PlayUI : MonoBehaviour
         }
 
         yield return null;
-    }
-
-    private void UpdateLapsCount()
-    {
-        laps.text = RaceManager.Instance.Laps.ToString();
     }
 
     void Update()
