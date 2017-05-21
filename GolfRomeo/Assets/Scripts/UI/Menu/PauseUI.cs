@@ -39,6 +39,9 @@ public class PauseUI : MonoBehaviour
 
     public void Exit()
     {
+        Time.timeScale = 1;
+        Track.Instance.LapTracker.LapTrackerUI.Hide();
+
         Parent.gameObject.SetActive(false);
         GameManager.SetState(State.Menu);
         PlayUI.Init();

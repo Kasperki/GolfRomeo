@@ -23,6 +23,17 @@ public class LapTracker : Singleton<LapTracker>
 
     public void Initialize(Car[] cars)
     {
+        StartCoroutine(InvokeNextFrame(cars));
+    }
+
+    private IEnumerator InvokeNextFrame(Car[] cars)
+    {
+        yield return null;
+        InitializeLapTracker(cars);
+    }
+
+    private void InitializeLapTracker(Car[] cars)
+    {
         Cars.Clear();
         someoneHasFinishedRace = false;
 
@@ -33,7 +44,7 @@ public class LapTracker : Singleton<LapTracker>
         for (int i = 0; i < cars.Count(); i++)
         {
             Cars.Add(new LapInfo(cars[i]));
-            cars[i].transform.position = startSquares[i % (startSquares.Length)].transform.position + new Vector3(0,0.1f,0);
+            cars[i].transform.position = startSquares[i % (startSquares.Length)].transform.position + new Vector3(0, 0.1f, 0);
             cars[i].transform.rotation = startSquares[i % (startSquares.Length)].transform.rotation;
         }
 

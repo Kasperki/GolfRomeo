@@ -44,5 +44,10 @@ public class CarInfo : MonoBehaviour
         Health.fillAmount = LapInfo.car.Health / LapInfo.car.MaxHealth;
         Fuel.fillAmount = LapInfo.car.Fuel / LapInfo.car.MaxFuel;
         Tires.fillAmount = LapInfo.car.TiresHealth / LapInfo.car.TiresMaxHealth;
+
+        if (GetComponent<RectTransform>().rect.width > 300)
+        {
+            GetComponent<RectTransform>().sizeDelta = new Vector2(300, GetComponent<RectTransform>().sizeDelta.y);
+        }
     }
 }

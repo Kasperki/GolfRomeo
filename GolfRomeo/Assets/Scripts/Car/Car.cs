@@ -32,6 +32,7 @@ public class Car : MonoBehaviour
 
         Health = MaxHealth;
         Fuel = MaxFuel;
+        TiresHealth = TiresMaxHealth;
 
         if (player.PlayerType == PlayerType.AI)
         {
