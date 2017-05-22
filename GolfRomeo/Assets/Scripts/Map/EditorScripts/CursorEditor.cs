@@ -106,27 +106,26 @@ public class CursorEditor : MonoBehaviour
                 MoveObjects((int)TrackMask.TrackObjects);
                 break;
             case EditMode.AIWaypoints:
-                if (Input.GetKeyDown(KeyCode.I))
-                {
-                    InitializeObject(WaypointPrefab, Track.Instance.WayPointCircuit.transform);
-                    FindObjectOfType<WayPointCircuit>().CachePositionsAndDistances();
-                }
-
                 MoveObjects((int)TrackMask.AIWaypoints);
                 break;
             case EditMode.Checkpoints:
-                if (Input.GetKeyDown(KeyCode.I))
-                {
-                    var obj = InitializeObject(CheckpointPrefab, Track.Instance.LapTracker.transform);
-                    obj.GetComponent<Checkpoint>().SetOrder();
-                }
-
                 MoveObjects((int)TrackMask.Checkpoints);
-
                 break;
             default:
                 break;
         }
+    }
+
+    public void CreateWaypoint()
+    {
+        InitializeObject(Instantiate(WaypointPrefab), Track.Instance.WayPointCircuit.transform);
+        FindObjectOfType<WayPointCircuit>().CachePositionsAndDistances();
+    }
+
+    public void CreateCheckpoint()
+    {
+        var obj = InitializeObject(Instantiate(CheckpointPrefab), Track.Instance.LapTracker.transform);
+        obj.GetComponent<Checkpoint>().SetOrder();
     }
 
     public void CreateNewObject(GameObject obj)

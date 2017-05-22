@@ -39,6 +39,7 @@ public class CursorTrackObjectsUI : CursorBaseUI
 
             button.onClick.AddListener(() =>  {
                 CursorEditor.CreateNewObject(ResourcesLoader.LoadTrackObject(trackObj.ID));
+                ButtonsRect.gameObject.SetActive(false);
                 CursorEditorUI.Exit();
             });
 

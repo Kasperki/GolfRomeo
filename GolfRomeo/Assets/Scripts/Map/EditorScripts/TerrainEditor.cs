@@ -14,7 +14,7 @@ public class TerrainEditor : MonoBehaviour
     private const int MIN_BRUSH_SIZE = 1;
     private const int MAX_BRUSH_SIZE = 100;
 
-    public int BrushSize;
+    public int BrushSize = 25;
     public float TerrainHeightEditModifier = 0.0005f;
 
     private TerrainEditorTools terrainHeightEditor;
