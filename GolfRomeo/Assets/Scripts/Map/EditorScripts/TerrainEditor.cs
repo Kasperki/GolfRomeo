@@ -27,8 +27,6 @@ public class TerrainEditor : MonoBehaviour
         cursorEditor = GetComponentInParent<CursorEditor>();
     }
 
-    Vector3 testPos = Vector3.zero;
-
     private void UpdateBrush()
     {
         BrushRenderer.enabled = true;
@@ -82,7 +80,7 @@ public class TerrainEditor : MonoBehaviour
     {
         UpdateBrush();
 
-        if (Input.GetKey(KeyCode.Space) && cursorEditor.CursorUI.IsActive() == false)
+        if (Input.GetKey(cursorEditor.ControlScheme.Select) && cursorEditor.CursorUI.IsActive() == false)
         {
             switch (TerrainEditMode)
             {
@@ -124,7 +122,7 @@ public class TerrainEditor : MonoBehaviour
         switch (TextureEditMode)
         {
             case TextureEdit.Brush:
-                if (Input.GetKey(KeyCode.Space) && cursorEditor.CursorUI.IsActive() == false)
+                if (Input.GetKey(cursorEditor.ControlScheme.Select) && cursorEditor.CursorUI.IsActive() == false)
                 {
                     terrainHeightEditor.UpdateTerrainTexture(TextureID, BrushSize);
                 }
@@ -133,16 +131,16 @@ public class TerrainEditor : MonoBehaviour
 
                 var bezierCurve = UpdateBezierCurve(p0, p1, p2, BrushSize);
 
-                if (Input.GetKeyDown(KeyCode.Space) && cursorEditor.CursorUI.IsActive() == false)
+                if (Input.GetKeyDown(cursorEditor.ControlScheme.Select) && cursorEditor.CursorUI.IsActive() == false)
                 {
                     if (bezierStatus == 0)
                     {
-                        var p2 = transform.position;
-                        var p1 = new Vector2(p2.x / 2, 2);
+                        p2 = transform.position;
+                        p1 = new Vector2(p2.x / 2, 2);
                     }
                     else if (bezierStatus == 1)
                     {
-                        var p1 = transform.position;
+                        p1 = transform.position;
                     }
                     else
                     {

@@ -7,8 +7,9 @@ public class CursorObjectsUI : CursorBaseUI
     private CursorUI CursorEditorUI;
     public CursorTrackObjectsUI TrackObjectsUI;
 
-    protected void Start()
+    protected new void Start()
     {
+        base.Start();
         CursorEditorUI = GetComponentInParent<CursorUI>();
     }
 

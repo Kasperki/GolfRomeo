@@ -13,7 +13,7 @@ public class ControllerScheme
     public KeyCode Select = KeyCode.Space;
     public KeyCode Cancel = KeyCode.Escape;
 
-    public KeyCode Duplicate = KeyCode.D;
+    public KeyCode Duplicate = KeyCode.H;
     public KeyCode Delete = KeyCode.Delete;
     public KeyCode Rotate = KeyCode.R;
 
@@ -47,9 +47,9 @@ public class ControllerScheme
         {
             VerticalAxis = "Vertical1",
             HorizontalAxis = "Horizontal1",
-            Menu = KeyCode.Joystick1Button0,
-            Select = KeyCode.Joystick1Button1,
-            Cancel = KeyCode.Joystick1Button2,
+            Menu = KeyCode.Joystick1Button7,
+            Select = KeyCode.Joystick1Button0,
+            Cancel = KeyCode.Joystick1Button1,
         };
     }
 }

@@ -28,7 +28,7 @@ public class RaceManager : Singleton<RaceManager>
     {
         if (raceEnded)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (InputManager.SelectedPressed())
             {
                 StandingsCalculator.HideStandings();
 

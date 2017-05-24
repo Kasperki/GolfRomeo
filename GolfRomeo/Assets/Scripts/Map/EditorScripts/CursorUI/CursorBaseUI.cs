@@ -10,12 +10,17 @@ public abstract class CursorBaseUI : MonoBehaviour
     public List<Button> Buttons;
 
     private int selection;
-    private InputManagerExtension inputManager;
+    private InputExtension inputManager;
 
     protected void Awake()
     {
         CursorEditor = GetComponentInParent<CursorEditor>();
-        inputManager = gameObject.AddComponent<InputManagerExtension>();
+    }
+
+    protected void Start()
+    {
+        inputManager = gameObject.AddComponent<InputExtension>();
+        inputManager.horizontalAxis = CursorEditor.CursorUI.CursorEditor.ControlScheme.HorizontalAxis;
     }
 
     protected void Update()
@@ -25,7 +30,7 @@ public abstract class CursorBaseUI : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (Input.GetKeyUp(CursorEditor.ControlScheme.Cancel))
         {
             Close();
         }
@@ -41,7 +46,7 @@ public abstract class CursorBaseUI : MonoBehaviour
             selection++;
         }
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(CursorEditor.ControlScheme.Select))
         {
             Buttons[selection].onClick.Invoke();
         }

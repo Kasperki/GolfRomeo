@@ -25,7 +25,7 @@ public class CursorEditor : MonoBehaviour
     public TerrainEditor terrainEditor;
 
     public CursorUI CursorUI;
-    //TODO ADD CONTROLC SCHEME.. remove all keycode.
+    public ControllerScheme ControlScheme;
 
     private void Awake()
     {
@@ -73,7 +73,7 @@ public class CursorEditor : MonoBehaviour
     {
         cursorMaterial.color = Normal;
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(ControlScheme.Menu))
         {
             CursorUI.Init();
         }
@@ -103,13 +103,7 @@ public class CursorEditor : MonoBehaviour
                 terrainEditor.UpdateTerrainTexture();
                 break;
             case EditMode.Objects:
-                MoveObjects((int)TrackMask.TrackObjects);
-                break;
-            case EditMode.AIWaypoints:
-                MoveObjects((int)TrackMask.AIWaypoints);
-                break;
-            case EditMode.Checkpoints:
-                MoveObjects((int)TrackMask.Checkpoints);
+                MoveObjects();
                 break;
             default:
                 break;
@@ -156,12 +150,13 @@ public class CursorEditor : MonoBehaviour
         return InitializeObject(newObj, obj.transform);
     }
 
-    private void MoveObjects(int layer)
+    private void MoveObjects()
     {
         selected = false;
+        int layer = (1 << (int)TrackMask.TrackObjects) | (1 << (int)TrackMask.AIWaypoints) | (1 << (int)TrackMask.Checkpoints);
 
         RaycastHit hit;
-        Physics.Raycast(raycastOrigin, raycastDirection, out hit, raycastLength, 1 << layer, QueryTriggerInteraction.Collide);
+        Physics.Raycast(raycastOrigin, raycastDirection, out hit, raycastLength, layer, QueryTriggerInteraction.Collide);
 
         if (hit.collider != null && hit.collider.gameObject != null)
         {
@@ -182,7 +177,7 @@ public class CursorEditor : MonoBehaviour
                 {
                     iEditable.OnHover();
 
-                    if (Input.GetKeyDown(KeyCode.Space))
+                    if (Input.GetKeyDown(ControlScheme.Select))
                     {
                         selectedIEditable = hit.collider.gameObject;
                         iEditable.OnSelect(true, transform);
@@ -195,7 +190,7 @@ public class CursorEditor : MonoBehaviour
                 //DUPLICATE
                 if (selectedIEditable == null)
                 {
-                    if (Input.GetKeyDown(KeyCode.H))
+                    if (Input.GetKeyDown(ControlScheme.Duplicate))
                     {
                         DuplicateObject(lastHoveredObject);
                     }
@@ -212,14 +207,14 @@ public class CursorEditor : MonoBehaviour
             selectedIEditable.GetComponent<IEditable>().Move(transform, Input.mouseScrollDelta.y * 5);
 
             //REMOVE
-            if (Input.GetKeyDown(KeyCode.Delete))
+            if (Input.GetKeyDown(ControlScheme.Delete))
             {
                 selectedIEditable.GetComponent<IEditable>().OnDelete();
                 selectedIEditable = null;
             }
 
             //DESELECT
-            if (Input.GetKeyDown(KeyCode.Space) && !selected)
+            if (Input.GetKeyDown(ControlScheme.Select) && !selected)
             {
                 selectedIEditable.GetComponent<IEditable>().OnSelect(false, transform);
                 selectedIEditable.GetComponent<IEditable>().OnBlur();
@@ -240,6 +235,4 @@ public enum EditMode
     TerrainHeightMap = 0,
     TerrainTexture = 1,
     Objects = 2,
-    AIWaypoints = 3,
-    Checkpoints = 4,
 }

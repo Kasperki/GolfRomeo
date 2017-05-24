@@ -247,7 +247,7 @@ public class CarController : MonoBehaviour
 
             if (trackObject != null && trackObject.SoftCollision == false)
             {
-                Car.Health -= rgbd.velocity.magnitude * RaceManager.Instance.RaceOptions.DamageFromEnvironmentRate;
+                Car.Health -= rgbd.velocity.magnitude * 3 * RaceManager.Instance.RaceOptions.DamageFromEnvironmentRate;
             }
         }
     }

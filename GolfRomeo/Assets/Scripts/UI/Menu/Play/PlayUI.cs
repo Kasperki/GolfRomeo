@@ -12,11 +12,14 @@ public class PlayUI : MonoBehaviour
     public RectTransform ContentParent;
     public GameObject StartButton;
 
-    public Text laps;
+    public Text laps, AICountLabel;
     public RectTransform mapButtonsParent;
     public List<PlayerSelectionUI> playerSelections;
 
     public GameObject MapButtonPrefab;
+
+    public Button[] ButtonsToMapSelectionNavigation;
+
     private DirectoryHelper directoryHelper;
 
     private void Start()
@@ -37,13 +40,24 @@ public class PlayUI : MonoBehaviour
             }
         }
 
-        foreach (var directory in directories)
+        for (int i = 0; i < directories.Length; i++)
         {
+            var directory = directories[i];
             var name = directory.Substring(directoryHelper.MapRootFolder.Length + 1);
 
             var obj = Instantiate(MapButtonPrefab);
             obj.transform.SetParent(mapButtonsParent, false);
             obj.GetComponent<MapSelectionButton>().SetListener(name);
+
+            if (i == 0)
+            {
+                foreach (var btn in ButtonsToMapSelectionNavigation)
+                {
+                    var navigation = btn.navigation;
+                    navigation.selectOnDown = obj.GetComponent<Button>();
+                    btn.navigation = navigation;
+                }
+            }
         }
     }
 
@@ -90,14 +104,14 @@ public class PlayUI : MonoBehaviour
     {
         if (GameManager.CheckState(State.Menu))
         {
-            if (Input.GetKeyDown(KeyCode.Keypad1))
+            if (Input.GetKeyDown(new ControllerScheme().Keyboard().Select))
             {
-                CreatePlayer("Joystick1", new ControllerScheme().Keyboard());
+                CreatePlayer("WASD", new ControllerScheme().Keyboard());
             }
 
-            if (Input.GetKeyDown(KeyCode.Keypad2))
+            if (Input.GetKeyDown(new ControllerScheme().Keyboard2().Select))
             {
-                CreatePlayer("Joystick2", new ControllerScheme().Keyboard2());
+                CreatePlayer("ARROWS", new ControllerScheme().Keyboard2());
             }
 
             var playersToRemove = new List<Player>();
@@ -117,7 +131,7 @@ public class PlayUI : MonoBehaviour
             RemovePlayers(playersToRemove);
             playersToRemove.Clear();
 
-            if (Input.GetKeyDown(KeyCode.P))
+            if (InputManager.ReturnPressed())
             {
                 Back();
             }
@@ -136,6 +150,8 @@ public class PlayUI : MonoBehaviour
             playerSelections[playerSelections.IndexOf(firstEmptySlot)].Join(player);
             RaceManager.Instance.Players.Add(player);
         }
+
+        UpdateAICount();
     }
 
     public void RemoveAI()
@@ -146,6 +162,13 @@ public class PlayUI : MonoBehaviour
         {
             RemovePlayers(new List<Player>() { player });
         }
+
+        UpdateAICount();
+    }
+
+    private void UpdateAICount()
+    {
+        AICountLabel.text = RaceManager.Instance.Players.FindAll(m => m.PlayerType == PlayerType.AI).Count.ToString("0");
     }
 
     public Player CreatePlayer(string name, ControllerScheme scheme)
@@ -162,6 +185,7 @@ public class PlayUI : MonoBehaviour
             if (firstEmptySlot.IsSlotAI())
             {
                 RemovePlayers(new List<Player>() { firstEmptySlot.Player });
+                UpdateAICount();
             }
 
             playerSelections[playerSelections.IndexOf(firstEmptySlot)].Join(player);

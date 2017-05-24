@@ -10,8 +10,10 @@ public class CursorTrackObjectsUI : CursorBaseUI
 {
     private CursorUI CursorEditorUI;
 
-    public void Start()
+    public new void Start()
     {
+        base.Start();
+
         CursorEditorUI = GetComponentInParent<CursorUI>();
         var trackObjects = Resources.LoadAll(ResourcesLoader.TRACKOBJECTS, typeof(GameObject)).Cast<GameObject>();
 

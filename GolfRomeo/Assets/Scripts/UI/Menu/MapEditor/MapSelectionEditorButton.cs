@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 class MapSelectionEditorButton : MonoBehaviour
 {
-    public Color selectedColor, normalColor;
+    public Color selectedColor = Color.white;
+    public Color normalColor = Color.white;
 
     public Image image;
     private Button button;

@@ -7,8 +7,9 @@ public class CursorTerrainHeightEditorUI : CursorBaseUI
 {
     private CursorUI CursorEditorUI;
 
-    protected void Start()
+    protected new void Start()
     {
+        base.Start();
         CursorEditorUI = GetComponentInParent<CursorUI>();
     }
 
