@@ -12,7 +12,7 @@ public class PauseUI : MonoBehaviour
 
     public void Update()
     {
-        if (InputManager.ReturnPressed())
+        if (InputManager.BackPressed())
         {
             if (GameManager.CheckState(State.Game))
             {

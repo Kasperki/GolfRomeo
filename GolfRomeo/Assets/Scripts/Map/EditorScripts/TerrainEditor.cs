@@ -80,7 +80,7 @@ public class TerrainEditor : MonoBehaviour
     {
         UpdateBrush();
 
-        if (Input.GetKey(cursorEditor.ControlScheme.Select) && cursorEditor.CursorUI.IsActive() == false)
+        if (Input.GetKey(cursorEditor.ControlScheme.Submit) && cursorEditor.CursorUI.IsActive() == false)
         {
             switch (TerrainEditMode)
             {
@@ -122,7 +122,7 @@ public class TerrainEditor : MonoBehaviour
         switch (TextureEditMode)
         {
             case TextureEdit.Brush:
-                if (Input.GetKey(cursorEditor.ControlScheme.Select) && cursorEditor.CursorUI.IsActive() == false)
+                if (Input.GetKey(cursorEditor.ControlScheme.Submit) && cursorEditor.CursorUI.IsActive() == false)
                 {
                     terrainHeightEditor.UpdateTerrainTexture(TextureID, BrushSize);
                 }
@@ -131,7 +131,7 @@ public class TerrainEditor : MonoBehaviour
 
                 var bezierCurve = UpdateBezierCurve(p0, p1, p2, BrushSize);
 
-                if (Input.GetKeyDown(cursorEditor.ControlScheme.Select) && cursorEditor.CursorUI.IsActive() == false)
+                if (Input.GetKeyDown(cursorEditor.ControlScheme.Submit) && cursorEditor.CursorUI.IsActive() == false)
                 {
                     if (bezierStatus == 0)
                     {

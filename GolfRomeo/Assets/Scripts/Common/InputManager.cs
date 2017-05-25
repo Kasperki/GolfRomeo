@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public static bool SelectedPressed()
+    public static bool SubmitPressed()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0))
+        if (Input.GetKeyDown(new ControllerScheme().Keyboard().Submit) || Input.GetKeyDown(new ControllerScheme().Joystick1().Submit))
         {
             return true;
         }
@@ -14,9 +14,19 @@ public class InputManager : MonoBehaviour
         return false;
     }
 
-	public static bool ReturnPressed()
+	public static bool BackPressed()
     {
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Joystick1Button1))
+        if (Input.GetKeyDown(new ControllerScheme().Keyboard().Select) || Input.GetKeyDown(new ControllerScheme().Joystick1().Select))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static bool StartPressed()
+    {
+        if (Input.GetKeyDown(new ControllerScheme().Keyboard().Start) || Input.GetKeyDown(new ControllerScheme().Joystick1().Start))
         {
             return true;
         }

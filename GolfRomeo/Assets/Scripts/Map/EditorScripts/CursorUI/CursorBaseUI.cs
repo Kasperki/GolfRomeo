@@ -46,7 +46,7 @@ public abstract class CursorBaseUI : MonoBehaviour
             selection++;
         }
 
-        if (Input.GetKeyUp(CursorEditor.ControlScheme.Select))
+        if (Input.GetKeyUp(CursorEditor.ControlScheme.Submit))
         {
             Buttons[selection].onClick.Invoke();
         }

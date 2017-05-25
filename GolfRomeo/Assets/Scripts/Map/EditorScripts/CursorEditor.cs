@@ -73,7 +73,7 @@ public class CursorEditor : MonoBehaviour
     {
         cursorMaterial.color = Normal;
 
-        if (Input.GetKeyDown(ControlScheme.Menu))
+        if (Input.GetKeyDown(ControlScheme.Start))
         {
             CursorUI.Init();
         }
@@ -177,7 +177,7 @@ public class CursorEditor : MonoBehaviour
                 {
                     iEditable.OnHover();
 
-                    if (Input.GetKeyDown(ControlScheme.Select))
+                    if (Input.GetKeyDown(ControlScheme.Submit))
                     {
                         selectedIEditable = hit.collider.gameObject;
                         iEditable.OnSelect(true, transform);
@@ -214,7 +214,7 @@ public class CursorEditor : MonoBehaviour
             }
 
             //DESELECT
-            if (Input.GetKeyDown(ControlScheme.Select) && !selected)
+            if (Input.GetKeyDown(ControlScheme.Submit) && !selected)
             {
                 selectedIEditable.GetComponent<IEditable>().OnSelect(false, transform);
                 selectedIEditable.GetComponent<IEditable>().OnBlur();

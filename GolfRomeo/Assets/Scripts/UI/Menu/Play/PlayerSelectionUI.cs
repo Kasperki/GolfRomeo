@@ -27,7 +27,7 @@ public class PlayerSelectionUI : MonoBehaviour
             return false;
         }
 
-        return this.scheme.Select == scheme.Select;
+        return this.scheme.Submit == scheme.Submit;
     }
 
     public bool IsSlotAI()

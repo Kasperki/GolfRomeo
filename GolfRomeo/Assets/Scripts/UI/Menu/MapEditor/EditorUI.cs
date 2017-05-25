@@ -90,7 +90,7 @@ public class EditorUI : MonoBehaviour
 
     public void Update ()
     {
-        if (InputManager.ReturnPressed() && editing == false)
+        if (InputManager.BackPressed() && editing == false)
         {
             Back(); //TODO ONLY WHEN ACTIVE ON THIS MENU....
         }

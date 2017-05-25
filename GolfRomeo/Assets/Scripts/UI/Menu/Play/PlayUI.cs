@@ -104,12 +104,12 @@ public class PlayUI : MonoBehaviour
     {
         if (GameManager.CheckState(State.Menu))
         {
-            if (Input.GetKeyDown(new ControllerScheme().Keyboard().Select))
+            if (Input.GetKeyDown(new ControllerScheme().Keyboard().Submit))
             {
                 CreatePlayer("WASD", new ControllerScheme().Keyboard());
             }
 
-            if (Input.GetKeyDown(new ControllerScheme().Keyboard2().Select))
+            if (Input.GetKeyDown(new ControllerScheme().Keyboard2().Submit))
             {
                 CreatePlayer("ARROWS", new ControllerScheme().Keyboard2());
             }
@@ -131,9 +131,14 @@ public class PlayUI : MonoBehaviour
             RemovePlayers(playersToRemove);
             playersToRemove.Clear();
 
-            if (InputManager.ReturnPressed())
+            if (InputManager.BackPressed())
             {
                 Back();
+            }
+
+            if (InputManager.StartPressed())
+            {
+                StartGame();
             }
         }
     }
@@ -145,6 +150,8 @@ public class PlayUI : MonoBehaviour
             Player player = new Player();
             player.Name = "AI";
             player.PlayerType = PlayerType.AI;
+            player.PrimaryColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+            player.SecondaryColor = new Color(Random.Range(0f, 1f), 0, 0);
 
             var firstEmptySlot = playerSelections.Find(x => x.IsSlotEmpty());
             playerSelections[playerSelections.IndexOf(firstEmptySlot)].Join(player);
