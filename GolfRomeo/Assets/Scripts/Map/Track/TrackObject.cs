@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+[SelectionBase]
 [RequireComponent(typeof(Collider))]
 public class TrackObject : MonoBehaviour, IEditable
 {

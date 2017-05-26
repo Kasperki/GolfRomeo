@@ -19,13 +19,13 @@ public class BezierCurve
         return Mathf.Pow(1 - t, 2) * p0 + 2 * (1 - t) * t * p1 + t * t * p2;
     }
 
-    public void Draw(float steps)
+    public void Draw(float steps, float y = 0)
     {
         for (float i = 0; i < 1.0f; i += steps)
         {
             var start = GetPositionAt(i);
             var end = GetPositionAt(i + steps);
-            DrawLines.DrawLine(new Vector3(start.x, 0, start.y), new Vector3(end.x, 0, end.y), Color.yellow);
+            DrawLines.DrawLine(new Vector3(start.x, y, start.y), new Vector3(end.x, y, end.y), Color.yellow);
         }
     }
 }

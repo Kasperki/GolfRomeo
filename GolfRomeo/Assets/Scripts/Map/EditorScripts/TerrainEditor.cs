@@ -67,13 +67,7 @@ public class TerrainEditor : MonoBehaviour
         endPosition = new Vector2(endPosition.x, endPosition.z);
         tangentPos = new Vector2(tangentPos.x, tangentPos.z);
 
-        var bezierCurve = new BezierCurve(startPosition, tangentPos, endPosition);
-
-        //Draw helper lines
-        float steps = 0.02f;
-        bezierCurve.Draw(steps);
-
-        return bezierCurve;
+        return new BezierCurve(startPosition, tangentPos, endPosition);
     }
 
     public void UpdateTerrainHeightMap ()
@@ -112,7 +106,19 @@ public class TerrainEditor : MonoBehaviour
     {
         TextureEditMode = TextureEdit.Bezier;
         p0 = transform.position;
-        bezierStatus = 0;
+        bezierStatus = -1;
+    }
+
+    public void OnRenderObject()
+    {
+        if (TextureEditMode == TextureEdit.Bezier && cursorEditor.CursorUI.IsActive() == false)
+        {
+            var bezierCurve = UpdateBezierCurve(p0, p1, p2, BrushSize);
+
+            //Draw helper lines
+            float steps = 0.02f;
+            bezierCurve.Draw(steps, p0.y);
+        }
     }
 
     public void UpdateTerrainTexture()
@@ -131,25 +137,44 @@ public class TerrainEditor : MonoBehaviour
 
                 var bezierCurve = UpdateBezierCurve(p0, p1, p2, BrushSize);
 
+                if (bezierStatus == 0)
+                {
+                    p2 = transform.position;
+                    p1 = p2;
+                }
+                else if (bezierStatus == 1)
+                {
+                    p1 = transform.position;
+                }
+
+                //Next bezier curve part
                 if (Input.GetKeyDown(cursorEditor.ControlScheme.Submit) && cursorEditor.CursorUI.IsActive() == false)
                 {
-                    if (bezierStatus == 0)
-                    {
-                        p2 = transform.position;
-                        p1 = new Vector2(p2.x / 2, 2);
-                    }
-                    else if (bezierStatus == 1)
-                    {
-                        p1 = transform.position;
-                    }
-                    else
+                    if (bezierStatus == 1)
                     {
                         terrainHeightEditor.UpdateTerrainTextureOnBezierCurvePath(TextureID, bezierCurve, BrushSize);
+                    }
+                    else if (bezierStatus == 2)
+                    {
+                        StartBezierEditMode();
                     }
 
                     bezierStatus++;
                 }
 
+                //Reset bezier curve back
+                if (Input.GetKeyDown(cursorEditor.ControlScheme.Cancel) && cursorEditor.CursorUI.IsActive() == false)
+                {
+                    if (bezierStatus >= 0)
+                    {
+                        bezierStatus--;
+                    }
+
+                    if (bezierStatus == -1)
+                    {
+                        StartBezierEditMode();
+                    }
+                }
                 break;
             default:
                 break;

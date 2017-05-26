@@ -152,7 +152,7 @@ public class TerrainEditorTools : MonoBehaviour
 
     public void UpdateTerrainTextureOnBezierCurvePath(int textureID, BezierCurve bzCurve, int size)
     {
-        for (float t = 0; t < 1.0f; t += 0.025f)
+        for (float t = 0; t < 1.0f; t += 0.005f)
         {
             var bzVector = bzCurve.GetPositionAt(t);
             UpdateTerrainTexture(new Vector3(bzVector.x, 0, bzVector.y), textureID, size);

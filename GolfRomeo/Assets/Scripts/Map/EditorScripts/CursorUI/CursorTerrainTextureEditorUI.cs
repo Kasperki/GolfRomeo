@@ -17,7 +17,6 @@ public class CursorTerrainTextureEditorUI : CursorBaseUI
     {
         ButtonsRect.gameObject.SetActive(true);
         CursorEditor.EditMode = EditMode.TerrainTexture;
-        CursorEditor.terrainEditor.TextureEditMode = TextureEdit.Brush;
     }
 
     public override void Close()
@@ -29,24 +28,28 @@ public class CursorTerrainTextureEditorUI : CursorBaseUI
     public void Asflat()
     {
         CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Asfalt0;
+        ButtonsRect.gameObject.SetActive(false);
         CursorEditorUI.Exit();
     }
 
     public void WhiteLine()
     {
         CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Asfalt1;
+        ButtonsRect.gameObject.SetActive(false);
         CursorEditorUI.Exit();
     }
 
     public void RedLine()
     {
         CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Asfalt2;
+        ButtonsRect.gameObject.SetActive(false);
         CursorEditorUI.Exit();
     }
 
     public void Desert()
     {
         CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Sand0;
+        ButtonsRect.gameObject.SetActive(false);
         CursorEditorUI.Exit();
     }
 }

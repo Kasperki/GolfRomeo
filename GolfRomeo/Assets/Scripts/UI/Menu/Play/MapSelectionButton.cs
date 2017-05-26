@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MapSelectionButton : MonoBehaviour
 {
-    public Color selectedColor, normalColor;
+    public Color selectedColor, normalColor, btnNormalColor;
 
     private bool selected;
     private Button button;
@@ -31,11 +31,19 @@ public class MapSelectionButton : MonoBehaviour
             {
                 RaceManager.Instance.TrackNames.Add(track);
                 image.color = selectedColor;
+
+                ColorBlock cb = button.colors;
+                cb.normalColor = Color.white;
+                button.colors = cb;
             }
             else
             {
                 RaceManager.Instance.TrackNames.Remove(track);
                 image.color = normalColor;
+
+                ColorBlock cb = button.colors;
+                cb.normalColor = btnNormalColor;
+                button.colors = cb;
             }
         });
     }
