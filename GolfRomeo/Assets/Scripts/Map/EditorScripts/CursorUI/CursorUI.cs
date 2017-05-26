@@ -7,6 +7,7 @@ public class CursorUI : CursorBaseUI
     public GameObject EditorObject;
     public CursorTerrainHeightEditorUI TerrainEditorUI;
     public CursorBrushUI BrushUI;
+    public CursorZoomUI ZoomUI;
     public CursorObjectsUI CursorObjectsUI;
 
     public bool DriveTesting;
@@ -38,7 +39,7 @@ public class CursorUI : CursorBaseUI
         Destroy(TestCar);
         DriveTesting = false;
 
-        if (TerrainEditorUI.gameObject.activeSelf == false && BrushUI.gameObject.activeSelf == false && CursorObjectsUI.gameObject.activeSelf == false)
+        if (TerrainEditorUI.gameObject.activeSelf == false && BrushUI.gameObject.activeSelf == false && CursorObjectsUI.gameObject.activeSelf == false && ZoomUI.gameObject.activeSelf == false)
         {
             Open();
         }
@@ -56,7 +57,7 @@ public class CursorUI : CursorBaseUI
 
     public override void Close()
     {
-        if (TerrainEditorUI.gameObject.activeSelf == false && BrushUI.gameObject.activeSelf == false && CursorObjectsUI.gameObject.activeSelf == false)
+        if (TerrainEditorUI.gameObject.activeSelf == false && BrushUI.gameObject.activeSelf == false && CursorObjectsUI.gameObject.activeSelf == false && ZoomUI.gameObject.activeSelf == false)
         {
             Exit();
         }
@@ -81,6 +82,12 @@ public class CursorUI : CursorBaseUI
     public void EditObjects()
     {
         CursorObjectsUI.Open();
+        Close();
+    }
+
+    public void EditZoom()
+    {
+        ZoomUI.Open();
         Close();
     }
 

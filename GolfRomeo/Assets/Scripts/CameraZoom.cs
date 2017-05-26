@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class CameraZoom : MonoBehaviour
 {
-    Quaternion cachedRotation;
+    private Quaternion cachedRotation;
+    private Transform target;
+
+    private bool zooming;
 
     private void Awake()
     {
@@ -15,17 +18,28 @@ public class CameraZoom : MonoBehaviour
     {
         transform.rotation = cachedRotation;
         Camera.main.fieldOfView = 60;
+        zooming = false;
     } 
 
     public void Zoom2X(Transform target)
     {
-        transform.LookAt(target);
+        this.target = target;
         Camera.main.fieldOfView = 40;
+        zooming = true;
     }
 
     public void Zoom4X(Transform target)
     {
-        transform.LookAt(target);
+        this.target = target;
         Camera.main.fieldOfView = 20;
+        zooming = true;
+    }
+
+    public void Update()
+    {
+        if (zooming)
+        {
+            transform.LookAt(target);
+        }
     }
 }
