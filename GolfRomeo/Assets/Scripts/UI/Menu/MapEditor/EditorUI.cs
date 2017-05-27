@@ -10,6 +10,7 @@ public class EditorUI : MonoBehaviour
     public MapEditorMenuUI MapEditorMenuUI;
     public RectTransform ContentParent;
     public GameObject EditButton;
+    public GameObject EditorInfo;
 
     public RectTransform mapButtonsParent;
     public GameObject MapButtonPrefab;
@@ -50,6 +51,7 @@ public class EditorUI : MonoBehaviour
     public void Init()
     {
         gameObject.SetActive(true);
+        EditorInfo.SetActive(false);
         ContentParent.gameObject.SetActive(true);
         EventSystem.current.SetSelectedGameObject(EditButton);
         Start();
@@ -72,6 +74,7 @@ public class EditorUI : MonoBehaviour
 
         editing = true;
         ContentParent.gameObject.SetActive(false);
+        EditorInfo.SetActive(true);
     }
 
     public void NewTrack()
@@ -86,6 +89,7 @@ public class EditorUI : MonoBehaviour
 
         editing = true;
         ContentParent.gameObject.SetActive(false);
+        EditorInfo.SetActive(true);
     }
 
     public void Update ()
