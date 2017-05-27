@@ -6,4 +6,5 @@
     Truck = 3,
     Van = 4,
     Monster = 5,
+    DragRacer = 6,
 }
