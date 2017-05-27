@@ -115,7 +115,8 @@ public class CarParticleController : MonoBehaviour
             }
 
             ParticleSystem.MainModule mainModule = SandRoadParticles.main;
-            mainModule.startSize = Mathf.Min(2, carController.CurrentSpeed / 10);
+            float minSize = Mathf.Max(0.02f, carController.CurrentSpeed / 100);
+            mainModule.startSize = new ParticleSystem.MinMaxCurve(minSize, minSize + 0.1f);
 
             sandRoadEmitting = true;
         }
@@ -123,7 +124,7 @@ public class CarParticleController : MonoBehaviour
 
     private void CleanSandRoadEmitter()
     {
-        if (!sandEmitting && SandRoadParticles.isPlaying)
+        if (!sandRoadEmitting && SandRoadParticles.isPlaying)
         {
             SandRoadParticles.Stop();
         }

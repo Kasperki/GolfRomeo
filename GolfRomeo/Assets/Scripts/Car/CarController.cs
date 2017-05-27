@@ -75,6 +75,7 @@ public class CarController : MonoBehaviour
                         axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSand;
                         break;
                     case WheelTerrain.SandRoad:
+                        ParticleController.EmitSandRoadParticles();
                         axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSandRoad;
                         break;
                     case WheelTerrain.Asfalt:
@@ -149,6 +150,11 @@ public class CarController : MonoBehaviour
             {
                 axleInfo.leftWheel.brakeTorque = 0f;
                 axleInfo.rightWheel.brakeTorque = 0f;
+            }
+
+            if (accel == 0 && footbrake == 0 && handbrake == 0 && CurrentSpeed > -3 && CurrentSpeed < 3)
+            {
+                rgbd.velocity = Vector3.zero;
             }
 
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
