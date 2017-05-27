@@ -66,7 +66,7 @@ public class CarController : MonoBehaviour
             //Driving
             if (axleInfo.motor)
             {
-                Car.Fuel -= FuelBaseConsuption * Time.deltaTime * RaceManager.Instance.RaceOptions.FuelConsuptionRate;
+                Car.Fuel -= FuelBaseConsuption * Time.deltaTime * RaceManager.Instance.RaceOptions.FuelConsuptionRate * accel;
 
                 switch (axleInfo.leftWheelTerrain)
                 {
@@ -99,6 +99,7 @@ public class CarController : MonoBehaviour
                         axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSand;
                         break;
                     case WheelTerrain.SandRoad:
+                        ParticleController.EmitSandRoadParticles();
                         axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSandRoad;
                         break;
                     case WheelTerrain.Asfalt:
@@ -132,6 +133,8 @@ public class CarController : MonoBehaviour
                 {
                     axleInfo.leftWheel.motorTorque = -MaxReverseTorque * footbrake;
                     axleInfo.rightWheel.motorTorque = -MaxReverseTorque * footbrake;
+
+                    Car.Fuel -= FuelBaseConsuption * Time.deltaTime * RaceManager.Instance.RaceOptions.FuelConsuptionRate * Mathf.Abs(footbrake);
                 }
             }
 

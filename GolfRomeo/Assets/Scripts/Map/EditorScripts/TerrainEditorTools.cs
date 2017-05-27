@@ -15,7 +15,7 @@ public class TerrainEditorTools : MonoBehaviour
     int heightmapWidth;
     int heightmapHeight;
 
-    void Start ()
+    void Awake ()
     {
         terrain = Track.Instance.Terrain;
 

@@ -10,7 +10,6 @@ public class Car : MonoBehaviour
     public Renderer SecondaryColor;
 
     public float Fuel;
-    public float FuelUsage;
     public float MaxFuel;
 
     public float Health;

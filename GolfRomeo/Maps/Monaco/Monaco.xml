@@ -12,11 +12,24 @@
   </TextureMapSize>
   <MapObjects>
     <TrackObjectDTO>
+      <ID>pitsOffice</ID>
+      <Position>
+        <x>-22.6900024</x>
+        <y>0.006226063</y>
+        <z>-6.06</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>1.17769408</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
       <ID>tentLong</ID>
       <Position>
-        <x>-16.2600021</x>
-        <y>0.006226063</y>
-        <z>1.09</z>
+        <x>-48.74</x>
+        <y>-0.11</y>
+        <z>3.27</z>
       </Position>
       <Rotation>
         <x>0</x>
@@ -40,9 +53,9 @@
     <TrackObjectDTO>
       <ID>grandStandCovered</ID>
       <Position>
-        <x>-23.7300014</x>
-        <y>0.006226063</y>
-        <z>18.25</z>
+        <x>-18.210001</x>
+        <y>0.61</y>
+        <z>28.74</z>
       </Position>
       <Rotation>
         <x>0</x>
@@ -66,26 +79,26 @@
     <TrackObjectDTO>
       <ID>flagYellow</ID>
       <Position>
-        <x>-30.84</x>
-        <y>0.006226063</y>
-        <z>12.29</z>
+        <x>-31.8879719</x>
+        <y>-0.279999971</y>
+        <z>7.150767</z>
       </Position>
       <Rotation>
         <x>0</x>
-        <y>296.98172</y>
+        <y>353.573669</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
       <ID>flagRed</ID>
       <Position>
-        <x>-31.4900017</x>
-        <y>0.0447728634</y>
-        <z>11.85</z>
+        <x>-32.4323654</x>
+        <y>-0.24000001</y>
+        <z>6.5801115</z>
       </Position>
       <Rotation>
         <x>0</x>
-        <y>298.32782</y>
+        <y>344.8167</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -131,26 +144,26 @@
     <TrackObjectDTO>
       <ID>TrafficCone</ID>
       <Position>
-        <x>-37.7944565</x>
-        <y>0.08236398</y>
-        <z>21.4623127</z>
+        <x>-37.9693146</x>
+        <y>0.100675531</y>
+        <z>21.654953</z>
       </Position>
       <Rotation>
         <x>270</x>
-        <y>6.783614</y>
+        <y>12.2567158</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
       <ID>TrafficCone</ID>
       <Position>
-        <x>-36.7031364</x>
-        <y>0.0823639557</y>
-        <z>20.4585934</z>
+        <x>-36.7501755</x>
+        <y>0.0823641941</y>
+        <z>20.5123119</z>
       </Position>
       <Rotation>
         <x>270</x>
-        <y>3.47336078</y>
+        <y>3.128479</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -170,14 +183,14 @@
     <TrackObjectDTO>
       <ID>TrafficCone</ID>
       <Position>
-        <x>-33.4989357</x>
-        <y>0.1799418</y>
-        <z>1.42710018</z>
+        <x>-33.4986877</x>
+        <y>0.179629862</y>
+        <z>1.42749488</z>
       </Position>
       <Rotation>
-        <x>305.666626</x>
-        <y>124.58683</y>
-        <z>270.323059</z>
+        <x>305.3604</x>
+        <y>124.962082</y>
+        <z>270.0709</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
@@ -261,9 +274,9 @@
     <TrackObjectDTO>
       <ID>barrierWhite</ID>
       <Position>
-        <x>-38.88</x>
+        <x>-40.16</x>
         <y>0.01</y>
-        <z>-1.73</z>
+        <z>-6.14</z>
       </Position>
       <Rotation>
         <x>0</x>
@@ -274,9 +287,9 @@
     <TrackObjectDTO>
       <ID>barrierRed</ID>
       <Position>
-        <x>-38.09</x>
+        <x>-39.3700027</x>
         <y>0.01</y>
-        <z>-1.72</z>
+        <z>-6.13</z>
       </Position>
       <Rotation>
         <x>0</x>
@@ -287,9 +300,9 @@
     <TrackObjectDTO>
       <ID>barrierWhite</ID>
       <Position>
-        <x>-37.2800026</x>
+        <x>-38.56</x>
         <y>0.01</y>
-        <z>-1.7</z>
+        <z>-6.11</z>
       </Position>
       <Rotation>
         <x>0</x>
@@ -300,9 +313,9 @@
     <TrackObjectDTO>
       <ID>barrierRed</ID>
       <Position>
-        <x>-36.49</x>
+        <x>-37.77</x>
         <y>0.01</y>
-        <z>-1.69</z>
+        <z>-6.1</z>
       </Position>
       <Rotation>
         <x>0</x>
@@ -313,13 +326,13 @@
     <TrackObjectDTO>
       <ID>flagGreen</ID>
       <Position>
-        <x>-32.24</x>
-        <y>0.006226063</y>
-        <z>11.49</z>
+        <x>-33.0904655</x>
+        <y>-0.279999971</y>
+        <z>6.08698273</z>
       </Position>
       <Rotation>
         <x>0</x>
-        <y>289.605774</y>
+        <y>320.9552</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -365,22 +378,22 @@
     <TrackObjectDTO>
       <ID>grandStandCovered</ID>
       <Position>
-        <x>-21.9700012</x>
-        <y>0.006226063</y>
-        <z>16.96</z>
+        <x>-15.710001</x>
+        <y>0.61</y>
+        <z>26.99</z>
       </Position>
       <Rotation>
         <x>0</x>
-        <y>56.0526733</y>
+        <y>43.7698631</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
       <ID>grandStandCovered</ID>
       <Position>
-        <x>-22.420002</x>
-        <y>0.006226063</y>
-        <z>17.44</z>
+        <x>-16.9000015</x>
+        <y>0.61</y>
+        <z>27.93</z>
       </Position>
       <Rotation>
         <x>0</x>
@@ -417,9 +430,9 @@
     <TrackObjectDTO>
       <ID>tentLong</ID>
       <Position>
-        <x>-16.29</x>
-        <y>0.006226063</y>
-        <z>-3.25</z>
+        <x>-50.5100021</x>
+        <y>-0.11</y>
+        <z>1.44</z>
       </Position>
       <Rotation>
         <x>0</x>
@@ -554,6 +567,19 @@
       <Rotation>
         <x>0</x>
         <y>87.6382</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>pitsGarage</ID>
+      <Position>
+        <x>-19.8100014</x>
+        <y>0.00622653961</y>
+        <z>-6.14</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>359.992645</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -749,6 +775,19 @@
       <Rotation>
         <x>0</x>
         <y>135.679291</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>pitsGarageCorner</ID>
+      <Position>
+        <x>-65.26856</x>
+        <y>0.006225586</y>
+        <z>-3.2340374</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -1041,19 +1080,6 @@
     <TrackObjectDTO>
       <ID>barrierWhite</ID>
       <Position>
-        <x>-28.0561333</x>
-        <y>0.006226063</y>
-        <z>-6.31535339</z>
-      </Position>
-      <Rotation>
-        <x>0</x>
-        <y>273.942322</y>
-        <z>0</z>
-      </Rotation>
-    </TrackObjectDTO>
-    <TrackObjectDTO>
-      <ID>barrierWhite</ID>
-      <Position>
         <x>-28.2497082</x>
         <y>0.006226063</y>
         <z>-7.16447449</z>
@@ -1113,6 +1139,292 @@
       <Rotation>
         <x>0</x>
         <y>348.942322</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>pitsOffice</ID>
+      <Position>
+        <x>-21.1500015</x>
+        <y>0.006226063</y>
+        <z>-6.09</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>1.17769408</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>pitsGarage</ID>
+      <Position>
+        <x>-24.2</x>
+        <y>0.00622653961</y>
+        <z>-6.04</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>359.992645</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>barrierWhite</ID>
+      <Position>
+        <x>-28.04</x>
+        <y>0.006226063</y>
+        <z>-3.99</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>268.942322</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>barrierWhite</ID>
+      <Position>
+        <x>-28.0300026</x>
+        <y>0.006226063</y>
+        <z>-4.79</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>268.942322</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>pitsGarage</ID>
+      <Position>
+        <x>-18.28</x>
+        <y>0.00622653961</y>
+        <z>-6.14</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>359.992645</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>pitsGarage</ID>
+      <Position>
+        <x>-16.7500019</x>
+        <y>0.00622653961</y>
+        <z>-6.14</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>359.992645</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>grandStandCovered</ID>
+      <Position>
+        <x>-14.1500015</x>
+        <y>0.61</y>
+        <z>24.55</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>63.8463478</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>grandStandCovered</ID>
+      <Position>
+        <x>-13.5800018</x>
+        <y>0.61</y>
+        <z>23.15</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>73.08328</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>grandStandCovered</ID>
+      <Position>
+        <x>-14.9000015</x>
+        <y>0.61</y>
+        <z>25.9</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>58.99102</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>grandStandCovered</ID>
+      <Position>
+        <x>-47.3000031</x>
+        <y>0</y>
+        <z>25.3</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>319.680573</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>grandStandCovered</ID>
+      <Position>
+        <x>-44.8000031</x>
+        <y>0</y>
+        <z>27.1</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>333.772827</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>grandStandCovered</ID>
+      <Position>
+        <x>-46.1000023</x>
+        <y>0</y>
+        <z>26.3</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>324.5359</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>grandStandCovered</ID>
+      <Position>
+        <x>-49</x>
+        <y>0</y>
+        <z>23</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>295.2224</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>grandStandCovered</ID>
+      <Position>
+        <x>-48.3000031</x>
+        <y>0</y>
+        <z>24.4</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>304.459381</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>grandStandCovered</ID>
+      <Position>
+        <x>-49.6000023</x>
+        <y>0</y>
+        <z>21.6</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>290.367157</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>grandStandCovered</ID>
+      <Position>
+        <x>-47.63</x>
+        <y>0</y>
+        <z>-8.43</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>224.2731</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>grandStandCovered</ID>
+      <Position>
+        <x>-49.6600037</x>
+        <y>0</y>
+        <z>-6.12</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>238.365341</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>grandStandCovered</ID>
+      <Position>
+        <x>-48.670002</x>
+        <y>0</y>
+        <z>-7.32</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>229.128448</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>grandStandCovered</ID>
+      <Position>
+        <x>-50.5100021</x>
+        <y>0</y>
+        <z>-3.34</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>258.4419</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>grandStandCovered</ID>
+      <Position>
+        <x>-50.72</x>
+        <y>0</y>
+        <z>-1.82</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>267.678741</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>grandStandCovered</ID>
+      <Position>
+        <x>-50.08</x>
+        <y>0</y>
+        <z>-4.84</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>253.586578</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>billboard</ID>
+      <Position>
+        <x>-50.7028961</x>
+        <y>0.006226063</y>
+        <z>18.0637856</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>279.999969</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>

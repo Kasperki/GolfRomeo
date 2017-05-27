@@ -7,6 +7,7 @@ public class CarParticleController : MonoBehaviour
     public ParticleSystem SandParticles;
     public ParticleSystem GrassParticles;
     public ParticleSystem Smoke;
+    public ParticleSystem SandRoadParticles;
 
     private Car car;
     private CarController carController;
@@ -24,6 +25,9 @@ public class CarParticleController : MonoBehaviour
 
         Smoke = Instantiate(Smoke);
         Smoke.transform.SetParent(transform, false);
+
+        SandRoadParticles = Instantiate(SandRoadParticles);
+        SandRoadParticles.transform.SetParent(transform, false);
     }
 
     private bool sandEmitting;
@@ -99,9 +103,39 @@ public class CarParticleController : MonoBehaviour
         }
     }
 
+
+    private bool sandRoadEmitting;
+    public void EmitSandRoadParticles()
+    {
+        if (carController.CurrentSpeed > 1)
+        {
+            if (SandRoadParticles.isPlaying == false)
+            {
+                SandRoadParticles.Play();
+            }
+
+            ParticleSystem.MainModule mainModule = SandRoadParticles.main;
+            mainModule.startSize = Mathf.Min(2, carController.CurrentSpeed / 10);
+
+            sandRoadEmitting = true;
+        }
+    }
+
+    private void CleanSandRoadEmitter()
+    {
+        if (!sandEmitting && SandRoadParticles.isPlaying)
+        {
+            SandRoadParticles.Stop();
+        }
+
+        sandRoadEmitting = false;
+    }
+
+
     public void CleanEmmiters()
     {
         CleanSandEmitter();
+        CleanSandRoadEmitter();
         CleanGrassEmmiter();
     }
 
