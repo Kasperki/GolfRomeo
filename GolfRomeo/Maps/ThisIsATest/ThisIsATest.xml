@@ -8,7 +8,7 @@
   <TextureMapSize>
     <x>512</x>
     <y>512</y>
-    <z>5</z>
+    <z>14</z>
   </TextureMapSize>
   <MapObjects>
     <TrackObjectDTO>
@@ -274,13 +274,13 @@
     <TrackObjectDTO>
       <ID>TrafficCone</ID>
       <Position>
-        <x>-34.2961273</x>
-        <y>0.08235727</y>
-        <z>1.79857683</z>
+        <x>-34.29639</x>
+        <y>0.0823214352</y>
+        <z>1.79846883</z>
       </Position>
       <Rotation>
-        <x>270</x>
-        <y>25.3598061</y>
+        <x>270.027985</x>
+        <y>25.23572</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -619,6 +619,58 @@
       <Rotation>
         <x>0</x>
         <y>283.7625</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>StartSquare</ID>
+      <Position>
+        <x>-22.9900017</x>
+        <y>0.006226063</y>
+        <z>4.7</z>
+      </Position>
+      <Rotation>
+        <x>5.77651834</x>
+        <y>204.950714</y>
+        <z>359.939972</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>StartSquare</ID>
+      <Position>
+        <x>-22.3300018</x>
+        <y>0.00622653961</y>
+        <z>3.46</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>207.6853</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>StartSquare</ID>
+      <Position>
+        <x>-23.960001</x>
+        <y>0.006226063</y>
+        <z>2.71</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>207.6853</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>StartSquare</ID>
+      <Position>
+        <x>-23.5200024</x>
+        <y>0.006226063</y>
+        <z>1.17</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>217.6853</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
