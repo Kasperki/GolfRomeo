@@ -17,12 +17,12 @@ public class EditorWarningsUI : MonoBehaviour
 
         if (Track.Instance.LapTracker.Checkpoints.Length == 0)
         {
-            text.text += "<color='orange'>! NO CHECKPOINTS !</color>";
+            text.text += "<color='orange'>! NO CHECKPOINTS !</color> \n";
         }
 
         if (Track.Instance.WayPointCircuit.waypointList.items.Length == 0)
         {
-            text.text += "<color='orange'>! AI HAS NO WAYPOINTS !</color>";
+            text.text += "<color='orange'>! AI HAS NO WAYPOINTS !</color> \n";
         }
 
         float startPointCount = 0;
@@ -36,11 +36,11 @@ public class EditorWarningsUI : MonoBehaviour
 
         if (startPointCount < RaceManager.MaxPlayers)
         {
-            text.text += "<color='orange'>You have too little "+startPointCount+"/"+ RaceManager.MaxPlayers + " start points</color>";
+            text.text += "<color='orange'>You have too little "+startPointCount+"/"+ RaceManager.MaxPlayers + " start points</color> \n";
         }
         else if(startPointCount > RaceManager.MaxPlayers)
         {
-            text.text += "<color='orange'>You have too many " + startPointCount + "/" + RaceManager.MaxPlayers + " start points</color>";
+            text.text += "<color='orange'>You have too many " + startPointCount + "/" + RaceManager.MaxPlayers + " start points</color> \n";
         }
     }
 }
