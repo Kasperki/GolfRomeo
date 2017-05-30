@@ -27,7 +27,7 @@ public class CarController : MonoBehaviour
     public Car Car;
 
     public const float SPEED_MULTIPLIER = 5.6f;
-    public float CurrentSpeed { get { return rgbd.velocity.magnitude * SPEED_MULTIPLIER; } }
+    public float CurrentSpeed { get { return rgbd == null ? 0 : rgbd.velocity.magnitude * SPEED_MULTIPLIER; } }
 
     public CarParticleController ParticleController;
 
@@ -150,11 +150,6 @@ public class CarController : MonoBehaviour
             {
                 axleInfo.leftWheel.brakeTorque = 0f;
                 axleInfo.rightWheel.brakeTorque = 0f;
-            }
-
-            if (accel == 0 && footbrake == 0 && handbrake == 0 && CurrentSpeed > -3 && CurrentSpeed < 3)
-            {
-                rgbd.velocity = Vector3.zero;
             }
 
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);

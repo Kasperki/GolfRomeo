@@ -7,10 +7,13 @@ using UnityEngine;
 public class TerrainEditorTools : MonoBehaviour
 {
     public Terrain terrain;
+    private TerrainToolkit terrainToolkit;
 
     private const float MaxHeight = 0.020f;
     private const float MinHeight = 0;
     private const float BaseHeight = 0.01f;
+
+    private const float BezierStep = 200;
 
     int heightmapWidth;
     int heightmapHeight;
@@ -18,6 +21,7 @@ public class TerrainEditorTools : MonoBehaviour
     void Awake ()
     {
         terrain = Track.Instance.Terrain;
+        terrainToolkit = new TerrainToolkit();
 
         heightmapWidth = terrain.terrainData.heightmapWidth;
         heightmapHeight = terrain.terrainData.heightmapHeight;
@@ -35,7 +39,6 @@ public class TerrainEditorTools : MonoBehaviour
         }
 
         terrain.terrainData.SetHeights(0, 0, heigthmapSize);
-
 
         float[,,] alphaMap = new float[terrain.terrainData.alphamapWidth, terrain.terrainData.alphamapHeight, terrain.terrainData.alphamapLayers];
         for (int x = 0; x < alphaMap.GetLength(0); x++)
@@ -82,6 +85,24 @@ public class TerrainEditorTools : MonoBehaviour
         }
 
         return new Vector4(posXInTerrain, posYInTerrain, width, height);
+    }
+
+    public Vector3[] CoordinatesToTerrain(Vector3[] pos)
+    {
+        float[,] heights = terrain.terrainData.GetHeights(0, 0, heightmapWidth, heightmapHeight);
+
+        for (int i = 0; i < pos.Length; i++)
+        {
+
+            int offset = 0;
+            Vector4 terrainPosition = GetTerrainPosition(pos[i] - terrain.gameObject.transform.position, 1, out offset);
+
+            int x = (int)terrainPosition.x;
+            int y = (int)terrainPosition.y;
+            pos[i] = new Vector3(pos[i].x, pos[i].y, heights[y, x] * 1200);
+        }
+
+        return pos;
     }
 
     public void UpdateTerrainTexture(int textureID, int size)
@@ -152,7 +173,7 @@ public class TerrainEditorTools : MonoBehaviour
 
     public void UpdateTerrainTextureOnBezierCurvePath(int textureID, BezierCurve bzCurve, int size)
     {
-        for (float t = 0; t < 1.0f; t += 0.005f)
+        for (float t = 0; t < 1.0f; t += 1.0f / BezierStep)
         {
             var bzVector = bzCurve.GetPositionAt(t);
             UpdateTerrainTexture(new Vector3(bzVector.x, 0, bzVector.y), textureID, size);
@@ -177,24 +198,6 @@ public class TerrainEditorTools : MonoBehaviour
         }
 
         terrain.terrainData.SetHeights((int)terrainPosition.x, (int)terrainPosition.y, heights);
-    }
-
-    public Vector3[] CoordinatesToTerrain(Vector3[] pos)
-    {
-        float[,] heights = terrain.terrainData.GetHeights(0, 0, heightmapWidth, heightmapHeight);
-
-        for (int i = 0; i < pos.Length; i++)
-        {
-
-            int offset = 0;
-            Vector4 terrainPosition = GetTerrainPosition(pos[i] - terrain.gameObject.transform.position, 1, out offset);
-
-            int x = (int)terrainPosition.x;
-            int y = (int)terrainPosition.y;
-            pos[i] = new Vector3(pos[i].x, pos[i].y, heights[y, x] * 1200);
-        }
-
-        return pos;
     }
 
     public void RaiseTerrainSmooth(float raiseAmount, int size)
@@ -230,87 +233,7 @@ public class TerrainEditorTools : MonoBehaviour
         Vector4 terrainPosition = GetTerrainPosition(pos - terrain.gameObject.transform.position, size, out offset);
         float[,] heights = terrain.terrainData.GetHeights((int)terrainPosition.x, (int)terrainPosition.y, (int)terrainPosition.w, (int)terrainPosition.z);
 
-        heights = Smooth(heights, (int)size);
+        heights = terrainToolkit.Smooth(heights, (int)size);
         terrain.terrainData.SetHeights((int)terrainPosition.x, (int)terrainPosition.y, heights);
     }
-
-    private float[,] Smooth(float[,] heightMap, int size)
-    {
-        int Tw = size;
-        int Th = size;
-        int xNeighbours;
-        int yNeighbours;
-        int xShift;
-        int yShift;
-        int xIndex;
-        int yIndex;
-        int Tx;
-        int Ty;
-
-        // Start iterations...
-        for (int iter = 0; iter < 5; iter++)
-        {
-            for (Ty = 0; Ty < Th; Ty++)
-            {
-                // y...
-                if (Ty == 0)
-                {
-                    yNeighbours = 2;
-                    yShift = 0;
-                    yIndex = 0;
-                }
-                else if (Ty == Th - 1)
-                {
-                    yNeighbours = 2;
-                    yShift = -1;
-                    yIndex = 1;
-                }
-                else
-                {
-                    yNeighbours = 3;
-                    yShift = -1;
-                    yIndex = 1;
-                }
-                for (Tx = 0; Tx < Tw; Tx++)
-                {
-                    // x...
-                    if (Tx == 0)
-                    {
-                        xNeighbours = 2;
-                        xShift = 0;
-                        xIndex = 0;
-                    }
-                    else if (Tx == Tw - 1)
-                    {
-                        xNeighbours = 2;
-                        xShift = -1;
-                        xIndex = 1;
-                    }
-                    else
-                    {
-                        xNeighbours = 3;
-                        xShift = -1;
-                        xIndex = 1;
-                    }
-                    int Ny;
-                    int Nx;
-                    float hCumulative = 0.0f;
-                    int nNeighbours = 0;
-                    for (Ny = 0; Ny < yNeighbours; Ny++)
-                    {
-                        for (Nx = 0; Nx < xNeighbours; Nx++)
-                        {
-                            float heightAtPoint = heightMap[Tx + Nx + xShift, Ty + Ny + yShift]; // Get height at point
-                            hCumulative += heightAtPoint;
-                            nNeighbours++;
-                        }
-                    }
-                    float hAverage = hCumulative / nNeighbours;
-                    heightMap[Tx + xIndex + xShift, Ty + yIndex + yShift] = hAverage;
-                }
-            }
-        }
-        return heightMap;
-    }
-
 }

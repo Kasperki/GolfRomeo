@@ -27,31 +27,31 @@ public class CursorTerrainHeightEditorUI : CursorBaseUI
 
     public void RaiseTerrain()
     {
-        CursorEditor.terrainEditor.TerrainEditMode = TerrainEdit.Raise;
+        CursorEditor.terrainEditor.TerrainEditMode = TerrainEditType.Raise;
         CursorEditorUI.Exit();
     }
 
     public void LowerTerrain()
     {
-        CursorEditor.terrainEditor.TerrainEditMode = TerrainEdit.Lower;
+        CursorEditor.terrainEditor.TerrainEditMode = TerrainEditType.Lower;
         CursorEditorUI.Exit();
     }
 
     public void RaiseTerrainSmooth()
     {
-        CursorEditor.terrainEditor.TerrainEditMode = TerrainEdit.RaiseSmooth;
+        CursorEditor.terrainEditor.TerrainEditMode = TerrainEditType.RaiseSmooth;
         CursorEditorUI.Exit();
     }
 
     public void LowerTerrainSmooth()
     {
-        CursorEditor.terrainEditor.TerrainEditMode = TerrainEdit.LowerSmooth;
+        CursorEditor.terrainEditor.TerrainEditMode = TerrainEditType.LowerSmooth;
         CursorEditorUI.Exit();
     }
 
     public void SmoothTerrain()
     {
-        CursorEditor.terrainEditor.TerrainEditMode = TerrainEdit.Smooth;
+        CursorEditor.terrainEditor.TerrainEditMode = TerrainEditType.Smooth;
         CursorEditorUI.Exit();
     }
 }

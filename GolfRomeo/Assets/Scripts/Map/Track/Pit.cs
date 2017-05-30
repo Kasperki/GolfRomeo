@@ -3,9 +3,9 @@
 [RequireComponent(typeof(Collider))]
 public class Pit : MonoBehaviour
 {
-    public const float Health = 100;
-    public const float Fuel = 300;
-    public const float Tires = 40;
+    private const float Health = 100;
+    private const float Fuel = 300;
+    private const float Tires = 40;
     private const float TimeAfterTiresChanged = 1;
     private float timeForTiresChanging;
 

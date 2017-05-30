@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TerrainEditor : MonoBehaviour
 {
-    public TerrainEdit TerrainEditMode;
-    public TextureEdit TextureEditMode;
+    public TerrainEditType TerrainEditMode;
+    public TextureEditType TextureEditMode;
     public int TextureID;
 
     public Renderer BrushRenderer;
@@ -78,19 +78,19 @@ public class TerrainEditor : MonoBehaviour
         {
             switch (TerrainEditMode)
             {
-                case TerrainEdit.Raise:
+                case TerrainEditType.Raise:
                     terrainHeightEditor.RaiseTerrain(TerrainHeightEditModifier, BrushSize);
                     break;
-                case TerrainEdit.Lower:
+                case TerrainEditType.Lower:
                     terrainHeightEditor.RaiseTerrain(-TerrainHeightEditModifier, BrushSize);
                     break;
-                case TerrainEdit.RaiseSmooth:
+                case TerrainEditType.RaiseSmooth:
                     terrainHeightEditor.RaiseTerrainSmooth(TerrainHeightEditModifier, BrushSize);
                     break;
-                case TerrainEdit.LowerSmooth:
+                case TerrainEditType.LowerSmooth:
                     terrainHeightEditor.RaiseTerrainSmooth(-TerrainHeightEditModifier, BrushSize);
                     break;
-                case TerrainEdit.Smooth:
+                case TerrainEditType.Smooth:
                     terrainHeightEditor.SmoothTerrain(BrushSize);
                     break;
                 default:
@@ -104,14 +104,14 @@ public class TerrainEditor : MonoBehaviour
 
     public void StartBezierEditMode()
     {
-        TextureEditMode = TextureEdit.Bezier;
+        TextureEditMode = TextureEditType.Bezier;
         p0 = transform.position;
         bezierStatus = -1;
     }
 
     public void OnRenderObject()
     {
-        if (TextureEditMode == TextureEdit.Bezier && cursorEditor.CursorUI.IsActive() == false)
+        if (TextureEditMode == TextureEditType.Bezier && cursorEditor.CursorUI.IsActive() == false)
         {
             var bezierCurve = UpdateBezierCurve(p0, p1, p2, BrushSize);
 
@@ -127,13 +127,13 @@ public class TerrainEditor : MonoBehaviour
 
         switch (TextureEditMode)
         {
-            case TextureEdit.Brush:
+            case TextureEditType.Brush:
                 if (Input.GetKey(cursorEditor.ControlScheme.Submit) && cursorEditor.CursorUI.IsActive() == false)
                 {
                     terrainHeightEditor.UpdateTerrainTexture(TextureID, BrushSize);
                 }
                 break;
-            case TextureEdit.Bezier:
+            case TextureEditType.Bezier:
 
                 var bezierCurve = UpdateBezierCurve(p0, p1, p2, BrushSize);
 
@@ -180,19 +180,4 @@ public class TerrainEditor : MonoBehaviour
                 break;
         }
     }
-}
-
-public enum TerrainEdit
-{
-    Raise = 0,
-    Lower = 1,
-    RaiseSmooth = 2,
-    LowerSmooth = 3,
-    Smooth = 4
-}
-
-public enum TextureEdit
-{
-    Brush = 0,
-    Bezier = 1,
 }

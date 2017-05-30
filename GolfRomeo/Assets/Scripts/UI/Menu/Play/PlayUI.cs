@@ -161,6 +161,7 @@ public class PlayUI : MonoBehaviour
         UpdateAICount();
     }
 
+
     public void RemoveAI()
     {
         var player = RaceManager.Instance.Players.Find(x => x.PlayerType == PlayerType.AI);

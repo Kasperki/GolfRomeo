@@ -22,6 +22,8 @@ public class RaceManager : Singleton<RaceManager>
     {
         base.Awake();
         DontDestroyOnLoad(gameObject);
+
+        RaceOptions = RaceOptions.DefaultRaceOptions;
     }
 
     private void Update()
@@ -34,8 +36,7 @@ public class RaceManager : Singleton<RaceManager>
 
                 if (CurrentTrack == TrackNames.Count)
                 {
-                    FindObjectOfType<PlayUI>().Init();
-                    GameManager.SetState(State.Menu);
+                    ReturnToMenu();
                 }
                 else
                 {
@@ -49,7 +50,6 @@ public class RaceManager : Singleton<RaceManager>
     {
         CurrentTrack = 0;
         StandingsCalculator = new StadingsCalculator(Players, StandingsUI);
-        RaceOptions = RaceOptions.DefaultRaceOptions;
         LoadNextRace();
     }
 
@@ -61,27 +61,34 @@ public class RaceManager : Singleton<RaceManager>
 
     public void LoadNextRace()
     {
-        GameManager.SetState(State.Pause);
-
-        //Clean up.
-        raceEnded = false;
-
-        var oldCars = FindObjectsOfType<Car>();
-        for (int i = 0; i < oldCars.Length; i++)
+        if (CurrentTrack == TrackNames.Count)
         {
-            Destroy(oldCars[i].gameObject);
+            EndRace();
         }
+        else
+        {
+            GameManager.SetState(State.Pause);
 
-        //Load World
-        Track.Instance.LoadTrack(TrackNames[CurrentTrack++]);
+            //Clean up.
+            raceEnded = false;
 
-        //Load Cars
-        var cars = LoadCars();
+            var oldCars = FindObjectsOfType<Car>();
+            for (int i = 0; i < oldCars.Length; i++)
+            {
+                Destroy(oldCars[i].gameObject);
+            }
 
-        //Init Lap Tracker
-        Track.Instance.LapTracker.Initialize(cars);
+            //Load World
+            Track.Instance.LoadTrack(TrackNames[CurrentTrack++]);
 
-        StartCoroutine(StartCountDown());
+            //Load Cars
+            var cars = LoadCars();
+
+            //Init Lap Tracker
+            Track.Instance.LapTracker.Initialize(cars);
+
+            StartCoroutine(StartCountDown());
+        }
     }
 
     private IEnumerator StartCountDown()
@@ -100,6 +107,12 @@ public class RaceManager : Singleton<RaceManager>
         yield return null;
     }
 
+    private void StartRace()
+    {
+        GameManager.SetState(State.Game);
+        Track.Instance.LapTracker.StartTimer();
+    }
+
     private Car[] LoadCars()
     {
         Car[] cars = new Car[Players.Count];
@@ -112,12 +125,6 @@ public class RaceManager : Singleton<RaceManager>
         }
 
         return cars;
-    }
-
-    private void StartRace()
-    {
-        GameManager.SetState(State.Game);
-        Track.Instance.LapTracker.StartTimer();
     }
 
     public void EndRace()
@@ -133,5 +140,11 @@ public class RaceManager : Singleton<RaceManager>
         {
             StandingsCalculator.ShowWinners();
         }
+    }
+
+    public void ReturnToMenu()
+    {
+        FindObjectOfType<PlayUI>().Init();
+        GameManager.SetState(State.Menu);
     }
 }

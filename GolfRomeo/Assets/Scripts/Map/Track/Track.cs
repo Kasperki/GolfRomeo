@@ -4,7 +4,6 @@ using UnityEngine;
 public class Track : Singleton<Track>
 {
     public Guid ID;
-    private Guid PrivateEditingKey;
     public string Name;
 
     public Vector2 HeightMapSize
