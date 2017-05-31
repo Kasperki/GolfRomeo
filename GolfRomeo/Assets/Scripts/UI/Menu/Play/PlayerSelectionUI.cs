@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -101,6 +102,11 @@ public class PlayerSelectionUI : MonoBehaviour
 
                 UpdateCar();
                 right = true;
+            }
+
+            if (Input.GetKeyDown(scheme.Cancel))
+            {
+                GetComponentInParent<PlayUI>().RemovePlayer(player);
             }
         }
     }

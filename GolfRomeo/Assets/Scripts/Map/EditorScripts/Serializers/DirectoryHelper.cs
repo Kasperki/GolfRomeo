@@ -20,6 +20,25 @@ public class DirectoryHelper
         return MapFolderName + "/" + trackName;
     }
 
+
+    public string[] GetAllTracks()
+    {
+        var directories = Directory.GetDirectories(MapRootFolder);
+        string[] trackNames = new string[directories.Length];
+
+        for (int i = 0; i < directories.Length; i++)
+        {
+            trackNames[i] = GetMapNameFromPath(directories[i]);
+        }
+
+        return trackNames;
+    } 
+
+    public string GetMapNameFromPath(string path)
+    {
+        return path.Substring(MapRootFolder.Length + 1);
+    }
+
 	public string GetPathToMap(string trackName)
     {
         if (!Directory.Exists(MapFolderName))

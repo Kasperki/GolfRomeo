@@ -36,6 +36,13 @@ public class RaceOptionsUI : MonoBehaviour
         Laps.text = RaceManager.Instance.Laps.ToString();
     }
 
+
+
+    private void UpdateAICount()
+    {
+        AICount.text = RaceManager.Instance.Players.FindAll(m => m.PlayerType == PlayerType.AI).Count.ToString("0");
+    }
+
     public void DecreaseDamageModifier()
     {
         RaceManager.Instance.RaceOptions.DamageFromEnvironmentRate -= 0.01f;

@@ -46,6 +46,12 @@ public class RaceManager : Singleton<RaceManager>
         }
     }
 
+    public void InitializeSettings()
+    {
+        TrackNames = new List<string>();
+        Laps = 1;
+    }
+
     public void StartNewTournament()
     {
         CurrentTrack = 0;

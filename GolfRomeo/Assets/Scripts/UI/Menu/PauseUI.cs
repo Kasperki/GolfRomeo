@@ -21,6 +21,7 @@ public class PauseUI : MonoBehaviour
     {
         Parent.gameObject.SetActive(true);
         GameManager.SetState(State.Pause);
+
         Time.timeScale = 0;
     }
 
@@ -28,6 +29,7 @@ public class PauseUI : MonoBehaviour
     {
         Parent.gameObject.SetActive(false);
         GameManager.SetState(State.Game);
+
         Time.timeScale = 1;
     }
 
@@ -35,18 +37,15 @@ public class PauseUI : MonoBehaviour
     {
         Parent.gameObject.SetActive(false);
         RaceManager.Instance.LoadNextRace();
+
         Time.timeScale = 1;
     }
 
     public void Exit()
     {
-        Time.timeScale = 1;
-        Track.Instance.LapTracker.LapTrackerUI.Hide();
-
         Parent.gameObject.SetActive(false);
-        GameManager.SetState(State.Menu);
-        PlayUI.Init();
-
         RaceManager.Instance.EndRace();
+
+        Time.timeScale = 1;
     }
 }

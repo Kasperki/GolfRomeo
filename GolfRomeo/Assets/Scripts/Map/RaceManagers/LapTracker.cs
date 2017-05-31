@@ -50,7 +50,7 @@ public class LapTracker : Singleton<LapTracker>
         for (int i = 0; i < cars.Count(); i++)
         {
             Cars.Add(new LapInfo(cars[i]));
-            cars[i].transform.position = startSquares[i % (startSquares.Length)].transform.position + new Vector3(0, 0.1f, 0);
+            cars[i].transform.position = startSquares[i % (startSquares.Length)].transform.position + new Vector3(0, 0.1f, 0); //TODO DO SOMETHING TO THIS :))
             cars[i].transform.rotation = startSquares[i % (startSquares.Length)].transform.rotation;
             cars[i].GetComponent<Rigidbody>().isKinematic = true;
         }

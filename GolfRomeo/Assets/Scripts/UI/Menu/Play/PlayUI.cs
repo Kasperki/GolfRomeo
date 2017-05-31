@@ -1,64 +1,27 @@
 ﻿using System.Collections;
-using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class PlayUI : MonoBehaviour
 {
     public MenuUI MenuUI;
     public RaceOptionsUI RaceOptionsUI;
     public RectTransform ContentParent;
-    public GameObject StartButton;
 
-    public Text laps, AICountLabel;
-    public RectTransform mapButtonsParent;
+    //Player selection
     public List<PlayerSelectionUI> playerSelections;
 
+    //Track selection
+    public RectTransform mapButtonsParent;
     public GameObject MapButtonPrefab;
-
     public Button[] ButtonsToMapSelectionNavigation;
 
     private DirectoryHelper directoryHelper;
 
     private void Start()
     {
-        RaceManager.Instance.TrackNames = new List<string>();
-        RaceManager.Instance.Laps = 1;
-
         directoryHelper = new DirectoryHelper();
-        var directories = Directory.GetDirectories(directoryHelper.MapRootFolder);
-
-        var mapbuttons = mapButtonsParent.GetComponentsInChildren<Transform>();
-
-        foreach (var buttonTransform in mapbuttons)
-        {
-            if (buttonTransform.transform.GetInstanceID() != mapButtonsParent.GetInstanceID())
-            {
-                Destroy(buttonTransform.gameObject);
-            }
-        }
-
-        for (int i = 0; i < directories.Length; i++)
-        {
-            var directory = directories[i];
-            var name = directory.Substring(directoryHelper.MapRootFolder.Length + 1);
-
-            var obj = Instantiate(MapButtonPrefab);
-            obj.transform.SetParent(mapButtonsParent, false);
-            obj.GetComponent<MapSelectionButton>().SetListener(name);
-
-            if (i == 0)
-            {
-                foreach (var btn in ButtonsToMapSelectionNavigation)
-                {
-                    var navigation = btn.navigation;
-                    navigation.selectOnDown = obj.GetComponent<Button>();
-                    btn.navigation = navigation;
-                }
-            }
-        }
     }
 
     public void Init()
@@ -68,10 +31,31 @@ public class PlayUI : MonoBehaviour
         ContentParent.GetComponent<RectTransform>().offsetMin = Vector2.zero;
         ContentParent.GetComponent<RectTransform>().offsetMax = Vector2.zero;
 
-        EventSystem.current.SetSelectedGameObject(StartButton);
-        Start();
-
+        RaceManager.Instance.InitializeSettings();
+        CreateMapButtons(directoryHelper.GetAllTracks());
         RaceOptionsUI.Init();
+    }
+
+    private void CreateMapButtons(string[] tracks)
+    {
+        mapButtonsParent.DestroyChildrens();
+
+        for (int i = 0; i < tracks.Length; i++)
+        {
+            var obj = Instantiate(MapButtonPrefab);
+            obj.transform.SetParent(mapButtonsParent, false);
+            obj.GetComponent<MapSelectionButton>().SetListener(tracks[i]);
+
+            if (i == 0)
+            {
+                foreach (var button in ButtonsToMapSelectionNavigation)
+                {
+                    var navigation = button.navigation;
+                    navigation.selectOnDown = obj.GetComponent<Button>();
+                    button.navigation = navigation;
+                }
+            }
+        }
     }
 
     public void Back()
@@ -114,23 +98,6 @@ public class PlayUI : MonoBehaviour
                 CreatePlayer("ARROWS", new ControllerScheme().Keyboard2());
             }
 
-            var playersToRemove = new List<Player>();
-            for (int i = 0; i < RaceManager.Instance.Players.Count; i++)
-            {
-                var player = RaceManager.Instance.Players[i];
-
-                if (player.PlayerType == PlayerType.Player)
-                {
-                    if (Input.GetKeyDown(player.ControllerScheme.Cancel))
-                    {
-                        playersToRemove.Add(player);
-                    }
-                }
-            }
-
-            RemovePlayers(playersToRemove);
-            playersToRemove.Clear();
-
             if (InputManager.BackPressed())
             {
                 Back();
@@ -158,7 +125,7 @@ public class PlayUI : MonoBehaviour
             RaceManager.Instance.Players.Add(player);
         }
 
-        UpdateAICount();
+       //UpdateAICount();
     }
 
 
@@ -168,16 +135,12 @@ public class PlayUI : MonoBehaviour
 
         if (player != null)
         {
-            RemovePlayers(new List<Player>() { player });
+            RemovePlayer(player);
         }
 
-        UpdateAICount();
+        //UpdateAICount();
     }
 
-    private void UpdateAICount()
-    {
-        AICountLabel.text = RaceManager.Instance.Players.FindAll(m => m.PlayerType == PlayerType.AI).Count.ToString("0");
-    }
 
     public Player CreatePlayer(string name, ControllerScheme scheme)
     {
@@ -192,8 +155,8 @@ public class PlayUI : MonoBehaviour
 
             if (firstEmptySlot.IsSlotAI())
             {
-                RemovePlayers(new List<Player>() { firstEmptySlot.Player });
-                UpdateAICount();
+                RemovePlayer(firstEmptySlot.Player);
+                //UpdateAICount();
             }
 
             playerSelections[playerSelections.IndexOf(firstEmptySlot)].Join(player);
@@ -203,17 +166,14 @@ public class PlayUI : MonoBehaviour
         return player;
     }
 
-    private void RemovePlayers(List<Player> players)
+    public void RemovePlayer(Player player)
     {
-        foreach (var player in players)
-        {
-            var playerFound = playerSelections.Find(x => x.Player != null && x.Player.ID == player.ID);
+        var playerFound = playerSelections.Find(x => x.Player != null && x.Player.ID == player.ID);
 
-            if (playerFound != null)
-            {
-                playerFound.Leave();
-                RaceManager.Instance.Players.Remove(player);
-            }
+        if (playerFound != null)
+        {
+            playerFound.Leave();
+            RaceManager.Instance.Players.Remove(player);
         }
     }
 }
