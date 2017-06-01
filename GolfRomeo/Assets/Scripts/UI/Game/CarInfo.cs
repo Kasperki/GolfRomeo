@@ -20,6 +20,8 @@ public class CarInfo : MonoBehaviour
 
     public CarRaceData LapInfo;
 
+    private RectTransform rectTransform;
+
     public void Init(CarRaceData lapInfo)
     {
         LapInfo = lapInfo;
@@ -27,6 +29,8 @@ public class CarInfo : MonoBehaviour
 
         Background.color = lapInfo.car.Player.PrimaryColor;
         SecondaryBackground.color = lapInfo.car.Player.SecondaryColor;
+
+        rectTransform = GetComponent<RectTransform>();
     }
 
     public void UpdateLapInformation()
@@ -45,9 +49,9 @@ public class CarInfo : MonoBehaviour
         Fuel.fillAmount = LapInfo.car.Fuel / LapInfo.car.MaxFuel;
         Tires.fillAmount = LapInfo.car.TiresHealth / LapInfo.car.TiresMaxHealth;
 
-        if (GetComponent<RectTransform>().rect.width > 250)
+        if (rectTransform.rect.width > 250)
         {
-            GetComponent<RectTransform>().sizeDelta = new Vector2(250, GetComponent<RectTransform>().sizeDelta.y);
+            rectTransform.sizeDelta = new Vector2(250, rectTransform.sizeDelta.y);
         }
     }
 }

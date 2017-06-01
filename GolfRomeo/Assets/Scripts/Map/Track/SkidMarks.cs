@@ -23,4 +23,10 @@ public class SkidMarks : MonoBehaviour
         texture.SetPixel((int)position.x, (int)position.z, oldColor + skidMarkIncrementColor);
         texture.Apply(false, false);
     }
+
+    public void DrawSkidMark(Vector3 position)
+    {
+        var tr = gameObject.AddComponent<TerrainEditorTools>();
+        tr.UpdateTerrainTexture(position, (int)TerrainTextures.Asfalt4, 2);
+    }
 }

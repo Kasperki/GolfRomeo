@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -57,6 +55,90 @@ public class ControllerScheme
             Start = KeyCode.Joystick1Button7,
             Submit = KeyCode.Joystick1Button0,
             Cancel = KeyCode.Joystick1Button1,
+        };
+    }
+
+    public ControllerScheme Joystick2()
+    {
+        return new ControllerScheme()
+        {
+            VerticalAxis = "Vertical2",
+            HorizontalAxis = "Horizontal2",
+            Start = KeyCode.Joystick2Button7,
+            Submit = KeyCode.Joystick2Button0,
+            Cancel = KeyCode.Joystick2Button1,
+        };
+    }
+
+    public ControllerScheme Joystick3()
+    {
+        return new ControllerScheme()
+        {
+            VerticalAxis = "Vertical3",
+            HorizontalAxis = "Horizontal3",
+            Start = KeyCode.Joystick3Button7,
+            Submit = KeyCode.Joystick3Button0,
+            Cancel = KeyCode.Joystick3Button1,
+        };
+    }
+
+    public ControllerScheme Joystick4()
+    {
+        return new ControllerScheme()
+        {
+            VerticalAxis = "Vertical4",
+            HorizontalAxis = "Horizontal4",
+            Start = KeyCode.Joystick4Button7,
+            Submit = KeyCode.Joystick4Button0,
+            Cancel = KeyCode.Joystick4Button1,
+        };
+    }
+
+    public ControllerScheme Joystick5()
+    {
+        return new ControllerScheme()
+        {
+            VerticalAxis = "Vertical5",
+            HorizontalAxis = "Horizontal5",
+            Start = KeyCode.Joystick5Button7,
+            Submit = KeyCode.Joystick5Button0,
+            Cancel = KeyCode.Joystick5Button1,
+        };
+    }
+
+    public ControllerScheme Joystick6()
+    {
+        return new ControllerScheme()
+        {
+            VerticalAxis = "Vertical6",
+            HorizontalAxis = "Horizontal6",
+            Start = KeyCode.Joystick6Button7,
+            Submit = KeyCode.Joystick6Button0,
+            Cancel = KeyCode.Joystick6Button1,
+        };
+    }
+
+    public ControllerScheme Joystick7()
+    {
+        return new ControllerScheme()
+        {
+            VerticalAxis = "Vertical7",
+            HorizontalAxis = "Horizontal7",
+            Start = KeyCode.Joystick7Button7,
+            Submit = KeyCode.Joystick7Button0,
+            Cancel = KeyCode.Joystick7Button1,
+        };
+    }
+
+    public ControllerScheme Joystick8()
+    {
+        return new ControllerScheme()
+        {
+            VerticalAxis = "Vertical8",
+            HorizontalAxis = "Horizontal8",
+            Start = KeyCode.Joystick8Button7,
+            Submit = KeyCode.Joystick8Button0,
+            Cancel = KeyCode.Joystick8Button1,
         };
     }
 }
