@@ -19,10 +19,12 @@ public class TerrainSerializer
         var heightMap = track.Terrain.terrainData.GetHeights(0, 0, (int)track.HeightMapSize.x, (int)track.HeightMapSize.y);
         var bytes = ToBytes(heightMap);
 
+#if UNITY_EDITOR
         using (FileStream file = new FileStream(name + trackHeightMapExtension, FileMode.Create, FileAccess.Write))
         {
             file.Write(bytes, 0, bytes.Length);
         }
+#endif
 
         return bytes;
     }
@@ -39,13 +41,18 @@ public class TerrainSerializer
         var alphaMap = track.Terrain.terrainData.GetAlphamaps(0, 0, (int)track.TextureMapSize.x, (int)track.TextureMapSize.y);
         var bytes = ToBytes(alphaMap);
 
+#if UNITY_EDITOR
         using (FileStream file = new FileStream(name + textureMapExtension, FileMode.Create, FileAccess.Write))
         {
             file.Write(bytes, 0, bytes.Length);
         }
+#endif
 
         return bytes;
     }
+
+    //Converting multidimensional array to byte array
+    //https://stackoverflow.com/a/30484982
 
     private byte[] ToBytes<T>(T[,] array) where T : struct
     {

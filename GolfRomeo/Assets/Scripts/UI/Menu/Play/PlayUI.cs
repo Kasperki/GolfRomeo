@@ -26,6 +26,8 @@ public class PlayUI : MonoBehaviour
 
     public void Init()
     {
+        GameManager.SetState(State.Menu);
+
         gameObject.SetActive(true);
         ContentParent.gameObject.SetActive(true);
         ContentParent.GetComponent<RectTransform>().offsetMin = Vector2.zero;

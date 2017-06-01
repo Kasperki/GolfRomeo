@@ -59,10 +59,10 @@ public class Track : Singleton<Track>
         var mapDTO = WorldSerialization.LoadWorld(trackName);
 
         //TODO META DATA
-        //ID -- set map folders name + GUID....
+        //ID -- set track folders name + GUID....
         Name = trackName;
 
-        //Init map objects
+        //Init track objects
         InstantiateMapObjects(mapDTO);
 
         //Init checkpoints
@@ -74,7 +74,7 @@ public class Track : Singleton<Track>
 
     private void InstantiateMapObjects(TrackDTO mapDTO)
     {
-        ClearChilds(TrackObjectsParent);
+        TrackObjectsParent.transform.DestroyChildrens();
 
         foreach (var mapObjectDTO in mapDTO.MapObjects)
         {
@@ -87,7 +87,7 @@ public class Track : Singleton<Track>
 
     private void InstantiateCheckpoints(TrackDTO mapDTO)
     {
-        ClearChilds(LapTracker.gameObject);
+        LapTracker.transform.DestroyChildrens();
 
         foreach (var checkpointDTO in mapDTO.Checkpoints)
         {
@@ -101,7 +101,7 @@ public class Track : Singleton<Track>
 
     private void InstantiateWaypoints(TrackDTO mapDTO)
     {
-        ClearChilds(WayPointCircuit.gameObject);
+        WayPointCircuit.transform.DestroyChildrens();
 
         foreach (var waypointDTO in mapDTO.Waypoints)
         {
@@ -114,19 +114,6 @@ public class Track : Singleton<Track>
         if (mapDTO.Waypoints.Length > 0)
         {
             WayPointCircuit.CachePositionsAndDistances();
-        }
-    }
-
-    private void ClearChilds(GameObject obj)
-    {
-        foreach (var tr in obj.GetComponentsInChildren<Transform>())
-        {
-            if (tr.GetInstanceID() == obj.transform.GetInstanceID())
-            {
-                continue;
-            }
-
-            Destroy(tr.gameObject);
         }
     }
 }

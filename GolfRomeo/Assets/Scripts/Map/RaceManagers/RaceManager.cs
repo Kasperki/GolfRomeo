@@ -73,50 +73,24 @@ public class RaceManager : Singleton<RaceManager>
         }
         else
         {
-            GameManager.SetState(State.Pause);
-
-            //Clean up.
-            raceEnded = false;
-
-            var oldCars = FindObjectsOfType<Car>();
-            for (int i = 0; i < oldCars.Length; i++)
-            {
-                Destroy(oldCars[i].gameObject);
-            }
+            CleanUp();
 
             //Load World
             Track.Instance.LoadTrack(TrackNames[CurrentTrack++]);
 
-            //Load Cars
-            var cars = LoadCars();
-
-            //Init Lap Tracker
-            Track.Instance.LapTracker.Initialize(cars);
-
-            StartCoroutine(StartCountDown());
+            //Start Race
+            Track.Instance.LapTracker.Initialize(LoadCars());
         }
     }
 
-    private IEnumerator StartCountDown()
+    private void CleanUp()
     {
-        FindObjectOfType<CountDown>().Awake();
-        GameManager.SetState(State.Pause);
-        var startTime = Time.time + 3.5f;
+        raceEnded = false;
 
-        while (Time.time < startTime)
+        foreach (var car in FindObjectsOfType<Car>())
         {
-            FindObjectOfType<CountDown>().UpdateCountdown(startTime - Time.time - 0.5f);
-            yield return null;
+            Destroy(car.gameObject);
         }
-
-        StartRace();
-        yield return null;
-    }
-
-    private void StartRace()
-    {
-        GameManager.SetState(State.Game);
-        Track.Instance.LapTracker.StartTimer();
     }
 
     private Car[] LoadCars()
@@ -138,7 +112,7 @@ public class RaceManager : Singleton<RaceManager>
         GameManager.SetState(State.Pause);
         raceEnded = true;
 
-        StandingsCalculator.UpdateStandings(Track.Instance.LapTracker.Cars);
+        StandingsCalculator.UpdateStandings(Track.Instance.LapTracker.CarOrder);
         StandingsCalculator.ShowStandings();
         Track.Instance.LapTracker.LapTrackerUI.Hide();
 
@@ -151,6 +125,5 @@ public class RaceManager : Singleton<RaceManager>
     public void ReturnToMenu()
     {
         FindObjectOfType<PlayUI>().Init();
-        GameManager.SetState(State.Menu);
     }
 }

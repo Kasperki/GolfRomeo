@@ -26,7 +26,7 @@ public class CursorBrushUI : CursorBaseUI
 
     public void NormalBrush()
     {
-        CursorEditor.terrainEditor.TextureEditMode = TextureEditType.Brush;
+        CursorEditor.terrainEditor.StartBrushEditMode();
         TerrainTextureEditor.Open();
         ButtonsRect.gameObject.SetActive(false);
     }

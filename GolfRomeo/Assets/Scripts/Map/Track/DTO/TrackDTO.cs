@@ -5,23 +5,23 @@ using UnityEngine;
 [XmlRootAttribute("Track", Namespace = "")]
 public class TrackDTO : IMappingData<TrackDTO, Track>
 {
-    //Map metadata  
+    //Track metadata  
     public string MapName;
     public Vector2 HeightMapSize;
     public Vector3 TextureMapSize;
 
     /// <summary>
-    /// Map Objects - trees etc.
+    /// Track Objects - trees etc.
     /// </summary>
     public TrackObjectDTO[] MapObjects;
 
     /// <summary>
-    /// Map checkpoints
+    /// Track checkpoints
     /// </summary>
     public CheckpointDTO[] Checkpoints;
 
     /// <summary>
-    /// Map checkpoints
+    /// Track checkpoints
     /// </summary>
     public WaypointDTO[] Waypoints;
 

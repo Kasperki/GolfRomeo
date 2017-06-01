@@ -9,7 +9,7 @@ public class LapTracker : Singleton<LapTracker>
     public LapTrackerUI LapTrackerUI;
 
     public Checkpoint[] Checkpoints { get { return GetComponentsInChildren<Checkpoint>(); } }
-    public List<LapInfo> Cars;
+    public List<CarRaceData> CarOrder;
 
     private float raceStartTime;
     private float timeUntilRaceIsOver;
@@ -18,48 +18,68 @@ public class LapTracker : Singleton<LapTracker>
 
     void Start()
     {
-        Cars = new List<LapInfo>();
+        CarOrder = new List<CarRaceData>();
     }
 
     public void Initialize(Car[] cars)
     {
+        GameManager.SetState(State.Pause);
+        someoneHasFinishedRace = false;
+
         StartCoroutine(InvokeNextFrame(cars));
+        LapTrackerUI.Init();
     }
 
     private IEnumerator InvokeNextFrame(Car[] cars)
     {
         yield return null;
-        InitializeLapTracker(cars);
+        SetupCarsAndRaceData(cars);
         yield return null;
 
-        foreach (var car in Cars)
+        foreach (var carOrder in CarOrder)
         {
-            car.car.GetComponent<Rigidbody>().isKinematic = false;
+            carOrder.car.GetComponent<Rigidbody>().isKinematic = false;
         }
+
+        StartCoroutine(StartCountDown());
     }
 
-    private void InitializeLapTracker(Car[] cars)
+    private void SetupCarsAndRaceData(Car[] cars)
     {
-        Cars.Clear();
-        someoneHasFinishedRace = false;
+        CarOrder.Clear();
 
-        var track = Track.Instance;
-        var startSquares = track.TrackObjectsParent.GetComponentsInChildren<StartSquare>();
+        var startSquares = Track.Instance.TrackObjectsParent.GetComponentsInChildren<StartSquare>();
         startSquares.OrderBy(m => m.transform.position - Checkpoints[0].transform.position);
 
-        for (int i = 0; i < cars.Count(); i++)
+        for (int i = 0; i < cars.Length; i++)
         {
-            Cars.Add(new LapInfo(cars[i]));
-            cars[i].transform.position = startSquares[i % (startSquares.Length)].transform.position + new Vector3(0, 0.1f, 0); //TODO DO SOMETHING TO THIS :))
-            cars[i].transform.rotation = startSquares[i % (startSquares.Length)].transform.rotation;
+            CarOrder.Add(new CarRaceData(cars[i]));
+
+            var squareIndex = i % (startSquares.Length);
+            cars[i].transform.position = startSquares[squareIndex].transform.position + new Vector3(0, 0.1f, 0);
+            cars[i].transform.rotation = startSquares[squareIndex].transform.rotation;
             cars[i].GetComponent<Rigidbody>().isKinematic = true;
         }
-
-        LapTrackerUI.Init();
     }
 
-    public void StartTimer()
+    private IEnumerator StartCountDown()
     {
+        FindObjectOfType<CountDown>().Awake();
+        var startTime = Time.time + 3.5f;
+
+        while (Time.time < startTime)
+        {
+            FindObjectOfType<CountDown>().UpdateCountdown(startTime - Time.time - 0.5f);
+            yield return null;
+        }
+
+        StartRace();
+        yield return null;
+    }
+
+    private void StartRace()
+    {
+        GameManager.SetState(State.Game);
         raceStartTime = Time.time;
     }
 
@@ -68,7 +88,7 @@ public class LapTracker : Singleton<LapTracker>
         if (GameManager.CheckState(State.Game))
         {
             //Update car positions
-            Cars = Cars.OrderByDescending(x => x.Finished ? 1 : 0)
+            CarOrder = CarOrder.OrderByDescending(x => x.Finished ? 1 : 0)
             .ThenByDescending(x => x.CurrentLap)
             .ThenByDescending(x => x.CurrentCheckpointID)
             .ThenBy(x => x.RaceTotalTime)
@@ -76,7 +96,7 @@ public class LapTracker : Singleton<LapTracker>
             .ToList();
 
             //Check when race ends
-            if (Cars.Find(x => x.Finished == true) != null && someoneHasFinishedRace == false)
+            if (CarOrder.Find(x => x.Finished == true) != null && someoneHasFinishedRace == false)
             {
                 someoneHasFinishedRace = true;
                 timeUntilRaceIsOver = Time.time + TIME_LEFT_AFTER_FIRST_FINISH;
@@ -87,7 +107,7 @@ public class LapTracker : Singleton<LapTracker>
                 RaceManager.Instance.EndRace();
             }
 
-            if (Cars.FindAll(x => x.Finished == true).Count == Cars.Count)
+            if (CarOrder.FindAll(x => x.Finished == true).Count == CarOrder.Count)
             {
                 RaceManager.Instance.EndRace();
             }
@@ -120,11 +140,11 @@ public class LapTracker : Singleton<LapTracker>
 
     public int GetCarPosition(Guid ID)
     {
-        return Cars.FindIndex(x => x.car.Player.ID == ID);
+        return CarOrder.FindIndex(x => x.car.Player.ID == ID);
     }
 
-    private LapInfo GetCarLapInfo(Guid ID)
+    private CarRaceData GetCarLapInfo(Guid ID)
     {
-        return Cars.Find(x => x.car.Player.ID == ID);
+        return CarOrder.Find(x => x.car.Player.ID == ID);
     }
 }

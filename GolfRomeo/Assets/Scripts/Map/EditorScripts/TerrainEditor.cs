@@ -99,6 +99,11 @@ public class TerrainEditor : MonoBehaviour
         }
     }
 
+    public void StartBrushEditMode()
+    {
+        TextureEditMode = TextureEditType.Brush;
+    }
+
     private Vector3 p0, p1, p2;
     private int bezierStatus = 0;
 

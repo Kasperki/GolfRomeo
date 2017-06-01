@@ -46,7 +46,7 @@ public class HoldButton : Button
 
         if (listenForSubmitUp)
         {
-            if (Input.GetKeyUp(KeyCode.Space)) //TODO THIS SHOULD BE GLOBAL SUBMIT BUTTON
+            if (Input.GetKeyUp(KeyCode.Space)) //TODO THIS SHOULD BE GLOBAL EVENT SYSTEM SUBMIT BUTTON
             {
                 listenForSubmitUp = false;
                 onHold = false;

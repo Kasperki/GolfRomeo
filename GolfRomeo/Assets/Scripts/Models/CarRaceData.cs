@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LapInfo
+public class CarRaceData
 {
     public Car car;
     public bool Finished;
@@ -25,7 +25,7 @@ public class LapInfo
         }
     }
 
-    public LapInfo(Car car)
+    public CarRaceData(Car car)
     {
         this.car = car;
         CurrentLap = 1;

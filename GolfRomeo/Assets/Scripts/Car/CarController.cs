@@ -122,6 +122,8 @@ public class CarController : MonoBehaviour
             //Breaking
             if (CurrentSpeed > 3 && Vector3.Angle(transform.forward, rgbd.velocity) < 50f)
             {
+                Track.Instance.gameObject.GetComponentInChildren<SkidMarks>().AddSkidMarks(transform.position);
+
                 axleInfo.leftWheel.brakeTorque = MaxBreakTorque * footbrake;
                 axleInfo.rightWheel.brakeTorque = MaxBreakTorque * footbrake;
             }

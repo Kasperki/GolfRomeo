@@ -4,7 +4,6 @@ using System.Text;
 using System.Xml.Serialization;
 using UnityEngine;
 
-//TODO CREATE NOT COMPRESSED FILES FOR ONLY DEBUG!
 public class TrackSerializer
 {
     public const string mapFileExtension = ".xml";
@@ -70,10 +69,12 @@ public class TrackSerializer
         var bytes = stream.ToArray();
         stream.Close();
 
+#if UNITY_EDITOR
         using (FileStream file = new FileStream(name + mapFileExtension, FileMode.Create, FileAccess.Write))
         {
             file.Write(bytes, 0, bytes.Length);
         }
+#endif
 
         return bytes;
     }

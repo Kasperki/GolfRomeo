@@ -5,7 +5,13 @@ using System.Text;
 
 public class GameManager : Singleton<GameManager>
 {
-    private static State e_state = State.Menu;
+    private static State e_state;
+
+    private new void Awake()
+    {
+        base.Awake();
+        SetState(State.Menu);
+    }
 
     /// <summary>
     /// Returns current state

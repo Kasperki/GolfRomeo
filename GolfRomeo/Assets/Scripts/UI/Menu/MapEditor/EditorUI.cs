@@ -53,9 +53,9 @@ public class EditorUI : MonoBehaviour
     public void StartEdit()
     {
         GameManager.SetState(State.Edit);
-        RaceManager.Instance.EditTrack(); //LOAD TRACK
-        var cursor = Instantiate(CursorPrefab) as GameObject;
-        cursor.GetComponent<CursorEditor>().ControlScheme = new ControllerScheme().Keyboard();
+        RaceManager.Instance.EditTrack();
+
+        CreateCursorEditor();
 
         ContentParent.gameObject.SetActive(false);
         EditorInfo.SetActive(true);
@@ -64,15 +64,24 @@ public class EditorUI : MonoBehaviour
     public void NewTrack()
     {
         GameManager.SetState(State.Edit);
+
         Track.Instance.Name = TrackNameInput.text;
         Track.Instance.ID = Guid.NewGuid(); //TODO INIT SOMEHERE ELSE THAN IN FUCKIN UI
-        var cursor = Instantiate(CursorPrefab) as GameObject;
 
-        cursor.GetComponent<CursorEditor>().ControlScheme = new ControllerScheme().Keyboard();
+        var cursor = CreateCursorEditor();
         cursor.GetComponentInChildren<TerrainEditorTools>().NewEmptyTerrain();
 
         ContentParent.gameObject.SetActive(false);
         EditorInfo.SetActive(true);
+    }
+
+    private CursorEditor CreateCursorEditor()
+    {
+        var cursor = Instantiate(CursorPrefab) as GameObject;
+        var cursorEditor = GetComponent<CursorEditor>();
+        cursorEditor.ControlScheme = new ControllerScheme().Keyboard();
+
+        return cursorEditor;
     }
 
     public void Update ()

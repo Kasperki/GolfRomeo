@@ -18,9 +18,9 @@ public class CarInfo : MonoBehaviour
     public Text CurrentLapTime;
     public Text Speed;
 
-    public LapInfo LapInfo;
+    public CarRaceData LapInfo;
 
-    public void Init(LapInfo lapInfo)
+    public void Init(CarRaceData lapInfo)
     {
         LapInfo = lapInfo;
         Name.text = lapInfo.car.Player.Name;

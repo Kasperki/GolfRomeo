@@ -22,7 +22,7 @@ public class StadingsCalculator
         this.standingsUI = standingsUI;
     }
 
-    public void UpdateStandings(List<LapInfo> lapinfo)
+    public void UpdateStandings(List<CarRaceData> lapinfo)
     {
         //Order points
         for (int i = 0; i < lapinfo.Count; i++)

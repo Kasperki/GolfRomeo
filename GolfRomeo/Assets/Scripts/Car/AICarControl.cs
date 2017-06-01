@@ -80,11 +80,6 @@ public class AICarControl : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody>();
     }
 
-    public void SetDefaultOptions()
-    {
-
-    }
-
     private void FixedUpdate()
     {
         m_Driving = GameManager.CheckState(State.Game);

@@ -25,31 +25,75 @@ public class CursorTerrainTextureEditorUI : CursorBaseUI
         CursorEditorUI.Open();
     }
 
+    private void ExitCursorEditorUI()
+    {
+        ButtonsRect.gameObject.SetActive(false);
+        CursorEditorUI.Exit();
+    }
+
     public void Asflat()
     {
         CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Asfalt0;
-        ButtonsRect.gameObject.SetActive(false);
-        CursorEditorUI.Exit();
+        ExitCursorEditorUI();
     }
 
     public void WhiteLine()
     {
         CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Asfalt1;
-        ButtonsRect.gameObject.SetActive(false);
-        CursorEditorUI.Exit();
+        ExitCursorEditorUI();
     }
 
     public void RedLine()
     {
         CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Asfalt2;
-        ButtonsRect.gameObject.SetActive(false);
-        CursorEditorUI.Exit();
+        ExitCursorEditorUI();
+    }
+
+    public void YellowLine()
+    {
+        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Asfalt3;
+        ExitCursorEditorUI();
+    }
+
+    public void BlackLine()
+    {
+        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Asfalt4;
+        ExitCursorEditorUI();
     }
 
     public void Desert()
     {
         CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Sand0;
-        ButtonsRect.gameObject.SetActive(false);
-        CursorEditorUI.Exit();
+        ExitCursorEditorUI();
+    }
+
+    public void Sand()
+    {
+        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Sand1;
+        ExitCursorEditorUI();
+    }
+
+    public void Grass0()
+    {
+        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Grass0;
+        ExitCursorEditorUI();
+    }
+
+    public void Grass1()
+    {
+        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.Grass1;
+        ExitCursorEditorUI();
+    }
+
+    public void SandRoad0()
+    {
+        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.SandRoad0;
+        ExitCursorEditorUI();
+    }
+
+    public void SandRoad1()
+    {
+        CursorEditor.terrainEditor.TextureID = (int)TerrainTextures.SandRoad1;
+        ExitCursorEditorUI();
     }
 }

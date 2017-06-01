@@ -94,11 +94,7 @@ public class CursorUI : CursorBaseUI
     public void TestMap()
     {
         Player player = new Player();
-        player.ControllerScheme = new ControllerScheme()
-        {
-            HorizontalAxis = "Horizontal",
-            VerticalAxis = "Vertical"
-        };
+        player.ControllerScheme = CursorEditor.ControlScheme;
 
         TestCar = ResourcesLoader.LoadCar(player.CarType);
         TestCar.GetComponent<Car>().Init(player);
