@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public abstract class CursorBaseUI : MonoBehaviour
 {
     protected CursorEditor CursorEditor;
-    public RectTransform ButtonsRect;
-    public List<Button> Buttons;
+    protected RectTransform buttonsRect { get { return GetComponent<RectTransform>(); } }
+    protected List<Button> buttons;
 
     private int selection;
     private InputExtension inputManager;
@@ -15,6 +15,7 @@ public abstract class CursorBaseUI : MonoBehaviour
     protected void Awake()
     {
         CursorEditor = GetComponentInParent<CursorEditor>();
+        buttons = new List<Button>(GetComponentsInChildren<Button>());
     }
 
     protected void Start()
@@ -25,7 +26,7 @@ public abstract class CursorBaseUI : MonoBehaviour
 
     protected void Update()
     {
-        if (ButtonsRect.gameObject.activeSelf == false)
+        if (buttonsRect.gameObject.activeSelf == false)
         {
             return;
         }
@@ -37,18 +38,18 @@ public abstract class CursorBaseUI : MonoBehaviour
 
         if (inputManager.LeftTriggerDown() && selection > 0)
         {
-            ButtonsRect.position += new Vector3(2.5f, 0);
+            buttonsRect.position += new Vector3(2.5f, 0);
             selection--;
         }
-        else if (inputManager.RightTriggerDown() && selection < Buttons.Count - 1)
+        else if (inputManager.RightTriggerDown() && selection < buttons.Count - 1)
         {
-            ButtonsRect.position -= new Vector3(2.5f, 0);
+            buttonsRect.position -= new Vector3(2.5f, 0);
             selection++;
         }
 
         if (Input.GetKeyUp(CursorEditor.ControlScheme.Submit))
         {
-            Buttons[selection].onClick.Invoke();
+            buttons[selection].onClick.Invoke();
         }
     }
 

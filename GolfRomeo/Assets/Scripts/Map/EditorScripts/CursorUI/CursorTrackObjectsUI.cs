@@ -8,16 +8,15 @@ using UnityEngine.UI;
 
 public class CursorTrackObjectsUI : CursorBaseUI
 {
-    private CursorUI CursorEditorUI;
+    public CursorUI CursorEditorUI;
 
     public new void Start()
     {
         base.Start();
 
-        CursorEditorUI = GetComponentInParent<CursorUI>();
         var trackObjects = Resources.LoadAll(ResourcesLoader.TRACKOBJECTS, typeof(GameObject)).Cast<GameObject>();
 
-        Buttons = new List<Button>();
+        buttons = new List<Button>();
 
         foreach (var obj in trackObjects)
         {
@@ -41,23 +40,23 @@ public class CursorTrackObjectsUI : CursorBaseUI
 
             button.onClick.AddListener(() =>  {
                 CursorEditor.CreateNewObject(ResourcesLoader.LoadTrackObject(trackObj.ID));
-                ButtonsRect.gameObject.SetActive(false);
+                buttonsRect.gameObject.SetActive(false);
                 CursorEditorUI.Exit();
             });
 
-            Buttons.Add(button);
+            buttons.Add(button);
         }
     }
 
     public override void Close()
     {
-        ButtonsRect.gameObject.SetActive(false);
+        buttonsRect.gameObject.SetActive(false);
         CursorEditorUI.Open();
     }
 
     public override void Open()
     {
-        ButtonsRect.gameObject.SetActive(true);
+        buttonsRect.gameObject.SetActive(true);
         CursorEditor.EditMode = EditMode.Objects;
     }
 }

@@ -7,8 +7,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
-    //Jarruille myös kerroin
-    //REFACTOR SHIT
+    public Car Car;
+    public const float SPEED_MULTIPLIER = 5.6f;
 
     public float TopSpeed = 200;
     public float TopSpeedOffRoad = 50;
@@ -23,13 +23,11 @@ public class CarController : MonoBehaviour
 
     public List<AxleInfo> AxleInfos; // the information about each individual axle
 
-    private Rigidbody rgbd;
-    public Car Car;
-
-    public const float SPEED_MULTIPLIER = 5.6f;
     public float CurrentSpeed { get { return rgbd == null ? 0 : rgbd.velocity.magnitude * SPEED_MULTIPLIER; } }
 
     public CarParticleController ParticleController;
+
+    private Rigidbody rgbd;
 
     private void Start()
     {

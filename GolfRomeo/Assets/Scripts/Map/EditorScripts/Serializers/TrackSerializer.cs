@@ -9,7 +9,7 @@ public class TrackSerializer
     public const string mapFileExtension = ".xml";
 
     private Track track;
-    private DirectoryHelper directoryHelper;
+    private TrackFolderHelper directoryHelper;
     private TrackFileCompressor trackCompressor;
     private TerrainSerializer terrainSerializer;
 
@@ -18,7 +18,7 @@ public class TrackSerializer
         this.track = track;
 
         terrainSerializer = new TerrainSerializer();
-        directoryHelper = new DirectoryHelper();
+        directoryHelper = new TrackFolderHelper();
         trackCompressor = new TrackFileCompressor();
     }
 	

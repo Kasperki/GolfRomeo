@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class EditorUI : MonoBehaviour
@@ -11,7 +12,7 @@ public class EditorUI : MonoBehaviour
 
     public RectTransform mapButtonsParent;
     public GameObject MapButtonPrefab;
-    private DirectoryHelper directoryHelper;
+    private TrackFolderHelper directoryHelper;
 
     private Track track;
     public InputField TrackNameInput;
@@ -20,7 +21,7 @@ public class EditorUI : MonoBehaviour
 
     private void Awake()
     {
-        directoryHelper = new DirectoryHelper();
+        directoryHelper = new TrackFolderHelper();
     }
 
     public void Init()
@@ -36,11 +37,16 @@ public class EditorUI : MonoBehaviour
     {
         mapButtonsParent.DestroyChildrens();
 
-        foreach (var track in tracks)
+        for (int i = 0; i < tracks.Length; i++)
         {
             var obj = Instantiate(MapButtonPrefab);
             obj.transform.SetParent(mapButtonsParent, false);
-            obj.GetComponent<MapSelectionEditorButton>().SetListener(track);
+            obj.GetComponent<MapSelectionEditorButton>().SetListener(tracks[i]);
+
+            if (i == 0)
+            {
+                EventSystem.current.SetSelectedGameObject(obj);
+            }
         }
     }
 

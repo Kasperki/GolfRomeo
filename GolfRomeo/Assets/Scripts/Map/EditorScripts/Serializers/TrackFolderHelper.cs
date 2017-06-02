@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class DirectoryHelper
+public class TrackFolderHelper
 {
     private const string TrackFolderName = "Maps"; 
 

@@ -20,6 +20,9 @@ public class TerrainEditor : MonoBehaviour
     private TerrainEditorTools terrainHeightEditor;
     private CursorEditor cursorEditor;
 
+    private Vector3 p0, p1, p2;
+    private int bezierStatus = 0;
+
     private void Awake()
     {
         terrainHeightEditor = GetComponentInChildren<TerrainEditorTools>();
@@ -103,9 +106,6 @@ public class TerrainEditor : MonoBehaviour
     {
         TextureEditMode = TextureEditType.Brush;
     }
-
-    private Vector3 p0, p1, p2;
-    private int bezierStatus = 0;
 
     public void StartBezierEditMode()
     {

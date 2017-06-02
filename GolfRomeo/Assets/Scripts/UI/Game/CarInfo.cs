@@ -36,8 +36,8 @@ public class CarInfo : MonoBehaviour
     public void UpdateLapInformation()
     {
         CurrentLap.text = LapInfo.CurrentLap + "/" + RaceManager.Instance.Laps;
-        FastestLapTime.text = TimeSpanExtensions.GetTimeInMinutesAndSeconds(LapInfo.FastestLapTime);
-        CurrentLapTime.text = TimeSpanExtensions.GetTimeInMinutesAndSeconds(LapInfo.LastLapTime);
+        FastestLapTime.text = TimeSpanHelper.GetTimeInMinutesAndSeconds(LapInfo.FastestLapTime);
+        CurrentLapTime.text = TimeSpanHelper.GetTimeInMinutesAndSeconds(LapInfo.LastLapTime);
         Speed.text = LapInfo.car.CarController.CurrentSpeed.ToString("0") + " km/h";
     }
 

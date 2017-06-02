@@ -4,23 +4,17 @@ using UnityEngine;
 
 public class CursorZoomUI : CursorBaseUI
 {
-    private CursorUI CursorEditorUI;
-
-    protected new void Start()
-    {
-        base.Start();
-        CursorEditorUI = GetComponentInParent<CursorUI>();
-    }
+    public CursorUI CursorEditorUI;
 
     public override void Open()
     {
-        ButtonsRect.gameObject.SetActive(true);
+        buttonsRect.gameObject.SetActive(true);
         CursorEditor.EditMode = EditMode.TerrainHeightMap;
     }
 
     public override void Close()
     {
-        ButtonsRect.gameObject.SetActive(false);
+        buttonsRect.gameObject.SetActive(false);
         CursorEditorUI.Open();
     }
 

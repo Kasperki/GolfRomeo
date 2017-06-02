@@ -4,23 +4,17 @@ using UnityEngine;
 
 public class CursorBrushUI : CursorBaseUI
 {
-    private CursorUI CursorEditorUI;
+    public CursorUI CursorEditorUI;
     public CursorTerrainTextureEditorUI TerrainTextureEditor;
-
-    protected new void Start()
-    {
-        base.Start();
-        CursorEditorUI = GetComponentInParent<CursorUI>();
-    }
 
     public override void Open()
     {
-        ButtonsRect.gameObject.SetActive(true);
+        buttonsRect.gameObject.SetActive(true);
     }
 
     public override void Close()
     {
-        ButtonsRect.gameObject.SetActive(false);
+        buttonsRect.gameObject.SetActive(false);
         CursorEditorUI.Open();
     }
 
@@ -28,13 +22,13 @@ public class CursorBrushUI : CursorBaseUI
     {
         CursorEditor.terrainEditor.StartBrushEditMode();
         TerrainTextureEditor.Open();
-        ButtonsRect.gameObject.SetActive(false);
+        buttonsRect.gameObject.SetActive(false);
     }
 
     public void BezierBrush()
     {
         CursorEditor.terrainEditor.StartBezierEditMode();
         TerrainTextureEditor.Open();
-        ButtonsRect.gameObject.SetActive(false);
+        buttonsRect.gameObject.SetActive(false);
     }
 }

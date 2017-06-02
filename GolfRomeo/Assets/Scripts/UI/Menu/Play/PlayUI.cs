@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+    TODO
+    - HOW TO JOIN TO GAME INFO SHOULD BE BETTER, HOW MANY CONTROLLERS ARE CONNECTED ETC.
+    - AI COUNT DOES NOT WORK
+*/
+
 public class PlayUI : MonoBehaviour
 {
     public MenuUI MenuUI;
@@ -17,11 +23,11 @@ public class PlayUI : MonoBehaviour
     public GameObject MapButtonPrefab;
     public Button[] ButtonsToMapSelectionNavigation;
 
-    private DirectoryHelper directoryHelper;
+    private TrackFolderHelper directoryHelper;
 
     private void Awake()
     {
-        directoryHelper = new DirectoryHelper();
+        directoryHelper = new TrackFolderHelper();
     }
 
     public void Init()
@@ -98,6 +104,46 @@ public class PlayUI : MonoBehaviour
             if (Input.GetKeyDown(new ControllerScheme().Keyboard2().Submit))
             {
                 CreatePlayer("ARROWS", new ControllerScheme().Keyboard2());
+            }
+
+            if (Input.GetKeyDown(new ControllerScheme().Joystick1().Submit))
+            {
+                CreatePlayer("JOYSTICK 1", new ControllerScheme().Joystick1());
+            }
+
+            if (Input.GetKeyDown(new ControllerScheme().Joystick2().Submit))
+            {
+                CreatePlayer("JOYSTICK 2", new ControllerScheme().Joystick2());
+            }
+
+            if (Input.GetKeyDown(new ControllerScheme().Joystick3().Submit))
+            {
+                CreatePlayer("JOYSTICK 3", new ControllerScheme().Joystick3());
+            }
+
+            if (Input.GetKeyDown(new ControllerScheme().Joystick4().Submit))
+            {
+                CreatePlayer("JOYSTICK 4", new ControllerScheme().Joystick4());
+            }
+
+            if (Input.GetKeyDown(new ControllerScheme().Joystick5().Submit))
+            {
+                CreatePlayer("JOYSTICK 5", new ControllerScheme().Joystick5());
+            }
+
+            if (Input.GetKeyDown(new ControllerScheme().Joystick6().Submit))
+            {
+                CreatePlayer("JOYSTICK 6", new ControllerScheme().Joystick6());
+            }
+
+            if (Input.GetKeyDown(new ControllerScheme().Joystick7().Submit))
+            {
+                CreatePlayer("JOYSTICK 7", new ControllerScheme().Joystick7());
+            }
+
+            if (Input.GetKeyDown(new ControllerScheme().Joystick8().Submit))
+            {
+                CreatePlayer("JOYSTICK 8", new ControllerScheme().Joystick8());
             }
 
             if (InputManager.BackPressed())

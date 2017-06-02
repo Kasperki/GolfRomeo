@@ -1,6 +1,13 @@
 ﻿using System;
 using UnityEngine;
 
+
+/*
+    TODO ---
+    Keyboard custom mapping.
+    - Default mappings to have all buttons.
+*/
+
 [Serializable]
 public class ControllerScheme
 {

@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/*
+    TODO
+    - DIFFERENT BURSHES FOR TERRAIN EDITING, (SQUARE, ROUND...)
+    - TEXTURE EDITING: Asfalt with white lines over,
+    - ANTIALIASING FOR BRUSHES.
+    - PERFORMANCE IMPROVEMENTS FOR EDITING ALPHAMAPS?
+ */
 public class TerrainEditorTools : MonoBehaviour
 {
     public Terrain terrain;
@@ -98,7 +105,7 @@ public class TerrainEditorTools : MonoBehaviour
 
             int x = (int)terrainPosition.x;
             int y = (int)terrainPosition.y;
-            pos[i] = new Vector3(pos[i].x, pos[i].y, heights[y, x] * 1200); //1200
+            pos[i] = new Vector3(pos[i].x, pos[i].y, heights[y, x] * 1200);
         }
 
         return pos;

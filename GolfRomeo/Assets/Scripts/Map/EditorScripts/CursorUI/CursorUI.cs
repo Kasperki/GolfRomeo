@@ -11,7 +11,7 @@ public class CursorUI : CursorBaseUI
     public CursorObjectsUI CursorObjectsUI;
 
     public bool DriveTesting;
-    public GameObject TestCar;
+    private GameObject testCar;
 
     private EditorUI editorUI;
 
@@ -36,7 +36,7 @@ public class CursorUI : CursorBaseUI
     public void Init()
     {
         EditorObject.SetActive(true);
-        Destroy(TestCar);
+        Destroy(testCar);
         DriveTesting = false;
 
         if (TerrainEditorUI.gameObject.activeSelf == false && BrushUI.gameObject.activeSelf == false && CursorObjectsUI.gameObject.activeSelf == false && ZoomUI.gameObject.activeSelf == false)
@@ -52,7 +52,7 @@ public class CursorUI : CursorBaseUI
 
     public override void Open()
     {
-        ButtonsRect.gameObject.SetActive(true);
+        buttonsRect.gameObject.SetActive(true);
     }
 
     public override void Close()
@@ -63,7 +63,7 @@ public class CursorUI : CursorBaseUI
         }
         else
         {
-            ButtonsRect.gameObject.SetActive(false);
+            buttonsRect.gameObject.SetActive(false);
         }
     }
 
@@ -96,9 +96,9 @@ public class CursorUI : CursorBaseUI
         Player player = new Player();
         player.ControllerScheme = CursorEditor.ControlScheme;
 
-        TestCar = ResourcesLoader.LoadCar(player.CarType);
-        TestCar.GetComponent<Car>().Init(player);
-        TestCar.transform.position = transform.position;
+        testCar = ResourcesLoader.LoadCar(player.CarType);
+        testCar.GetComponent<Car>().Init(player);
+        testCar.transform.position = transform.position;
         DriveTesting = true;
 
         Exit();

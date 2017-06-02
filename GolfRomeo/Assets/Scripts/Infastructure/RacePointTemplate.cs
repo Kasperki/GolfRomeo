@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+/*
+    TODO
+    - LET PLAYER TO EDIT, SAVE & SELECT RACEPOINT TEMPLATES
+*/
 public struct RacePointTemplate
 {
     public int[] PointOrder;
