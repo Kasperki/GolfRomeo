@@ -33,8 +33,12 @@ public class CarController : MonoBehaviour
     {
         rgbd = GetComponent<Rigidbody>();
         Car = GetComponent<Car>();
-    }
 
+        foreach (AxleInfo axleInfo in AxleInfos)
+        {
+            axleInfo.Initialize();
+        }
+    }
     public void Move(float steering, float accel, float footbrake, float handbrake)
     {
         //clamp input values
@@ -123,8 +127,10 @@ public class CarController : MonoBehaviour
 
                 if (driftValue < 5f)
                 {
-                    Track.Instance.SkidMarks.AddSkidMarks(axleInfo.leftWheel.transform.position, SkidMarkForcePerSpeed());
-                    Track.Instance.SkidMarks.AddSkidMarks(axleInfo.rightWheel.transform.position, SkidMarkForcePerSpeed());
+                    var force = SkidMarkForcePerSpeed();
+                    Car.TiresHealth -= force * RaceManager.Instance.RaceOptions.TiresConsuptionRate * Time.deltaTime;
+                    Track.Instance.SkidMarks.AddSkidMarks(axleInfo.leftWheel.transform.position, force);
+                    Track.Instance.SkidMarks.AddSkidMarks(axleInfo.rightWheel.transform.position, force);
                 }
             }
 
@@ -133,8 +139,10 @@ public class CarController : MonoBehaviour
             {
                 if (footbrake > 0)
                 {
-                    Track.Instance.SkidMarks.AddSkidMarks(axleInfo.leftWheel.transform.position, SkidMarkForcePerSpeed());
-                    Track.Instance.SkidMarks.AddSkidMarks(axleInfo.rightWheel.transform.position, SkidMarkForcePerSpeed());
+                    var force = SkidMarkForcePerSpeed();
+                    Car.TiresHealth -= force * RaceManager.Instance.RaceOptions.TiresConsuptionRate * Time.deltaTime;
+                    Track.Instance.SkidMarks.AddSkidMarks(axleInfo.leftWheel.transform.position, force);
+                    Track.Instance.SkidMarks.AddSkidMarks(axleInfo.rightWheel.transform.position, force);
                 }
 
                 axleInfo.leftWheel.brakeTorque = MaxBreakTorque * footbrake;
@@ -172,8 +180,10 @@ public class CarController : MonoBehaviour
 
             if (axleInfo.addDownForce == true)
             {
-                AddDownForce(axleInfo); //TODO.. remove down force when tiers are gone. & change tiers damping values?
+                AddDownForce(axleInfo);
             }
+
+            axleInfo.UpdateExtremumSlip(Car.TiresHealth / Car.TiresMaxHealth);
         }
 
         CapSpeed();
@@ -301,6 +311,60 @@ public class AxleInfo
     public float TractionGrass = 1;
     [Range(0, 2)]
     public float TractionIce = 1;
+
+    private const float MaxForwardSlip = 2;
+    private const float MaxSidewaysSlip = 2;
+
+    public float ExtremumSlipForward
+    {
+        set
+        {
+            var leftWheelFrictionCurve =  leftWheel.forwardFriction;
+            leftWheelFrictionCurve.extremumSlip = value;
+            leftWheel.forwardFriction = leftWheelFrictionCurve;
+
+            var rightWheelFrictionCurve = rightWheel.forwardFriction;
+            rightWheelFrictionCurve.extremumSlip = value;
+            rightWheel.forwardFriction = rightWheelFrictionCurve;
+        }
+        get
+        {
+            return leftWheel.forwardFriction.extremumSlip;
+        }
+    }
+
+    public float ExtremumSlipSideways
+    {
+        set
+        {
+            var leftWheelFrictionCurve = leftWheel.sidewaysFriction;
+            leftWheelFrictionCurve.extremumSlip = value;
+            leftWheel.sidewaysFriction = leftWheelFrictionCurve;
+
+            var rightWheelFrictionCurve = rightWheel.sidewaysFriction;
+            rightWheelFrictionCurve.extremumSlip = value;
+            rightWheel.sidewaysFriction = rightWheelFrictionCurve;
+        }
+        get
+        {
+            return leftWheel.sidewaysFriction.extremumSlip;
+        }
+    }
+
+    private float extremumSlipForwardDefault = 0.4f;
+    private float extremumSlipSidewaysDefault = 0.2f;
+
+    public void Initialize()
+    {
+        extremumSlipForwardDefault = leftWheel.forwardFriction.extremumSlip;
+        extremumSlipSidewaysDefault = leftWheel.sidewaysFriction.extremumSlip;
+    }
+
+    public void UpdateExtremumSlip(float tireHealthPercentage)
+    {
+        ExtremumSlipForward = Mathf.Lerp(MaxForwardSlip , extremumSlipForwardDefault, tireHealthPercentage);
+        ExtremumSlipSideways = Mathf.Lerp(MaxSidewaysSlip, extremumSlipSidewaysDefault, tireHealthPercentage);
+    }
 
     private float[] GetTextureMix(Vector3 worldPos)
     {
