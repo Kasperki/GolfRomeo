@@ -27,7 +27,6 @@ public class LapTracker : Singleton<LapTracker>
         someoneHasFinishedRace = false;
 
         StartCoroutine(InvokeNextFrame(cars));
-        LapTrackerUI.Init();
     }
 
     private IEnumerator InvokeNextFrame(Car[] cars)
@@ -41,6 +40,7 @@ public class LapTracker : Singleton<LapTracker>
             carOrder.car.GetComponent<Rigidbody>().isKinematic = false;
         }
 
+        LapTrackerUI.Init();
         StartCoroutine(StartCountDown());
     }
 

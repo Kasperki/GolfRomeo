@@ -18,7 +18,7 @@ public class EditorUI : MonoBehaviour
 
     public GameObject CursorPrefab;
 
-    private void Start()
+    private void Awake()
     {
         directoryHelper = new DirectoryHelper();
     }
@@ -78,7 +78,7 @@ public class EditorUI : MonoBehaviour
     private CursorEditor CreateCursorEditor()
     {
         var cursor = Instantiate(CursorPrefab) as GameObject;
-        var cursorEditor = GetComponent<CursorEditor>();
+        var cursorEditor = cursor.GetComponent<CursorEditor>();
         cursorEditor.ControlScheme = new ControllerScheme().Keyboard();
 
         return cursorEditor;

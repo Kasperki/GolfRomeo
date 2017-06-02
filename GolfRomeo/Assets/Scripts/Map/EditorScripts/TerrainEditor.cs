@@ -58,7 +58,7 @@ public class TerrainEditor : MonoBehaviour
             vertices[i] = new Vector3(vertices[i].x, vertices[i].y, verticesCopy[i].z);
         }
 
-        BrushRenderer.GetComponent<MeshFilter>().mesh.vertices = vertices;
+        brushRendererMesh.mesh.vertices = vertices;
     }
 
     private BezierCurve UpdateBezierCurve(Vector3 startPosition, Vector3 tangentPos, Vector3 endPosition, int size)

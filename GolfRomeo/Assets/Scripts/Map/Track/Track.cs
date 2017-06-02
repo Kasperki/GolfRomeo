@@ -44,8 +44,15 @@ public class Track : Singleton<Track>
     public GameObject TrackObjectsParent;
     public LapTracker LapTracker; //Checkpoints parent
     public WayPointCircuit WayPointCircuit; //Waypoints parent
+    public SkidMarks SkidMarks;
 
     public TrackObject[] MapObjects { get { return TrackObjectsParent.GetComponentsInChildren<TrackObject>(); } }
+
+    private new void Awake()
+    {
+        base.Awake();
+        SkidMarks = GetComponentInChildren<SkidMarks>();
+    }
 
     public void SaveTrack()
     {
@@ -57,6 +64,7 @@ public class Track : Singleton<Track>
     {
         var WorldSerialization = new TrackSerializer(this);
         var mapDTO = WorldSerialization.LoadWorld(trackName);
+        SkidMarks.Init();
 
         //TODO META DATA
         //ID -- set track folders name + GUID....

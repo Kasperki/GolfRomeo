@@ -119,14 +119,25 @@ public class CarController : MonoBehaviour
                 }
             }
 
+            if (CurrentSpeed > 10)
+            {
+                float driftValue = Vector3.Dot(rgbd.velocity, transform.forward);   
+
+                if (driftValue < 5f)
+                {
+                    Track.Instance.SkidMarks.AddSkidMarks(axleInfo.leftWheel.transform.position, SkidMarkForcePerSpeed());
+                    Track.Instance.SkidMarks.AddSkidMarks(axleInfo.rightWheel.transform.position, SkidMarkForcePerSpeed());
+                }
+            }
+
             //Breaking
             if (CurrentSpeed > 3 && Vector3.Angle(transform.forward, rgbd.velocity) < 50f)
             {
-                Track.Instance.gameObject.GetComponentInChildren<SkidMarks>().AddSkidMarks(axleInfo.leftWheel.transform.position);
-                Track.Instance.gameObject.GetComponentInChildren<SkidMarks>().AddSkidMarks(axleInfo.rightWheel.transform.position);
-
-                Track.Instance.gameObject.GetComponentInChildren<SkidMarks>().DrawSkidMark(axleInfo.leftWheel.transform.position);
-                Track.Instance.gameObject.GetComponentInChildren<SkidMarks>().DrawSkidMark(axleInfo.rightWheel.transform.position);
+                if (footbrake > 0)
+                {
+                    Track.Instance.SkidMarks.AddSkidMarks(axleInfo.leftWheel.transform.position, SkidMarkForcePerSpeed());
+                    Track.Instance.SkidMarks.AddSkidMarks(axleInfo.rightWheel.transform.position, SkidMarkForcePerSpeed());
+                }
 
                 axleInfo.leftWheel.brakeTorque = MaxBreakTorque * footbrake;
                 axleInfo.rightWheel.brakeTorque = MaxBreakTorque * footbrake;
@@ -169,6 +180,11 @@ public class CarController : MonoBehaviour
 
         CapSpeed();
         ParticleController.CleanEmmiters();
+    }
+
+    private float SkidMarkForcePerSpeed()
+    {
+        return Mathf.Max(0.05f, CurrentSpeed / 100);
     }
 
     private void CapSpeed()

@@ -20,7 +20,7 @@ public abstract class CursorBaseUI : MonoBehaviour
     protected void Start()
     {
         inputManager = gameObject.AddComponent<InputExtension>();
-        inputManager.horizontalAxis = CursorEditor.CursorUI.CursorEditor.ControlScheme.HorizontalAxis;
+        inputManager.horizontalAxis = CursorEditor.ControlScheme.HorizontalAxis;
     }
 
     protected void Update()

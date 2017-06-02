@@ -93,13 +93,12 @@ public class TerrainEditorTools : MonoBehaviour
 
         for (int i = 0; i < pos.Length; i++)
         {
-
             int offset = 0;
-            Vector4 terrainPosition = GetTerrainPosition(pos[i] - terrain.gameObject.transform.position, 1, out offset);
+            Vector4 terrainPosition = GetTerrainPosition(pos[i] - terrain.transform.position, 1, out offset);
 
             int x = (int)terrainPosition.x;
             int y = (int)terrainPosition.y;
-            pos[i] = new Vector3(pos[i].x, pos[i].y, heights[y, x] * 1200);
+            pos[i] = new Vector3(pos[i].x, pos[i].y, heights[y, x] * 1200); //1200
         }
 
         return pos;
@@ -113,7 +112,7 @@ public class TerrainEditorTools : MonoBehaviour
     public void UpdateTerrainTexture(Vector3 pos, int textureID, int size)
     {
         int offset = 0;
-        Vector4 terrainPosition = GetTerrainPosition(pos - terrain.gameObject.transform.position, size, out offset);
+        Vector4 terrainPosition = GetTerrainPosition(pos - terrain.transform.position, size, out offset);
 
         float[,,] alphas = terrain.terrainData.GetAlphamaps((int)terrainPosition.x, (int)terrainPosition.y, (int)terrainPosition.z, (int)terrainPosition.w);
 
@@ -183,7 +182,7 @@ public class TerrainEditorTools : MonoBehaviour
     public void RaiseTerrain(float raiseAmount, int size)
     {
         int offset = 0;
-        Vector4 terrainPosition = GetTerrainPosition(transform.position - terrain.gameObject.transform.position, size, out offset);
+        Vector4 terrainPosition = GetTerrainPosition(transform.position - terrain.transform.position, size, out offset);
         float[,] heights = terrain.terrainData.GetHeights((int)terrainPosition.x, (int)terrainPosition.y, (int)terrainPosition.z, (int)terrainPosition.w);
 
         for (int x = 0; x < heights.GetLength(0); x++)
@@ -203,7 +202,7 @@ public class TerrainEditorTools : MonoBehaviour
     public void RaiseTerrainSmooth(float raiseAmount, int size)
     {
         int offset = 0;
-        Vector4 terrainPosition = GetTerrainPosition(transform.position - terrain.gameObject.transform.position, size, out offset);
+        Vector4 terrainPosition = GetTerrainPosition(transform.position - terrain.transform.position, size, out offset);
         float[,] heights = terrain.terrainData.GetHeights((int)terrainPosition.x, (int)terrainPosition.y, (int)terrainPosition.z, (int)terrainPosition.w);
 
         for (int x = 0; x < heights.GetLength(0); x++)
@@ -230,7 +229,7 @@ public class TerrainEditorTools : MonoBehaviour
     public void SmoothTerrain(Vector3 pos, int size)
     {
         int offset = 0;
-        Vector4 terrainPosition = GetTerrainPosition(pos - terrain.gameObject.transform.position, size, out offset);
+        Vector4 terrainPosition = GetTerrainPosition(pos - terrain.transform.position, size, out offset);
         float[,] heights = terrain.terrainData.GetHeights((int)terrainPosition.x, (int)terrainPosition.y, (int)terrainPosition.w, (int)terrainPosition.z);
 
         heights = terrainToolkit.Smooth(heights, (int)size);

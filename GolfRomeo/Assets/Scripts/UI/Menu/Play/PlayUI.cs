@@ -19,7 +19,7 @@ public class PlayUI : MonoBehaviour
 
     private DirectoryHelper directoryHelper;
 
-    private void Start()
+    private void Awake()
     {
         directoryHelper = new DirectoryHelper();
     }
