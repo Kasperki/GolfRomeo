@@ -35,7 +35,7 @@ public class Car : MonoBehaviour
 
         if (player.PlayerType == PlayerType.AI)
         {
-            var aiCarController = gameObject.AddComponent<AICarControl>();
+            gameObject.AddComponent<AICarControl>();
         }
         else
         {

@@ -366,6 +366,11 @@ public class AxleInfo
         ExtremumSlipSideways = Mathf.Lerp(MaxSidewaysSlip, extremumSlipSidewaysDefault, tireHealthPercentage);
     }
 
+    /// <summary>
+    /// http://answers.unity3d.com/answers/457390/view.html
+    /// </summary>
+    /// <param name="worldPos">position</param>
+    /// <returns>Array of terrain texture weights</returns>
     private float[] GetTextureMix(Vector3 worldPos)
     {
         var terrainPos = Track.Instance.Terrain.transform.position;

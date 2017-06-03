@@ -45,7 +45,7 @@ public class AICarControl : MonoBehaviour
     private float m_LateralWanderSpeed = 0.1f;                               // how fast the lateral wandering will fluctuate
     [SerializeField]
     [Range(0, 1)]
-    private float m_AccelWanderAmount = 0.15f;                  // how much the cars acceleration will wander
+    private float m_AccelWanderAmount = 0.15f;                              // how much the cars acceleration will wander
     [SerializeField]
     private float m_AccelWanderSpeed = 0.01f;                                 // how fast the cars acceleration wandering will fluctuate
     [SerializeField]

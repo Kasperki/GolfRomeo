@@ -28,4 +28,5 @@ Feel free to contribute! <3
 * Add Player Profiles
 * Add AI Profiles / Difficulties
 * Add Snow & Ice
+* Networking - Multiplayer
 
