@@ -11,24 +11,38 @@ public class TrackObject : MonoBehaviour, IEditable
     private bool[] cachedTriggerInfo;
     private bool hover;
 
+    private new Renderer renderer;
+    private Renderer[] childRenderers;
+    private readonly Color HOVER_COLOR = new Color(2, 2, 2, 1);
+
+    private Color cachedRendererColor;
+    private Color[] cachedChildRendererColors;
+
+    private void Awake()
+    {
+        if (GameManager.CheckState(State.Edit))
+        {
+            renderer = GetComponent<Renderer>();
+
+            if (renderer)
+            {
+                cachedRendererColor = renderer.material.GetColor("_Color");
+            }
+
+            childRenderers = gameObject.GetComponentsInChildren<Renderer>();
+            cachedChildRendererColors = new Color[childRenderers.Length];
+            for (int i = 0; i < childRenderers.Length; i++)
+            {
+                cachedChildRendererColors[i] = childRenderers[i].material.GetColor("_Color");
+            } 
+        }
+    }
+
     public void OnHover()
     {
         if (!hover)
         {
-            var renderer = GetComponent<Renderer>();
-
-            if (renderer)
-            {
-                var color = renderer.material.GetColor("_Color");
-                renderer.material.SetColor("_Color", color - new Color(0.5f, 0.5f, 0.5f, 0));
-            }
-
-            foreach (var rendererChildren in gameObject.GetComponentsInChildren<Renderer>())
-            {
-                var color = rendererChildren.material.GetColor("_Color");
-                rendererChildren.material.SetColor("_Color", color - new Color(0.5f, 0.5f, 0.5f, 0));
-            }
-
+            SetRendererColors(HOVER_COLOR);
             hover = true;
         }
     }
@@ -37,21 +51,34 @@ public class TrackObject : MonoBehaviour, IEditable
     {
         if (hover)
         {
-            var renderer = GetComponent<Renderer>();
-
-            if (renderer)
-            {
-                var color = renderer.material.GetColor("_Color");
-                renderer.material.SetColor("_Color", color + new Color(0.5f, 0.5f, 0.5f, 0));
-            }
-
-            foreach (var rendererChildren in gameObject.GetComponentsInChildren<Renderer>())
-            {
-                var color = rendererChildren.material.GetColor("_Color");
-                rendererChildren.material.SetColor("_Color", color + new Color(0.5f, 0.5f, 0.5f, 0));
-            }
-
+            SetRendererDefaultColors();
             hover = false;
+        }
+    }
+
+    private void SetRendererDefaultColors()
+    {
+        if (renderer)
+        {
+            renderer.material.SetColor("_Color", cachedRendererColor);
+        }
+
+        for (int i = 0; i < childRenderers.Length; i++)
+        {
+            childRenderers[i].material.SetColor("_Color", cachedChildRendererColors[i]);
+        }
+    }
+
+    private void SetRendererColors(Color color)
+    {
+        if (renderer)
+        {
+            renderer.material.SetColor("_Color", color);
+        }
+
+        for (int i = 0; i < childRenderers.Length; i++)
+        {
+            childRenderers[i].material.SetColor("_Color", color);
         }
     }
 
@@ -63,6 +90,11 @@ public class TrackObject : MonoBehaviour, IEditable
             cachedTriggerInfo = new bool[colliders.Length];
             for (int i = 0; i < colliders.Length; i++)
             {
+                if (colliders[i] is MeshCollider)
+                {
+                    continue;
+                }
+
                 cachedTriggerInfo[i] = colliders[i].isTrigger;
                 colliders[i].isTrigger = true;
             }
@@ -72,6 +104,11 @@ public class TrackObject : MonoBehaviour, IEditable
             var colliders = GetComponents<Collider>();
             for (int i = 0; i < colliders.Length; i++)
             {
+                if (colliders[i] is MeshCollider)
+                {
+                    continue;
+                }
+
                 colliders[i].isTrigger = cachedTriggerInfo[i];
             }
         }

@@ -3,41 +3,36 @@
 public class CameraZoom : MonoBehaviour
 {
     private Quaternion cachedRotation;
-    private Transform target;
-
-    private bool zooming;
 
     private void Awake()
     {
         cachedRotation = transform.rotation;
     }
 
-	public void Zoom1X(Transform target)
+    public void Zoom(float zoomDelta, Vector3 pos)
     {
-        transform.rotation = cachedRotation;
-        Camera.main.fieldOfView = 60;
-        zooming = false;
-    } 
-
-    public void Zoom2X(Transform target)
-    {
-        this.target = target;
-        Camera.main.fieldOfView = 40;
-        zooming = true;
-    }
-
-    public void Zoom4X(Transform target)
-    {
-        this.target = target;
-        Camera.main.fieldOfView = 20;
-        zooming = true;
-    }
-
-    public void Update()
-    {
-        if (zooming)
+        if (zoomDelta != 0)
         {
-            transform.LookAt(target);
+            float zoomLevel = Camera.main.fieldOfView + zoomDelta;
+            zoomLevel = Mathf.Clamp(zoomLevel, 20, 60);
+            Camera.main.fieldOfView = zoomLevel;
+
+            if (zoomLevel < 60)
+            {
+                //Camera.main.transform.LookAt(pos);
+                var targetRotation = Quaternion.LookRotation(pos - transform.position);
+                Camera.main.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
+            }
+            else
+            {
+                ResetCamera();
+            }
         }
+    }
+
+    public void ResetCamera()
+    {
+        Camera.main.fieldOfView = 60;
+        Camera.main.transform.rotation = cachedRotation;
     }
 }

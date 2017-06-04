@@ -111,12 +111,13 @@ public class TerrainEditor : MonoBehaviour
     {
         TextureEditMode = TextureEditType.Bezier;
         p0 = transform.position;
+        p2 = p1 = p0;
         bezierStatus = -1;
     }
 
     public void OnRenderObject()
     {
-        if (TextureEditMode == TextureEditType.Bezier && cursorEditor.CursorUI.IsActive() == false)
+        if (TextureEditMode == TextureEditType.Bezier && cursorEditor.CursorUI.IsActive() == false && bezierStatus > -1)
         {
             var bezierCurve = UpdateBezierCurve(p0, p1, p2, BrushSize);
 
@@ -144,10 +145,15 @@ public class TerrainEditor : MonoBehaviour
 
                 if (bezierStatus == 0)
                 {
+                    p0 = transform.position;
+                    p2 = p1 = p0;
+                }
+                else if (bezierStatus == 1)
+                {
                     p2 = transform.position;
                     p1 = p2;
                 }
-                else if (bezierStatus == 1)
+                else if (bezierStatus == 2)
                 {
                     p1 = transform.position;
                 }
@@ -155,11 +161,11 @@ public class TerrainEditor : MonoBehaviour
                 //Next bezier curve part
                 if (Input.GetKeyDown(cursorEditor.ControlScheme.Submit) && cursorEditor.CursorUI.IsActive() == false)
                 {
-                    if (bezierStatus == 1)
+                    if (bezierStatus == 2)
                     {
                         terrainHeightEditor.UpdateTerrainTextureOnBezierCurvePath(TextureID, bezierCurve, BrushSize);
                     }
-                    else if (bezierStatus == 2)
+                    else if (bezierStatus == 3)
                     {
                         StartBezierEditMode();
                     }

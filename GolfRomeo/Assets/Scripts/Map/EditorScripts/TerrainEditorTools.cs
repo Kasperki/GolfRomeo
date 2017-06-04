@@ -105,7 +105,11 @@ public class TerrainEditorTools : MonoBehaviour
 
             int x = (int)terrainPosition.x;
             int y = (int)terrainPosition.y;
-            pos[i] = new Vector3(pos[i].x, pos[i].y, heights[y, x] * 1200);
+
+            if (heights.GetLength(0) > y && heights.GetLength(1) > x)
+            {
+                pos[i] = new Vector3(pos[i].x, pos[i].y, heights[y, x] * 1200);
+            }
         }
 
         return pos;

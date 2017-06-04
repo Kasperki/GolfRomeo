@@ -43,7 +43,7 @@ public class CursorEditor : MonoBehaviour
     
     private RaycastHit RaycastAgainstTerrain(int cursorHitLayer)
     {
-        if (Mouse)
+        if (Mouse) //TODO FIRST PLAYER IS MOUSE, NEXT INPUT IS CONTROLLER?
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             raycastOrigin = ray.origin;
@@ -76,10 +76,12 @@ public class CursorEditor : MonoBehaviour
     {
         cursorMaterial.color = Normal;
 
-        if (Input.GetKeyDown(ControlScheme.Start))
+        if (Input.GetKeyUp(ControlScheme.Cancel))
         {
             CursorUI.Init();
         }
+
+        UpdateZoom();
 
         int cursorHitLayer = 1 << (int)TrackMask.Terrain;
         var hit = RaycastAgainstTerrain(cursorHitLayer);
@@ -110,6 +112,23 @@ public class CursorEditor : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    float lastTime;
+    Vector3 cachedPosition;
+
+    private void UpdateZoom()
+    {
+        if (CursorUI.IsActive() == false && selectedIEditable == null)
+        {
+            if (Time.time > lastTime)
+            {
+                lastTime = Time.time + 0.75f;
+                cachedPosition = transform.position;
+            }
+
+            FindObjectOfType<CameraZoom>().Zoom(-Input.mouseScrollDelta.y, cachedPosition); //TODO GET AXIS FROM CONTROL SCHEME
         }
     }
 

@@ -7,7 +7,6 @@ public class CursorUI : CursorBaseUI
     public GameObject EditorObject;
     public CursorTerrainHeightEditorUI TerrainEditorUI;
     public CursorBrushUI BrushUI;
-    public CursorZoomUI ZoomUI;
     public CursorObjectsUI CursorObjectsUI;
 
     public bool DriveTesting;
@@ -39,7 +38,7 @@ public class CursorUI : CursorBaseUI
         Destroy(testCar);
         DriveTesting = false;
 
-        if (TerrainEditorUI.gameObject.activeSelf == false && BrushUI.gameObject.activeSelf == false && CursorObjectsUI.gameObject.activeSelf == false && ZoomUI.gameObject.activeSelf == false)
+        if (TerrainEditorUI.gameObject.activeSelf == false && BrushUI.gameObject.activeSelf == false && CursorObjectsUI.gameObject.activeSelf == false)
         {
             Open();
         }
@@ -57,7 +56,7 @@ public class CursorUI : CursorBaseUI
 
     public override void Close()
     {
-        if (TerrainEditorUI.gameObject.activeSelf == false && BrushUI.gameObject.activeSelf == false && CursorObjectsUI.gameObject.activeSelf == false && ZoomUI.gameObject.activeSelf == false)
+        if (TerrainEditorUI.gameObject.activeSelf == false && BrushUI.gameObject.activeSelf == false && CursorObjectsUI.gameObject.activeSelf == false)
         {
             Exit();
         }
@@ -85,12 +84,6 @@ public class CursorUI : CursorBaseUI
         Close();
     }
 
-    public void EditZoom()
-    {
-        ZoomUI.Open();
-        Close();
-    }
-
     public void TestMap()
     {
         Player player = new Player();
@@ -98,7 +91,7 @@ public class CursorUI : CursorBaseUI
 
         testCar = ResourcesLoader.LoadCar(player.CarType);
         testCar.GetComponent<Car>().Init(player);
-        testCar.transform.position = transform.position;
+        testCar.transform.position = CursorEditor.transform.position + Vector3.up;
         DriveTesting = true;
 
         Exit();
