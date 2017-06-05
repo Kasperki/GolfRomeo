@@ -6,25 +6,32 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour, IEditable
 {
     public int CheckpointOrder;
+
+    public Vector3 Position
+    {
+        get { return transform.position; }
+        set { transform.position = value; }
+    }
+
+    public Vector3 Rotation
+    {
+        get { return transform.eulerAngles; }
+        set { transform.eulerAngles = value; }
+    }
+
     public MeshRenderer TextRenderer;
     private new MeshRenderer renderer;
-
-    private LapTracker lapTracker
-    {
-        get
-        {
-            return GetComponentInParent<LapTracker>();
-        }
-    }
+    private LapTracker lapTracker;
 
     void Awake ()
     {
         renderer = GetComponent<MeshRenderer>();
+        lapTracker = GetComponentInParent<LapTracker>();
     }
 	
     void Update()
     {
-        renderer.enabled = TextRenderer.enabled = GameManager.CheckState(State.Edit);
+        renderer.enabled = TextRenderer.enabled = GameManager.CheckState(State.Edit); //TODO ADD TO START / AWAKE?
     }
 
     void OnTriggerEnter(Collider collider)

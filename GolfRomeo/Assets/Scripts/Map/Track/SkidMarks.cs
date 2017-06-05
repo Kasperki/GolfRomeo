@@ -39,14 +39,14 @@ public class SkidMarks : MonoBehaviour
             verticesCopy[i] = transform.TransformPoint(vertices[i]);
         }
 
-        var g = new GameObject();
-        var d = g.AddComponent<TerrainEditorTools>();
-        verticesCopy = d.CoordinatesToTerrain(verticesCopy);
-        Destroy(g);
+        var gameObj = new GameObject();
+        var terrainTools = gameObj.AddComponent<TerrainEditorTools>();
+        verticesCopy = terrainTools.CoordinatesToTerrain(verticesCopy);
+        Destroy(gameObj);
 
         for (int i = 0; i < verticesCopy.Length; i++)
         {
-            vertices[i] = new Vector3(vertices[i].x, verticesCopy[i].z / 5 - 2.4f, vertices[i].z);
+            vertices[i] = new Vector3(vertices[i].x, verticesCopy[i].z / 5 - 2.4f, vertices[i].z); //TODO Do something for these magical numbers.
         }
 
         meshFilter.mesh.vertices = vertices;

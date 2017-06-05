@@ -8,6 +8,18 @@ public class TrackObject : MonoBehaviour, IEditable
     public string ID;
     public bool SoftCollision;
 
+    public Vector3 Position
+    {
+        get { return transform.position; }
+        set { transform.position = value; }
+    }
+
+    public Vector3 Rotation
+    {
+        get { return transform.eulerAngles; }
+        set { transform.eulerAngles = value; }
+    }
+
     private bool[] cachedTriggerInfo;
     private bool hover;
 

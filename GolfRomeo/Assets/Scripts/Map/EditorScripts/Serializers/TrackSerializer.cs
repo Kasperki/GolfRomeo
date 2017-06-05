@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
@@ -56,7 +57,7 @@ public class TrackSerializer
         MemoryStream stream = new MemoryStream();
         XmlSerializer xmlSerializer = new XmlSerializer(typeof(TrackDTO));
 
-        TrackDTO mapDTO = new TrackDTO().MapToDTO(track);
+        TrackDTO mapDTO = Mapper.Map<Track, TrackDTO>(track);
 
         MapObjectsToDTO(mapDTO);
         CheckpointsToDTO(mapDTO);
@@ -81,25 +82,28 @@ public class TrackSerializer
 
     private void MapObjectsToDTO(TrackDTO mapDTO)
     {
+        mapDTO.MapObjects = new TrackObjectDTO[track.MapObjects.Length];
         for (int i = 0; i < track.MapObjects.Length; i++)
         {
-            mapDTO.MapObjects[i] = new TrackObjectDTO().MapToDTO(track.MapObjects[i]);
+            mapDTO.MapObjects[i] = Mapper.Map<TrackObject, TrackObjectDTO>(track.MapObjects[i]);
         }
     }
 
     private void CheckpointsToDTO(TrackDTO mapDTO)
     {
+        mapDTO.Checkpoints = new CheckpointDTO[track.LapTracker.Checkpoints.Length];
         for (int i = 0; i < track.LapTracker.Checkpoints.Length; i++)
         {
-            mapDTO.Checkpoints[i] = new CheckpointDTO().MapToDTO(track.LapTracker.Checkpoints[i]);
+            mapDTO.Checkpoints[i] = Mapper.Map<Checkpoint, CheckpointDTO>(track.LapTracker.Checkpoints[i]);
         }
     }
 
     private void WaypointsToDTO(TrackDTO mapDTO)
     {
+        mapDTO.Waypoints = new WaypointDTO[mapDTO.Waypoints.Length];
         for (int i = 0; i < mapDTO.Waypoints.Length; i++)
         {
-            mapDTO.Waypoints[i] = new WaypointDTO().MapToDTO(track.WayPointCircuit.GetComponentsInChildren<WaypointNode>()[i]);
+            mapDTO.Waypoints[i] = Mapper.Map<WaypointNode, WaypointDTO>(track.WayPointCircuit.GetComponentsInChildren<WaypointNode>()[i]);
         }
     }
 }

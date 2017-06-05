@@ -6,6 +6,13 @@ using UnityEngine;
 
 public class WaypointNode : MonoBehaviour, IEditable
 {
+    public Vector3 Position
+    {
+        get { return transform.position; }
+        set { transform.position = value; }
+    }
+
+
     private new Renderer renderer;
 
     void Start()
@@ -15,7 +22,7 @@ public class WaypointNode : MonoBehaviour, IEditable
 
     void Update()
     {
-        renderer.enabled = GameManager.CheckState(State.Edit);
+        renderer.enabled = GameManager.CheckState(State.Edit); //TODO SET TO START / AWAKE? We should not need to call this on race, just when instantiated on edit mode.
     }
 
     public void SetStart()

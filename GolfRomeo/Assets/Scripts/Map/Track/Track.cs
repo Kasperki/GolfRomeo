@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using UnityEngine;
 
 public class Track : Singleton<Track>
@@ -27,15 +28,15 @@ public class Track : Singleton<Track>
     {
         get
         {
-            float lenght = 0;
+            float length = 0;
 
             for (int i = 0; i < LapTracker.Checkpoints.Length; i++)
             {
                 int nextNode = i + 1 == LapTracker.Checkpoints.Length ? 0 : i + 1;
-                lenght = (LapTracker.Checkpoints[i].transform.position - LapTracker.Checkpoints[nextNode].transform.position).magnitude;
+                length = (LapTracker.Checkpoints[i].transform.position - LapTracker.Checkpoints[nextNode].transform.position).magnitude;
             }
 
-            return lenght;
+            return length;
         }
     }
 
@@ -54,6 +55,18 @@ public class Track : Singleton<Track>
         SkidMarks = GetComponentInChildren<SkidMarks>();
     }
 
+
+    public Track NewTrack(string name) //TODO -- Separate track and behaviour.
+    {
+        var track = new Track();
+        track.ID = Guid.NewGuid();
+        track.Name = name;
+
+        //TODO INIT TERRAIN TO SMOOTH AF
+
+        return track;
+    }
+
     public void SaveTrack()
     {
         var WorldSerialization = new TrackSerializer(this);
@@ -66,8 +79,7 @@ public class Track : Singleton<Track>
         var mapDTO = WorldSerialization.LoadWorld(trackName);
         SkidMarks.Init();
 
-        //TODO META DATA
-        //ID -- set track folders name + GUID....
+        //TODO MAP META DATA
         Name = trackName;
 
         //Init track objects
@@ -89,7 +101,7 @@ public class Track : Singleton<Track>
             GameObject gameObj = ResourcesLoader.LoadTrackObject(mapObjectDTO.ID);
             gameObj.transform.SetParent(TrackObjectsParent.transform);
 
-            mapObjectDTO.MapToGameObject(mapObjectDTO, gameObj.GetComponent<TrackObject>());
+            Mapper.Map(mapObjectDTO, gameObj.GetComponent<TrackObject>());
         }
     }
 
@@ -102,7 +114,7 @@ public class Track : Singleton<Track>
             GameObject gameObj = ResourcesLoader.LoadRoadObject("Checkpoint");
             gameObj.transform.SetParent(LapTracker.transform);
 
-            checkpointDTO.MapToGameObject(checkpointDTO, gameObj.GetComponent<Checkpoint>());
+            Mapper.Map(checkpointDTO, gameObj.GetComponent<Checkpoint>());
             gameObj.GetComponent<Checkpoint>().SetOrder(gameObj.GetComponent<Checkpoint>().CheckpointOrder);
         }
     }
@@ -116,7 +128,7 @@ public class Track : Singleton<Track>
             GameObject gameObj = ResourcesLoader.LoadRoadObject("WaypointNode");
             gameObj.transform.SetParent(WayPointCircuit.transform);
 
-            waypointDTO.MapToGameObject(waypointDTO, gameObj.GetComponent<WaypointNode>());
+            Mapper.Map(waypointDTO, gameObj.GetComponent<WaypointNode>());
         }
 
         if (mapDTO.Waypoints.Length > 0)
