@@ -8,6 +8,8 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
         SetState(State.Menu);
+
+        MapperConfiguration.Configure();
     }
 
     /// <summary>

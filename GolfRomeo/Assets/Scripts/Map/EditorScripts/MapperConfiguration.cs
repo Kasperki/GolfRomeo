@@ -2,14 +2,16 @@
 
 public class MapperConfiguration
 {
-    public MapperConfiguration()
+    public static void Configure()
     {
         Mapper.Initialize(cfg =>
         {
             cfg.CreateMap<Track, TrackDTO>()
+                .ForMember(dest => dest.ID, opt => opt.MapFrom(src => src.ID))
                 .ForMember(dest => dest.MapName, opt => opt.MapFrom(src => src.Name));
 
             cfg.CreateMap<TrackDTO, Track>()
+                .ForMember(dest => dest.ID, opt => opt.MapFrom(src => src.ID))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.MapName));
 
             cfg.CreateMap<TrackObject, TrackObjectDTO>()

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-public static class StreamExtension
+public static class StreamExtensions
 {
     public static void CopyTo(this Stream source, Stream output, int bufferSize = 81920)
     {

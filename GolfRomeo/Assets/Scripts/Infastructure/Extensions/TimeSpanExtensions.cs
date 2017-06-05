@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeSpanHelper
+public static class TimeSpanExtensions
 {
-	public static string GetTimeInMinutesAndSeconds(float t)
+	public static string GetTimeInMinutesAndSeconds(this TimeSpan timespan)
     {
-        var timespan = TimeSpan.FromSeconds(t);
         return timespan.Minutes.ToString("00") + ":" + timespan.Seconds.ToString("00") + "." + timespan.Milliseconds.ToString("000");
     }
 }

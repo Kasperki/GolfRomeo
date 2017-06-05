@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,8 +37,8 @@ public class CarInfo : MonoBehaviour
     public void UpdateLapInformation()
     {
         CurrentLap.text = LapInfo.CurrentLap + "/" + RaceManager.Instance.Laps;
-        FastestLapTime.text = TimeSpanHelper.GetTimeInMinutesAndSeconds(LapInfo.FastestLapTime);
-        CurrentLapTime.text = TimeSpanHelper.GetTimeInMinutesAndSeconds(LapInfo.LastLapTime);
+        FastestLapTime.text = TimeSpan.FromSeconds(LapInfo.FastestLapTime).GetTimeInMinutesAndSeconds();
+        CurrentLapTime.text = TimeSpan.FromSeconds(LapInfo.LastLapTime).GetTimeInMinutesAndSeconds();
         Speed.text = LapInfo.car.CarController.CurrentSpeed.ToString("0") + " km/h";
     }
 

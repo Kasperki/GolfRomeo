@@ -40,7 +40,7 @@ public class Track : Singleton<Track>
         }
     }
 
-    //BEHAVIOUR -------------------------------------------------
+    //BEHAVIOUR -------------------------------------------------  //TODO -- Separate track and behaviour.
     public Terrain Terrain;
     public GameObject TrackObjectsParent;
     public LapTracker LapTracker; //Checkpoints parent
@@ -55,16 +55,14 @@ public class Track : Singleton<Track>
         SkidMarks = GetComponentInChildren<SkidMarks>();
     }
 
-
-    public Track NewTrack(string name) //TODO -- Separate track and behaviour.
+    public void NewTrack(string name)
     {
-        var track = new Track();
-        track.ID = Guid.NewGuid();
-        track.Name = name;
+        ID = Guid.NewGuid();
+        Name = name;
 
-        //TODO INIT TERRAIN TO SMOOTH AF
-
-        return track;
+        var editorTools = gameObject.AddComponent<TerrainEditorTools>();
+        editorTools.NewEmptyTerrain();
+        Destroy(editorTools);
     }
 
     public void SaveTrack()
@@ -79,8 +77,8 @@ public class Track : Singleton<Track>
         var mapDTO = WorldSerialization.LoadWorld(trackName);
         SkidMarks.Init();
 
-        //TODO MAP META DATA
-        Name = trackName;
+        //MAP METADATA
+        Mapper.Map(mapDTO, this);
 
         //Init track objects
         InstantiateMapObjects(mapDTO);

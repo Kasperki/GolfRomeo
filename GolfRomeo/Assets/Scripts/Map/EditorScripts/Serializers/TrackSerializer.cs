@@ -25,7 +25,7 @@ public class TrackSerializer
 	
     public void SaveWorld(string name)
     {
-        var trackPath = directoryHelper.GetPathToMap(name);
+        var trackPath = directoryHelper.GetTrackPath(name);
 
         var trackStreams = new TrackData();
 
@@ -100,7 +100,7 @@ public class TrackSerializer
 
     private void WaypointsToDTO(TrackDTO mapDTO)
     {
-        mapDTO.Waypoints = new WaypointDTO[mapDTO.Waypoints.Length];
+        mapDTO.Waypoints = new WaypointDTO[track.WayPointCircuit.GetComponentsInChildren<WaypointNode>().Length];
         for (int i = 0; i < mapDTO.Waypoints.Length; i++)
         {
             mapDTO.Waypoints[i] = Mapper.Map<WaypointNode, WaypointDTO>(track.WayPointCircuit.GetComponentsInChildren<WaypointNode>()[i]);

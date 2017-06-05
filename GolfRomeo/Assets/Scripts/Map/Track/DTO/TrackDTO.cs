@@ -5,7 +5,7 @@ using UnityEngine;
 [XmlRootAttribute("Track", Namespace = "")]
 public class TrackDTO
 {
-    //Track metadata  
+    public Guid ID;
     public string MapName;
 
     /// <summary>

@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <MapName>World</MapName>
-  <HeightMapSize>
-    <x>513</x>
-    <y>513</y>
-  </HeightMapSize>
-  <TextureMapSize>
-    <x>512</x>
-    <y>512</y>
-    <z>14</z>
-  </TextureMapSize>
+  <MapName>Pearl Street</MapName>
   <MapObjects>
     <TrackObjectDTO>
       <ID>tree4</ID>
@@ -417,9 +408,9 @@
     <TrackObjectDTO>
       <ID>block5</ID>
       <Position>
-        <x>-19.95171</x>
-        <y>0.00622653961</y>
-        <z>10.0594206</z>
+        <x>-19.762661</x>
+        <y>0.006226063</y>
+        <z>6.03479862</z>
       </Position>
       <Rotation>
         <x>0</x>
@@ -475,7 +466,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>24.999958</y>
+        <y>24.99996</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -1314,14 +1305,14 @@
     <TrackObjectDTO>
       <ID>Barrel</ID>
       <Position>
-        <x>-41.4365654</x>
-        <y>0.192220882</y>
-        <z>17.4677143</z>
+        <x>-41.4126472</x>
+        <y>0.19210656</y>
+        <z>17.4649353</z>
       </Position>
       <Rotation>
-        <x>359.9941</x>
-        <y>5.87305069</y>
-        <z>0.111782238</z>
+        <x>359.907074</x>
+        <y>5.862539</y>
+        <z>352.70755</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
@@ -1372,7 +1363,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>70.0000153</y>
+        <y>70.00001</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -1385,7 +1376,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>30.0000248</y>
+        <y>30.0000286</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -1398,7 +1389,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>15.0000515</y>
+        <y>15.0000505</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>

@@ -70,12 +70,9 @@ public class EditorUI : MonoBehaviour
     public void NewTrack()
     {
         GameManager.SetState(State.Edit);
+        Track.Instance.NewTrack(TrackNameInput.text);
 
-        Track.Instance.Name = TrackNameInput.text;
-        Track.Instance.ID = Guid.NewGuid(); //TODO INIT SOMEHERE ELSE THAN IN FUCKIN UI
-
-        var cursor = CreateCursorEditor();
-        cursor.GetComponentInChildren<TerrainEditorTools>().NewEmptyTerrain();
+        CreateCursorEditor();
 
         ContentParent.gameObject.SetActive(false);
         EditorInfo.SetActive(true);
