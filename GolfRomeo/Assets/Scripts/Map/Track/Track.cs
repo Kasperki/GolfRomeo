@@ -78,7 +78,8 @@ public class Track : Singleton<Track>
         SkidMarks.Init();
 
         //MAP METADATA
-        Mapper.Map(mapDTO, this);
+        Name = trackName;
+        //Mapper.Map(mapDTO, this);
 
         //Init track objects
         InstantiateMapObjects(mapDTO);

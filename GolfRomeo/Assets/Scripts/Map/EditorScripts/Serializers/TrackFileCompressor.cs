@@ -13,7 +13,6 @@ public class TrackFileCompressor
 {
     public void CreatePackage(string directoryPath, TrackData trackData)
     {
-        CompressFile(directoryPath + TrackSerializer.mapFileExtension, trackData.ObjectsData);
         CompressFile(directoryPath + TerrainSerializer.trackHeightMapExtension, trackData.HeightMapData);
         CompressFile(directoryPath + TerrainSerializer.textureMapExtension, trackData.TextureMapData);
     }
@@ -28,7 +27,7 @@ public class TrackFileCompressor
                 stream.CopyTo(compressionStream);
             }
 
-            compressedMemStream.Seek(0, SeekOrigin.Begin);
+            compressedMemStream.Position = 0;
 
             FileStream compressedFileStream = File.Create(path + ".gz");
             compressedMemStream.WriteTo(compressedFileStream);
@@ -40,10 +39,12 @@ public class TrackFileCompressor
 
     public TrackData DecompressPackage(string directoryPath)
     {
-        TrackData deserializedTrackStreams = new TrackData();
-        deserializedTrackStreams.ObjectsData = DecompressFile(directoryPath + TrackSerializer.mapFileExtension);
-        deserializedTrackStreams.HeightMapData = DecompressFile(directoryPath + TerrainSerializer.trackHeightMapExtension);
-        deserializedTrackStreams.TextureMapData = DecompressFile(directoryPath + TerrainSerializer.textureMapExtension);
+        TrackData deserializedTrackStreams = new TrackData()
+        {
+            ObjectsData = File.ReadAllBytes(directoryPath + TrackSerializer.mapFileExtension),
+            HeightMapData = DecompressFile(directoryPath + TerrainSerializer.trackHeightMapExtension),
+            TextureMapData = DecompressFile(directoryPath + TerrainSerializer.textureMapExtension)
+        };
 
         return deserializedTrackStreams;
     }
@@ -58,9 +59,8 @@ public class TrackFileCompressor
             {
                 var decompressedMemoryStream = new MemoryStream();
                 decompressionStream.CopyTo(decompressedMemoryStream);
-                decompressedMemoryStream.Position = 0;
 
-                return decompressedMemoryStream.ToArray();
+                return decompressedMemoryStream.GetBytes();
             }
         }
     }

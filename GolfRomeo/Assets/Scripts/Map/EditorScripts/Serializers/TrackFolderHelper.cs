@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 using UnityEngine;
 
 public class TrackFolderHelper
@@ -68,9 +69,14 @@ public class TrackFolderHelper
         Directory.Delete(TrackFolderName + "/" + track, true);
     }
 
-    public void CopyTrack(string track)
+    public void CopyTrack(string track, string newName = "")
     {
-        string destinationDirectory = track + "_copy";
+        if (string.IsNullOrEmpty(newName)) 
+        {
+            newName = track + "_copy";
+        }
+
+        string destinationDirectory = TrackFolderName + "/" + newName;
 
         // Get the subdirectories for the specified directory.
         DirectoryInfo dir = new DirectoryInfo(TrackFolderName + "/" + track);
@@ -91,14 +97,28 @@ public class TrackFolderHelper
         FileInfo[] files = dir.GetFiles();
         foreach (FileInfo file in files)
         {
-            string temppath = Path.Combine(destinationDirectory, file.Name);
+            string temppath = Path.Combine(destinationDirectory, newName + file.Name.Substring(file.Name.IndexOf('.'))); //TODO: DO NOT ALLOW Extra '.' in map names. will break this naive solution
             file.CopyTo(temppath, false);
         }
+
+        ChangeTrackName(newName, newName);
     }
 
-    public void RenameTrack(string track)
+    public void RenameTrack(string track, string newName)
     {
-        throw new System.NotImplementedException();
+        CopyTrack(track, newName);
+        RemoveTrack(track);
     }
+
+    private void ChangeTrackName(string track, string newName)
+    {
+        var filePath = TrackFolderName + "/" + track + "/" + track + ".xml";
+        XmlDocument xml = new XmlDocument();
+
+        xml.Load(filePath);
+        xml.SelectSingleNode("/Track/MapName").InnerText = newName;
+        xml.Save(filePath);
+    }
+    
 }
 

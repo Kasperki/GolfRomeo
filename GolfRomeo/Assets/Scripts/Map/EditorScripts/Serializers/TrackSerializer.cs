@@ -66,16 +66,13 @@ public class TrackSerializer
         //Serialize
         xmlSerializer.Serialize(stream, mapDTO);
 
-        stream.Position = 0;
-        var bytes = stream.ToArray();
+        var bytes = stream.GetBytes();
         stream.Close();
 
-#if UNITY_EDITOR
         using (FileStream file = new FileStream(name + mapFileExtension, FileMode.Create, FileAccess.Write))
         {
             file.Write(bytes, 0, bytes.Length);
         }
-#endif
 
         return bytes;
     }

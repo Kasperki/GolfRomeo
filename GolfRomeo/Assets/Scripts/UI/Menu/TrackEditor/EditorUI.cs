@@ -7,6 +7,7 @@ public class EditorUI : MonoBehaviour
 {
     public MenuUI MenuUI;
     public MapEditorMenuUI MapEditorMenuUI;
+    public ConfirmUI ConfirmDeleteUI;
     public RectTransform ContentParent;
     public GameObject EditorInfo;
 
@@ -30,11 +31,12 @@ public class EditorUI : MonoBehaviour
         EditorInfo.SetActive(false);
         ContentParent.gameObject.SetActive(true);
 
-        CreateTrackButtons(directoryHelper.GetAllTracks());
+        CreateTrackButtons();
     }
 
-    private void CreateTrackButtons(string[] tracks)
+    private void CreateTrackButtons()
     {
+        var tracks = directoryHelper.GetAllTracks();
         mapButtonsParent.DestroyChildrens();
 
         for (int i = 0; i < tracks.Length; i++)
@@ -46,6 +48,7 @@ public class EditorUI : MonoBehaviour
             if (i == 0)
             {
                 EventSystem.current.SetSelectedGameObject(obj);
+                RaceManager.Instance.TrackNames[0] = tracks[i];
             }
         }
     }
@@ -93,5 +96,22 @@ public class EditorUI : MonoBehaviour
         {
             Back();
         }
+    }
+
+    public void PromptDeleteTrack()
+    {
+        ConfirmDeleteUI.Init("Do you want to delete: " + RaceManager.Instance.TrackNames[0]);
+    }
+
+    public void DeleteTrack()
+    {
+        new TrackFolderHelper().RemoveTrack(RaceManager.Instance.TrackNames[0]);
+        CreateTrackButtons();
+    }
+
+    public void CopyTrack()
+    {
+        new TrackFolderHelper().CopyTrack(RaceManager.Instance.TrackNames[0]);
+        CreateTrackButtons();
     }
 }

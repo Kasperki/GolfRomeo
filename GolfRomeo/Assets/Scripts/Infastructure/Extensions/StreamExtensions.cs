@@ -11,4 +11,10 @@ public static class StreamExtensions
             output.Write(array, 0, count);
         }
     }
+
+    public static byte[] GetBytes(this MemoryStream source)
+    {
+        source.Position = 0;
+        return source.ToArray();
+    }
 }
