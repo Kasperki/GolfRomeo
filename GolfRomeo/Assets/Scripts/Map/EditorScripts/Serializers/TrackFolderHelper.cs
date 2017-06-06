@@ -29,7 +29,7 @@ public class TrackFolderHelper
         return trackNames;
     } 
 
-    public string GetMapNameFromPath(string path)
+    private string GetMapNameFromPath(string path)
     {
         return path.Substring(TrackRootFolder.Length + 1);
     }
@@ -110,12 +110,18 @@ public class TrackFolderHelper
 
     private void ChangeTrackName(string track, string newName)
     {
-        var filePath = TrackFolderName + "/" + track + "/" + track + ".xml";
-        XmlDocument xml = new XmlDocument();
+        string path = LoadTrackPath(track) + TrackSerializer.mapFileExtension;
+        var xml = GetTrackXMLFile(path);
+        xml.SelectSingleNode("/" + Constants.Track_Root_Node_Name + "/MapName").InnerText = newName;
+        xml.Save(path);
+    }
 
-        xml.Load(filePath);
-        xml.SelectSingleNode("/Track/MapName").InnerText = newName;
-        xml.Save(filePath);
+    public XmlDocument GetTrackXMLFile(string trackXMLFilePath)
+    {
+        XmlDocument xml = new XmlDocument();
+        xml.Load(trackXMLFilePath);
+
+        return xml;
     }
 }
 

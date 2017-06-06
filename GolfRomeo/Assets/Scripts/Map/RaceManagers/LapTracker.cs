@@ -14,7 +14,7 @@ public class LapTracker : Singleton<LapTracker>
     private float raceStartTime;
     private float timeUntilRaceIsOver;
     private bool someoneHasFinishedRace;
-    private const float TIME_LEFT_AFTER_FIRST_FINISH = 20;
+    private const float Time_Left_After_First_Finish = 20;
 
     void Start()
     {
@@ -99,7 +99,7 @@ public class LapTracker : Singleton<LapTracker>
             if (CarOrder.Find(x => x.Finished == true) != null && someoneHasFinishedRace == false)
             {
                 someoneHasFinishedRace = true;
-                timeUntilRaceIsOver = Time.time + TIME_LEFT_AFTER_FIRST_FINISH;
+                timeUntilRaceIsOver = Time.time + Time_Left_After_First_Finish;
             }
 
             if (someoneHasFinishedRace && Time.time > timeUntilRaceIsOver)

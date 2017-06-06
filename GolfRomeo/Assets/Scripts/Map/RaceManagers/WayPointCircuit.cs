@@ -235,7 +235,7 @@ public class WayPointCircuit : MonoBehaviour
     }
 }
 
-namespace UnityStandardAssets.Utility.Inspector
+namespace UnityStandardAssets.Utility.Inspector //TODO IS THIS USELESS?
 {
 #if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(WayPointCircuit.WaypointList))]

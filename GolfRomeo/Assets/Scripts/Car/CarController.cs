@@ -8,7 +8,7 @@ using UnityEngine;
 public class CarController : MonoBehaviour
 {
     public Car Car;
-    public const float SPEED_MULTIPLIER = 5.6f;
+    public const float Speed_Multipler = 5.6f;
 
     public float TopSpeed = 200;
     public float TopSpeedOffRoad = 50;
@@ -23,7 +23,7 @@ public class CarController : MonoBehaviour
 
     public List<AxleInfo> AxleInfos; // the information about each individual axle
 
-    public float CurrentSpeed { get { return rgbd == null ? 0 : rgbd.velocity.magnitude * SPEED_MULTIPLIER; } }
+    public float CurrentSpeed { get { return rgbd == null ? 0 : rgbd.velocity.magnitude * Speed_Multipler; } }
 
     public CarParticleController ParticleController;
 
@@ -239,7 +239,7 @@ public class CarController : MonoBehaviour
         //Set rigidbody velocity based on maxspeed
         if (CurrentSpeed > maxSpeed)
         {
-            var newVelocity = (maxSpeed / SPEED_MULTIPLIER) * rgbd.velocity.normalized;
+            var newVelocity = (maxSpeed / Speed_Multipler) * rgbd.velocity.normalized;
             rgbd.velocity = new Vector3(newVelocity.x, rgbd.velocity.y, newVelocity.z);
         }
     }

@@ -14,7 +14,7 @@ public class CursorTrackObjectsUI : CursorBaseUI
     {
         base.Start();
 
-        var trackObjects = Resources.LoadAll(ResourcesLoader.TRACKOBJECTS, typeof(GameObject)).Cast<GameObject>();
+        var trackObjects = Resources.LoadAll(ResourcesLoader.Track_Objects, typeof(GameObject)).Cast<GameObject>();
 
         buttons = new List<Button>();
 

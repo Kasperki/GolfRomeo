@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class Pit : MonoBehaviour
+public class Pit : TrackObject
 {
     private const float Health = 100;
     private const float Fuel = 300;

@@ -32,8 +32,16 @@ public class StadingsCalculator
 
         //Fastest lap points
         var lapInfoWithTime = lapinfo.FindAll(x => x.LastLapTime > 0);
-        var fastestPlayer = lapInfoWithTime.OrderBy(x => x.FastestLapTime).First().car.Player;
-        PlayerStandings[fastestPlayer] += RacePointTemplate.FastestLap;
+        var fastestCarRaceData = lapInfoWithTime.OrderBy(x => x.FastestLapTime).First();
+
+        if (fastestCarRaceData != null)
+        {
+            var fastestPlayer = fastestCarRaceData.car.Player;
+            PlayerStandings[fastestPlayer] += RacePointTemplate.FastestLap;
+
+            //Update TrackRecord
+            new TrackLoader(Track.Instance).UpdateTrackRecord(fastestCarRaceData.FastestLapTime);
+        }
 
         //Player did not finish points
         foreach (var linfo in lapinfo.FindAll(x => x.Finished == false).ToList())

@@ -2,7 +2,7 @@
 using System.Xml.Serialization;
 using UnityEngine;
 
-[XmlRootAttribute("Track", Namespace = "")]
+[XmlRootAttribute(Constants.Track_Root_Node_Name, Namespace = "")]
 public class TrackDTO
 {
     public Guid ID;

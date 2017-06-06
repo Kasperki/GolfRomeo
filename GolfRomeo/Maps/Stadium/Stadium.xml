@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <MapName>World</MapName>
-  <HeightMapSize>
-    <x>513</x>
-    <y>513</y>
-  </HeightMapSize>
-  <TextureMapSize>
-    <x>512</x>
-    <y>512</y>
-    <z>14</z>
-  </TextureMapSize>
+  <ID>00000000-0000-0000-0000-000000000000</ID>
+  <MapName>Stadium</MapName>
+  <TrackRecord>11.14937</TrackRecord>
   <MapObjects>
     <TrackObjectDTO>
       <ID>treeLarge</ID>
@@ -2880,7 +2873,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.425792754</y>
+        <y>0.425792783</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -2893,7 +2886,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.425792754</y>
+        <y>0.425792783</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -2906,7 +2899,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.425792754</y>
+        <y>0.425792783</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -3193,6 +3186,19 @@
       <Rotation>
         <x>0</x>
         <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Bush</ID>
+      <Position>
+        <x>-24.7726479</x>
+        <y>0.006226063</y>
+        <z>-7.231143</z>
+      </Position>
+      <Rotation>
+        <x>270</x>
+        <y>355.692261</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>

@@ -11,8 +11,8 @@ public class TerrainEditor : MonoBehaviour
     public Renderer BrushRenderer;
     private MeshFilter brushRendererMesh;
 
-    private const int MIN_BRUSH_SIZE = 1;
-    private const int MAX_BRUSH_SIZE = 100;
+    private const int Min_Brush_Size = 1;
+    private const int Max_Brush_Size = 100;
 
     public int BrushSize = 25;
     public float TerrainHeightEditModifier = 0.0005f;
@@ -35,7 +35,7 @@ public class TerrainEditor : MonoBehaviour
         BrushRenderer.enabled = true;
 
         BrushSize += (int)(Input.mouseScrollDelta.y * 1.5f);
-        BrushSize = Mathf.Clamp(BrushSize, MIN_BRUSH_SIZE, MAX_BRUSH_SIZE);
+        BrushSize = Mathf.Clamp(BrushSize, Min_Brush_Size, Max_Brush_Size);
 
         BrushRenderer.transform.position = new Vector3(transform.position.x, -5.65f, transform.position.z);
         BrushRenderer.transform.localScale = new Vector3(BrushSize / 6.8f, BrushSize / 6.8f, 1);
