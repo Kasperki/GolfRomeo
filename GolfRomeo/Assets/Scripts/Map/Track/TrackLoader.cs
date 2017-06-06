@@ -13,8 +13,7 @@ public class TrackLoader
 
     public void NewTrack(string name)
     {
-        track.ID = Guid.NewGuid();
-        track.Name = name;
+        track.Metadata = new TrackMetadata(name);
 
         var editorTools = track.gameObject.AddComponent<TerrainEditorTools>();
         editorTools.NewEmptyTerrain();
@@ -24,7 +23,7 @@ public class TrackLoader
     public void SaveTrack()
     {
         var WorldSerialization = new TrackSerializer(track);
-        WorldSerialization.SaveWorld(track.Name);
+        WorldSerialization.SaveWorld(track.Metadata.Name);
     }
 
     public void LoadTrack(string trackName)
@@ -34,8 +33,7 @@ public class TrackLoader
         track.SkidMarks.Init();
 
         //MAP METADATA
-        track.Name = trackName;
-        //Mapper.Map(mapDTO, track);
+        Mapper.Map(mapDTO, track.Metadata);
 
         //Init track objects
         InstantiateMapObjects(mapDTO);

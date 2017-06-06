@@ -2,6 +2,7 @@
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ID>00000000-0000-0000-0000-000000000000</ID>
   <MapName>ThisIsATest</MapName>
+  <TrackRecord>0</TrackRecord>
   <MapObjects>
     <TrackObjectDTO>
       <ID>palm2</ID>
@@ -318,13 +319,13 @@
     <TrackObjectDTO>
       <ID>TrafficCone</ID>
       <Position>
-        <x>-34.29678</x>
-        <y>0.08232183</y>
-        <z>1.79828167</z>
+        <x>-34.2967834</x>
+        <y>0.08237744</y>
+        <z>1.7982595</z>
       </Position>
       <Rotation>
-        <x>270.027985</x>
-        <y>25.0813751</y>
+        <x>270</x>
+        <y>25.0908527</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -1176,14 +1177,27 @@
     <TrackObjectDTO>
       <ID>Barrel</ID>
       <Position>
-        <x>-44.12571</x>
-        <y>0.3428083</y>
-        <z>-5.788273</z>
+        <x>-43.9560852</x>
+        <y>0.3429002</y>
+        <z>-5.258556</z>
       </Position>
       <Rotation>
-        <x>87.29875</x>
-        <y>270.054382</y>
-        <z>269.860626</z>
+        <x>88.17866</x>
+        <y>166.081131</y>
+        <z>166.065964</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>barrierWhite</ID>
+      <Position>
+        <x>-42.34951</x>
+        <y>0.006226063</y>
+        <z>-4.026735</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>293.942322</y>
+        <z>0</z>
       </Rotation>
     </TrackObjectDTO>
   </MapObjects>

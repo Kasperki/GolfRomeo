@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class Track : Singleton<Track>
 {
-    public Guid ID;
-    public string Name;
-    public float TrackRecord;
+    public TrackMetadata Metadata;
 
     public Vector2 HeightMapSize
     {

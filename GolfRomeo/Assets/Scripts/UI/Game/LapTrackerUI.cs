@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,8 +25,8 @@ public class LapTrackerUI : MonoBehaviour
         lapTracker = Track.Instance.LapTracker;
         track = Track.Instance;
 
-        MapName.text = track.Name;
-        LapRecord.text = "TR:" + "todo";
+        MapName.text = track.Metadata.Name;
+        LapRecord.text = "TR: " + TimeSpan.FromSeconds(track.Metadata.TrackRecord).GetTimeInMinutesAndSeconds();
 
         carInfoUIs = new List<CarInfo>();
 
