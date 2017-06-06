@@ -13,11 +13,12 @@ Feel free to contribute! <3
 * Every new release will be merged to master.
 
 ### Useful tools:
+* Lets try to follow this more or less: http://www.dofactory.com/reference/csharp-coding-standards
 * https://github.com/vad710/UnityEngineAnalyzer
 
 ## TODO
 * Improve Track Editor
-    * Better Zooming
+    * Multiediting support, better ux.
     * Y-Axis Editing
     * Export and Import Alphamaps as .png
 * Improve Car handling
@@ -28,5 +29,8 @@ Feel free to contribute! <3
 * Add Player Profiles
 * Add AI Profiles / Difficulties
 * Add Snow & Ice
+* Add Weather effects
 * Networking - Multiplayer
+* TrackRecord lists, with cars & names.
+* Race option: Weapon pickups like in CTR, Mario Cart, Death Rally. default off.
 

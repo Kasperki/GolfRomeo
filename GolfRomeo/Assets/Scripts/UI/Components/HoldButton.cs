@@ -11,7 +11,7 @@ public class HoldButton : Button
 {
     // Event delegate triggered on mouse or touch down.
     [SerializeField]
-    ButtonDownEvent _onDown = new ButtonDownEvent();
+    private ButtonDownEvent onDown = new ButtonDownEvent();
 
     private bool onHold = false;
     private bool listenForSubmitUp;
@@ -41,7 +41,7 @@ public class HoldButton : Button
     {
         if (onHold)
         {
-            _onDown.Invoke();
+            onDown.Invoke();
         }
 
         if (listenForSubmitUp)
@@ -56,8 +56,8 @@ public class HoldButton : Button
 
     public ButtonDownEvent OnHold
     {
-        get { return _onDown; }
-        set { _onDown = value; }
+        get { return onDown; }
+        set { onDown = value; }
     }
 
     [Serializable]

@@ -86,8 +86,6 @@ public class TrackFolderHelper
             throw new DirectoryNotFoundException("Source directory does not exist or could not be found: " + track);
         }
 
-        DirectoryInfo[] dirs = dir.GetDirectories();
-
         if (!Directory.Exists(destinationDirectory))
         {
             Directory.CreateDirectory(destinationDirectory);
@@ -119,6 +117,5 @@ public class TrackFolderHelper
         xml.SelectSingleNode("/Track/MapName").InnerText = newName;
         xml.Save(filePath);
     }
-    
 }
 

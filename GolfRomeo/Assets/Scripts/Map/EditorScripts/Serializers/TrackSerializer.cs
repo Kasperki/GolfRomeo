@@ -27,11 +27,12 @@ public class TrackSerializer
     {
         var trackPath = directoryHelper.GetTrackPath(name);
 
-        var trackStreams = new TrackData();
-
-        trackStreams.ObjectsData = SerializeMap(trackPath);
-        trackStreams.HeightMapData = terrainSerializer.SerializeHeightMap(trackPath, track);
-        trackStreams.TextureMapData = terrainSerializer.SerializeTextureMap(trackPath, track);
+        var trackStreams = new TrackData()
+        {
+            ObjectsData = SerializeMap(trackPath),
+            HeightMapData = terrainSerializer.SerializeHeightMap(trackPath, track),
+            TextureMapData = terrainSerializer.SerializeTextureMap(trackPath, track)
+        };
 
         trackCompressor.CreatePackage(trackPath, trackStreams);
     }
@@ -54,53 +55,23 @@ public class TrackSerializer
 
     private byte[] SerializeMap(string name)
     {
-        MemoryStream stream = new MemoryStream();
-        XmlSerializer xmlSerializer = new XmlSerializer(typeof(TrackDTO));
-
-        TrackDTO mapDTO = Mapper.Map<Track, TrackDTO>(track);
-
-        MapObjectsToDTO(mapDTO);
-        CheckpointsToDTO(mapDTO);
-        WaypointsToDTO(mapDTO);
-
-        //Serialize
-        xmlSerializer.Serialize(stream, mapDTO);
-
-        var bytes = stream.GetBytes();
-        stream.Close();
-
-        using (FileStream file = new FileStream(name + mapFileExtension, FileMode.Create, FileAccess.Write))
+        using (MemoryStream stream = new MemoryStream())
         {
-            file.Write(bytes, 0, bytes.Length);
-        }
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(TrackDTO));
 
-        return bytes;
-    }
+            TrackDTO mapDTO = Mapper.Map<Track, TrackDTO>(track);
 
-    private void MapObjectsToDTO(TrackDTO mapDTO)
-    {
-        mapDTO.MapObjects = new TrackObjectDTO[track.MapObjects.Length];
-        for (int i = 0; i < track.MapObjects.Length; i++)
-        {
-            mapDTO.MapObjects[i] = Mapper.Map<TrackObject, TrackObjectDTO>(track.MapObjects[i]);
-        }
-    }
+            //Serialize
+            xmlSerializer.Serialize(stream, mapDTO);
 
-    private void CheckpointsToDTO(TrackDTO mapDTO)
-    {
-        mapDTO.Checkpoints = new CheckpointDTO[track.LapTracker.Checkpoints.Length];
-        for (int i = 0; i < track.LapTracker.Checkpoints.Length; i++)
-        {
-            mapDTO.Checkpoints[i] = Mapper.Map<Checkpoint, CheckpointDTO>(track.LapTracker.Checkpoints[i]);
-        }
-    }
+            var bytes = stream.GetBytes();
 
-    private void WaypointsToDTO(TrackDTO mapDTO)
-    {
-        mapDTO.Waypoints = new WaypointDTO[track.WayPointCircuit.GetComponentsInChildren<WaypointNode>().Length];
-        for (int i = 0; i < mapDTO.Waypoints.Length; i++)
-        {
-            mapDTO.Waypoints[i] = Mapper.Map<WaypointNode, WaypointDTO>(track.WayPointCircuit.GetComponentsInChildren<WaypointNode>()[i]);
+            using (FileStream file = new FileStream(name + mapFileExtension, FileMode.Create, FileAccess.Write))
+            {
+                file.Write(bytes, 0, bytes.Length);
+            }
+
+            return bytes;
         }
     }
 }

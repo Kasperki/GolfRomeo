@@ -21,12 +21,11 @@ public class Checkpoint : MonoBehaviour, IEditable
 
     public MeshRenderer TextRenderer;
     private new MeshRenderer renderer;
-    private LapTracker lapTracker;
+    private LapTracker lapTracker { get { return GetComponentInParent<LapTracker>(); } }
 
     void Awake ()
     {
         renderer = GetComponent<MeshRenderer>();
-        lapTracker = GetComponentInParent<LapTracker>();
     }
 	
     void Update()

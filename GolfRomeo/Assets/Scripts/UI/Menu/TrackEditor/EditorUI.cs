@@ -48,7 +48,6 @@ public class EditorUI : MonoBehaviour
             if (i == 0)
             {
                 EventSystem.current.SetSelectedGameObject(obj);
-                RaceManager.Instance.TrackNames[0] = tracks[i];
             }
         }
     }
@@ -73,7 +72,7 @@ public class EditorUI : MonoBehaviour
     public void NewTrack()
     {
         GameManager.SetState(State.Edit);
-        Track.Instance.NewTrack(TrackNameInput.text);
+        new TrackLoader(Track.Instance).NewTrack(TrackNameInput.text);
 
         CreateCursorEditor();
 

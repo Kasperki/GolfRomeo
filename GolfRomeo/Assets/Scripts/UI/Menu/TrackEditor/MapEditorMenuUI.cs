@@ -26,7 +26,7 @@ public class MapEditorMenuUI : MonoBehaviour
     public void SaveAndExit()
     {
         CleanEditorCursors();
-        Track.Instance.SaveTrack();
+        new TrackLoader(Track.Instance).SaveTrack();
         gameObject.SetActive(false);
         EditorUI.Init();
         GameManager.SetState(State.Menu);

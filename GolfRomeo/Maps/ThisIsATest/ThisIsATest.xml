@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <MapName>World</MapName>
-  <HeightMapSize>
-    <x>513</x>
-    <y>513</y>
-  </HeightMapSize>
-  <TextureMapSize>
-    <x>512</x>
-    <y>512</y>
-    <z>14</z>
-  </TextureMapSize>
+  <ID>00000000-0000-0000-0000-000000000000</ID>
+  <MapName>ThisIsATest</MapName>
   <MapObjects>
     <TrackObjectDTO>
       <ID>palm2</ID>
@@ -326,13 +318,13 @@
     <TrackObjectDTO>
       <ID>TrafficCone</ID>
       <Position>
-        <x>-34.296608</x>
-        <y>0.0822625756</y>
-        <z>1.79845953</z>
+        <x>-34.29678</x>
+        <y>0.08232183</y>
+        <z>1.79828167</z>
       </Position>
       <Rotation>
-        <x>270.100861</x>
-        <y>25.1481552</y>
+        <x>270.027985</x>
+        <y>25.0813751</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -1138,7 +1130,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>356.839752</y>
+        <y>356.839722</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -1151,7 +1143,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>356.839752</y>
+        <y>356.839722</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -1164,8 +1156,34 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>356.839752</y>
+        <y>356.839722</y>
         <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>barrierRed</ID>
+      <Position>
+        <x>-42.09713</x>
+        <y>0.006225586</y>
+        <z>-6.660905</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>253.9423</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Barrel</ID>
+      <Position>
+        <x>-44.12571</x>
+        <y>0.3428083</y>
+        <z>-5.788273</z>
+      </Position>
+      <Rotation>
+        <x>87.29875</x>
+        <y>270.054382</y>
+        <z>269.860626</z>
       </Rotation>
     </TrackObjectDTO>
   </MapObjects>

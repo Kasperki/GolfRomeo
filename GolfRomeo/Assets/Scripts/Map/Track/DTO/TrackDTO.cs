@@ -7,6 +7,7 @@ public class TrackDTO
 {
     public Guid ID;
     public string MapName;
+    public float TrackRecord;
 
     /// <summary>
     /// Track Objects - trees etc.

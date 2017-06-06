@@ -8,7 +8,10 @@ public class MapperConfiguration
         {
             cfg.CreateMap<Track, TrackDTO>()
                 .ForMember(dest => dest.ID, opt => opt.MapFrom(src => src.ID))
-                .ForMember(dest => dest.MapName, opt => opt.MapFrom(src => src.Name));
+                .ForMember(dest => dest.MapName, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.MapObjects, opt => opt.MapFrom(src => src.MapObjects))
+                .ForMember(dest => dest.Checkpoints, opt => opt.MapFrom(src => src.LapTracker.Checkpoints))
+                .ForMember(dest => dest.Waypoints, opt => opt.MapFrom(src => src.WayPointCircuit.GetComponentsInChildren<WaypointNode>()));
 
             cfg.CreateMap<TrackDTO, Track>()
                 .ForMember(dest => dest.ID, opt => opt.MapFrom(src => src.ID))

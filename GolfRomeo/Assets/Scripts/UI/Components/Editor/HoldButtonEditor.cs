@@ -7,12 +7,12 @@ using UnityEditor.UI;
 [CustomEditor(typeof(HoldButton), true)]
 public class HoldButtonEditor : ButtonEditor
 {
-    SerializedProperty _onDownProperty;
+    private SerializedProperty onDownProperty;
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        _onDownProperty = serializedObject.FindProperty("_onDown");
+        onDownProperty = serializedObject.FindProperty("_onDown");
     }
 
     public override void OnInspectorGUI()
@@ -21,7 +21,7 @@ public class HoldButtonEditor : ButtonEditor
         EditorGUILayout.Space();
 
         serializedObject.Update();
-        EditorGUILayout.PropertyField(_onDownProperty);
+        EditorGUILayout.PropertyField(onDownProperty);
         serializedObject.ApplyModifiedProperties();
     }
 }

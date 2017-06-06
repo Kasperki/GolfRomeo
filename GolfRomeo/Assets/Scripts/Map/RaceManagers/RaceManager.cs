@@ -62,7 +62,7 @@ public class RaceManager : Singleton<RaceManager>
     public void EditTrack()
     {
         GameManager.SetState(State.Edit);
-        Track.Instance.LoadTrack(TrackNames[0]);
+        new TrackLoader(Track.Instance).LoadTrack(TrackNames[0]);
     }
 
     public void LoadNextRace()
@@ -76,7 +76,7 @@ public class RaceManager : Singleton<RaceManager>
             CleanUp();
 
             //Load World
-            Track.Instance.LoadTrack(TrackNames[CurrentTrack++]);
+            new TrackLoader(Track.Instance).LoadTrack(TrackNames[CurrentTrack++]);
 
             //Start Race
             Track.Instance.LapTracker.Initialize(LoadCars());

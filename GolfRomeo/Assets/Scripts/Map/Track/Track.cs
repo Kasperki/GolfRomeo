@@ -1,11 +1,11 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using UnityEngine;
 
 public class Track : Singleton<Track>
 {
     public Guid ID;
     public string Name;
+    public float TrackRecord;
 
     public Vector2 HeightMapSize
     {
@@ -14,7 +14,6 @@ public class Track : Singleton<Track>
             return new Vector2(Terrain.terrainData.heightmapWidth, Terrain.terrainData.heightmapHeight);
         }
     }
-
 
     public Vector3 TextureMapSize
     {
@@ -40,11 +39,10 @@ public class Track : Singleton<Track>
         }
     }
 
-    //BEHAVIOUR -------------------------------------------------  //TODO -- Separate track and behaviour.
     public Terrain Terrain;
     public GameObject TrackObjectsParent;
-    public LapTracker LapTracker; //Checkpoints parent
-    public WayPointCircuit WayPointCircuit; //Waypoints parent
+    public LapTracker LapTracker;
+    public WayPointCircuit WayPointCircuit;
     public SkidMarks SkidMarks;
 
     public TrackObject[] MapObjects { get { return TrackObjectsParent.GetComponentsInChildren<TrackObject>(); } }
@@ -53,86 +51,5 @@ public class Track : Singleton<Track>
     {
         base.Awake();
         SkidMarks = GetComponentInChildren<SkidMarks>();
-    }
-
-    public void NewTrack(string name)
-    {
-        ID = Guid.NewGuid();
-        Name = name;
-
-        var editorTools = gameObject.AddComponent<TerrainEditorTools>();
-        editorTools.NewEmptyTerrain();
-        Destroy(editorTools);
-    }
-
-    public void SaveTrack()
-    {
-        var WorldSerialization = new TrackSerializer(this);
-        WorldSerialization.SaveWorld(Name);
-    }
-
-    public void LoadTrack(string trackName)
-    {
-        var WorldSerialization = new TrackSerializer(this);
-        var mapDTO = WorldSerialization.LoadWorld(trackName);
-        SkidMarks.Init();
-
-        //MAP METADATA
-        Name = trackName;
-        //Mapper.Map(mapDTO, this);
-
-        //Init track objects
-        InstantiateMapObjects(mapDTO);
-
-        //Init checkpoints
-        InstantiateCheckpoints(mapDTO);
-
-        //Init waypoints
-        InstantiateWaypoints(mapDTO);
-    }
-
-    private void InstantiateMapObjects(TrackDTO mapDTO)
-    {
-        TrackObjectsParent.transform.DestroyChildrens();
-
-        foreach (var mapObjectDTO in mapDTO.MapObjects)
-        {
-            GameObject gameObj = ResourcesLoader.LoadTrackObject(mapObjectDTO.ID);
-            gameObj.transform.SetParent(TrackObjectsParent.transform);
-
-            Mapper.Map(mapObjectDTO, gameObj.GetComponent<TrackObject>());
-        }
-    }
-
-    private void InstantiateCheckpoints(TrackDTO mapDTO)
-    {
-        LapTracker.transform.DestroyChildrens();
-
-        foreach (var checkpointDTO in mapDTO.Checkpoints)
-        {
-            GameObject gameObj = ResourcesLoader.LoadRoadObject("Checkpoint");
-            gameObj.transform.SetParent(LapTracker.transform);
-
-            Mapper.Map(checkpointDTO, gameObj.GetComponent<Checkpoint>());
-            gameObj.GetComponent<Checkpoint>().SetOrder(gameObj.GetComponent<Checkpoint>().CheckpointOrder);
-        }
-    }
-
-    private void InstantiateWaypoints(TrackDTO mapDTO)
-    {
-        WayPointCircuit.transform.DestroyChildrens();
-
-        foreach (var waypointDTO in mapDTO.Waypoints)
-        {
-            GameObject gameObj = ResourcesLoader.LoadRoadObject("WaypointNode");
-            gameObj.transform.SetParent(WayPointCircuit.transform);
-
-            Mapper.Map(waypointDTO, gameObj.GetComponent<WaypointNode>());
-        }
-
-        if (mapDTO.Waypoints.Length > 0)
-        {
-            WayPointCircuit.CachePositionsAndDistances();
-        }
     }
 }

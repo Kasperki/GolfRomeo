@@ -1,5 +1,9 @@
 # Created by https://www.gitignore.io/api/unity,visualstudio
 
+## Project Spesific ##
+*.heightmap
+*.texturemap
+
 ### Unity ###
 /GolfRomeo/[Ll]ibrary/
 /GolfRomeo/[Tt]emp/
@@ -320,4 +324,3 @@ __pycache__/
 *.xsd.cs
 
 # End of https://www.gitignore.io/api/unity,visualstudio
-
