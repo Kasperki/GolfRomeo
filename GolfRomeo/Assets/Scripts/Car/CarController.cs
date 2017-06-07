@@ -125,7 +125,7 @@ public class CarController : MonoBehaviour
             {
                 float driftValue = Vector3.Dot(rgbd.velocity, transform.forward);   
 
-                if (driftValue < 5f)
+                if (driftValue < 4f)
                 {
                     var force = SkidMarkForcePerSpeed();
                     Car.TiresHealth -= force * RaceManager.Instance.RaceOptions.TiresConsuptionRate * Time.deltaTime;

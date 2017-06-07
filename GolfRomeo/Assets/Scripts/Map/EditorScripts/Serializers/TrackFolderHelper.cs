@@ -1,24 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Xml;
 using UnityEngine;
 
 public class TrackFolderHelper
 {
-    private const string TrackFolderName = "Maps"; 
+    private const string TracksRootFolder = "Maps"; 
 
-    public string TrackRootFolder
+    public string GetTrackFolder(string trackName)
     {
-        get
+        return Path.Combine(TracksRootFolder, trackName);
+    }
+
+	public string GetTrackPath(string trackName)
+    {
+        if (!Directory.Exists(TracksRootFolder))
         {
-            return TrackFolderName;
+            Directory.CreateDirectory(TracksRootFolder);
         }
+
+        var trackFolder = GetTrackFolder(trackName);
+
+        if (!Directory.Exists(trackFolder))
+        {
+            Directory.CreateDirectory(trackFolder);
+        }
+
+        return Path.Combine(trackFolder, trackName);
     }
 
     public string[] GetAllTracks()
     {
-        var directories = Directory.GetDirectories(TrackRootFolder);
+        var directories = Directory.GetDirectories(TracksRootFolder);
         string[] trackNames = new string[directories.Length];
 
         for (int i = 0; i < directories.Length; i++)
@@ -27,46 +39,16 @@ public class TrackFolderHelper
         }
 
         return trackNames;
-    } 
+    }
 
     private string GetMapNameFromPath(string path)
     {
-        return path.Substring(TrackRootFolder.Length + 1);
-    }
-
-	public string GetTrackPath(string trackName)
-    {
-        if (!Directory.Exists(TrackFolderName))
-        {
-            Directory.CreateDirectory(TrackFolderName);
-        }
-
-        if (!Directory.Exists(TrackFolderName + "/" + trackName))
-        {
-            Directory.CreateDirectory(TrackFolderName + "/" + trackName);
-        }
-
-        return TrackFolderName + "/" + trackName + "/" + trackName;
-    }
-
-    public string LoadTrackPath(string trackName)
-    {
-        if (!Directory.Exists(TrackFolderName))
-        {
-            Directory.CreateDirectory(TrackFolderName);
-        }
-
-        if (!Directory.Exists(TrackFolderName + "/" + trackName))
-        {
-            throw new System.Exception("Track does not exists");
-        }
-
-        return TrackFolderName + "/" + trackName + "/" + trackName;
+        return path.Substring(TracksRootFolder.Length + 1);
     }
 
     public void RemoveTrack(string track)
     {
-        Directory.Delete(TrackFolderName + "/" + track, true);
+        Directory.Delete(TracksRootFolder + "/" + track, true);
     }
 
     public void CopyTrack(string track, string newName = "")
@@ -76,10 +58,10 @@ public class TrackFolderHelper
             newName = track + "_copy";
         }
 
-        string destinationDirectory = TrackFolderName + "/" + newName;
+        string destinationDirectory = TracksRootFolder + "/" + newName;
 
         // Get the subdirectories for the specified directory.
-        DirectoryInfo dir = new DirectoryInfo(TrackFolderName + "/" + track);
+        DirectoryInfo dir = new DirectoryInfo(TracksRootFolder + "/" + track);
 
         if (!dir.Exists)
         {
@@ -99,29 +81,14 @@ public class TrackFolderHelper
             file.CopyTo(temppath, false);
         }
 
-        ChangeTrackName(newName, newName);
+        var trackXMLEditor = new TrackXMLDataEditor(newName);
+        trackXMLEditor.ChangeTrackName(newName);
     }
 
     public void RenameTrack(string track, string newName)
     {
         CopyTrack(track, newName);
         RemoveTrack(track);
-    }
-
-    private void ChangeTrackName(string track, string newName)
-    {
-        string path = LoadTrackPath(track) + TrackSerializer.mapFileExtension;
-        var xml = GetTrackXMLFile(path);
-        xml.SelectSingleNode("/" + Constants.Track_Root_Node_Name + "/MapName").InnerText = newName;
-        xml.Save(path);
-    }
-
-    public XmlDocument GetTrackXMLFile(string trackXMLFilePath)
-    {
-        XmlDocument xml = new XmlDocument();
-        xml.Load(trackXMLFilePath);
-
-        return xml;
     }
 }
 

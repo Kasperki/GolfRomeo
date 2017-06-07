@@ -39,7 +39,7 @@ public class TrackSerializer
 
     public TrackDTO LoadWorld(string name)
     {
-        var trackPath = directoryHelper.LoadTrackPath(name);
+        var trackPath = directoryHelper.GetTrackPath(name);
 
         XmlSerializer serializer = new XmlSerializer(typeof(TrackDTO));
 

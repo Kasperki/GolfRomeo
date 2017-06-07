@@ -45,19 +45,6 @@ public class TrackLoader
         InstantiateWaypoints(mapDTO);
     }
 
-    public void UpdateTrackRecord(float lapTime)
-    {
-        if (track.Metadata.TrackRecord == 0 || track.Metadata.TrackRecord > lapTime)
-        {
-            var trackFolderHelper = new TrackFolderHelper();
-
-            var path = trackFolderHelper.GetTrackPath(track.Metadata.Name) + TrackSerializer.mapFileExtension;
-            var xml = trackFolderHelper.GetTrackXMLFile(path);
-            xml.SelectSingleNode("/" + Constants.Track_Root_Node_Name + "/TrackRecord").InnerText = lapTime.ToString();
-            xml.Save(path);
-        }
-    }
-
     private void InstantiateMapObjects(TrackDTO mapDTO)
     {
         track.TrackObjectsParent.transform.DestroyChildrens();

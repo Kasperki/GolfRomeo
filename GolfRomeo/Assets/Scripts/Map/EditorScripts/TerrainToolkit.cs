@@ -4,9 +4,6 @@
 -- Unity Summer of Code 2009
 -- Terrain Toolkit for Unity (Version 1.0.2)
 -- All code by Sándor Moldán, except where noted.
--- 
--- Contains an implementation of Perlin noise by Daniel Greenheck.
--- Contains an implementation of the Diamond-Square algorithm by Jim George.
 --
 -- TerrainToolkit.cs
 --

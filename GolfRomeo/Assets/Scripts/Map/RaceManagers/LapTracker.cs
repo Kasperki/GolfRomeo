@@ -126,7 +126,7 @@ public class LapTracker : Singleton<LapTracker>
             {
                 lapInfo.LapTimes.Add(Time.time - raceStartTime);
 
-                if (lapInfo.CurrentLap < RaceManager.Instance.Laps)
+                if (lapInfo.CurrentLap < RaceManager.Instance.RaceOptions.Laps)
                 {
                     lapInfo.CurrentLap++;
                 }

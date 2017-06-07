@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -40,7 +39,11 @@ public class StadingsCalculator
             PlayerStandings[fastestPlayer] += RacePointTemplate.FastestLap;
 
             //Update TrackRecord
-            new TrackLoader(Track.Instance).UpdateTrackRecord(fastestCarRaceData.FastestLapTime);
+            if (Track.Instance.Metadata.TrackRecord == 0 || Track.Instance.Metadata.TrackRecord > fastestCarRaceData.FastestLapTime)
+            {
+                var trackXMLEditor = new TrackXMLDataEditor(Track.Instance.Metadata.Name);
+                trackXMLEditor.ChangeTrackRecord(fastestCarRaceData.FastestLapTime);
+            }
         }
 
         //Player did not finish points

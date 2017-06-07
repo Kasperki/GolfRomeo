@@ -20,5 +20,9 @@ public class UserCarController : MonoBehaviour
         {
             carController.Move(Input.GetAxis(controllerScheme.HorizontalAxis), Input.GetAxis(controllerScheme.VerticalAxis), Input.GetAxis(controllerScheme.VerticalAxis), 0);
         }
+        else
+        {
+            carController.Move(0, 0, 0, 1);
+        }
     }
 }

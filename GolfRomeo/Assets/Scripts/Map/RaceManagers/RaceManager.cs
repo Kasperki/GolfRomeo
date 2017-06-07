@@ -14,7 +14,6 @@ public class RaceManager : Singleton<RaceManager>
 
     public List<string> TrackNames;
     public int CurrentTrack;
-    public int Laps = 1;
 
     private bool raceEnded;
 
@@ -49,7 +48,6 @@ public class RaceManager : Singleton<RaceManager>
     public void InitializeSettings()
     {
         TrackNames = new List<string>();
-        Laps = 1;
     }
 
     public void StartNewTournament()

@@ -18,22 +18,22 @@ public class RaceOptionsUI : MonoBehaviour
 
     public void AddLaps()
     {
-        RaceManager.Instance.Laps++;
+        RaceManager.Instance.RaceOptions.Laps++;
         UpdateLapsCount();
     }
 
     public void DecreaseLaps()
     {
-        if (RaceManager.Instance.Laps > 1)
+        if (RaceManager.Instance.RaceOptions.Laps > 1)
         {
-            RaceManager.Instance.Laps--;
+            RaceManager.Instance.RaceOptions.Laps--;
             UpdateLapsCount();
         }
     }
 
     private void UpdateLapsCount()
     {
-        Laps.text = RaceManager.Instance.Laps.ToString();
+        Laps.text = RaceManager.Instance.RaceOptions.Laps.ToString();
     }
 
     private void UpdateAICount()

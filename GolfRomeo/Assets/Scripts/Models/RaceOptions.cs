@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 public struct RaceOptions
 {
+    [Range(1,1000)]
+    public int Laps;
     [Range(0, 2)]
     public float TiresConsuptionRate;
     [Range(0, 2)]
@@ -19,6 +17,7 @@ public struct RaceOptions
         {
             return new RaceOptions()
             {
+                Laps = 3,
                 TiresConsuptionRate = 1,
                 FuelConsuptionRate = 1,
                 DamageFromEnvironmentRate = 1,
