@@ -40,11 +40,11 @@ public class PlayUI : MonoBehaviour
         ContentParent.GetComponent<RectTransform>().offsetMax = Vector2.zero;
 
         RaceManager.Instance.InitializeSettings();
-        CreateMapButtons(directoryHelper.GetAllTracks());
+        CreateTrackSelectionButtons(directoryHelper.GetAllTracks());
         RaceOptionsUI.Init();
     }
 
-    private void CreateMapButtons(string[] tracks)
+    private void CreateTrackSelectionButtons(string[] tracks)
     {
         mapButtonsParent.DestroyChildrens();
 
@@ -98,52 +98,52 @@ public class PlayUI : MonoBehaviour
         {
             if (Input.GetKeyDown(new ControllerScheme().Keyboard().Submit))
             {
-                CreatePlayer("WASD", new ControllerScheme().Keyboard());
+                AddPlayer("WASD", new ControllerScheme().Keyboard());
             }
 
             if (Input.GetKeyDown(new ControllerScheme().Keyboard2().Submit))
             {
-                CreatePlayer("ARROWS", new ControllerScheme().Keyboard2());
+                AddPlayer("ARROWS", new ControllerScheme().Keyboard2());
             }
 
             if (Input.GetKeyDown(new ControllerScheme().Joystick1().Submit))
             {
-                CreatePlayer("JOYSTICK 1", new ControllerScheme().Joystick1());
+                AddPlayer("JOYSTICK 1", new ControllerScheme().Joystick1());
             }
 
             if (Input.GetKeyDown(new ControllerScheme().Joystick2().Submit))
             {
-                CreatePlayer("JOYSTICK 2", new ControllerScheme().Joystick2());
+                AddPlayer("JOYSTICK 2", new ControllerScheme().Joystick2());
             }
 
             if (Input.GetKeyDown(new ControllerScheme().Joystick3().Submit))
             {
-                CreatePlayer("JOYSTICK 3", new ControllerScheme().Joystick3());
+                AddPlayer("JOYSTICK 3", new ControllerScheme().Joystick3());
             }
 
             if (Input.GetKeyDown(new ControllerScheme().Joystick4().Submit))
             {
-                CreatePlayer("JOYSTICK 4", new ControllerScheme().Joystick4());
+                AddPlayer("JOYSTICK 4", new ControllerScheme().Joystick4());
             }
 
             if (Input.GetKeyDown(new ControllerScheme().Joystick5().Submit))
             {
-                CreatePlayer("JOYSTICK 5", new ControllerScheme().Joystick5());
+                AddPlayer("JOYSTICK 5", new ControllerScheme().Joystick5());
             }
 
             if (Input.GetKeyDown(new ControllerScheme().Joystick6().Submit))
             {
-                CreatePlayer("JOYSTICK 6", new ControllerScheme().Joystick6());
+                AddPlayer("JOYSTICK 6", new ControllerScheme().Joystick6());
             }
 
             if (Input.GetKeyDown(new ControllerScheme().Joystick7().Submit))
             {
-                CreatePlayer("JOYSTICK 7", new ControllerScheme().Joystick7());
+                AddPlayer("JOYSTICK 7", new ControllerScheme().Joystick7());
             }
 
             if (Input.GetKeyDown(new ControllerScheme().Joystick8().Submit))
             {
-                CreatePlayer("JOYSTICK 8", new ControllerScheme().Joystick8());
+                AddPlayer("JOYSTICK 8", new ControllerScheme().Joystick8());
             }
 
             if (InputManager.BackPressed())
@@ -165,15 +165,10 @@ public class PlayUI : MonoBehaviour
             Player player = new Player();
             player.Name = "AI";
             player.PlayerType = PlayerType.AI;
-            player.PrimaryColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-            player.SecondaryColor = new Color(Random.Range(0f, 1f), 0, 0);
 
-            var firstEmptySlot = playerSelections.Find(x => x.IsSlotEmpty());
-            playerSelections[playerSelections.IndexOf(firstEmptySlot)].Join(player);
-            RaceManager.Instance.Players.Add(player);
+            var index = playerSelections.FindIndex(x => x.IsSlotEmpty());
+            AddPlayer(player, index);
         }
-
-       //UpdateAICount();
     }
 
 
@@ -185,33 +180,42 @@ public class PlayUI : MonoBehaviour
         {
             RemovePlayer(player);
         }
-
-        //UpdateAICount();
     }
 
-
-    public Player CreatePlayer(string name, ControllerScheme scheme)
+    public void AddPlayer(string name, ControllerScheme scheme)
     {
         Player player = new Player();
         player.Name = name;
         player.ControllerScheme = scheme;
-        player.PrimaryColor = Color.red;
 
         if (playerSelections.Find(x => x.IsControllerSchemeSame(player.ControllerScheme)) == null)
         {
-            var firstEmptySlot = playerSelections.Find(x => x.IsSlotEmpty() || x.IsSlotAI());
+            int index = playerSelections.FindIndex(x => x.IsSlotEmpty());
 
-            if (firstEmptySlot.IsSlotAI())
+            if (index == -1)
             {
-                RemovePlayer(firstEmptySlot.Player);
-                //UpdateAICount();
+                index = playerSelections.FindIndex(x => x.IsSlotAI());
+                if (index != -1)
+                {
+                    RemovePlayer(playerSelections[index].Player);
+                }
             }
 
-            playerSelections[playerSelections.IndexOf(firstEmptySlot)].Join(player);
-            RaceManager.Instance.Players.Add(player);
+            if (index != -1)
+            {
+                AddPlayer(player, index);
+            }
         }
+    }
 
-        return player;
+    public void AddPlayer(Player player, int index)
+    {
+        player.PrimaryColor = PlayerColors.PrimaryColors[index];
+
+        playerSelections[index].Join(player);
+        RaceManager.Instance.Players.Add(player);
+
+        //UpdateAICount();
     }
 
     public void RemovePlayer(Player player)
@@ -223,5 +227,7 @@ public class PlayUI : MonoBehaviour
             playerFound.Leave();
             RaceManager.Instance.Players.Remove(player);
         }
+
+        //UpdateAICount();
     }
 }
