@@ -7,15 +7,34 @@ public class StandingUIPlayerCard : MonoBehaviour
     public Text Score;
     public Text ScoreAdded;
 
+    public Image Background;
     public Image PrimaryColor;
-    public Image SecondaryColor;
 
-	public void UpdateCardInfo (Player player, int score)
+	public void UpdateCardInfo (Player player, StandingsData standingsData)
     {
         PlayerName.text = player.Name;
-        Score.text = score.ToString("0");
+        Score.text = standingsData.Points.ToString("0");
 
+        if (standingsData.TrackRecord)
+        {
+            ScoreAdded.text = "TR";
+        }
+        else
+        {
+            ScoreAdded.text = "";
+        }
+
+        Background.color = new Color(player.PrimaryColor.r, player.PrimaryColor.g, player.PrimaryColor.b, 0.2f);
         PrimaryColor.color = player.PrimaryColor;
-        SecondaryColor.color = player.SecondaryColor;
+    }
+
+    public void HideCard()
+    {
+        PlayerName.text = "";
+        Score.text = "";
+        ScoreAdded.text = "";
+
+        Background.color = new Color(0, 0, 0, 0);
+        PrimaryColor.color = new Color(0, 0, 0, 0);
     }
 }

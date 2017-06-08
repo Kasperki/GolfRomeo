@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -174,7 +175,7 @@ public class PlayUI : MonoBehaviour
 
     public void RemoveAI()
     {
-        var player = RaceManager.Instance.Players.Find(x => x.PlayerType == PlayerType.AI);
+        var player = RaceManager.Instance.Players.FindAll(x => x.PlayerType == PlayerType.AI).Last();
 
         if (player != null)
         {
@@ -215,7 +216,7 @@ public class PlayUI : MonoBehaviour
         playerSelections[index].Join(player);
         RaceManager.Instance.Players.Add(player);
 
-        //UpdateAICount();
+        RaceOptionsUI.UpdateAICount();
     }
 
     public void RemovePlayer(Player player)
@@ -228,6 +229,6 @@ public class PlayUI : MonoBehaviour
             RaceManager.Instance.Players.Remove(player);
         }
 
-        //UpdateAICount();
+        RaceOptionsUI.UpdateAICount();
     }
 }

@@ -20,7 +20,7 @@ public class LapTrackerUI : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        ClearChildrens();
+        CarInfoParent.DestroyChildrens();
 
         lapTracker = Track.Instance.LapTracker;
         track = Track.Instance;
@@ -39,21 +39,14 @@ public class LapTrackerUI : MonoBehaviour
             obj.transform.SetParent(CarInfoParent, true);
             obj.GetComponent<RectTransform>().sizeDelta = new Vector2(CarInfoParent.rect.width / lapTracker.CarOrder.Count, 0);
         }
-	}
+
+        //CarInfoParent.GetComponent<HorizontalLayoutGroup>().childAlignment = TextAnchor.MiddleLeft; TODO
+    }
 
     public void Hide()
     {
-        ClearChildrens();
+        CarInfoParent.DestroyChildrens();
         gameObject.SetActive(false);
-    }
-
-    public void ClearChildrens()
-    {
-        var oldLapInfos = CarInfoParent.GetComponentsInChildren<CarInfo>();
-        for (int i = 0; i < oldLapInfos.Length; i++)
-        {
-            Destroy(oldLapInfos[i].gameObject);
-        }
     }
 
     public void Update()

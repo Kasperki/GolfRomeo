@@ -5,17 +5,17 @@ using UnityEngine;
 public class StadingsCalculator
 {
     public RacePointTemplate RacePointTemplate;
-    public Dictionary<Player, int> PlayerStandings;
+    public Dictionary<Player, StandingsData> PlayerStandings;
     private StandingsUI standingsUI;
 
 	public StadingsCalculator(List<Player> players, StandingsUI standingsUI)
     {
         RacePointTemplate = RacePointTemplate.DefaultTemplate;
 
-        PlayerStandings = new Dictionary<Player, int>();
+        PlayerStandings = new Dictionary<Player, StandingsData>();
         foreach (var player in players)
         {
-            PlayerStandings.Add(player, 0);
+            PlayerStandings.Add(player, new StandingsData());
         }
 
         this.standingsUI = standingsUI;
@@ -26,7 +26,8 @@ public class StadingsCalculator
         //Order points
         for (int i = 0; i < lapinfo.Count; i++)
         {
-            PlayerStandings[lapinfo[i].car.Player] += RacePointTemplate.PointOrder[i];
+            PlayerStandings[lapinfo[i].car.Player].Points += RacePointTemplate.PointOrder[i];
+            PlayerStandings[lapinfo[i].car.Player].PointsAdded = RacePointTemplate.PointOrder[i];
         }
 
         //Fastest lap points
@@ -36,7 +37,8 @@ public class StadingsCalculator
         if (fastestCarRaceData != null)
         {
             var fastestPlayer = fastestCarRaceData.car.Player;
-            PlayerStandings[fastestPlayer] += RacePointTemplate.FastestLap;
+            PlayerStandings[fastestPlayer].Points += RacePointTemplate.FastestLap;
+            PlayerStandings[fastestPlayer].TrackRecord = true;
 
             //Update TrackRecord
             if (Track.Instance.Metadata.TrackRecord == 0 || Track.Instance.Metadata.TrackRecord > fastestCarRaceData.FastestLapTime)
@@ -49,7 +51,7 @@ public class StadingsCalculator
         //Player did not finish points
         foreach (var linfo in lapinfo.FindAll(x => x.Finished == false).ToList())
         {
-            PlayerStandings[linfo.car.Player] -= RacePointTemplate.DidNotFinish;
+            PlayerStandings[linfo.car.Player].Points -= RacePointTemplate.DidNotFinish;
         }
 
         SortDictionaryByValue();
@@ -57,7 +59,7 @@ public class StadingsCalculator
 
     private void SortDictionaryByValue()
     {
-        var sortedDict =  from entry in PlayerStandings orderby entry.Value descending select entry;
+        var sortedDict =  from entry in PlayerStandings orderby entry.Value.Points descending select entry;
         PlayerStandings = sortedDict.ToDictionary(pair => pair.Key, pair => pair.Value);
     }
 
@@ -75,4 +77,11 @@ public class StadingsCalculator
     {
         standingsUI.Hide();
     }
+}
+
+public class StandingsData
+{
+    public int Points;
+    public int PointsAdded;
+    public bool TrackRecord;
 }

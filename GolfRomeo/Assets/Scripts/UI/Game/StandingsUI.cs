@@ -8,7 +8,7 @@ public class StandingsUI : MonoBehaviour
     public StandingUIPlayerCard[] StandingsObject;
     public RectTransform StandingsParent;
 
-    public void SetStandings(Dictionary<Player, int> standings)
+    public void SetStandings(Dictionary<Player, StandingsData> standings)
     {
         gameObject.SetActive(true);
 
@@ -19,9 +19,9 @@ public class StandingsUI : MonoBehaviour
             StandingsObject[i++].UpdateCardInfo(standing.Key, standing.Value);
         }
 
-        for (int j = i; j < StandingsObject.Length; j++)
+        for (int j = standings.Count; j < StandingsObject.Length; j++)
         {
-            StandingsObject[j].gameObject.SetActive(false);
+            StandingsObject[j].HideCard();
         }
     }
 

@@ -22,6 +22,7 @@ public class CarInfo : MonoBehaviour
     public CarRaceData LapInfo;
 
     private RectTransform rectTransform;
+    private float currentTrackRecord;
 
     public void Init(CarRaceData lapInfo)
     {
@@ -32,14 +33,30 @@ public class CarInfo : MonoBehaviour
         SecondaryBackground.color = lapInfo.car.Player.SecondaryColor;
 
         rectTransform = GetComponent<RectTransform>();
+
+        currentTrackRecord = new TrackXMLDataEditor(Track.Instance.Metadata.Name).GetTrackRecord();
     }
 
     public void UpdateLapInformation()
     {
         CurrentLap.text = LapInfo.CurrentLap + "/" + RaceManager.Instance.RaceOptions.Laps;
         FastestLapTime.text = TimeSpan.FromSeconds(LapInfo.FastestLapTime).GetTimeInMinutesAndSeconds();
-        CurrentLapTime.text = TimeSpan.FromSeconds(LapInfo.LastLapTime).GetTimeInMinutesAndSeconds();
-        Speed.text = LapInfo.car.CarController.CurrentSpeed.ToString("0") + " km/h";
+
+        if (GameManager.CheckState(State.Game))
+        {
+            CurrentLapTime.text = TimeSpan.FromSeconds(LapInfo.CurrentLapTime).GetTimeInMinutesAndSeconds();
+        }
+        else
+        {
+            CurrentLapTime.text = "00:00:000";
+        }
+
+        if (LapInfo.FastestLapTime > 0 && LapInfo.FastestLapTime < currentTrackRecord)
+        {
+            FastestLapTime.color = Color.red;
+        }
+
+        Speed.text = LapInfo.car.CarController.CurrentSpeed.ToString("0");
     }
 
     public void Update()

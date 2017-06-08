@@ -18,11 +18,7 @@ public class WaypointNode : MonoBehaviour, IEditable
     void Start()
     {
         renderer = GetComponent<Renderer>();
-    }
-
-    void Update()
-    {
-        renderer.enabled = GameManager.CheckState(State.Edit); //TODO SET TO START / AWAKE? We should not need to call this on race, just when instantiated on edit mode.
+        renderer.enabled = GameManager.CheckState(State.Edit);
     }
 
     public void SetStart()

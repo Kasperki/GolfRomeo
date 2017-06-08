@@ -6,7 +6,7 @@ class PlayerColors
     {
         get
         {
-            return new Color[RaceManager.MaxPlayers] { Color.red, Color.blue, Color.green, Color.yellow, Color.magenta, new Color32(255, 125, 0, 1), Color.white, Color.gray };
+            return new Color[RaceManager.MaxPlayers] { new Color32(255, 125, 125, 255), new Color32(0, 125, 255, 255), new Color32(125, 255, 125, 255), Color.yellow, Color.magenta, new Color32(255, 125, 0, 255), new Color32(175, 200, 175, 255), Color.black };
         }
     }
 

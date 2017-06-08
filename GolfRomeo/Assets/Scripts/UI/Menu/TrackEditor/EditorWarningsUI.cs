@@ -10,7 +10,6 @@ public class EditorWarningsUI : MonoBehaviour
         text = GetComponent<Text>();
     }
 
-
     void Update ()
     {
         text.text = string.Empty;

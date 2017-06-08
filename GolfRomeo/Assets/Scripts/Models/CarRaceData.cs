@@ -11,11 +11,15 @@ public class CarRaceData
     public int CurrentCheckpointID;
     public List<float> LapTimes;
 
+    private float raceStartTime;
+
     public float RaceTotalTime { get { return LapTimes.Count() > 0 ? LapTimes.Sum() : 0; } }
 
     public float LastLapTime { get { return LapTimes.Count() > 0 ? LapTimes.Last() : 0; } }
 
     public float FastestLapTime { get { return LapTimes.Count() > 0 ? LapTimes.Min() : 0; } }
+
+    public float CurrentLapTime { get { return Time.time - raceStartTime - RaceTotalTime; } }
 
     public int NextCheckpointID
     {
@@ -32,5 +36,10 @@ public class CarRaceData
         CurrentCheckpointID = 0;
 
         LapTimes = new List<float>();
+    }
+
+    public void SetRaceStartTime(float raceStartTime)
+    {
+        this.raceStartTime = raceStartTime;
     }
 }

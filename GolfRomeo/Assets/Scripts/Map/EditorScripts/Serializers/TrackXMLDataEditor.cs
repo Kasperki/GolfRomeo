@@ -40,4 +40,14 @@ public class TrackXMLDataEditor
         xml.SelectSingleNode("/" + Constants.Track_Root_Node_Name + "/TrackRecord").InnerText = lapTime.ToString();
         xml.Save(TrackXMLFilePath);
     }
+
+    public float GetTrackRecord()
+    {
+        var xml = GetTrackXMLFile();
+
+        float trackRecord = 0;
+        float.TryParse(xml.SelectSingleNode("/" + Constants.Track_Root_Node_Name + "/TrackRecord").InnerText, out trackRecord);
+
+        return trackRecord;
+    }
 }

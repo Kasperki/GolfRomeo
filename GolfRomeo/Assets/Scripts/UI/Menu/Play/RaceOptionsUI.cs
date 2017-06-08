@@ -36,7 +36,7 @@ public class RaceOptionsUI : MonoBehaviour
         Laps.text = RaceManager.Instance.RaceOptions.Laps.ToString();
     }
 
-    private void UpdateAICount()
+    public void UpdateAICount()
     {
         AICount.text = RaceManager.Instance.Players.FindAll(m => m.PlayerType == PlayerType.AI).Count.ToString("0");
     }

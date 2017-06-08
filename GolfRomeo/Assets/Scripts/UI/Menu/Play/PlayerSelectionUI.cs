@@ -15,6 +15,12 @@ public class PlayerSelectionUI : MonoBehaviour
 
     private ControllerScheme scheme;
     private Player player = null;
+    private Image image;
+
+    void Awake()
+    {
+        image = GetComponent<Image>();
+    }
 
     public Player Player
     {
@@ -53,6 +59,8 @@ public class PlayerSelectionUI : MonoBehaviour
         PreviousCarButton.gameObject.SetActive(true);
         NextCarButton.gameObject.SetActive(true);
 
+        image.color = player.PrimaryColor;
+
         UpdateCar();
     }
 
@@ -66,6 +74,8 @@ public class PlayerSelectionUI : MonoBehaviour
         PlayerName.gameObject.SetActive(false);
         PreviousCarButton.gameObject.SetActive(false);
         NextCarButton.gameObject.SetActive(false);
+
+        image.color = new Color(0, 0, 0, 0.5f);
     }
 
     void Update()

@@ -81,6 +81,11 @@ public class LapTracker : Singleton<LapTracker>
     {
         GameManager.SetState(State.Game);
         raceStartTime = Time.time;
+
+        foreach (var carOrder in CarOrder)
+        {
+            carOrder.SetRaceStartTime(raceStartTime);
+        }
     }
 
     void Update()
@@ -124,7 +129,7 @@ public class LapTracker : Singleton<LapTracker>
 
             if (lapInfo.CurrentCheckpointID == 0 && lapInfo.Finished == false)
             {
-                lapInfo.LapTimes.Add(Time.time - raceStartTime);
+                lapInfo.LapTimes.Add(Time.time - raceStartTime - lapInfo.RaceTotalTime);
 
                 if (lapInfo.CurrentLap < RaceManager.Instance.RaceOptions.Laps)
                 {

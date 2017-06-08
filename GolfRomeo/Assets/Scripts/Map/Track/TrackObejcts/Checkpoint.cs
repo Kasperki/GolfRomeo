@@ -26,13 +26,9 @@ public class Checkpoint : MonoBehaviour, IEditable
     void Awake ()
     {
         renderer = GetComponent<MeshRenderer>();
+        renderer.enabled = TextRenderer.enabled = GameManager.CheckState(State.Edit);
     }
 	
-    void Update()
-    {
-        renderer.enabled = TextRenderer.enabled = GameManager.CheckState(State.Edit); //TODO ADD TO START / AWAKE?
-    }
-
     void OnTriggerEnter(Collider collider)
     {
         var car = collider.gameObject.GetComponentInParent<Car>();
