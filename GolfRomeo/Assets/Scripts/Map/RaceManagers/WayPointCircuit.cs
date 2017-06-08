@@ -162,6 +162,8 @@ public class WayPointCircuit : MonoBehaviour
                 accumulateDistance += (p1 - p2).magnitude;
             }
         }
+
+        numPoints = Waypoints.Length;
     }
 
     private void OnDrawGizmos()
