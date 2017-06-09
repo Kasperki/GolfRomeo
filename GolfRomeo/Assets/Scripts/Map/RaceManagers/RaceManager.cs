@@ -111,12 +111,15 @@ public class RaceManager : Singleton<RaceManager>
         raceEnded = true;
 
         StandingsCalculator.UpdateStandings(Track.Instance.LapTracker.CarOrder);
-        StandingsCalculator.ShowStandings();
         Track.Instance.LapTracker.LapTrackerUI.Hide();
 
         if (CurrentTrack == TrackNames.Count)
         {
             StandingsCalculator.ShowWinners();
+        }
+        else
+        {
+            StandingsCalculator.ShowStandings();
         }
     }
 

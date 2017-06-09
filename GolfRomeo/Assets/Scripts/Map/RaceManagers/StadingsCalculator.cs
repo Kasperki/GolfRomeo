@@ -70,7 +70,7 @@ public class StadingsCalculator
 
     public void ShowWinners()
     {
-        standingsUI.ShowWinners();
+        standingsUI.ShowWinners(PlayerStandings);
     }
 
     public void HideStandings()

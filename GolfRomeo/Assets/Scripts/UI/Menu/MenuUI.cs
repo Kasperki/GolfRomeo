@@ -29,4 +29,9 @@ public class MenuUI : MonoBehaviour
         ContentParent.gameObject.SetActive(false);
         editorUI.Init();
     }
+
+    public void Exit()
+    {
+        Application.Quit();
+    }
 }

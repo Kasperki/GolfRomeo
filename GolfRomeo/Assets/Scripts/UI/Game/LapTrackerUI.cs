@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,11 +37,9 @@ public class LapTrackerUI : MonoBehaviour
             obj.GetComponent<CarInfo>().Init(car);
             carInfoUIs.Add(obj.GetComponent<CarInfo>());
 
-            obj.transform.SetParent(CarInfoParent, true);
+            obj.GetComponent<RectTransform>().SetParent(CarInfoParent, true);
             obj.GetComponent<RectTransform>().sizeDelta = new Vector2(CarInfoParent.rect.width / lapTracker.CarOrder.Count, 0);
         }
-
-        //CarInfoParent.GetComponent<HorizontalLayoutGroup>().childAlignment = TextAnchor.MiddleLeft; TODO
     }
 
     public void Hide()
