@@ -85,6 +85,14 @@ public class CursorEditor : MonoBehaviour
             CursorUI.Init();
         }
 
+        if (CursorUI.IsActive() == false)
+        {
+            if (InputManager.StartPressed() || InputManager.BackPressed())
+            {
+                CursorUI.Save();
+            }
+        }
+
         UpdateZoom();
 
         int cursorHitLayer = 1 << (int)TrackMask.Terrain;

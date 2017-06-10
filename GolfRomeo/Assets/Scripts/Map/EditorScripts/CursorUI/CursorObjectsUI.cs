@@ -19,6 +19,12 @@ public class CursorObjectsUI : CursorBaseUI
         CursorEditorUI.Open();
     }
 
+    public void MoveObjects()
+    {
+        buttonsRect.gameObject.SetActive(false);
+        CursorEditorUI.Exit();
+    }
+
     public void EditObjects()
     {
         TrackObjectsUI.Open();
