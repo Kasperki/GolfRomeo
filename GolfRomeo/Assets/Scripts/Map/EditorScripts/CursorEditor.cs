@@ -34,6 +34,10 @@ public class CursorEditor : MonoBehaviour
     public CursorUI CursorUI;
     public ControllerScheme ControlScheme;
 
+    public GameObject GetSelectedObject { get { return selectedIEditable; } }
+
+    public GameObject GetLastHoveredObject { get { return lastHoveredObject; } }
+
     private void Awake()
     {
         cursorMaterial = Renderer.material;

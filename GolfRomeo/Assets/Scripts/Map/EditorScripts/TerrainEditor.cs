@@ -34,10 +34,13 @@ public class TerrainEditor : MonoBehaviour
     {
         BrushRenderer.enabled = true;
 
-        BrushSize += (int)(Input.mouseScrollDelta.y * 1.5f);
-        BrushSize = Mathf.Clamp(BrushSize, Min_Brush_Size, Max_Brush_Size);
+        if (cursorEditor.CursorUI.IsActive())
+        {
+            BrushSize += (int)(Input.mouseScrollDelta.y * 1.5f);
+            BrushSize = Mathf.Clamp(BrushSize, Min_Brush_Size, Max_Brush_Size);
+        }
 
-        BrushRenderer.transform.position = new Vector3(transform.position.x, -5.65f, transform.position.z);
+        BrushRenderer.transform.position = new Vector3(transform.position.x, -5.85f, transform.position.z);
         BrushRenderer.transform.localScale = new Vector3(BrushSize / 6.8f, BrushSize / 6.8f, 1);
         BrushRenderer.transform.eulerAngles = new Vector3(-90, 0, 0);
 

@@ -9,7 +9,9 @@ public class EditorUI : MonoBehaviour
     public MapEditorMenuUI MapEditorMenuUI;
     public ConfirmUI ConfirmDeleteUI;
     public RectTransform ContentParent;
+
     public GameObject EditorInfo;
+    public RectTransform EditorInfoCursorParent;
 
     public RectTransform mapButtonsParent;
     public GameObject MapButtonPrefab;
@@ -19,6 +21,7 @@ public class EditorUI : MonoBehaviour
     public InputField TrackNameInput;
 
     public GameObject CursorPrefab;
+    public GameObject CursorEditorInfo;
 
     private void Awake()
     {
@@ -85,6 +88,11 @@ public class EditorUI : MonoBehaviour
         var cursor = Instantiate(CursorPrefab) as GameObject;
         var cursorEditor = cursor.GetComponent<CursorEditor>();
         cursorEditor.ControlScheme = new ControllerScheme().Keyboard();
+
+        var cursorInfo = Instantiate(CursorEditorInfo) as GameObject;
+        var cursorEditorInfo = cursorInfo.GetComponent<EditorCursorInfo>();
+        cursorEditorInfo.transform.SetParent(EditorInfoCursorParent);
+        cursorEditorInfo.Init(cursorEditor);
 
         return cursorEditor;
     }

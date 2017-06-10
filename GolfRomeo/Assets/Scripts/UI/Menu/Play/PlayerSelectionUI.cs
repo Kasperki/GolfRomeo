@@ -80,38 +80,41 @@ public class PlayerSelectionUI : MonoBehaviour
 
     void Update()
     {
-        if (scheme != null && scheme.HorizontalAxis != new ControllerScheme().Keyboard().HorizontalAxis && GameManager.CheckState(State.Menu))
+        if (scheme != null && GameManager.CheckState(State.Menu))
         {
-            if (Input.GetAxisRaw(scheme.HorizontalAxis) == 0)
+            if (scheme.HorizontalAxis != new ControllerScheme().Keyboard().HorizontalAxis)
             {
-                left = false;
-                right = false;
-            }
-
-            if (Input.GetAxisRaw(scheme.HorizontalAxis) == -1 && !left)
-            {
-                carIndex--;
-
-                if (carIndex < 0)
+                if (Input.GetAxisRaw(scheme.HorizontalAxis) == 0)
                 {
-                    carIndex = Enum.GetNames(typeof(CarType)).Length - 1;
+                    left = false;
+                    right = false;
                 }
 
-                UpdateCar();
-                left = true;
-            }
-
-            if (Input.GetAxisRaw(scheme.HorizontalAxis) == 1 && !right)
-            {
-                carIndex++;
-
-                if (carIndex >= Enum.GetNames(typeof(CarType)).Length)
+                if (Input.GetAxisRaw(scheme.HorizontalAxis) == -1 && !left)
                 {
-                    carIndex = 0;
+                    carIndex--;
+
+                    if (carIndex < 0)
+                    {
+                        carIndex = Enum.GetNames(typeof(CarType)).Length - 1;
+                    }
+
+                    UpdateCar();
+                    left = true;
                 }
 
-                UpdateCar();
-                right = true;
+                if (Input.GetAxisRaw(scheme.HorizontalAxis) == 1 && !right)
+                {
+                    carIndex++;
+
+                    if (carIndex >= Enum.GetNames(typeof(CarType)).Length)
+                    {
+                        carIndex = 0;
+                    }
+
+                    UpdateCar();
+                    right = true;
+                }
             }
 
             if (Input.GetKeyDown(scheme.Cancel))
