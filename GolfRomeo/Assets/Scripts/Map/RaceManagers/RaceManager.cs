@@ -65,6 +65,8 @@ public class RaceManager : Singleton<RaceManager>
 
     public void LoadNextRace()
     {
+        FindObjectOfType<CameraZoom>().ResetCamera();
+
         if (CurrentTrack == TrackNames.Count)
         {
             EndRace();

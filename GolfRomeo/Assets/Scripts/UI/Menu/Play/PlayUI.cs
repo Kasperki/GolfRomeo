@@ -7,7 +7,6 @@ using UnityEngine.UI;
 /*
     TODO
     - HOW TO JOIN TO GAME INFO SHOULD BE BETTER, HOW MANY CONTROLLERS ARE CONNECTED ETC.
-    - AI COUNT DOES NOT WORK
 */
 
 public class PlayUI : MonoBehaviour
@@ -97,54 +96,27 @@ public class PlayUI : MonoBehaviour
     {
         if (GameManager.CheckState(State.Menu))
         {
-            if (Input.GetKeyDown(new ControllerScheme().Keyboard().Submit))
+            int setNameSlot = 0;
+
+            for (int i = InputManager.Instance.GetAvailableControllerSchemes().Count; i < playerSelections.Count; i++)
             {
-                AddPlayer("WASD", new ControllerScheme().Keyboard());
+                playerSelections[i].JoinInfo.text = "ADD NEW CONTROLLER";
             }
 
-            if (Input.GetKeyDown(new ControllerScheme().Keyboard2().Submit))
+            foreach (var controllerScheme in InputManager.Instance.GetAvailableControllerSchemes()) 
             {
-                AddPlayer("ARROWS", new ControllerScheme().Keyboard2());
-            }
+                int playerSlot = GetFreePlayerSlot(controllerScheme, setNameSlot);
 
-            if (Input.GetKeyDown(new ControllerScheme().Joystick1().Submit))
-            {
-                AddPlayer("JOYSTICK 1", new ControllerScheme().Joystick1());
-            }
+                if (playerSlot != -1)
+                {
+                    playerSelections[playerSlot].JoinInfo.text = "PRESS " + controllerScheme.Submit.ToString() + " TO JOIN";
+                    setNameSlot++;
+                }
 
-            if (Input.GetKeyDown(new ControllerScheme().Joystick2().Submit))
-            {
-                AddPlayer("JOYSTICK 2", new ControllerScheme().Joystick2());
-            }
-
-            if (Input.GetKeyDown(new ControllerScheme().Joystick3().Submit))
-            {
-                AddPlayer("JOYSTICK 3", new ControllerScheme().Joystick3());
-            }
-
-            if (Input.GetKeyDown(new ControllerScheme().Joystick4().Submit))
-            {
-                AddPlayer("JOYSTICK 4", new ControllerScheme().Joystick4());
-            }
-
-            if (Input.GetKeyDown(new ControllerScheme().Joystick5().Submit))
-            {
-                AddPlayer("JOYSTICK 5", new ControllerScheme().Joystick5());
-            }
-
-            if (Input.GetKeyDown(new ControllerScheme().Joystick6().Submit))
-            {
-                AddPlayer("JOYSTICK 6", new ControllerScheme().Joystick6());
-            }
-
-            if (Input.GetKeyDown(new ControllerScheme().Joystick7().Submit))
-            {
-                AddPlayer("JOYSTICK 7", new ControllerScheme().Joystick7());
-            }
-
-            if (Input.GetKeyDown(new ControllerScheme().Joystick8().Submit))
-            {
-                AddPlayer("JOYSTICK 8", new ControllerScheme().Joystick8());
+                if (Input.GetKeyDown(controllerScheme.Submit))
+                {
+                    AddPlayer(playerSlot.ToString("0"), controllerScheme);
+                }
             }
 
             if (InputManager.BackPressed())
@@ -159,6 +131,17 @@ public class PlayUI : MonoBehaviour
         }
     }
 
+    private int GetFreePlayerSlot(ControllerScheme controllerScheme, int next)
+    {
+        if (playerSelections.Find(x => x.IsControllerSchemeSame(controllerScheme)) == null)
+        {
+            var players = playerSelections.FindAll(x => x.IsSlotEmpty());
+            return playerSelections.IndexOf(players[next]);
+        }
+
+        return -1;
+    }
+
     public void AddAI()
     {
         if (RaceManager.Instance.Players.Count < RaceManager.MaxPlayers)
@@ -171,7 +154,6 @@ public class PlayUI : MonoBehaviour
             AddPlayer(player, index);
         }
     }
-
 
     public void RemoveAI()
     {

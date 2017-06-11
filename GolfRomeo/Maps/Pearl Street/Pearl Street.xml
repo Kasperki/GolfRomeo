@@ -2,7 +2,7 @@
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ID>00000000-0000-0000-0000-000000000000</ID>
   <MapName>Pearl Street</MapName>
-  <TrackRecord>25.89999</TrackRecord>
+  <TrackRecord>0</TrackRecord>
   <MapObjects>
     <TrackObjectDTO>
       <ID>tree4</ID>
@@ -1450,14 +1450,14 @@
     <TrackObjectDTO>
       <ID>Barrel</ID>
       <Position>
-        <x>-41.41299</x>
-        <y>0.192291662</y>
-        <z>17.465559</z>
+        <x>-41.4140739</x>
+        <y>0.1922225</y>
+        <z>17.4654045</z>
       </Position>
       <Rotation>
-        <x>0.06944282</x>
-        <y>5.88609743</y>
-        <z>352.828827</z>
+        <x>-0.005541098</x>
+        <y>5.88568926</y>
+        <z>353.1576</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
@@ -2178,117 +2178,117 @@
     <TrackObjectDTO>
       <ID>Barrel</ID>
       <Position>
-        <x>-27.2442455</x>
-        <y>0.342805982</y>
-        <z>9.500303</z>
+        <x>-27.2444382</x>
+        <y>0.3428068</y>
+        <z>9.500123</z>
       </Position>
       <Rotation>
-        <x>87.27466</x>
-        <y>266.4073</y>
-        <z>269.997437</z>
+        <x>87.28654</x>
+        <y>266.1771</y>
+        <z>270.0219</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
       <ID>StartSquare</ID>
       <Position>
-        <x>-43.573597</x>
+        <x>-43.70736</x>
         <y>0.106226064</y>
-        <z>14.447608</z>
+        <z>14.9852076</z>
       </Position>
       <Rotation>
         <x>0</x>
-        <y>337.6853</y>
+        <y>157.6853</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
       <ID>StartSquare</ID>
       <Position>
-        <x>-42.70097</x>
+        <x>-42.38963</x>
         <y>0.106226064</y>
-        <z>15.0413685</z>
+        <z>15.3977747</z>
       </Position>
       <Rotation>
         <x>0</x>
-        <y>337.6853</y>
+        <y>157.6853</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
       <ID>StartSquare</ID>
       <Position>
-        <x>-42.79943</x>
+        <x>-42.8636246</x>
         <y>0.106226064</y>
-        <z>12.6595316</z>
+        <z>13.0007219</z>
       </Position>
       <Rotation>
         <x>0</x>
-        <y>337.6853</y>
+        <y>157.6853</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
       <ID>StartSquare</ID>
       <Position>
-        <x>-41.95791</x>
+        <x>-41.52636</x>
         <y>0.106226064</y>
-        <z>13.1905413</z>
+        <z>13.46182</z>
       </Position>
       <Rotation>
         <x>0</x>
-        <y>337.6853</y>
+        <y>157.6853</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
       <ID>StartSquare</ID>
       <Position>
-        <x>-42.1324463</x>
+        <x>-42.0947037</x>
         <y>0.106226064</y>
-        <z>11.0607347</z>
+        <z>11.1295919</z>
       </Position>
       <Rotation>
         <x>0</x>
-        <y>337.6853</y>
+        <y>157.6853</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
       <ID>StartSquare</ID>
       <Position>
-        <x>-41.26935</x>
+        <x>-40.7937775</x>
         <y>0.106226064</y>
-        <z>11.5582819</z>
+        <z>11.6252565</z>
       </Position>
       <Rotation>
         <x>0</x>
-        <y>337.6853</y>
+        <y>157.6853</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
       <ID>StartSquare</ID>
       <Position>
-        <x>-44.37844</x>
+        <x>-44.5687943</x>
         <y>0.106226064</y>
-        <z>16.45483</z>
+        <z>17.3099213</z>
       </Position>
       <Rotation>
         <x>0</x>
-        <y>337.6853</y>
+        <y>157.6853</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
       <ID>StartSquare</ID>
       <Position>
-        <x>-43.37914</x>
+        <x>-43.24019</x>
         <y>0.106226064</y>
-        <z>16.98116</z>
+        <z>17.7241631</z>
       </Position>
       <Rotation>
         <x>0</x>
-        <y>337.6853</y>
+        <y>157.6853</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
