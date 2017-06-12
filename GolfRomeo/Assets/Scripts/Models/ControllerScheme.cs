@@ -11,6 +11,8 @@ using UnityEngine;
 [Serializable]
 public class ControllerScheme
 {
+    public string Name;
+
     //Select & Menu
     public KeyCode Select = KeyCode.Escape;
     public KeyCode Start = KeyCode.Return;
@@ -32,6 +34,7 @@ public class ControllerScheme
     {
         return new ControllerScheme()
         {
+            Name = "WASD",
             VerticalAxis = "Vertical",
             HorizontalAxis = "Horizontal",
             Select = KeyCode.Escape,
@@ -45,6 +48,7 @@ public class ControllerScheme
     {
         return new ControllerScheme()
         {
+            Name = "ARROWS",
             VerticalAxis = "VerticalDebug",
             HorizontalAxis = "HorizontalDebug",
             Start = KeyCode.K,
@@ -57,6 +61,7 @@ public class ControllerScheme
     {
         return new ControllerScheme()
         {
+            Name = "CONTROLLER 1",
             VerticalAxis = "Vertical1",
             HorizontalAxis = "Horizontal1",
             Start = KeyCode.Joystick1Button7,
@@ -69,6 +74,7 @@ public class ControllerScheme
     {
         return new ControllerScheme()
         {
+            Name = "CONTROLLER 2",
             VerticalAxis = "Vertical2",
             HorizontalAxis = "Horizontal2",
             Start = KeyCode.Joystick2Button7,
@@ -81,6 +87,7 @@ public class ControllerScheme
     {
         return new ControllerScheme()
         {
+            Name = "CONTROLLER 3",
             VerticalAxis = "Vertical3",
             HorizontalAxis = "Horizontal3",
             Start = KeyCode.Joystick3Button7,
@@ -93,6 +100,7 @@ public class ControllerScheme
     {
         return new ControllerScheme()
         {
+            Name = "CONTROLLER 4",
             VerticalAxis = "Vertical4",
             HorizontalAxis = "Horizontal4",
             Start = KeyCode.Joystick4Button7,
@@ -105,6 +113,7 @@ public class ControllerScheme
     {
         return new ControllerScheme()
         {
+            Name = "CONTROLLER 5",
             VerticalAxis = "Vertical5",
             HorizontalAxis = "Horizontal5",
             Start = KeyCode.Joystick5Button7,
@@ -117,6 +126,7 @@ public class ControllerScheme
     {
         return new ControllerScheme()
         {
+            Name = "CONTROLLER 6",
             VerticalAxis = "Vertical6",
             HorizontalAxis = "Horizontal6",
             Start = KeyCode.Joystick6Button7,
@@ -129,6 +139,7 @@ public class ControllerScheme
     {
         return new ControllerScheme()
         {
+            Name = "CONTROLLER 7",
             VerticalAxis = "Vertical7",
             HorizontalAxis = "Horizontal7",
             Start = KeyCode.Joystick7Button7,
@@ -141,6 +152,7 @@ public class ControllerScheme
     {
         return new ControllerScheme()
         {
+            Name = "CONTROLLER 8",
             VerticalAxis = "Vertical8",
             HorizontalAxis = "Horizontal8",
             Start = KeyCode.Joystick8Button7,

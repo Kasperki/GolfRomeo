@@ -12,7 +12,7 @@ public class HoldButtonEditor : ButtonEditor
     protected override void OnEnable()
     {
         base.OnEnable();
-        onDownProperty = serializedObject.FindProperty("_onDown");
+        onDownProperty = serializedObject.FindProperty("onDown");
     }
 
     public override void OnInspectorGUI()

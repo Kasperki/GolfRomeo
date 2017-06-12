@@ -8,13 +8,12 @@ using UnityEditor;
 public class WayPointCircuit : MonoBehaviour
 {
     public WaypointList waypointList = new WaypointList();
-    [SerializeField]
-    private bool smoothRoute = true;
+
     private int numPoints;
     private Vector3[] points;
     private float[] distances;
 
-    public float editorVisualisationSubsteps = 100;
+    private float editorVisualisationSubsteps = 100;
     public float Length { get; private set; }
 
     public Transform[] Waypoints
@@ -92,34 +91,22 @@ public class WayPointCircuit : MonoBehaviour
         
         i = Mathf.InverseLerp(distances[p1n], distances[p2n], dist);
         
-        if (smoothRoute)
-        {
-            // get indices for the surrounding 2 points, because
-            // four points are required by the catmull-rom function
-            p0n = ((point - 2) + numPoints) % numPoints;
-            p3n = (point + 1) % numPoints;
+        // get indices for the surrounding 2 points, because
+        // four points are required by the catmull-rom function
+        p0n = ((point - 2) + numPoints) % numPoints;
+        p3n = (point + 1) % numPoints;
 
-            // 2nd point may have been the 'last' point - a dupe of the first,
-            // (to give a value of max track distance instead of zero)
-            // but now it must be wrapped back to zero if that was the case.
-            p2n = p2n % numPoints;
+        // 2nd point may have been the 'last' point - a dupe of the first,
+        // (to give a value of max track distance instead of zero)
+        // but now it must be wrapped back to zero if that was the case.
+        p2n = p2n % numPoints;
 
-            P0 = points[p0n];
-            P1 = points[p1n];
-            P2 = points[p2n];
-            P3 = points[p3n];
+        P0 = points[p0n];
+        P1 = points[p1n];
+        P2 = points[p2n];
+        P3 = points[p3n];
 
-            return CatmullRom(P0, P1, P2, P3, i);
-        }
-        else
-        {
-            // simple linear lerp between the two points:
-
-            p1n = ((point - 1) + numPoints) % numPoints;
-            p2n = point;
-
-            return Vector3.Lerp(points[p1n], points[p2n], i);
-        }
+        return CatmullRom(P0, P1, P2, P3, i);
     }
 
     private Vector3 CatmullRom(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float i)
@@ -189,25 +176,15 @@ public class WayPointCircuit : MonoBehaviour
 
             Gizmos.color = selected ? Color.yellow : new Color(1, 1, 0, 0.5f);
             Vector3 prev = Waypoints[0].position;
-            if (smoothRoute)
+
+            for (float dist = 0; dist < Length; dist += Length / editorVisualisationSubsteps)
             {
-                for (float dist = 0; dist < Length; dist += Length / editorVisualisationSubsteps)
-                {
-                    Vector3 next = GetRoutePosition(dist + 1);
-                    Gizmos.DrawLine(prev, next);
-                    prev = next;
-                }
-                Gizmos.DrawLine(prev, Waypoints[0].position);
+                Vector3 next = GetRoutePosition(dist + 1);
+                Gizmos.DrawLine(prev, next);
+                prev = next;
             }
-            else
-            {
-                for (int n = 0; n < Waypoints.Length; ++n)
-                {
-                    Vector3 next = Waypoints[(n + 1) % Waypoints.Length].position;
-                    Gizmos.DrawLine(prev, next);
-                    prev = next;
-                }
-            }
+
+            Gizmos.DrawLine(prev, Waypoints[0].position);
         }
     }
 

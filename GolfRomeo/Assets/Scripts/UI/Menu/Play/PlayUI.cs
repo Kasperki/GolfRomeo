@@ -115,7 +115,7 @@ public class PlayUI : MonoBehaviour
 
                 if (Input.GetKeyDown(controllerScheme.Submit))
                 {
-                    AddPlayer(playerSlot.ToString("0"), controllerScheme);
+                    AddPlayer(controllerScheme.Name, controllerScheme); //TODO SET PLAYER NAME
                 }
             }
 

@@ -32,19 +32,24 @@ public class StadingsCalculator
 
         //Fastest lap points
         var lapInfoWithTime = lapinfo.FindAll(x => x.LastLapTime > 0);
-        var fastestCarRaceData = lapInfoWithTime.OrderBy(x => x.FastestLapTime).First();
+        var carsWithFastestLapTime = lapInfoWithTime.OrderBy(x => x.FastestLapTime);
 
-        if (fastestCarRaceData != null)
+        if (carsWithFastestLapTime.Any())
         {
-            var fastestPlayer = fastestCarRaceData.car.Player;
-            PlayerStandings[fastestPlayer].Points += RacePointTemplate.FastestLap;
-            PlayerStandings[fastestPlayer].TrackRecord = true;
-
-            //Update TrackRecord
-            if (Track.Instance.Metadata.TrackRecord == 0 || Track.Instance.Metadata.TrackRecord > fastestCarRaceData.FastestLapTime)
+            var fastestCarRaceData = carsWithFastestLapTime.First();
+ 
+            if (fastestCarRaceData != null)
             {
-                var trackXMLEditor = new TrackXMLDataEditor(Track.Instance.Metadata.Name);
-                trackXMLEditor.ChangeTrackRecord(fastestCarRaceData.FastestLapTime);
+                var fastestPlayer = fastestCarRaceData.car.Player;
+                PlayerStandings[fastestPlayer].Points += RacePointTemplate.FastestLap;
+                PlayerStandings[fastestPlayer].TrackRecord = true;
+
+                //Update TrackRecord
+                if (Track.Instance.Metadata.TrackRecord == 0 || Track.Instance.Metadata.TrackRecord > fastestCarRaceData.FastestLapTime)
+                {
+                    var trackXMLEditor = new TrackXMLDataEditor(Track.Instance.Metadata.Name);
+                    trackXMLEditor.ChangeTrackRecord(fastestCarRaceData.FastestLapTime);
+                }
             }
         }
 

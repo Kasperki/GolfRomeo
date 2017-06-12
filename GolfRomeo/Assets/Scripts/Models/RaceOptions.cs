@@ -19,7 +19,7 @@ public struct RaceOptions
             {
                 Laps = 3,
                 TiresConsuptionRate = 1,
-                FuelConsuptionRate = 1,
+                FuelConsuptionRate = 2.5f,
                 DamageFromEnvironmentRate = 1,
             };
         }
