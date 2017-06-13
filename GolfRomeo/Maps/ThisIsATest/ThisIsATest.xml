@@ -319,13 +319,13 @@
     <TrackObjectDTO>
       <ID>TrafficCone</ID>
       <Position>
-        <x>-34.2967834</x>
-        <y>0.08237744</y>
-        <z>1.7982595</z>
+        <x>-34.29678</x>
+        <y>0.08236417</y>
+        <z>1.79825938</z>
       </Position>
       <Rotation>
         <x>270</x>
-        <y>25.0908527</y>
+        <y>25.09108</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -1177,14 +1177,66 @@
     <TrackObjectDTO>
       <ID>Barrel</ID>
       <Position>
-        <x>-43.9560852</x>
-        <y>0.3429002</y>
-        <z>-5.258556</z>
+        <x>-38.44094</x>
+        <y>0.342805356</y>
+        <z>-5.08045673</z>
       </Position>
       <Rotation>
-        <x>88.17866</x>
-        <y>166.081131</y>
-        <z>166.065964</z>
+        <x>87.27243</x>
+        <y>269.9081</y>
+        <z>269.960358</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Barrel</ID>
+      <Position>
+        <x>-38.5342827</x>
+        <y>0.342805177</y>
+        <z>-5.97119141</z>
+      </Position>
+      <Rotation>
+        <x>87.27186</x>
+        <y>269.7916</y>
+        <z>269.9709</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Barrel</ID>
+      <Position>
+        <x>-33.5799141</x>
+        <y>0.3428075</y>
+        <z>-1.011148</z>
+      </Position>
+      <Rotation>
+        <x>87.28797</x>
+        <y>269.0617</y>
+        <z>270.010162</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Barrel</ID>
+      <Position>
+        <x>-33.67847</x>
+        <y>0.342806548</y>
+        <z>-1.8233428</z>
+      </Position>
+      <Rotation>
+        <x>87.2824249</x>
+        <y>269.24176</y>
+        <z>269.704468</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Barrel</ID>
+      <Position>
+        <x>-20.0853558</x>
+        <y>0.342808217</y>
+        <z>2.89771461</z>
+      </Position>
+      <Rotation>
+        <x>87.28755</x>
+        <y>269.1062</y>
+        <z>270.007</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
@@ -1429,9 +1481,9 @@
     </WaypointDTO>
     <WaypointDTO>
       <Position>
-        <x>-24.6650162</x>
+        <x>-24.72358</x>
         <y>0.006226063</y>
-        <z>-1.28411865</z>
+        <z>-0.735569954</z>
       </Position>
     </WaypointDTO>
   </Waypoints>

@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ID>00000000-0000-0000-0000-000000000000</ID>
   <MapName>Agari</MapName>
-  <TrackRecord>9.760001</TrackRecord>
-  <HeightMapSize>
-    <x>513</x>
-    <y>513</y>
-  </HeightMapSize>
-  <TextureMapSize>
-    <x>512</x>
-    <y>512</y>
-    <z>14</z>
-  </TextureMapSize>
+  <TrackRecord>0</TrackRecord>
   <MapObjects>
     <TrackObjectDTO>
       <ID>Palm</ID>
@@ -749,7 +741,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.977686</y>
+        <y>0.9776861</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -762,7 +754,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.977686</y>
+        <y>0.9776861</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -775,7 +767,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.977686</y>
+        <y>0.9776861</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -788,7 +780,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.977686</y>
+        <y>0.9776861</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -801,7 +793,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.977686</y>
+        <y>0.9776861</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -814,7 +806,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.977686</y>
+        <y>0.9776861</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -827,7 +819,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.977686</y>
+        <y>0.9776861</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -840,7 +832,124 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.977686</y>
+        <y>0.9776861</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>fence</ID>
+      <Position>
+        <x>-28.2528934</x>
+        <y>0.006226063</y>
+        <z>17.91737</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>fenceStraight</ID>
+      <Position>
+        <x>-30.74</x>
+        <y>-0.4</y>
+        <z>19.93</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>270.458252</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>fence</ID>
+      <Position>
+        <x>-29.5000019</x>
+        <y>0.006226063</y>
+        <z>17.91737</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>fence</ID>
+      <Position>
+        <x>-30.7400017</x>
+        <y>0.006226063</y>
+        <z>17.91737</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>fence</ID>
+      <Position>
+        <x>-31.9800014</x>
+        <y>0.006226063</y>
+        <z>17.91737</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>fence</ID>
+      <Position>
+        <x>-31.9800014</x>
+        <y>0.006226063</y>
+        <z>22.06</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>fence</ID>
+      <Position>
+        <x>-30.7400017</x>
+        <y>0.006226063</y>
+        <z>22.06</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>fence</ID>
+      <Position>
+        <x>-29.5000019</x>
+        <y>0.006226063</y>
+        <z>22.06</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>fence</ID>
+      <Position>
+        <x>-28.2528934</x>
+        <y>0.006226063</y>
+        <z>22.06</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -855,7 +964,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>1.05184567</y>
+        <y>1.05184579</y>
         <z>0</z>
       </Rotation>
     </CheckpointDTO>

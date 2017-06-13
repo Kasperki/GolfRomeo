@@ -39,5 +39,11 @@ public class MapEditorMenuUI : MonoBehaviour
         {
             Destroy(cursors[i].gameObject);
         }
+
+        var editorCurosrInfos = FindObjectsOfType<EditorCursorInfo>();
+        for (int i = 0; i < editorCurosrInfos.Length; i++)
+        {
+            Destroy(editorCurosrInfos[i].gameObject);
+        }
     }
 }
