@@ -12,7 +12,6 @@ public class WaypointNode : MonoBehaviour, IEditable
         set { transform.position = value; }
     }
 
-
     private new Renderer renderer;
 
     void Start()
@@ -35,7 +34,10 @@ public class WaypointNode : MonoBehaviour, IEditable
 
     public void OnHover() { }
 
-    public void OnSelect(bool selected, Transform target) { }
+    public void OnSelect(bool selected, Transform target)
+    {
+        Track.Instance.WayPointCircuit.CachePositionsAndDistances();
+    }
 
     public void Move(Transform target, float rotationDelta)
     {

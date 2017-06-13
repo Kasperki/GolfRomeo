@@ -2,7 +2,7 @@
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ID>00000000-0000-0000-0000-000000000000</ID>
   <MapName>Agari</MapName>
-  <TrackRecord>0</TrackRecord>
+  <TrackRecord>11.68</TrackRecord>
   <MapObjects>
     <TrackObjectDTO>
       <ID>Palm</ID>
@@ -741,7 +741,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776861</y>
+        <y>0.9776862</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -754,7 +754,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776861</y>
+        <y>0.9776862</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -767,7 +767,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776861</y>
+        <y>0.9776862</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -780,7 +780,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776861</y>
+        <y>0.9776862</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -793,7 +793,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776861</y>
+        <y>0.9776862</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -806,7 +806,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776861</y>
+        <y>0.9776862</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -819,7 +819,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776861</y>
+        <y>0.9776862</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -832,7 +832,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776861</y>
+        <y>0.9776862</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -964,16 +964,16 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>1.05184579</y>
+        <y>1.05184591</y>
         <z>0</z>
       </Rotation>
     </CheckpointDTO>
     <CheckpointDTO>
       <Order>1</Order>
       <Position>
-        <x>-26.6760025</x>
-        <y>0.58</y>
-        <z>11.976</z>
+        <x>-26.5260487</x>
+        <y>0.006226063</y>
+        <z>12.336381</z>
       </Position>
       <Rotation>
         <x>0</x>
@@ -1031,23 +1031,23 @@
     </WaypointDTO>
     <WaypointDTO>
       <Position>
-        <x>-25.1211071</x>
+        <x>-25.5608082</x>
         <y>0.006226063</y>
-        <z>12.5028086</z>
+        <z>13.8224459</z>
       </Position>
     </WaypointDTO>
     <WaypointDTO>
       <Position>
-        <x>-42.49629</x>
+        <x>-42.65772</x>
         <y>0.006226063</y>
-        <z>-3.09711981</z>
+        <z>-2.54697418</z>
       </Position>
     </WaypointDTO>
     <WaypointDTO>
       <Position>
-        <x>-38.90635</x>
+        <x>-39.9412727</x>
         <y>0.006226063</y>
-        <z>-5.65498352</z>
+        <z>-5.723463</z>
       </Position>
     </WaypointDTO>
     <WaypointDTO>

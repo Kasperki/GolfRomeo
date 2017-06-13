@@ -63,19 +63,21 @@ public class EditorUI : MonoBehaviour
 
     public void StartEdit()
     {
-        GameManager.SetState(State.Edit);
+        Edit();
         RaceManager.Instance.EditTrack();
-
-        CreateCursorEditor();
-
-        ContentParent.gameObject.SetActive(false);
-        EditorInfo.SetActive(true);
     }
 
     public void NewTrack()
     {
-        GameManager.SetState(State.Edit);
+        Edit();
         new TrackLoader(Track.Instance).NewTrack(TrackNameInput.text);
+    }
+
+    private void Edit()
+    {
+        GameManager.SetState(State.Edit);
+
+        Track.Instance.LapTracker.gameObject.AddComponent<LapTrackerEditor>();
 
         CreateCursorEditor();
 
