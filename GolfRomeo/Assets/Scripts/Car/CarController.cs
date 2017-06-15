@@ -39,6 +39,7 @@ public class CarController : MonoBehaviour
             axleInfo.Initialize();
         }
     }
+
     public void Move(float steering, float accel, float footbrake, float handbrake)
     {
         //clamp input values
@@ -68,7 +69,7 @@ public class CarController : MonoBehaviour
             //Driving
             if (axleInfo.motor)
             {
-                Car.Fuel -= FuelBaseConsuption * Time.deltaTime * RaceManager.Instance.RaceOptions.FuelConsuptionRate * accel;
+                Car.Fuel -= FuelBaseConsuption * RaceManager.Instance.RaceOptions.FuelConsuptionRate * accel;
 
                 switch (axleInfo.leftWheelTerrain)
                 {
@@ -128,7 +129,7 @@ public class CarController : MonoBehaviour
                 if (driftValue < 4f)
                 {
                     var force = SkidMarkForcePerSpeed();
-                    Car.TiresHealth -= force * RaceManager.Instance.RaceOptions.TiresConsuptionRate * Time.deltaTime;
+                    Car.TiresHealth -= force * RaceManager.Instance.RaceOptions.TiresConsuptionRate;
                     Track.Instance.SkidMarks.AddSkidMarks(axleInfo.leftWheel.transform.position, force);
                     Track.Instance.SkidMarks.AddSkidMarks(axleInfo.rightWheel.transform.position, force);
                 }
@@ -140,7 +141,7 @@ public class CarController : MonoBehaviour
                 if (footbrake > 0)
                 {
                     var force = SkidMarkForcePerSpeed();
-                    Car.TiresHealth -= force * RaceManager.Instance.RaceOptions.TiresConsuptionRate * Time.deltaTime;
+                    Car.TiresHealth -= force * RaceManager.Instance.RaceOptions.TiresConsuptionRate;
                     Track.Instance.SkidMarks.AddSkidMarks(axleInfo.leftWheel.transform.position, force);
                     Track.Instance.SkidMarks.AddSkidMarks(axleInfo.rightWheel.transform.position, force);
                 }
@@ -158,7 +159,7 @@ public class CarController : MonoBehaviour
                     axleInfo.leftWheel.motorTorque = -MaxReverseTorque * footbrake;
                     axleInfo.rightWheel.motorTorque = -MaxReverseTorque * footbrake;
 
-                    Car.Fuel -= FuelBaseConsuption * Time.deltaTime * RaceManager.Instance.RaceOptions.FuelConsuptionRate * Mathf.Abs(footbrake);
+                    Car.Fuel -= FuelBaseConsuption * RaceManager.Instance.RaceOptions.FuelConsuptionRate * Mathf.Abs(footbrake);
                 }
             }
 
