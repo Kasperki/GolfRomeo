@@ -102,7 +102,7 @@ public class AIWaypointProgressTracker : MonoBehaviour
         {
             Gizmos.color = Color.green;
             Gizmos.DrawLine(transform.position, target.position);
-            Gizmos.DrawWireSphere(circuit.GetRoutePosition(progressDistance), 1);
+
             Gizmos.color = Color.yellow;
             Gizmos.DrawLine(target.position, target.position + target.forward);
         }

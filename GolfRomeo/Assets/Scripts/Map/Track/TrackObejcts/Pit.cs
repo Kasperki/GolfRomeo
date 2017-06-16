@@ -8,8 +8,8 @@ public class Pit : TrackObject
         get { return playerOnPit != null; }
     }
 
-    private const float Health = 2.5f;
-    private const float Fuel = 8;
+    private const float Health = 0.5f;
+    private const float Fuel = 1.5f;
     private const float Tires = 30;
     private const float TimeAfterTiresChanged = 1;
     private float timeForTiresChanging;

@@ -34,3 +34,6 @@ Feel free to contribute! <3
 * TrackRecord lists, with cars & names.
 * Race option: Weapon pickups like in CTR, Mario Cart, Death Rally. default off.
 
+## Thanks
+
+* Most of 3 models from: https://kenney.nl/assets
