@@ -13,7 +13,7 @@ public class CarController : MonoBehaviour
     public float TopSpeed = 200;
     public float TopSpeedOffRoad = 50;
     private const float NoFuelMaxSpeed = 10;
-    private const float FuelBaseConsuption = 0.1f;
+    private const float FuelBaseConsuption = 0.01f;
 
     public float MaxMotorTorque; // maximum torque the motor can apply to wheel
     public float MaxBreakTorque; // maximum torque the motor can apply to wheel
@@ -129,7 +129,7 @@ public class CarController : MonoBehaviour
                 if (driftValue < 4f)
                 {
                     var force = SkidMarkForcePerSpeed();
-                    Car.TiresHealth -= force * RaceManager.Instance.RaceOptions.TiresConsuptionRate;
+                    Car.TiresHealth -= force * 0.035f * RaceManager.Instance.RaceOptions.TiresConsuptionRate;
                     Track.Instance.SkidMarks.AddSkidMarks(axleInfo.leftWheel.transform.position, force);
                     Track.Instance.SkidMarks.AddSkidMarks(axleInfo.rightWheel.transform.position, force);
                 }
@@ -141,7 +141,7 @@ public class CarController : MonoBehaviour
                 if (footbrake > 0)
                 {
                     var force = SkidMarkForcePerSpeed();
-                    Car.TiresHealth -= force * RaceManager.Instance.RaceOptions.TiresConsuptionRate;
+                    Car.TiresHealth -= force * 0.045f * RaceManager.Instance.RaceOptions.TiresConsuptionRate;
                     Track.Instance.SkidMarks.AddSkidMarks(axleInfo.leftWheel.transform.position, force);
                     Track.Instance.SkidMarks.AddSkidMarks(axleInfo.rightWheel.transform.position, force);
                 }
