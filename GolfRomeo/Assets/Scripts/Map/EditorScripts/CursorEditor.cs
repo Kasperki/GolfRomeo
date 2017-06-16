@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 /*
     TODO
@@ -189,46 +190,56 @@ public class CursorEditor : MonoBehaviour
         selected = false;
         int layer = (1 << (int)TrackMask.TrackObjects) | (1 << (int)TrackMask.AIWaypoints) | (1 << (int)TrackMask.Checkpoints);
 
-        RaycastHit hit;
-        Physics.Raycast(raycastOrigin, raycastDirection, out hit, raycastLength, layer, QueryTriggerInteraction.Collide);
+        bool hitIEditable = false;
+        var hits = Physics.RaycastAll(raycastOrigin, raycastDirection, raycastLength, layer, QueryTriggerInteraction.Collide);
 
-        if (hit.collider != null && hit.collider.gameObject != null)
+        foreach (var hit in hits.OrderBy(m => (raycastOrigin - m.point).sqrMagnitude))
         {
-            //BLUR
-            if (lastHoveredObject != null && lastHoveredObject != hit.collider.gameObject)
+            if (hit.collider.gameObject.GetComponent<IEditable>() != null)
             {
-                lastHoveredObject.GetComponent<IEditable>().OnBlur();
-            }
+                hitIEditable = true;
 
-            //SELECT
-            var iEditable = hit.collider.gameObject.GetComponent(typeof(IEditable)) as IEditable;
-
-            if (iEditable != null)
-            {
-                cursorMaterial.color = Hover;
-
-                if (selectedIEditable == null)
+                if (hit.collider != null && hit.collider.gameObject != null)
                 {
-                    iEditable.OnHover();
-
-                    if (Input.GetKeyDown(ControlScheme.Submit))
+                    //BLUR
+                    if (lastHoveredObject != null && lastHoveredObject != hit.collider.gameObject)
                     {
-                        selectedIEditable = hit.collider.gameObject;
-                        iEditable.OnSelect(true, transform);
-                        selected = true;
+                        lastHoveredObject.GetComponent<IEditable>().OnBlur();
+                    }
+
+                    //SELECT
+                    var iEditable = hit.collider.gameObject.GetComponent(typeof(IEditable)) as IEditable;
+
+                    if (iEditable != null)
+                    {
+                        cursorMaterial.color = Hover;
+
+                        if (selectedIEditable == null)
+                        {
+                            iEditable.OnHover();
+
+                            if (Input.GetKeyDown(ControlScheme.Submit))
+                            {
+                                selectedIEditable = hit.collider.gameObject;
+                                iEditable.OnSelect(true, transform);
+                                selected = true;
+                            }
+                        }
+
+                        lastHoveredObject = hit.collider.gameObject;
+
+                        //DUPLICATE
+                        if (selectedIEditable == null)
+                        {
+                            if (Input.GetKeyDown(ControlScheme.Duplicate))
+                            {
+                                DuplicateObject(lastHoveredObject);
+                            }
+                        }
                     }
                 }
 
-                lastHoveredObject = hit.collider.gameObject;
-
-                //DUPLICATE
-                if (selectedIEditable == null)
-                {
-                    if (Input.GetKeyDown(ControlScheme.Duplicate))
-                    {
-                        DuplicateObject(lastHoveredObject);
-                    }
-                }
+                break;
             }
         }
 
@@ -257,7 +268,7 @@ public class CursorEditor : MonoBehaviour
         }
 
         //BLUR
-        if (hit.collider == null && lastHoveredObject != null && selectedIEditable == null)
+        if (hitIEditable == false && lastHoveredObject != null && selectedIEditable == null)
         {
             lastHoveredObject.GetComponent<IEditable>().OnBlur();
         }

@@ -21,17 +21,20 @@ public class Human : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (running)
+        if (GameManager.CheckState(State.Game))
         {
-            GetComponent<Rigidbody>().AddForce(awayFromCarDirection * Running_Speed);
-        }
-        else if ((standingPosition - transform.position).magnitude > 0.1f)
-        {
-            GetComponent<Rigidbody>().AddForce((standingPosition - transform.position).normalized * Walking_Speed);
-        }
+            if (running)
+            {
+                GetComponent<Rigidbody>().AddForce(awayFromCarDirection * Running_Speed);
+            }
+            else if ((standingPosition - transform.position).magnitude > 0.1f)
+            {
+                GetComponent<Rigidbody>().AddForce((standingPosition - transform.position).normalized * Walking_Speed);
+            }
 
-        var maxVelocity = Vector3.ClampMagnitude(GetComponent<Rigidbody>().velocity, 0.0001f); //TODO BETTER 
-        GetComponent<Rigidbody>().velocity = maxVelocity;
+            var maxVelocity = Vector3.ClampMagnitude(GetComponent<Rigidbody>().velocity, 0.0001f); //TODO BETTER 
+            GetComponent<Rigidbody>().velocity = maxVelocity;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

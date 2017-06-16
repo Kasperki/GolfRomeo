@@ -65,7 +65,7 @@ public class CarInfo : MonoBehaviour
 
         Health.fillAmount = LapInfo.car.Health / LapInfo.car.MaxHealth;
         Fuel.fillAmount = LapInfo.car.Fuel / LapInfo.car.MaxFuel;
-        Tires.fillAmount = LapInfo.car.TiresHealth / LapInfo.car.TiresMaxHealth;
+        Tires.fillAmount = LapInfo.car.Tires / LapInfo.car.MaxTires;
 
         if (rectTransform.rect.width > 250)
         {

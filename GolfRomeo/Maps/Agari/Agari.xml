@@ -2,7 +2,7 @@
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ID>00000000-0000-0000-0000-000000000000</ID>
   <MapName>Agari</MapName>
-  <TrackRecord>11.68</TrackRecord>
+  <TrackRecord>0</TrackRecord>
   <MapObjects>
     <TrackObjectDTO>
       <ID>Palm</ID>
@@ -741,7 +741,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776862</y>
+        <y>0.9776865</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -754,7 +754,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776862</y>
+        <y>0.9776865</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -767,7 +767,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776862</y>
+        <y>0.9776865</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -780,7 +780,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776862</y>
+        <y>0.9776865</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -793,7 +793,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776862</y>
+        <y>0.9776865</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -806,7 +806,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776862</y>
+        <y>0.9776865</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -819,7 +819,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776862</y>
+        <y>0.9776865</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -832,7 +832,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776862</y>
+        <y>0.9776865</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -953,6 +953,45 @@
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Pit</ID>
+      <Position>
+        <x>-26.20015</x>
+        <y>0.006226063</y>
+        <z>2.54597282</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Pit</ID>
+      <Position>
+        <x>-26.4412975</x>
+        <y>0.006226063</y>
+        <z>-0.2093153</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>-4.46236E-05</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Pit</ID>
+      <Position>
+        <x>-26.4799728</x>
+        <y>0.006226063</y>
+        <z>-2.77192879</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>-4.46236E-05</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
   </MapObjects>
   <Checkpoints>
     <CheckpointDTO>
@@ -964,7 +1003,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>1.05184591</y>
+        <y>1.05184627</y>
         <z>0</z>
       </Rotation>
     </CheckpointDTO>

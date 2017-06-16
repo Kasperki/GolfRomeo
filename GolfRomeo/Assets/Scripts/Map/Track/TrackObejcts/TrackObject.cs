@@ -20,7 +20,6 @@ public class TrackObject : MonoBehaviour, IEditable
         set { transform.eulerAngles = value; }
     }
 
-    private bool[] cachedTriggerInfo;
     private bool hover;
 
     private new Renderer renderer;
@@ -46,7 +45,19 @@ public class TrackObject : MonoBehaviour, IEditable
             for (int i = 0; i < childRenderers.Length; i++)
             {
                 cachedChildRendererColors[i] = childRenderers[i].material.GetColor("_Color");
-            } 
+            }
+
+            var rigidBody = GetComponent<Rigidbody>();
+
+            if (rigidBody != null)
+            {
+                rigidBody.isKinematic = true;
+            }
+
+            foreach (var rgdb in GetComponentsInChildren<Rigidbody>())
+            {
+                rgdb.isKinematic = true;
+            }
         }
     }
 
@@ -96,34 +107,7 @@ public class TrackObject : MonoBehaviour, IEditable
 
     public virtual void OnSelect(bool selected, Transform target)
     {
-        if (selected)
-        {
-            var colliders = GetComponents<Collider>();
-            cachedTriggerInfo = new bool[colliders.Length];
-            for (int i = 0; i < colliders.Length; i++)
-            {
-                if (colliders[i] is MeshCollider)
-                {
-                    continue;
-                }
 
-                cachedTriggerInfo[i] = colliders[i].isTrigger;
-                colliders[i].isTrigger = true;
-            }
-        }
-        else
-        {
-            var colliders = GetComponents<Collider>();
-            for (int i = 0; i < colliders.Length; i++)
-            {
-                if (colliders[i] is MeshCollider)
-                {
-                    continue;
-                }
-
-                colliders[i].isTrigger = cachedTriggerInfo[i];
-            }
-        }
     }
 
     public void Move(Transform target, float rotationDelta)

@@ -31,6 +31,7 @@ public class RaceManager : Singleton<RaceManager>
         {
             if (InputManager.SubmitPressed())
             {
+                raceEnded = false;
                 StandingsCalculator.HideStandings();
 
                 if (CurrentTrack == TrackNames.Count)

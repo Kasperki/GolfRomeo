@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ID>00000000-0000-0000-0000-000000000000</ID>
   <MapName>Rivers Mouth</MapName>
   <TrackRecord>0</TrackRecord>
-  <HeightMapSize>
-    <x>513</x>
-    <y>513</y>
-  </HeightMapSize>
-  <TextureMapSize>
-    <x>512</x>
-    <y>512</y>
-    <z>14</z>
-  </TextureMapSize>
   <MapObjects>
     <TrackObjectDTO>
       <ID>barrierWhite</ID>
@@ -216,7 +208,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>1.02856612</y>
+        <y>1.02856636</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -4143,6 +4135,71 @@
       <Rotation>
         <x>0</x>
         <y>272.6853</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-36.14337</x>
+        <y>0.006226063</y>
+        <z>15.5162668</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Pit</ID>
+      <Position>
+        <x>-29.736618</x>
+        <y>0.00622653961</y>
+        <z>-4.354458</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Pit</ID>
+      <Position>
+        <x>-27.0416565</x>
+        <y>0.006226063</y>
+        <z>-4.42796946</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Pit</ID>
+      <Position>
+        <x>-24.3551121</x>
+        <y>0.006226063</y>
+        <z>-4.35445833</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Pit</ID>
+      <Position>
+        <x>-34.59106</x>
+        <y>0.006226063</y>
+        <z>-0.5329752</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>

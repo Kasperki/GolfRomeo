@@ -69,7 +69,7 @@ public class CarController : MonoBehaviour
             //Driving
             if (axleInfo.motor)
             {
-                Car.Fuel -= FuelBaseConsuption * RaceManager.Instance.RaceOptions.FuelConsuptionRate * accel;
+                Car.AddFuel(-FuelBaseConsuption * accel);
 
                 switch (axleInfo.leftWheelTerrain)
                 {
@@ -129,7 +129,7 @@ public class CarController : MonoBehaviour
                 if (driftValue < 4f)
                 {
                     var force = SkidMarkForcePerSpeed();
-                    Car.TiresHealth -= force * 0.035f * RaceManager.Instance.RaceOptions.TiresConsuptionRate;
+                    Car.AddTires(-force * 0.035f);
                     Track.Instance.SkidMarks.AddSkidMarks(axleInfo.leftWheel.transform.position, force);
                     Track.Instance.SkidMarks.AddSkidMarks(axleInfo.rightWheel.transform.position, force);
                 }
@@ -141,7 +141,7 @@ public class CarController : MonoBehaviour
                 if (footbrake > 0)
                 {
                     var force = SkidMarkForcePerSpeed();
-                    Car.TiresHealth -= force * 0.045f * RaceManager.Instance.RaceOptions.TiresConsuptionRate;
+                    Car.AddTires(-force * 0.045f);
                     Track.Instance.SkidMarks.AddSkidMarks(axleInfo.leftWheel.transform.position, force);
                     Track.Instance.SkidMarks.AddSkidMarks(axleInfo.rightWheel.transform.position, force);
                 }
@@ -159,7 +159,7 @@ public class CarController : MonoBehaviour
                     axleInfo.leftWheel.motorTorque = -MaxReverseTorque * footbrake;
                     axleInfo.rightWheel.motorTorque = -MaxReverseTorque * footbrake;
 
-                    Car.Fuel -= FuelBaseConsuption * RaceManager.Instance.RaceOptions.FuelConsuptionRate * Mathf.Abs(footbrake);
+                    Car.AddFuel(-FuelBaseConsuption * Mathf.Abs(footbrake));
                 }
             }
 
@@ -184,7 +184,7 @@ public class CarController : MonoBehaviour
                 AddDownForce(axleInfo);
             }
 
-            axleInfo.UpdateExtremumSlip(Car.TiresHealth / Car.TiresMaxHealth);
+            axleInfo.UpdateExtremumSlip(Car.Tires / Car.MaxTires);
         }
 
         CapSpeed();
@@ -282,7 +282,7 @@ public class CarController : MonoBehaviour
 
             if (trackObject != null && trackObject.SoftCollision == false)
             {
-                Car.Health -= rgbd.velocity.magnitude * 3 * RaceManager.Instance.RaceOptions.DamageFromEnvironmentRate;
+                Car.AddHealth(rgbd.velocity.magnitude * -3);
             }
         }
     }

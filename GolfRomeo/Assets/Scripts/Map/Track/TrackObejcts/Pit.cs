@@ -3,9 +3,14 @@
 [RequireComponent(typeof(Collider))]
 public class Pit : TrackObject
 {
-    private const float Health = 100;
-    private const float Fuel = 300;
-    private const float Tires = 40;
+    public bool CarOnPit
+    {
+        get { return playerOnPit != null; }
+    }
+
+    private const float Health = 2.5f;
+    private const float Fuel = 8;
+    private const float Tires = 30;
     private const float TimeAfterTiresChanged = 1;
     private float timeForTiresChanging;
 
@@ -13,7 +18,7 @@ public class Pit : TrackObject
 
     public void OnTriggerEnter(Collider other)
     {
-        var car = other.GetComponent<Car>();
+        var car = other.GetComponentInParent<Car>();
         if (car != null)
         {
             playerOnPit = car.Player;
@@ -23,15 +28,15 @@ public class Pit : TrackObject
 
     public void OnTriggerStay(Collider other)
     {
-        var car = other.GetComponent<Car>();
+        var car = other.GetComponentInParent<Car>();
         if (car != null && playerOnPit == car.Player)
         {
-            car.Fuel += Health * Time.deltaTime;
-            car.Fuel += Fuel * Time.deltaTime;
+            car.AddHealth(Health * Time.deltaTime);
+            car.AddFuel(Fuel * Time.deltaTime);
 
             if (Time.time > timeForTiresChanging)
             {
-                car.Fuel += Tires;
+                car.AddTires(Tires);
                 timeForTiresChanging += TimeAfterTiresChanged;
 
             }
@@ -40,7 +45,7 @@ public class Pit : TrackObject
 
     public void OnTriggerExit(Collider other)
     {
-        var car = other.GetComponent<Car>();
+        var car = other.GetComponentInParent<Car>();
         if (car != null && playerOnPit == car.Player)
         {
             playerOnPit = null;

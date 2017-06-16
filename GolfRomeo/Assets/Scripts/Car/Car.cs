@@ -9,14 +9,18 @@ public class Car : MonoBehaviour
     public Renderer PrimaryColor;
     public Renderer SecondaryColor;
 
-    public float Fuel;
+    private float fuel;
+    private float health;
+    private float tires;
+
+    public float Fuel { get { return fuel; } }
     public float MaxFuel;
 
-    public float Health;
+    public float Health { get { return health; } }
     public float MaxHealth;
 
-    public float TiresHealth;
-    public float TiresMaxHealth;
+    public float Tires { get { return tires; } }
+    public float MaxTires;
 
     public void Awake()
     {
@@ -29,9 +33,9 @@ public class Car : MonoBehaviour
         PrimaryColor.material.color = Player.PrimaryColor;
         SecondaryColor.material.color = Player.SecondaryColor;
 
-        Health = MaxHealth;
-        Fuel = MaxFuel;
-        TiresHealth = TiresMaxHealth;
+        AddHealth(MaxHealth);
+        AddFuel(MaxFuel);
+        AddTires(MaxTires);
 
         if (player.PlayerType == PlayerType.AI)
         {
@@ -41,5 +45,38 @@ public class Car : MonoBehaviour
         {
             gameObject.AddComponent<UserCarController>();
         }
+    }
+
+    public void AddTires(float value)
+    {
+        if (value < 0)
+        {
+            value *= RaceManager.Instance.RaceOptions.TiresConsuptionRate;
+        }
+
+        tires += value;
+        tires = Mathf.Clamp(tires, 0, MaxTires);
+    }
+
+    public void AddFuel(float value)
+    {
+        if (value < 0)
+        {
+            value *= RaceManager.Instance.RaceOptions.FuelConsuptionRate;
+        }
+
+        fuel += value;
+        fuel = Mathf.Clamp(fuel, 0, MaxFuel);
+    }
+
+    public void AddHealth(float value)
+    {
+        if (value < 0)
+        {
+            value *= RaceManager.Instance.RaceOptions.DamageFromEnvironmentRate;
+        }
+
+        health += value;
+        health = Mathf.Clamp(health, 0, MaxHealth);
     }
 }

@@ -2,7 +2,7 @@
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ID>00000000-0000-0000-0000-000000000000</ID>
   <MapName>Stadium</MapName>
-  <TrackRecord>7.5</TrackRecord>
+  <TrackRecord>0</TrackRecord>
   <MapObjects>
     <TrackObjectDTO>
       <ID>treeLarge</ID>
@@ -2873,7 +2873,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.425792783</y>
+        <y>0.425792843</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -2886,7 +2886,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.425792783</y>
+        <y>0.425792843</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -2899,7 +2899,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.425792783</y>
+        <y>0.425792843</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -3199,6 +3199,201 @@
       <Rotation>
         <x>270</x>
         <y>355.692261</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-19.6798363</x>
+        <y>0.309577942</y>
+        <z>-2.3334322</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-20.6951637</x>
+        <y>0.555575848</y>
+        <z>-4.39817429</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-22.19212</x>
+        <y>0.429242134</y>
+        <z>-5.987782</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-23.9594936</x>
+        <y>0.08823395</y>
+        <z>-6.879697</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-21.2497387</x>
+        <y>0.006225586</y>
+        <z>16.0863724</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-17.343956</x>
+        <y>0.006226063</y>
+        <z>15.3259916</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-39.19163</x>
+        <y>0.006226063</y>
+        <z>15.7986708</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-41.0050354</x>
+        <y>0.006226063</y>
+        <z>15.6086569</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-47.4205742</x>
+        <y>0.006225586</y>
+        <z>14.4960966</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-46.14456</x>
+        <y>0.006226063</y>
+        <z>-1.2521143</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-44.4948158</x>
+        <y>0.006226063</y>
+        <z>-7.09139347</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Pit</ID>
+      <Position>
+        <x>-38.28693</x>
+        <y>0.006226063</y>
+        <z>-3.906426</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Pit</ID>
+      <Position>
+        <x>-35.024128</x>
+        <y>0.006226063</y>
+        <z>-3.94424868</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Pit</ID>
+      <Position>
+        <x>-32.1543846</x>
+        <y>0.006226063</y>
+        <z>-3.83055878</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Pit</ID>
+      <Position>
+        <x>-29.1968</x>
+        <y>0.006226063</y>
+        <z>-3.677825</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
