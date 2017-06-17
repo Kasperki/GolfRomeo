@@ -5,6 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Car))]
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(AudioSource))]
 public class CarController : MonoBehaviour
 {
     public Car Car;
@@ -26,11 +27,13 @@ public class CarController : MonoBehaviour
     public float CurrentSpeed { get { return rgbd == null ? 0 : rgbd.velocity.magnitude * Speed_Multipler; } }
 
     public CarParticleController ParticleController;
+    private AudioSource audioSource;
 
     private Rigidbody rgbd;
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         rgbd = GetComponent<Rigidbody>();
         Car = GetComponent<Car>();
 
@@ -46,6 +49,15 @@ public class CarController : MonoBehaviour
         steering = Mathf.Clamp(steering, -1, 1);
         accel = Mathf.Clamp(accel, 0, 1);
         footbrake = -1 * Mathf.Clamp(footbrake, -1, 0);
+
+        if (accel > 0)
+        {
+            audioSource.pitch = Mathf.Lerp(0.7f, 1.5f, CurrentSpeed / (TopSpeed / 2));
+        }
+        else
+        {
+            audioSource.pitch = 0.4f;
+        }
 
         var steerAngle = steering * MaxSteeringAngle;
         foreach (CarAxle axleInfo in AxleInfos)
