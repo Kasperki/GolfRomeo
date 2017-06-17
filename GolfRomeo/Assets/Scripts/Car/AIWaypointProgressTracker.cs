@@ -30,14 +30,11 @@ public class AIWaypointProgressTracker : MonoBehaviour
     // A multiplier adding distance ahead along the route for speed adjustments
 
     // these are public, readable by other objects - i.e. for an AI to know where to head!
-    public WayPointCircuit.RoutePoint targetPoint { get; private set; }
-    public WayPointCircuit.RoutePoint speedPoint { get; private set; }
     public WayPointCircuit.RoutePoint progressPoint { get; private set; }
 
     public Transform target;
 
     private float progressDistance; // The progress round the route, used in smooth mode.
-    private int progressNum; // the current waypoint number, used in point-to-point mode.
     private Vector3 lastPosition; // Used to calculate current speed (since we may not have a rigidbody component)
     private float speed; // current speed of this object (calculated from delta since last frame)
 
@@ -63,12 +60,10 @@ public class AIWaypointProgressTracker : MonoBehaviour
     public void Reset()
     {
         progressDistance = 0;
-        progressNum = 0;
     }
 
     public void PreviousPoint()
     {
-        progressNum--;
         progressDistance--;
     }
 
