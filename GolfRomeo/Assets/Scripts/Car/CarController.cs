@@ -21,7 +21,7 @@ public class CarController : MonoBehaviour
     public float MaxReverseTorque; // reverse torque
     public float DownForce; // down force
 
-    public List<AxleInfo> AxleInfos; // the information about each individual axle
+    public List<CarAxle> AxleInfos; // the information about each individual axle
 
     public float CurrentSpeed { get { return rgbd == null ? 0 : rgbd.velocity.magnitude * Speed_Multipler; } }
 
@@ -34,7 +34,7 @@ public class CarController : MonoBehaviour
         rgbd = GetComponent<Rigidbody>();
         Car = GetComponent<Car>();
 
-        foreach (AxleInfo axleInfo in AxleInfos)
+        foreach (CarAxle axleInfo in AxleInfos)
         {
             axleInfo.Initialize();
         }
@@ -48,12 +48,12 @@ public class CarController : MonoBehaviour
         footbrake = -1 * Mathf.Clamp(footbrake, -1, 0);
 
         var steerAngle = steering * MaxSteeringAngle;
-        foreach (AxleInfo axleInfo in AxleInfos)
+        foreach (CarAxle axleInfo in AxleInfos)
         {
-            GetAxleTerrain(axleInfo);
+            axleInfo.UpdateWheelTerrain();
 
             //Steering
-            if (axleInfo.steering)
+            if (axleInfo.Steering)
             {
                 float steerRandom = 0;
                 if (Car.Health / Car.MaxHealth < 0.5f)
@@ -62,63 +62,43 @@ public class CarController : MonoBehaviour
                     steerRandom = UnityEngine.Random.Range(-3, 3) * destructionFactor;
                 }
 
-                axleInfo.leftWheel.steerAngle = steerAngle + steerRandom;
-                axleInfo.rightWheel.steerAngle = steerAngle + steerRandom;
+                foreach (var wheel in axleInfo.Wheels)
+                {
+                    wheel.Wheel.steerAngle = steerAngle + steerRandom;
+                }
             }
 
             //Driving
-            if (axleInfo.motor)
+            if (axleInfo.Motor)
             {
                 Car.AddFuel(-FuelBaseConsuption * accel);
 
-                switch (axleInfo.leftWheelTerrain)
+                foreach (var wheel in axleInfo.Wheels)
                 {
-                    case WheelTerrain.Sand:
-                        ParticleController.EmitSandParticles();
-                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSand;
-                        break;
-                    case WheelTerrain.SandRoad:
-                        ParticleController.EmitSandRoadParticles();
-                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSandRoad;
-                        break;
-                    case WheelTerrain.Asfalt:
-                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionAsfalt;
-                        break;
-                    case WheelTerrain.Grass:
-                        ParticleController.EmitGrassParticles();
-                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionGrass;
-                        break;
-                    case WheelTerrain.Ice:
-                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionIce;
-                        break;
-                    default:
-                        axleInfo.leftWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionDefault;
-                        break;
-                }
-
-                switch (axleInfo.rightWheelTerrain)
-                {
-                    case WheelTerrain.Sand:
-                        ParticleController.EmitSandParticles();
-                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSand;
-                        break;
-                    case WheelTerrain.SandRoad:
-                        ParticleController.EmitSandRoadParticles();
-                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSandRoad;
-                        break;
-                    case WheelTerrain.Asfalt:
-                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionAsfalt;
-                        break;
-                    case WheelTerrain.Grass:
-                        ParticleController.EmitGrassParticles();
-                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionGrass;
-                        break;
-                    case WheelTerrain.Ice:
-                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionIce;
-                        break;
-                    default:
-                        axleInfo.rightWheel.motorTorque = accel * MaxMotorTorque;
-                        break;
+                    switch (wheel.WheelTerrain)
+                    {
+                        case WheelTerrainType.Sand:
+                            ParticleController.EmitSandParticles();
+                            wheel.Wheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSand;
+                            break;
+                        case WheelTerrainType.SandRoad:
+                            ParticleController.EmitSandRoadParticles();
+                            wheel.Wheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionSandRoad;
+                            break;
+                        case WheelTerrainType.Asfalt:
+                            wheel.Wheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionAsfalt;
+                            break;
+                        case WheelTerrainType.Grass:
+                            ParticleController.EmitGrassParticles();
+                            wheel.Wheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionGrass;
+                            break;
+                        case WheelTerrainType.Ice:
+                            wheel.Wheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionIce;
+                            break;
+                        default:
+                            wheel.Wheel.motorTorque = accel * MaxMotorTorque * axleInfo.TractionDefault;
+                            break;
+                    }
                 }
             }
 
@@ -130,8 +110,11 @@ public class CarController : MonoBehaviour
                 {
                     var force = SkidMarkForcePerSpeed();
                     Car.AddTires(-force * 0.035f);
-                    Track.Instance.SkidMarks.AddSkidMarks(axleInfo.leftWheel.transform.position, force);
-                    Track.Instance.SkidMarks.AddSkidMarks(axleInfo.rightWheel.transform.position, force);
+
+                    foreach (var wheel in axleInfo.Wheels)
+                    {
+                        Track.Instance.SkidMarks.AddSkidMarks(wheel.Wheel.transform.position, force);
+                    }
                 }
             }
 
@@ -142,22 +125,31 @@ public class CarController : MonoBehaviour
                 {
                     var force = SkidMarkForcePerSpeed();
                     Car.AddTires(-force * 0.045f);
-                    Track.Instance.SkidMarks.AddSkidMarks(axleInfo.leftWheel.transform.position, force);
-                    Track.Instance.SkidMarks.AddSkidMarks(axleInfo.rightWheel.transform.position, force);
+
+                    foreach (var wheel in axleInfo.Wheels)
+                    {
+                        Track.Instance.SkidMarks.AddSkidMarks(wheel.Wheel.transform.position, force);
+                    }
                 }
 
-                axleInfo.leftWheel.brakeTorque = MaxBreakTorque * footbrake;
-                axleInfo.rightWheel.brakeTorque = MaxBreakTorque * footbrake;
+                foreach (var wheel in axleInfo.Wheels)
+                {
+                    wheel.Wheel.brakeTorque = MaxBreakTorque * footbrake;
+                }
             }
             else if (footbrake > 0)
             {
-                axleInfo.leftWheel.brakeTorque = 0f;
-                axleInfo.rightWheel.brakeTorque = 0f;
-
-                if (axleInfo.motor)
+                foreach (var wheel in axleInfo.Wheels)
                 {
-                    axleInfo.leftWheel.motorTorque = -MaxReverseTorque * footbrake;
-                    axleInfo.rightWheel.motorTorque = -MaxReverseTorque * footbrake;
+                    wheel.Wheel.brakeTorque = 0f;
+                }
+
+                if (axleInfo.Motor)
+                {
+                    foreach (var wheel in axleInfo.Wheels)
+                    {
+                        wheel.Wheel.motorTorque = -MaxReverseTorque * footbrake;
+                    }
 
                     Car.AddFuel(-FuelBaseConsuption * Mathf.Abs(footbrake));
                 }
@@ -166,25 +158,32 @@ public class CarController : MonoBehaviour
             if (handbrake > 0f)
             {
                 var hbTorque = handbrake * MaxBreakTorque;
-                axleInfo.leftWheel.brakeTorque = hbTorque;
-                axleInfo.rightWheel.brakeTorque = hbTorque;
+
+                foreach (var wheel in axleInfo.Wheels)
+                {
+                    wheel.Wheel.brakeTorque = hbTorque;
+                }
             }
 
             if (footbrake == 0 && handbrake == 0)
             {
-                axleInfo.leftWheel.brakeTorque = 0f;
-                axleInfo.rightWheel.brakeTorque = 0f;
+                foreach (var wheel in axleInfo.Wheels)
+                {
+                    wheel.Wheel.brakeTorque = 0f;
+                }
             }
 
-            ApplyLocalPositionToVisuals(axleInfo.leftWheel);
-            ApplyLocalPositionToVisuals(axleInfo.rightWheel);
+            foreach (var wheel in axleInfo.Wheels)
+            {
+                ApplyLocalPositionToVisuals(wheel.Wheel);
+            }
 
-            if (axleInfo.addDownForce == true)
+            if (axleInfo.AddDownForce == true)
             {
                 AddDownForce(axleInfo);
             }
 
-            axleInfo.UpdateExtremumSlip(Car.Tires / Car.MaxTires);
+            axleInfo.UpdateTireHealth(Car.Tires / Car.MaxTires);
         }
 
         CapSpeed();
@@ -205,17 +204,16 @@ public class CarController : MonoBehaviour
         int motorWheelCount = 0;
         foreach (var axle in AxleInfos)
         {
-            if (axle.motor)
+            if (axle.Motor)
             {
-                motorWheelCount += 2;
+                motorWheelCount += axle.Wheels.Count;
 
-                if (axle.leftWheelTerrain != WheelTerrain.Asfalt && axle.leftWheelTerrain != WheelTerrain.SandRoad)
+                foreach (var wheel in axle.Wheels)
                 {
-                    offRoadTerrain++;
-                }
-                if (axle.rightWheelTerrain != WheelTerrain.Asfalt && axle.rightWheelTerrain != WheelTerrain.SandRoad)
-                {
-                    offRoadTerrain++;
+                    if (wheel.WheelTerrain != WheelTerrainType.Asfalt && wheel.WheelTerrain != WheelTerrainType.SandRoad)
+                    {
+                        offRoadTerrain++;
+                    }
                 }
             }
         }
@@ -246,10 +244,12 @@ public class CarController : MonoBehaviour
     }
 
     // this is used to add more grip in relation to speed
-    private void AddDownForce(AxleInfo axelInfo)
+    private void AddDownForce(CarAxle axleInfo)
     {
-        axelInfo.leftWheel.attachedRigidbody.AddForce(-transform.up * DownForce * axelInfo.leftWheel.attachedRigidbody.velocity.magnitude);
-        axelInfo.rightWheel.attachedRigidbody.AddForce(-transform.up * DownForce * axelInfo.rightWheel.attachedRigidbody.velocity.magnitude);
+        foreach (var wheel in axleInfo.Wheels)
+        {
+            wheel.Wheel.attachedRigidbody.AddForce(-transform.up * DownForce * wheel.Wheel.attachedRigidbody.velocity.magnitude);
+        }
     }
 
     public void ApplyLocalPositionToVisuals(WheelCollider collider)
@@ -268,12 +268,6 @@ public class CarController : MonoBehaviour
         visualWheel.transform.rotation = rotation;
     }
 
-    private void GetAxleTerrain(AxleInfo axle)
-    {
-        axle.leftWheelTerrain = axle.GetWheelTerrain(axle.leftWheel.transform.position);
-        axle.rightWheelTerrain = axle.GetWheelTerrain(axle.rightWheel.transform.position);
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (CurrentSpeed < 15 && collision.collider.gameObject.layer == (int)TrackMask.TrackObjects)
@@ -286,141 +280,4 @@ public class CarController : MonoBehaviour
             }
         }
     }
-}
-
-[Serializable]
-public class AxleInfo
-{
-    public WheelCollider leftWheel;
-    public WheelCollider rightWheel;
-    public WheelTerrain leftWheelTerrain;
-    public WheelTerrain rightWheelTerrain;
-
-    public bool motor;
-    public bool steering;
-    public bool addDownForce;
-
-    [Range(0,2)]
-    public float TractionDefault = 1;
-    [Range(0, 2)]
-    public float TractionAsfalt = 1;
-    [Range(0, 2)]
-    public float TractionSandRoad = 1;
-    [Range(0, 2)]
-    public float TractionSand = 1;
-    [Range(0, 2)]
-    public float TractionGrass = 1;
-    [Range(0, 2)]
-    public float TractionIce = 1;
-
-    private const float MaxForwardSlip = 2;
-    private const float MaxSidewaysSlip = 2;
-
-    public float ExtremumSlipForward
-    {
-        set
-        {
-            var leftWheelFrictionCurve =  leftWheel.forwardFriction;
-            leftWheelFrictionCurve.extremumSlip = value;
-            leftWheel.forwardFriction = leftWheelFrictionCurve;
-
-            var rightWheelFrictionCurve = rightWheel.forwardFriction;
-            rightWheelFrictionCurve.extremumSlip = value;
-            rightWheel.forwardFriction = rightWheelFrictionCurve;
-        }
-        get
-        {
-            return leftWheel.forwardFriction.extremumSlip;
-        }
-    }
-
-    public float ExtremumSlipSideways
-    {
-        set
-        {
-            var leftWheelFrictionCurve = leftWheel.sidewaysFriction;
-            leftWheelFrictionCurve.extremumSlip = value;
-            leftWheel.sidewaysFriction = leftWheelFrictionCurve;
-
-            var rightWheelFrictionCurve = rightWheel.sidewaysFriction;
-            rightWheelFrictionCurve.extremumSlip = value;
-            rightWheel.sidewaysFriction = rightWheelFrictionCurve;
-        }
-        get
-        {
-            return leftWheel.sidewaysFriction.extremumSlip;
-        }
-    }
-
-    private float extremumSlipForwardDefault = 0.4f;
-    private float extremumSlipSidewaysDefault = 0.2f;
-
-    public void Initialize()
-    {
-        extremumSlipForwardDefault = leftWheel.forwardFriction.extremumSlip;
-        extremumSlipSidewaysDefault = leftWheel.sidewaysFriction.extremumSlip;
-    }
-
-    public void UpdateExtremumSlip(float tireHealthPercentage)
-    {
-        ExtremumSlipForward = Mathf.Lerp(MaxForwardSlip , extremumSlipForwardDefault, tireHealthPercentage);
-        ExtremumSlipSideways = Mathf.Lerp(MaxSidewaysSlip, extremumSlipSidewaysDefault, tireHealthPercentage);
-    }
-
-    /// <summary>
-    /// http://answers.unity3d.com/answers/457390/view.html
-    /// </summary>
-    /// <param name="worldPos">position</param>
-    /// <returns>Array of terrain texture weights</returns>
-    private float[] GetTextureMix(Vector3 worldPos)
-    {
-        var terrainPos = Track.Instance.Terrain.transform.position;
-        var terrainData = Track.Instance.Terrain.terrainData;
-
-        int mapX = (int)(((worldPos.x - terrainPos.x) / terrainData.size.x) * terrainData.alphamapWidth );
-        int mapZ = (int)(((worldPos.z - terrainPos.z) / terrainData.size.z) * terrainData.alphamapHeight );
-
-        float[,,] splatmapData = terrainData.GetAlphamaps(mapX, mapZ, 1, 1 );
-
-        // extract the 3D array data to a 1D array:
-        float[] cellMix = new float[splatmapData.GetUpperBound(2) + 1];
-     
-         for (int i = 0; i < cellMix.Length; i++)
-         {
-             cellMix[i] = splatmapData[0, 0, i];
-         }
-     
-         return cellMix;
-    }
- 
-    public WheelTerrain GetWheelTerrain(Vector3 wheelPosition)
-    {
-        float[] mix = GetTextureMix(wheelPosition);
-
-        float maxMix = 0;
-        int terrainIndex = 0;
-     
-        for (int i = 0; i < mix.Length; i++)
-        {
-            if (mix[i] > maxMix)
-            {
-                terrainIndex = i;
-                maxMix = mix[i];
-            }
-        }
-
-        var terrainTexture = (TerrainTextures)terrainIndex;
-        var terrainTextureName = Regex.Replace(terrainTexture.ToString(), @"[\d-]", string.Empty);
-        return (WheelTerrain)Enum.Parse(typeof(WheelTerrain), terrainTextureName, true);
-    }
-}
-
-public enum WheelTerrain
-{
-    Asfalt = 0,
-    SandRoad = 1,
-    Sand = 2,
-    Grass = 3,
-    Snow = 4,
-    Ice = 5,
 }
