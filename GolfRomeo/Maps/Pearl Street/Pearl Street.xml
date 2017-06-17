@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ID>00000000-0000-0000-0000-000000000000</ID>
   <MapName>Pearl Street</MapName>
@@ -1455,8 +1455,8 @@
         <z>17.4654045</z>
       </Position>
       <Rotation>
-        <x>-0.00554104429</x>
-        <y>5.88569</y>
+        <x>-0.00554101774</x>
+        <y>5.88569069</y>
         <z>353.1576</z>
       </Rotation>
     </TrackObjectDTO>
@@ -2183,9 +2183,9 @@
         <z>9.500123</z>
       </Position>
       <Rotation>
-        <x>87.28654</x>
-        <y>266.17688</y>
-        <z>270.021759</z>
+        <x>87.2866058</x>
+        <y>266.176849</y>
+        <z>270.021729</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>

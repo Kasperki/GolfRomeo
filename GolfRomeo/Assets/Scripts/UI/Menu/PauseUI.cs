@@ -44,7 +44,7 @@ public class PauseUI : MonoBehaviour
     public void Exit()
     {
         Parent.gameObject.SetActive(false);
-        RaceManager.Instance.EndRace();
+        RaceManager.Instance.EndTournament();
 
         Time.timeScale = 1;
     }

@@ -56,7 +56,7 @@ public class LapTracker : Singleton<LapTracker>
             CarOrder.Add(new CarRaceData(cars[i]));
 
             var squareIndex = i % (startSquares.Length);
-            cars[i].transform.position = startSquares[squareIndex].transform.position + new Vector3(0, 0.1f, 0);
+            cars[i].transform.position = startSquares[squareIndex].transform.position + new Vector3(0, 0.15f, 0);
             cars[i].transform.rotation = startSquares[squareIndex].transform.rotation;
             cars[i].GetComponent<Rigidbody>().isKinematic = true;
         }

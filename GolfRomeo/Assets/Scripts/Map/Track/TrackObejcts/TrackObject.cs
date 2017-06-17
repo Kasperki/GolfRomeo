@@ -6,6 +6,7 @@ using UnityEngine;
 public class TrackObject : MonoBehaviour, IEditable
 {
     public string ID;
+    public Sprite Icon;
     public bool SoftCollision;
 
     public Vector3 Position

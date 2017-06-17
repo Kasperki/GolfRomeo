@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ID>00000000-0000-0000-0000-000000000000</ID>
   <MapName>Stadium</MapName>
-  <TrackRecord>19.46656</TrackRecord>
+  <TrackRecord>12.08951</TrackRecord>
   <MapObjects>
     <TrackObjectDTO>
       <ID>treeLarge</ID>
@@ -2873,7 +2873,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.425792843</y>
+        <y>0.425792873</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -2886,7 +2886,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.425792843</y>
+        <y>0.425792873</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -2899,7 +2899,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.425792843</y>
+        <y>0.425792873</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>

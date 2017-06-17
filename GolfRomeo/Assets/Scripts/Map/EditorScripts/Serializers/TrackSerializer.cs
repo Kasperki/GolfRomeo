@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using System;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
-using UnityEngine;
 
 public class TrackSerializer
 {
@@ -55,23 +53,17 @@ public class TrackSerializer
 
     private byte[] SerializeMap(string name)
     {
-        using (MemoryStream stream = new MemoryStream())
+        using (MemoryStream ms = new MemoryStream())
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(TrackDTO));
-
             TrackDTO mapDTO = Mapper.Map<Track, TrackDTO>(track);
+            XmlSerializer serializer = new XmlSerializer(typeof(TrackDTO));
 
-            //Serialize
-            xmlSerializer.Serialize(stream, mapDTO);
-
-            var bytes = stream.GetBytes();
-
-            using (FileStream file = new FileStream(name + mapFileExtension, FileMode.Create, FileAccess.Write))
+            using (StreamWriter writer = new StreamWriter(name + mapFileExtension, false, Encoding.GetEncoding("UTF-8")))
             {
-                file.Write(bytes, 0, bytes.Length);
+                serializer.Serialize(writer, mapDTO);
             }
 
-            return bytes;
+            return ms.GetBytes();
         }
     }
 }

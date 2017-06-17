@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ID>00000000-0000-0000-0000-000000000000</ID>
   <MapName>Rivers Mouth</MapName>
@@ -208,7 +208,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>1.02856636</y>
+        <y>1.0285666</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -4144,6 +4144,136 @@
         <x>-36.14337</x>
         <y>0.006226063</y>
         <z>15.5162668</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-16.7993889</x>
+        <y>0.006226063</y>
+        <z>13.3927126</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-15.5341263</x>
+        <y>0.006226063</y>
+        <z>14.7349768</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-14.1156807</x>
+        <y>0.006226063</y>
+        <z>16.24704</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-13.5429153</x>
+        <y>0.006226063</y>
+        <z>26.2903557</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-15.1919441</x>
+        <y>0.006225586</y>
+        <z>27.2641983</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-17.2788582</x>
+        <y>0.00622653961</y>
+        <z>27.6907921</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-19.6393661</x>
+        <y>0.006226063</y>
+        <z>27.83422</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-21.4898338</x>
+        <y>0.006226063</y>
+        <z>27.6908</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-49.5524178</x>
+        <y>0.00622653961</y>
+        <z>-0.3482666</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+    </TrackObjectDTO>
+    <TrackObjectDTO>
+      <ID>Crowd</ID>
+      <Position>
+        <x>-49.6098022</x>
+        <y>0.006226063</y>
+        <z>1.55497551</z>
       </Position>
       <Rotation>
         <x>0</x>

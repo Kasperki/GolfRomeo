@@ -77,7 +77,7 @@ public class PlayUI : MonoBehaviour
         if (RaceManager.Instance.TrackNames.Count > 0 && RaceManager.Instance.Players.Count > 0)
         {
             RaceManager.Instance.StartNewTournament();
-            StartCoroutine(MoveCurtain(new Vector3(0, 1600, 0)));
+            StartCoroutine(MoveCurtain(new Vector3(0, 3000, 0)));
         }
     }
 

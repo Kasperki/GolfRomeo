@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,14 +26,9 @@ public class CursorTrackObjectsUI : CursorBaseUI
 
             var button = gameObj.AddComponent<Button>();
             var image = gameObj.AddComponent<Image>();
-            button.targetGraphic = image;
 
-            Texture2D prev = AssetPreview.GetAssetPreview(obj.gameObject);
-            if (prev != null)
-            {
-                var sprite = Sprite.Create(prev, new Rect(0, 0, prev.width, prev.height), Vector2.zero);
-                image.sprite = sprite;
-            }
+            button.targetGraphic = image;
+            image.sprite = obj.GetComponent<TrackObject>().Icon;
 
             button.onClick.AddListener(() =>  {
                 CursorEditor.CreateNewObject(ResourcesLoader.LoadTrackObject(trackObj.ID));

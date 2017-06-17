@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ID>00000000-0000-0000-0000-000000000000</ID>
   <MapName>Agari</MapName>
-  <TrackRecord>9.82</TrackRecord>
+  <TrackRecord>12.66681</TrackRecord>
   <MapObjects>
     <TrackObjectDTO>
       <ID>Palm</ID>
@@ -741,7 +741,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776865</y>
+        <y>0.977686763</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -754,7 +754,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776865</y>
+        <y>0.977686763</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -767,7 +767,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776865</y>
+        <y>0.977686763</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -780,7 +780,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776865</y>
+        <y>0.977686763</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -793,7 +793,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776865</y>
+        <y>0.977686763</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -806,7 +806,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776865</y>
+        <y>0.977686763</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -819,7 +819,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776865</y>
+        <y>0.977686763</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -832,7 +832,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>0.9776865</y>
+        <y>0.977686763</y>
         <z>0</z>
       </Rotation>
     </TrackObjectDTO>
@@ -1003,7 +1003,7 @@
       </Position>
       <Rotation>
         <x>0</x>
-        <y>1.05184627</y>
+        <y>1.0518465</y>
         <z>0</z>
       </Rotation>
     </CheckpointDTO>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ID>00000000-0000-0000-0000-000000000000</ID>
   <MapName>Oasis</MapName>
@@ -151,7 +151,7 @@
       <ID>StartSquare</ID>
       <Position>
         <x>-25.4656944</x>
-        <y>0.006226063</y>
+        <y>0.145</y>
         <z>-2.55051231</z>
       </Position>
       <Rotation>
@@ -324,9 +324,9 @@
         <z>1.79827178</z>
       </Position>
       <Rotation>
-        <x>270.194824</x>
-        <y>258.082275</y>
-        <z>127.007576</z>
+        <x>270.1928</x>
+        <y>258.083771</y>
+        <z>127.006989</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
@@ -359,7 +359,7 @@
       <ID>StartSquare</ID>
       <Position>
         <x>-25.908905</x>
-        <y>0.006226063</y>
+        <y>0.11</y>
         <z>-1.00230789</z>
       </Position>
       <Rotation>
@@ -372,7 +372,7 @@
       <ID>StartSquare</ID>
       <Position>
         <x>-24.2788811</x>
-        <y>0.00622653961</y>
+        <y>0.108</y>
         <z>-0.2517395</z>
       </Position>
       <Rotation>
@@ -384,14 +384,14 @@
     <TrackObjectDTO>
       <ID>StartSquare</ID>
       <Position>
-        <x>-24.9433956</x>
-        <y>0.006226063</y>
-        <z>0.980010033</z>
+        <x>-24.95</x>
+        <y>0.1</y>
+        <z>0.97</z>
       </Position>
       <Rotation>
-        <x>5.77651834</x>
-        <y>204.950714</y>
-        <z>359.939972</z>
+        <x>5.75546169</x>
+        <y>210.49353</y>
+        <z>0.497251719</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
@@ -670,9 +670,9 @@
     <TrackObjectDTO>
       <ID>StartSquare</ID>
       <Position>
-        <x>-22.9900017</x>
-        <y>0.006226063</y>
-        <z>4.7</z>
+        <x>-23.0000019</x>
+        <y>0.14</y>
+        <z>4.69</z>
       </Position>
       <Rotation>
         <x>5.77651834</x>
@@ -684,7 +684,7 @@
       <ID>StartSquare</ID>
       <Position>
         <x>-22.3300018</x>
-        <y>0.00622653961</y>
+        <y>0.12</y>
         <z>3.46</z>
       </Position>
       <Rotation>
@@ -697,7 +697,7 @@
       <ID>StartSquare</ID>
       <Position>
         <x>-23.960001</x>
-        <y>0.006226063</y>
+        <y>0.19</y>
         <z>2.71</z>
       </Position>
       <Rotation>
@@ -710,7 +710,7 @@
       <ID>StartSquare</ID>
       <Position>
         <x>-23.5200024</x>
-        <y>0.006226063</y>
+        <y>0.146</y>
         <z>1.17</z>
       </Position>
       <Rotation>
@@ -1182,9 +1182,9 @@
         <z>-5.081987</z>
       </Position>
       <Rotation>
-        <x>87.26584</x>
-        <y>268.230347</y>
-        <z>269.8742</z>
+        <x>87.2659149</x>
+        <y>268.230469</y>
+        <z>269.874268</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
@@ -1208,9 +1208,9 @@
         <z>-1.01276791</z>
       </Position>
       <Rotation>
-        <x>87.26684</x>
-        <y>267.279572</y>
-        <z>269.86438</z>
+        <x>87.26691</x>
+        <y>267.279266</y>
+        <z>269.864075</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
@@ -1222,7 +1222,7 @@
       </Position>
       <Rotation>
         <x>87.2974548</x>
-        <y>271.3595</y>
+        <y>271.359467</y>
         <z>270.042664</z>
       </Rotation>
     </TrackObjectDTO>
@@ -1234,9 +1234,9 @@
         <z>2.89588666</z>
       </Position>
       <Rotation>
-        <x>87.29246</x>
-        <y>267.453369</y>
-        <z>270.167145</z>
+        <x>87.29267</x>
+        <y>267.4532</y>
+        <z>270.166931</z>
       </Rotation>
     </TrackObjectDTO>
     <TrackObjectDTO>
@@ -1479,23 +1479,23 @@
   <Waypoints>
     <WaypointDTO>
       <Position>
-        <x>-28.3038387</x>
-        <y>0.006226063</y>
-        <z>-5.4493475</z>
+        <x>-27.8108215</x>
+        <y>0.006225586</y>
+        <z>-4.90815258</z>
       </Position>
     </WaypointDTO>
     <WaypointDTO>
       <Position>
-        <x>-32.92566</x>
+        <x>-31.125164</x>
         <y>0.006226063</y>
-        <z>-8.160812</z>
+        <z>-7.7439456</z>
       </Position>
     </WaypointDTO>
     <WaypointDTO>
       <Position>
-        <x>-37.7392426</x>
+        <x>-36.60258</x>
         <y>0.006226063</y>
-        <z>-8.188604</z>
+        <z>-8.298708</z>
       </Position>
     </WaypointDTO>
     <WaypointDTO>

@@ -18,6 +18,9 @@ public class TrackLoader
         var editorTools = track.gameObject.AddComponent<TerrainEditorTools>();
         editorTools.NewEmptyTerrain();
         UnityEngine.GameObject.Destroy(editorTools);
+
+
+        Track.Instance.SkidMarks.Init();
     }
 
     public void SaveTrack()

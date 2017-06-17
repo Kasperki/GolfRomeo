@@ -17,7 +17,6 @@ public class EditorUI : MonoBehaviour
     public GameObject MapButtonPrefab;
     private TrackFolderHelper directoryHelper;
 
-    private Track track;
     public InputField TrackNameInput;
 
     public GameObject CursorPrefab;
