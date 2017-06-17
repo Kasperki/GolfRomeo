@@ -2,6 +2,12 @@
 
 public static class StreamExtensions
 {
+    /// <summary>
+    /// https://stackoverflow.com/a/7423720
+    /// </summary>
+    /// <param name="source">Stream source</param>
+    /// <param name="output">Stream output</param>
+    /// <param name="bufferSize">bufferSize</param>
     public static void CopyTo(this Stream source, Stream output, int bufferSize = 81920)
     {
         byte[] array = new byte[bufferSize];

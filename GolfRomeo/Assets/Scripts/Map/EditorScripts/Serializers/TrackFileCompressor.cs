@@ -11,6 +11,8 @@ public class TrackData
 
 public class TrackFileCompressor
 {
+    private const string Gzip_Extension = ".gz";
+
     public void CreatePackage(string directoryPath, TrackData trackData)
     {
         CompressFile(directoryPath + TerrainSerializer.trackHeightMapExtension, trackData.HeightMapData);
@@ -29,7 +31,7 @@ public class TrackFileCompressor
 
             compressedMemStream.Position = 0;
 
-            FileStream compressedFileStream = File.Create(path + ".gz");
+            FileStream compressedFileStream = File.Create(path + Gzip_Extension);
             compressedMemStream.WriteTo(compressedFileStream);
             compressedFileStream.Close();
         }
@@ -41,7 +43,7 @@ public class TrackFileCompressor
     {
         TrackData deserializedTrackStreams = new TrackData()
         {
-            ObjectsData = File.ReadAllBytes(directoryPath + TrackSerializer.mapFileExtension),
+            ObjectsData = File.ReadAllBytes(directoryPath + TrackSerializer.Track_File_Extension),
             HeightMapData = DecompressFile(directoryPath + TerrainSerializer.trackHeightMapExtension),
             TextureMapData = DecompressFile(directoryPath + TerrainSerializer.textureMapExtension)
         };
@@ -51,7 +53,7 @@ public class TrackFileCompressor
 
     private byte[] DecompressFile(string directoryPath)
     {
-        var fileInfo = new FileInfo(directoryPath + ".gz");
+        var fileInfo = new FileInfo(directoryPath + Gzip_Extension);
 
         using (FileStream originalFileStream = fileInfo.OpenRead())
         {

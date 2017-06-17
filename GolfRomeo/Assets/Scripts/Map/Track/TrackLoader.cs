@@ -19,6 +19,9 @@ public class TrackLoader
         editorTools.NewEmptyTerrain();
         UnityEngine.GameObject.Destroy(editorTools);
 
+        track.TrackObjectsParent.transform.DestroyChildrens();
+        track.WayPointCircuit.transform.DestroyChildrens();
+        track.LapTracker.transform.DestroyChildrens();
 
         Track.Instance.SkidMarks.Init();
     }

@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 
 public class TrackSerializer
 {
-    public const string mapFileExtension = ".xml";
+    public const string Track_File_Extension = ".xml";
 
     private Track track;
     private TrackFolderHelper directoryHelper;
@@ -58,7 +58,7 @@ public class TrackSerializer
             TrackDTO mapDTO = Mapper.Map<Track, TrackDTO>(track);
             XmlSerializer serializer = new XmlSerializer(typeof(TrackDTO));
 
-            using (StreamWriter writer = new StreamWriter(name + mapFileExtension, false, Encoding.GetEncoding("UTF-8")))
+            using (StreamWriter writer = new StreamWriter(name + Track_File_Extension, false, Encoding.GetEncoding("UTF-8")))
             {
                 serializer.Serialize(writer, mapDTO);
             }

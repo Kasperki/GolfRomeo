@@ -143,34 +143,6 @@ public class TerrainEditorTools : MonoBehaviour
                         }
                     }
                 }
-
-                /*var x1 = Input.GetAxis("Horizontal");
-                var y1 = Input.GetAxis("Vertical");
-
-                var dotProduct = Vector2.Dot(new Vector2(x1, y1), new Vector2(y, x) - new Vector2(offset, offset));
-
-                if (dotProduct >= 0 && Mathf.Abs(x1 + y1) == 1)
-                {
-                    float mindis = 0.90f;
-                    float maxdis = 1.2f;
-
-                    if (distance > mindis && distance < maxdis)
-                    {
-                        alphas[x, y, 2] = 1; //Mathf.Lerp(0, 1, (maxdis - distance) / (maxdis - mindis));
-
-                        if (x + 1 < alphas.GetLength(0) && y + 1 < alphas.GetLength(1) && x - 1 > 0 && y - 1 > 0)
-                        {
-                            alphas[x - 1, y - 1, 2] = 0.5f;
-                            alphas[x - 1, y + 1, 2] = 0.5f;
-                            alphas[x - 1, y, 2] = 0.5f;
-                            alphas[x, y - 1, 2] = 0.5f;
-                            alphas[x, y + 1, 2] = 0.5f;
-                            alphas[x + 1, y - 1, 2] = 0.5f;
-                            alphas[x + 1, y + 1, 2] = 0.5f;
-                            alphas[x + 1, y, 2] = 0.5f;
-                        }
-                    }
-                }*/
             }
         }
 

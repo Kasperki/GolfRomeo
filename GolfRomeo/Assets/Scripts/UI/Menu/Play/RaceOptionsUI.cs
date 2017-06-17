@@ -55,7 +55,7 @@ public class RaceOptionsUI : MonoBehaviour
 
     private void UpdateDamageModifierText()
     {
-        DamageModifier.text = RaceManager.Instance.RaceOptions.DamageFromEnvironmentRate.ToString("0.00");
+        DamageModifier.text = RaceManager.Instance.RaceOptions.DamageFromEnvironmentRate.ToString(Constants.Race_Options_Precision);
     }
 
     public void DecreaseFuelConsuption()
@@ -72,7 +72,7 @@ public class RaceOptionsUI : MonoBehaviour
 
     private void UpdateFuelConsuptionText()
     {
-        FuelUsage.text = RaceManager.Instance.RaceOptions.FuelConsuptionRate.ToString("0.00");
+        FuelUsage.text = RaceManager.Instance.RaceOptions.FuelConsuptionRate.ToString(Constants.Race_Options_Precision);
     }
 
     public void DecreaseTierConsuptionRate()
@@ -89,6 +89,6 @@ public class RaceOptionsUI : MonoBehaviour
 
     private void UpdateTierConsuptionRateText()
     {
-        TiresExhausting.text = RaceManager.Instance.RaceOptions.TiresConsuptionRate.ToString("0.00");
+        TiresExhausting.text = RaceManager.Instance.RaceOptions.TiresConsuptionRate.ToString(Constants.Race_Options_Precision);
     }
 }

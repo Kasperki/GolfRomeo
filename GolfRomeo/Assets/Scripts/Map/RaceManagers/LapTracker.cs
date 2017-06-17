@@ -81,6 +81,7 @@ public class LapTracker : Singleton<LapTracker>
     {
         GameManager.SetState(State.Game);
         raceStartTime = Time.time;
+        Track.Instance.WayPointCircuit.CachePositionsAndDistances();
 
         foreach (var carOrder in CarOrder)
         {

@@ -15,7 +15,7 @@ public class TrackXMLDataEditor
     {
         get
         {
-            return trackFolderHelper.GetTrackPath(trackName) + TrackSerializer.mapFileExtension;
+            return trackFolderHelper.GetTrackPath(trackName) + TrackSerializer.Track_File_Extension;
         }
     }
 

@@ -19,7 +19,6 @@ public class CameraZoom : MonoBehaviour
 
             if (zoomLevel < 60)
             {
-                //Camera.main.transform.LookAt(pos);
                 var targetRotation = Quaternion.LookRotation(pos - transform.position);
                 Camera.main.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
             }

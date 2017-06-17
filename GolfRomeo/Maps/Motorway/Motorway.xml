@@ -2,7 +2,7 @@
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ID>00000000-0000-0000-0000-000000000000</ID>
   <MapName>Motorway</MapName>
-  <TrackRecord>0</TrackRecord>
+  <TrackRecord>29.59058</TrackRecord>
   <MapObjects>
     <TrackObjectDTO>
       <ID>tree1</ID>

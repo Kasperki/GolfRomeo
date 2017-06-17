@@ -89,6 +89,7 @@ public class PlayUI : MonoBehaviour
             yield return null;
         }
 
+        ContentParent.gameObject.SetActive(false);
         yield return null;
     }
 

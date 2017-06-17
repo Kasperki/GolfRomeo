@@ -61,7 +61,7 @@ public class CursorEditor : MonoBehaviour
             {
                 if (CursorUI.DriveTesting == false)
                 {
-                    raycastPos += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * Time.deltaTime * 6;
+                    raycastPos += new Vector3(Input.GetAxis(ControlScheme.HorizontalAxis), 0, Input.GetAxis(ControlScheme.VerticalAxis)) * Time.deltaTime * 6;
                 }
             }
 
