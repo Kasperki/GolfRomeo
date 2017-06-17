@@ -48,6 +48,8 @@ public class InputManager : Singleton<InputManager>
 
         avaiableControllers.Add(new ControllerScheme().Keyboard());
         avaiableControllers.Add(new ControllerScheme().Keyboard2());
+        avaiableControllers.Add(new ControllerScheme().Keyboard3());
+        avaiableControllers.Add(new ControllerScheme().Keyboard4());
     }
 
     public ReadOnlyCollection<ControllerScheme> GetAvailableControllerSchemes()
