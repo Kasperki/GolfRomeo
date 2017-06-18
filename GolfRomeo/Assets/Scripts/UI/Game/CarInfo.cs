@@ -34,6 +34,11 @@ public class CarInfo : MonoBehaviour
 
         rectTransform = GetComponent<RectTransform>();
 
+        if (rectTransform.rect.width > 250)
+        {
+            rectTransform.sizeDelta = new Vector2(250, rectTransform.sizeDelta.y);
+        }
+
         currentTrackRecord = new TrackXMLDataEditor(Track.Instance.Metadata.Name).GetTrackRecord();
     }
 
@@ -66,10 +71,5 @@ public class CarInfo : MonoBehaviour
         Health.fillAmount = LapInfo.car.Health / LapInfo.car.MaxHealth;
         Fuel.fillAmount = LapInfo.car.Fuel / LapInfo.car.MaxFuel;
         Tires.fillAmount = LapInfo.car.Tires / LapInfo.car.MaxTires;
-
-        if (rectTransform.rect.width > 250)
-        {
-            rectTransform.sizeDelta = new Vector2(250, rectTransform.sizeDelta.y);
-        }
     }
 }

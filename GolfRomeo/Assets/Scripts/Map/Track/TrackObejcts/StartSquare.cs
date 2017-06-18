@@ -9,10 +9,6 @@ public class StartSquare : TrackObject
     void Start()
     {
         renderer = GetComponentInChildren<Renderer>();
-    }
-
-    void Update()
-    {
         renderer.enabled = GameManager.CheckState(State.Edit);
     }
 

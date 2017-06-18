@@ -43,6 +43,11 @@ public class CarController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        audioSource.volume = GameManager.CheckState(State.Pause) ? 0 : 1;
+    }
+
     public void Move(float steering, float accel, float footbrake, float handbrake)
     {
         //clamp input values
