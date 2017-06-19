@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class RaceManager : Singleton<RaceManager>
 {
@@ -63,6 +64,7 @@ public class RaceManager : Singleton<RaceManager>
     public void LoadNextRace()
     {
         FindObjectOfType<CameraZoom>().ResetCamera();
+        WeatherManager.Instance.Initialize(WeatherManager.Instance.Weathers[Random.Range(0, WeatherManager.Instance.Weathers.Count)]);
 
         if (CurrentTrack == TrackNames.Count)
         {
