@@ -21,7 +21,7 @@ public class LapTrackerUI : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        CarInfoParent.DestroyChildrens();
+        CarInfoParent.DestroyChildren();
 
         lapTracker = Track.Instance.LapTracker;
         track = Track.Instance;
@@ -45,7 +45,7 @@ public class LapTrackerUI : MonoBehaviour
 
     public void Hide()
     {
-        CarInfoParent.DestroyChildrens();
+        CarInfoParent.DestroyChildren();
         gameObject.SetActive(false);
     }
 

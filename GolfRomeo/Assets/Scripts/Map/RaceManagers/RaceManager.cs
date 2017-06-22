@@ -64,7 +64,6 @@ public class RaceManager : Singleton<RaceManager>
     public void LoadNextRace()
     {
         FindObjectOfType<CameraZoom>().ResetCamera();
-        WeatherManager.Instance.Initialize(WeatherManager.Instance.Weathers[Random.Range(0, WeatherManager.Instance.Weathers.Count)]);
 
         if (CurrentTrack == TrackNames.Count)
         {
@@ -77,8 +76,11 @@ public class RaceManager : Singleton<RaceManager>
             //Load World
             new TrackLoader(Track.Instance).LoadTrack(TrackNames[CurrentTrack++]);
 
+            var cars = LoadCars();
+
             //Start Race
-            Track.Instance.LapTracker.Initialize(LoadCars());
+            Track.Instance.LapTracker.Initialize(cars);
+            WeatherManager.Instance.Initialize(cars);
         }
     }
 

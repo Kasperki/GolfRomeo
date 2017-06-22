@@ -10,6 +10,7 @@ public class RaceOptionsUI : MonoBehaviour
     public Text DamageModifier;
     public Text FuelUsage;
     public Text TiresExhausting;
+    public Text Weather;
 
     public void Init()
     {
@@ -90,5 +91,22 @@ public class RaceOptionsUI : MonoBehaviour
     private void UpdateTierConsuptionRateText()
     {
         TiresExhausting.text = RaceManager.Instance.RaceOptions.TiresConsuptionRate.ToString(Constants.Race_Options_Precision);
+    }
+
+    public void PreviousWeather()
+    {
+        WeatherManager.Instance.PreviousWeather();
+        UpdateWeatherText();
+    }
+
+    public void NextWeather()
+    {
+        WeatherManager.Instance.NextWeather();
+        UpdateWeatherText();
+    }
+
+    private void UpdateWeatherText()
+    {
+        Weather.text = WeatherManager.Instance.GetWeatherText();
     }
 }
