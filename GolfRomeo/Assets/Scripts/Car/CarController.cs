@@ -9,6 +9,7 @@ using UnityEngine;
 public class CarController : MonoBehaviour
 {
     public Car Car;
+    public CarLights Lights;
     public const float Speed_Multipler = 5.6f;
 
     public float TopSpeed = 200;
@@ -63,6 +64,8 @@ public class CarController : MonoBehaviour
         {
             audioSource.pitch = 0.4f;
         }
+
+        Lights.Reset();
 
         var steerAngle = steering * MaxSteeringAngle;
         foreach (CarAxle axleInfo in AxleInfos)
@@ -140,6 +143,7 @@ public class CarController : MonoBehaviour
             {
                 if (footbrake > 0)
                 {
+                    Lights.ShowBreakLight();
                     var force = SkidMarkForcePerSpeed();
                     Car.AddTires(-force * 0.045f);
 

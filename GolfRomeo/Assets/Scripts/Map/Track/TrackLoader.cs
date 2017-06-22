@@ -19,9 +19,9 @@ public class TrackLoader
         editorTools.NewEmptyTerrain();
         UnityEngine.GameObject.Destroy(editorTools);
 
-        track.TrackObjectsParent.transform.DestroyChildrens();
-        track.WayPointCircuit.transform.DestroyChildrens();
-        track.LapTracker.transform.DestroyChildrens();
+        track.TrackObjectsParent.transform.DestroyChildren();
+        track.WayPointCircuit.transform.DestroyChildren();
+        track.LapTracker.transform.DestroyChildren();
 
         Track.Instance.SkidMarks.Init();
     }
@@ -53,7 +53,7 @@ public class TrackLoader
 
     private void InstantiateMapObjects(TrackDTO mapDTO)
     {
-        track.TrackObjectsParent.transform.DestroyChildrens();
+        track.TrackObjectsParent.transform.DestroyChildren();
 
         foreach (var mapObjectDTO in mapDTO.MapObjects)
         {
@@ -66,7 +66,7 @@ public class TrackLoader
 
     private void InstantiateCheckpoints(TrackDTO mapDTO)
     {
-        track.LapTracker.transform.DestroyChildrens();
+        track.LapTracker.transform.DestroyChildren();
 
         foreach (var checkpointDTO in mapDTO.Checkpoints)
         {
@@ -80,7 +80,7 @@ public class TrackLoader
 
     private void InstantiateWaypoints(TrackDTO mapDTO)
     {
-        track.WayPointCircuit.transform.DestroyChildrens();
+        track.WayPointCircuit.transform.DestroyChildren();
 
         foreach (var waypointDTO in mapDTO.Waypoints)
         {

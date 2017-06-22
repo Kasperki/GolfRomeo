@@ -39,7 +39,7 @@ public class EditorUI : MonoBehaviour
     private void CreateTrackButtons()
     {
         var tracks = directoryHelper.GetAllTracks();
-        mapButtonsParent.DestroyChildrens();
+        mapButtonsParent.DestroyChildren();
 
         for (int i = 0; i < tracks.Length; i++)
         {

@@ -2,7 +2,7 @@
 <Track xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ID>00000000-0000-0000-0000-000000000000</ID>
   <MapName>Stadium</MapName>
-  <TrackRecord>12.08951</TrackRecord>
+  <TrackRecord>11.5833</TrackRecord>
   <MapObjects>
     <TrackObjectDTO>
       <ID>treeLarge</ID>

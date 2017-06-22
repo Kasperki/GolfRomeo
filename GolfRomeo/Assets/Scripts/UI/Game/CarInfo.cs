@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +11,7 @@ public class CarInfo : MonoBehaviour
     public Image Health;
     public Image Fuel;
     public Image Tires;
+    public GameObject FinishedImage;
 
     public Text CurrentLap;
     public Text FastestLapTime;
@@ -60,6 +59,9 @@ public class CarInfo : MonoBehaviour
         {
             FastestLapTime.color = Color.red;
         }
+
+
+        FinishedImage.SetActive(LapInfo.Finished);
 
         Speed.text = LapInfo.car.CarController.CurrentSpeed.ToString("0");
     }
