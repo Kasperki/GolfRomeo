@@ -16,6 +16,10 @@ public class CarController : MonoBehaviour
     private const float NoFuelMaxSpeed = 10;
     private const float FuelBaseConsuption = 0.01f;
 
+    private const float CrashObjectsDamageMultiplier = 3.0f;
+    private const float CrashSlowerCarDamageMultiplier = 2.55f;
+    private const float CrashFasterCarDamageMultiplier = 1.25f;
+
     public float MaxMotorTorque; // maximum torque the motor can apply to wheel
     public float MaxBreakTorque; // maximum torque the motor can apply to wheel
     public float MaxSteeringAngle; // maximum steer angle the wheel can have
@@ -300,7 +304,7 @@ public class CarController : MonoBehaviour
 
             if (trackObject != null && trackObject.SoftCollision == false)
             {
-                Car.AddHealth(-rgbd.velocity.magnitude * 3);
+                Car.AddHealth(-rgbd.velocity.magnitude * CrashObjectsDamageMultiplier);
                 PlayHitSound();
             }
         }
@@ -311,17 +315,17 @@ public class CarController : MonoBehaviour
 
             if (rigidbody != null)
             {
-                var crashMagnitude = -(rgbd.velocity + rigidbody.velocity).magnitude;
+                var crashMagnitude = -(rgbd.velocity - rigidbody.velocity).magnitude;
 
                 if (rgbd.velocity.magnitude < rigidbody.velocity.magnitude)
                 {
-                    rigidbody.GetComponent<Car>().AddHealth(crashMagnitude * 1.5f);
-                    Car.AddHealth(crashMagnitude * 3);
+                    rigidbody.GetComponent<Car>().AddHealth(crashMagnitude * CrashFasterCarDamageMultiplier);
+                    Car.AddHealth(crashMagnitude * CrashSlowerCarDamageMultiplier);
                 }
                 else
                 {
-                    rigidbody.GetComponent<Car>().AddHealth(crashMagnitude * 3);
-                    Car.AddHealth(crashMagnitude * 1.5f);
+                    rigidbody.GetComponent<Car>().AddHealth(crashMagnitude * CrashSlowerCarDamageMultiplier);
+                    Car.AddHealth(crashMagnitude * CrashFasterCarDamageMultiplier);
                 }
 
                 PlayHitSound();
