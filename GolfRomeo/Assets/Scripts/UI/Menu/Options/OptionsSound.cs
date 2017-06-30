@@ -5,20 +5,27 @@ public class OptionsSound : MonoBehaviour
 {
     public Text Volume;
 
+    void Start()
+    {
+        SaveAndUpdateVolumeUI();
+    }
+
 	public void DecreaseVolume()
     {
         AudioListener.volume -= 0.01f;
-        UpdateVolumeText();
+        SaveAndUpdateVolumeUI();
     }
 
     public void IncreaseVolue()
     {
         AudioListener.volume += 0.01f;
-        UpdateVolumeText();
+        SaveAndUpdateVolumeUI();
     }
 
-    public void UpdateVolumeText()
+    public void SaveAndUpdateVolumeUI()
     {
+        OptionsManager.Instance.SaveVolume(AudioListener.volume);
+
         AudioListener.volume = Mathf.Clamp(AudioListener.volume, 0, 1);
         Volume.text = AudioListener.volume.ToString("0.00");
     }

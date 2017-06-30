@@ -28,6 +28,7 @@ public class QualitySettingsButton : MonoBehaviour
                 btn.image.color = normalColor;
             }
 
+            OptionsManager.Instance.SaveGraphics(qualitySettingLevel);
             QualitySettings.SetQualityLevel(qualitySettingLevel);
             SetActive();
         });

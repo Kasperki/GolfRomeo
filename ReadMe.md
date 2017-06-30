@@ -38,4 +38,4 @@ Feel free to contribute! <3
 
 ## Thanks to
 
-* Most of 3 models from: https://kenney.nl/assets
+* Most of 3D models from: https://kenney.nl/assets
