@@ -6,7 +6,7 @@ using UnityEngine;
 
 public static class TransformExtensions
 {
-    public static void DestroyChildrens(this Transform transform)
+    public static void DestroyChildren(this Transform transform)
     {
         foreach (var childTransform in transform.GetComponentsInChildren<Transform>())
         {

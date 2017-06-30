@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +11,7 @@ public class CarInfo : MonoBehaviour
     public Image Health;
     public Image Fuel;
     public Image Tires;
+    public GameObject FinishedImage;
 
     public Text CurrentLap;
     public Text FastestLapTime;
@@ -33,6 +32,11 @@ public class CarInfo : MonoBehaviour
         SecondaryBackground.color = lapInfo.car.Player.SecondaryColor;
 
         rectTransform = GetComponent<RectTransform>();
+
+        if (rectTransform.rect.width > 250)
+        {
+            rectTransform.sizeDelta = new Vector2(250, rectTransform.sizeDelta.y);
+        }
 
         currentTrackRecord = new TrackXMLDataEditor(Track.Instance.Metadata.Name).GetTrackRecord();
     }
@@ -56,6 +60,9 @@ public class CarInfo : MonoBehaviour
             FastestLapTime.color = Color.red;
         }
 
+
+        FinishedImage.SetActive(LapInfo.Finished);
+
         Speed.text = LapInfo.car.CarController.CurrentSpeed.ToString("0");
     }
 
@@ -66,10 +73,5 @@ public class CarInfo : MonoBehaviour
         Health.fillAmount = LapInfo.car.Health / LapInfo.car.MaxHealth;
         Fuel.fillAmount = LapInfo.car.Fuel / LapInfo.car.MaxFuel;
         Tires.fillAmount = LapInfo.car.Tires / LapInfo.car.MaxTires;
-
-        if (rectTransform.rect.width > 250)
-        {
-            rectTransform.sizeDelta = new Vector2(250, rectTransform.sizeDelta.y);
-        }
     }
 }

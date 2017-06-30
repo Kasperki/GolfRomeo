@@ -5,10 +5,10 @@ using UnityEngine;
 
 [RequireComponent(typeof(Car))]
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(AudioSource))]
 public class CarController : MonoBehaviour
 {
     public Car Car;
+    public CarLights Lights;
     public const float Speed_Multipler = 5.6f;
 
     public float TopSpeed = 200;
@@ -27,13 +27,14 @@ public class CarController : MonoBehaviour
     public float CurrentSpeed { get { return rgbd == null ? 0 : rgbd.velocity.magnitude * Speed_Multipler; } }
 
     public CarParticleController ParticleController;
-    private AudioSource audioSource;
+
+    public AudioSource MotorAudioSource;
+    public AudioSource HitAudioSource;
 
     private Rigidbody rgbd;
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         rgbd = GetComponent<Rigidbody>();
         Car = GetComponent<Car>();
 
@@ -43,20 +44,24 @@ public class CarController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        MotorAudioSource.volume = GameManager.CheckState(State.Pause) ? 0 : 1;
+    }
+
     public void Move(float steering, float accel, float footbrake, float handbrake)
     {
-        //clamp input values
+        //Sanitize input values
         steering = Mathf.Clamp(steering, -1, 1);
         accel = Mathf.Clamp(accel, 0, 1);
         footbrake = -1 * Mathf.Clamp(footbrake, -1, 0);
 
+        MotorAudioSource.pitch = 0.4f;
+        Lights.Reset();
+
         if (accel > 0)
         {
-            audioSource.pitch = Mathf.Lerp(0.7f, 1.5f, CurrentSpeed / (TopSpeed / 2));
-        }
-        else
-        {
-            audioSource.pitch = 0.4f;
+            MotorAudioSource.pitch = Mathf.Lerp(0.7f, 1.5f, CurrentSpeed / (TopSpeed / 2));
         }
 
         var steerAngle = steering * MaxSteeringAngle;
@@ -135,6 +140,7 @@ public class CarController : MonoBehaviour
             {
                 if (footbrake > 0)
                 {
+                    Lights.ShowBreakLight();
                     var force = SkidMarkForcePerSpeed();
                     Car.AddTires(-force * 0.045f);
 
@@ -161,6 +167,7 @@ public class CarController : MonoBehaviour
                     foreach (var wheel in axleInfo.Wheels)
                     {
                         wheel.Wheel.motorTorque = -MaxReverseTorque * footbrake;
+                        MotorAudioSource.pitch = 0.65f;
                     }
 
                     Car.AddFuel(-FuelBaseConsuption * Mathf.Abs(footbrake));
@@ -282,14 +289,49 @@ public class CarController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (CurrentSpeed < 15 && collision.collider.gameObject.layer == (int)TrackMask.TrackObjects)
+        if (GameManager.CheckState(State.Game) == false)
+        {
+            return;
+        }
+
+        if (collision.collider.gameObject.layer == (int)TrackMask.TrackObjects)
         {
             var trackObject = collision.collider.gameObject.GetComponent<TrackObject>();
 
             if (trackObject != null && trackObject.SoftCollision == false)
             {
-                Car.AddHealth(rgbd.velocity.magnitude * -3);
+                Car.AddHealth(-rgbd.velocity.magnitude * 3);
+                PlayHitSound();
             }
         }
+
+        if (collision.collider.gameObject.layer == (int)TrackMask.CarBody)
+        {
+            var rigidbody = collision.collider.gameObject.GetComponentInParent<Rigidbody>();
+
+            if (rigidbody != null)
+            {
+                var crashMagnitude = -(rgbd.velocity + rigidbody.velocity).magnitude;
+
+                if (rgbd.velocity.magnitude < rigidbody.velocity.magnitude)
+                {
+                    rigidbody.GetComponent<Car>().AddHealth(crashMagnitude * 1.5f);
+                    Car.AddHealth(crashMagnitude * 3);
+                }
+                else
+                {
+                    rigidbody.GetComponent<Car>().AddHealth(crashMagnitude * 3);
+                    Car.AddHealth(crashMagnitude * 1.5f);
+                }
+
+                PlayHitSound();
+            }
+        }
+    }
+
+    private void PlayHitSound()
+    {
+        HitAudioSource.volume = Mathf.Lerp(0.1f, 1.5f, rgbd.velocity.magnitude / 10);
+        HitAudioSource.Play();
     }
 }

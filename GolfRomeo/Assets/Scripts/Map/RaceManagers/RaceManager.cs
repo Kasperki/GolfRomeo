@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class RaceManager : Singleton<RaceManager>
 {
@@ -75,8 +76,11 @@ public class RaceManager : Singleton<RaceManager>
             //Load World
             new TrackLoader(Track.Instance).LoadTrack(TrackNames[CurrentTrack++]);
 
+            var cars = LoadCars();
+
             //Start Race
-            Track.Instance.LapTracker.Initialize(LoadCars());
+            Track.Instance.LapTracker.Initialize(cars);
+            WeatherManager.Instance.Initialize(cars);
         }
     }
 

@@ -21,7 +21,7 @@ public class LapTrackerUI : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        CarInfoParent.DestroyChildrens();
+        CarInfoParent.DestroyChildren();
 
         lapTracker = Track.Instance.LapTracker;
         track = Track.Instance;
@@ -34,17 +34,18 @@ public class LapTrackerUI : MonoBehaviour
         foreach (var car in lapTracker.CarOrder)
         {
             var obj = Instantiate(CarLapInfoPrefab) as GameObject;
-            obj.GetComponent<CarInfo>().Init(car);
             carInfoUIs.Add(obj.GetComponent<CarInfo>());
 
             obj.GetComponent<RectTransform>().SetParent(CarInfoParent, true);
             obj.GetComponent<RectTransform>().sizeDelta = new Vector2(CarInfoParent.rect.width / lapTracker.CarOrder.Count, 0);
+
+            obj.GetComponent<CarInfo>().Init(car);
         }
     }
 
     public void Hide()
     {
-        CarInfoParent.DestroyChildrens();
+        CarInfoParent.DestroyChildren();
         gameObject.SetActive(false);
     }
 

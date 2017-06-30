@@ -140,6 +140,15 @@ public class AxleWheel
         extremumSlipSidewaysDefault = Wheel.sidewaysFriction.extremumSlip;
     }
 
+    public void Initialize(float extremumSlipForwardDefault, float extremumSlipSidewaysDefault)
+    {
+        ExtremumSlipForward = extremumSlipForwardDefault;
+        ExtremumSlipSideways = extremumSlipSidewaysDefault;
+
+        this.extremumSlipForwardDefault = extremumSlipForwardDefault;
+        this.extremumSlipSidewaysDefault = extremumSlipSidewaysDefault;
+    }
+
     public void UpdateExtremumSlip(float tireHealthPercentage)
     {
         ExtremumSlipForward = Mathf.Lerp(MaxForwardSlip, extremumSlipForwardDefault, tireHealthPercentage);

@@ -19,7 +19,10 @@ Feel free to contribute! <3
 ## TODO
 * Improve Track Editor
     * Multiediting support, better ux.
+        * Players should be able to edit with controller
     * Y-Axis Editing
+    * Support for different brush (square brush, brush with white stroke)
+        * Brush antialiasing
     * Export and Import Alphamaps as .png
 * Improve Car handling
 * Improve AI
@@ -29,11 +32,10 @@ Feel free to contribute! <3
 * Add Player Profiles
 * Add AI Profiles / Difficulties
 * Add Snow & Ice
-* Add Weather effects
 * Networking - Multiplayer
 * TrackRecord lists, with cars & names.
 * Race option: Weapon pickups like in CTR, Mario Cart, Death Rally. default off.
 
-## Thanks
+## Thanks to
 
-* Most of 3 models from: https://kenney.nl/assets
+* Most of 3D models from: https://kenney.nl/assets

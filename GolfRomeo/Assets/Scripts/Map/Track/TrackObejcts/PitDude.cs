@@ -6,6 +6,7 @@ public class PitDude : MonoBehaviour
 {
     private Pit pit;
     private Vector3 standingPosition;
+    private Rigidbody rdbd;
 
     private const float Movement_Speed = 20;
 
@@ -13,6 +14,8 @@ public class PitDude : MonoBehaviour
     {
         pit = GetComponentInParent<Pit>();
         standingPosition = transform.position;
+
+        rdbd = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
@@ -23,12 +26,12 @@ public class PitDude : MonoBehaviour
             {
                 if ((pit.transform.position - transform.position).magnitude > 0.5f)
                 {
-                    GetComponent<Rigidbody>().AddForce((pit.transform.position - transform.position).normalized * Movement_Speed);
+                    rdbd.AddForce((pit.transform.position - transform.position).normalized * Movement_Speed);
                 }
             }
             else if ((standingPosition - transform.position).magnitude > 0.1f)
             {
-                GetComponent<Rigidbody>().AddForce((standingPosition - transform.position).normalized * Movement_Speed);
+                rdbd.AddForce((standingPosition - transform.position).normalized * Movement_Speed);
             }
         }
     }

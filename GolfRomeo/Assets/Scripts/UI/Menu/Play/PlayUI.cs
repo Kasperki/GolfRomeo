@@ -46,7 +46,7 @@ public class PlayUI : MonoBehaviour
 
     private void CreateTrackSelectionButtons(string[] tracks)
     {
-        mapButtonsParent.DestroyChildrens();
+        mapButtonsParent.DestroyChildren();
 
         for (int i = 0; i < tracks.Length; i++)
         {
